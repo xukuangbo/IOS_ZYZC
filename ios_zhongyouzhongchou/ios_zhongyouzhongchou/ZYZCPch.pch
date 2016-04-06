@@ -1,0 +1,135 @@
+//
+//  ZYZCPch.pch
+//  ios_zhongyouzhongchou
+//
+//  Created by liuliang on 16/3/4.
+//  Copyright © 2016年 liuliang. All rights reserved.
+//
+
+#ifndef ZYZCPch_pch
+#define ZYZCPch_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#pragma mark --- 全局头文件
+
+
+#import "MoreFZCDataManager.h"
+
+#import "UIColor+ZYZCColors.h"
+
+#import "UIView+ZYZCLineView.h"
+
+#import "UIViewExt.h"
+
+//获取UIView控制器
+#import "UIView+ViewController.h"
+
+#import "ZYZCDefine.h"
+
+#import "ZYZCTool.h"
+
+#import "ZYZCHTTPTool.h"
+
+#import "AFNetworking.h"
+
+#import "MJExtension.h"
+
+#import "UIImageView+WebCache.h"
+
+#import "MJRefresh.h"
+
+#import "Masonry.h"
+
+#pragma mark --- 基础网络接口
+#define BASE_URL @"http://121.40.225.119:8080/"
+
+#define HTTPURL(APPEND_URL) [NSString stringWithFormat:@"%@%@.action?",BASE_URL,APPEND_URL]
+
+
+#pragma mark --- 项目网络接口
+//获取个人主页信息
+#define GETUSERDETAIL      HTTPURL(@"u/getUserDetail")
+//获取我关注的人
+#define LISTUSERFOLLOWED   HTTPURL(@"friends/listUserFollowed")
+
+//获取label信息
+#define LISTLABLE          HTTPURL(@"user/listLabel")
+
+//关注个人
+#define FOLLOWUSER         HTTPURL(@"friends/followUser")
+//取消关注个人
+#define UNFOLLOWUSER       HTTPURL(@"friends/unfollowUser")
+//收藏众筹
+#define FOLLOWPRODUCT      HTTPURL(@"friends/followProduct")
+//取消收藏
+#define UNFOLLOWPRODUCT    HTTPURL(@"friends/unfollowProduct")
+//获取用户信息
+#define GETUSERINFO        HTTPURL(@"register/getUserInfo")
+//注册微信用户信息
+#define REGISTERWEICHAT    HTTPURL(@"register/saveWeixinInfo")
+//用户基本信息
+#define BASEINFO           HTTPURL(@"register/saveBaseInfo")
+//实名认证
+#define AUTHINFO           HTTPURL(@"register/saveAuthInfo")
+//联系信息
+#define CONTACTINFO        HTTPURL(@"register/saveContactInfo")
+//职业信息
+#define CAREERINFO         HTTPURL(@"register/saveCareerInfo")
+//教育信息
+#define EDUINFO            HTTPURL(@"register/saveEduInfo")
+//兴趣标签
+#define TAGINFO            HTTPURL(@"register/saveTagInfo")
+//收货地址
+#define DELIVERYADDRESS    HTTPURL(@"register/saveDeliveryAddress")
+//发布众筹
+#define ADDPRODUCT         HTTPURL(@"product/addProduct")
+//编辑众筹
+#define UPDATEPRODUCT      HTTPURL(@"product/updateproduct")
+//获取众筹内容
+#define GETPRODUCTDETAIL   HTTPURL(@"productInfo/getProductDetail")
+
+//获取prepay_id
+
+//获取所有众筹列表
+#define LISTALLPRODUCTS   HTTPURL(@"list/listAllProducts")
+//获取我的众筹列表
+#define LISTMYPRODUCTS    HTTPURL(@"list/listMyProducts")
+//获取国家列表
+#define LISTCOUNTRY       HTTPURL(@"user/listCountry")
+//获取国家-省份-城市信息
+#define GETCOUNTRYINFO    HTTPURL(@"user/getCountryInfo")
+
+
+
+#endif /* ZYZCPch_pch */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
