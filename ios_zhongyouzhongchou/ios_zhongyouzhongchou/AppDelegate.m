@@ -20,11 +20,6 @@
     
     
     
-    
-    
-    
-    
-    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor=[UIColor whiteColor];
     self.window.layer.cornerRadius=5;
