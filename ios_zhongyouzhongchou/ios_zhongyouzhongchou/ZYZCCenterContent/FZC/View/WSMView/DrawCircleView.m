@@ -76,11 +76,13 @@
     frontFillBezierPath = [UIBezierPath bezierPathWithArcCenter:self.center radius:(CGRectGetWidth(self.bounds)-self.progressStrokeWidth)/2.f startAngle:-M_PI_2 endAngle:(2*M_PI)*progressValue-M_PI_2 clockwise:YES];
     frontFillLayer.path = frontFillBezierPath.CGPath;
 }
+
 - (void)setProgressStrokeWidth:(CGFloat)progressStrokeWidth
 {
     _progressStrokeWidth = progressStrokeWidth;
     frontFillLayer.lineWidth = progressStrokeWidth;
     backGroundLayer.lineWidth = progressStrokeWidth;
 }
+
 
 @end

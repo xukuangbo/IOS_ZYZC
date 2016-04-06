@@ -143,4 +143,54 @@
         NSLog(@"录音完成!");
 }
 
+#pragma mark --- 将音频转换为MP3格式
+-(void)turnSoundToMP3
+{
+//    NSString *mp3AudioPath = [[NSString stringWithFormat:@"%@/%@.mp3", DOCUMENTS_FOLDER, @"temp"] retain]; //新转换mp3文件路径
+//    
+//    //进入转换
+//    int read, write;
+//    
+//    FILE *pcm = fopen([recorderFilePath cStringUsingEncoding:1], "rb");//被转换的文件
+//    FILE *mp3 = fopen([mp3AudioPath cStringUsingEncoding:1], "wb");//转换后文件的存放位置
+//    
+//    const int PCM_SIZE = 8192;
+//    
+//    const int MP3_SIZE = 8192;
+//    
+//    short int pcm_buffer[PCM_SIZE*2];
+//    
+//    unsigned char mp3_buffer[MP3_SIZE];
+//    
+//    lame_t lame = lame_init();
+//    
+//    lame_set_in_samplerate(lame, 44100);
+//    
+//    lame_set_VBR(lame, vbr_default);
+//    
+//    lame_init_params(lame);
+//    
+//    do {
+//        
+//        read = fread(pcm_buffer, 2*sizeof(short int), PCM_SIZE, pcm);
+//        
+//        if (read == 0)
+//            
+//            write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
+//        
+//        else
+//            
+//            write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
+//        
+//        fwrite(mp3_buffer, write, 1, mp3);
+//        
+//    } while (read != 0);
+//    
+//    lame_close(lame);
+//    
+//    fclose(mp3);
+//    
+//    fclose(pcm);
+}
+
 @end
