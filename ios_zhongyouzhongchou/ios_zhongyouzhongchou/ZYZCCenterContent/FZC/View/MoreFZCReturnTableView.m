@@ -96,11 +96,13 @@
         cell.open = [self.openArray[indexPath.row] floatValue];
         return cell;
     }else if(indexPath.row == 4){
-        ReturnThirdCell *cell = [self dequeueReusableCellWithIdentifier:@"ReturnThirdCell"];
+        NSString *cellId=@"ReturnThirdCell";
+        ReturnThirdCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
         if (!cell) {
-            cell = [[ReturnThirdCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ReturnThirdCell"];
+            cell = [[ReturnThirdCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         }
         cell.open = [self.openArray[indexPath.row] floatValue];
+        cell.soundFileName=cellId;
         [cell reloadManagerData];
         return cell;
     }else{

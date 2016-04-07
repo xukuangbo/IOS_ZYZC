@@ -19,6 +19,7 @@ typedef void(^ReloadTableBlock)(BOOL isChangeHeight);
 @property (nonatomic, copy  ) ReloadTableBlock    reloadTableBlock;
 @property (nonatomic, assign) BOOL                isOpenView;
 @property (nonatomic, strong) MoreFZCTravelOneDayDetailMdel *oneDetailModel;
+@property (nonatomic, copy  ) NSString            *soundFileName;
 /**
  *  存储数据到模型中
  */

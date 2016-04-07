@@ -65,6 +65,11 @@
     return nil;
 }
 
+-(void)setSoundFileName:(NSString *)soundFileName
+{
+    _soundFileName=soundFileName;
+    _contentEntryView.soundFileName=soundFileName;
+}
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

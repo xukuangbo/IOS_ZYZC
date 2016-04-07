@@ -58,7 +58,7 @@
     else if(indexPath.row%2==0)
     {
         NSInteger cellNumber=indexPath.row/2;
-        NSString *cellId=[NSString stringWithFormat:@"travelSecondCell%zd",indexPath.row];
+        NSString *cellId=[NSString stringWithFormat:@"travelSecondCell%zd",indexPath.row/2];
         TravelSecondCell *travelSecondCell=[tableView dequeueReusableCellWithIdentifier:cellId];
         if (!travelSecondCell) {
             travelSecondCell=[[TravelSecondCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
@@ -80,6 +80,7 @@
         }
         NSDate *cellDate=[NSDate dateWithTimeInterval:cellNumber*24*60*60 sinceDate:startDate];
         travelSecondCell.oneDetailModel.date=cellDate;
+        travelSecondCell.soundFileName=cellId;
         return travelSecondCell;
     }
     else

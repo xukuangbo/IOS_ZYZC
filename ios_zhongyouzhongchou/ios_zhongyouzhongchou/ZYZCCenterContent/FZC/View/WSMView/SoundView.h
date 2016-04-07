@@ -14,4 +14,5 @@
 @property (nonatomic, strong)  UIButton *soundBtn;
 @property (nonatomic, strong)  UIButton *playerBtn;
 @property (nonatomic, strong)  DrawCircleView *circleView;
+@property (nonatomic, copy  )  NSString *soundFileName;
 @end

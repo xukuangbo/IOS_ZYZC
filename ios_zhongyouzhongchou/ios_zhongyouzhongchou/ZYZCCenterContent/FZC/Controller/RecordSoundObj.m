@@ -10,27 +10,35 @@
 
 @implementation RecordSoundObj
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 /**
  *  设置音频会话
  */
-//-(void)setAudioSession{
-//    AVAudioSession *audioSession=[AVAudioSession sharedInstance];
-//    //设置为播放和录音状态，以便可以在录制完之后播放录音
-//    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-//    [audioSession setActive:YES error:nil];
-//}
+-(void)setAudioSession{
+    AVAudioSession *audioSession=[AVAudioSession sharedInstance];
+    //设置为播放和录音状态，以便可以在录制完之后播放录音
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [audioSession setActive:YES error:nil];
+}
 /**
  *  取得录音文件保存路径
  *
  *  @return 录音文件路径
  */
--(NSURL *)getSavePath{
-    NSString *urlStr=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    urlStr=[urlStr stringByAppendingPathComponent:kRecordAudioFile];
-    NSLog(@"file path:%@",urlStr);
-    NSURL *url=[NSURL fileURLWithPath:urlStr];
-    return url;
+-(NSString *)getSavePath{
+    
+    NSString *documentDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path =[documentDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",_soundFileName]];
+    NSLog(@"kWAVAudioFile_path:%@",path);
+    return path;
 }
 
 /**
@@ -39,15 +47,16 @@
  *  @return 录音设置
  */
 -(NSDictionary *)getAudioSetting{
+    
     NSMutableDictionary *dicM=[NSMutableDictionary dictionary];
     //设置录音格式
     [dicM setObject:@(kAudioFormatLinearPCM) forKey:AVFormatIDKey];
     //设置录音采样率，8000是电话采样率，对于一般录音已经够了
-    [dicM setObject:@(8000) forKey:AVSampleRateKey];
+    [dicM setObject:@(44100) forKey:AVSampleRateKey];
     //设置通道,这里采用单声道
     [dicM setObject:@(1) forKey:AVNumberOfChannelsKey];
     //每个采样点位数,分为8、16、24、32
-    [dicM setObject:@(8) forKey:AVLinearPCMBitDepthKey];
+    [dicM setObject:@(16) forKey:AVLinearPCMBitDepthKey];
     //是否使用浮点数采样
     [dicM setObject:@(YES) forKey:AVLinearPCMIsFloatKey];
     //....其他设置等
@@ -60,9 +69,10 @@
  *  @return 录音机对象
  */
 -(AVAudioRecorder *)audioRecorder{
+    _audioRecorder=nil;
     if (!_audioRecorder) {
         //创建录音文件保存路径
-        NSURL *url=[self getSavePath];
+        NSURL *url=[NSURL fileURLWithPath:[self getSavePath]];
         //创建录音格式设置
         NSDictionary *setting=[self getAudioSetting];
         //创建录音机
@@ -78,29 +88,11 @@
     return _audioRecorder;
 }
 
-/**
- *  创建播放器
- *
- *  @return 播放器
- */
--(AVAudioPlayer *)audioPlayer{
-    if (!_audioPlayer) {
-        NSURL *url=[self getSavePath];
-        NSError *error=nil;
-        _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
-        _audioPlayer.numberOfLoops=0;
-        [_audioPlayer prepareToPlay];
-        if (error) {
-            NSLog(@"创建播放器过程中发生错误，错误信息：%@",error.localizedDescription);
-            return nil;
-        }
-    }
-    return _audioPlayer;
-}
-
 #pragma mark --- 语音录制
 -(void)recordMySound
 {
+    [self setAudioSession];
+    
     [self.audioRecorder record];//首次使用应用时如果调用record方法会询问用户是否允许使用麦克风
 }
 
@@ -113,22 +105,43 @@
 #pragma mark --- 语音播放
 -(void)playSound
 {
-    [self.audioPlayer play];
+    _audioPlayer=nil;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    if (!_audioPlayer) {
+        NSString *path=[self getSavePath];
+        NSURL *url=[NSURL fileURLWithPath:path];
+        NSError *error=nil;
+        _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+        _audioPlayer.numberOfLoops=0;
+        [_audioPlayer prepareToPlay];
+        if (error) {
+            NSLog(@"创建播放器过程中发生错误，错误信息：%@",error.localizedDescription);
+        }
+    }
+    if([_audioPlayer isPlaying])
+    {
+        [_audioPlayer pause];
+    }
+    else
+    {
+        [_audioPlayer play];
+    }
 }
 
 #pragma mark --- 删除语音
 -(void)deleteMySound
 {
-    _audioRecorder=nil;
-    _audioPlayer=nil;
-    NSString *urlStr=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    urlStr=[urlStr stringByAppendingPathComponent:kRecordAudioFile];
-    NSLog(@"urlStr:%@",urlStr);
+    NSString *urlStr=[self getSavePath];
     NSError *error=nil;
     if ([[NSFileManager defaultManager] fileExistsAtPath:urlStr]) {
         [[NSFileManager defaultManager] removeItemAtPath:urlStr error:&error];
     }
     
+}
+
+-(void)setSoundFileName:(NSString *)soundFileName
+{
+    _soundFileName=soundFileName;
 }
 
 
@@ -143,54 +156,97 @@
         NSLog(@"录音完成!");
 }
 
-#pragma mark --- 将音频转换为MP3格式
--(void)turnSoundToMP3
+#pragma mark --- 存储MP3格式文件路径
+-(NSString *)saveMP3Path
 {
-//    NSString *mp3AudioPath = [[NSString stringWithFormat:@"%@/%@.mp3", DOCUMENTS_FOLDER, @"temp"] retain]; //新转换mp3文件路径
-//    
-//    //进入转换
-//    int read, write;
-//    
-//    FILE *pcm = fopen([recorderFilePath cStringUsingEncoding:1], "rb");//被转换的文件
-//    FILE *mp3 = fopen([mp3AudioPath cStringUsingEncoding:1], "wb");//转换后文件的存放位置
-//    
-//    const int PCM_SIZE = 8192;
-//    
-//    const int MP3_SIZE = 8192;
-//    
-//    short int pcm_buffer[PCM_SIZE*2];
-//    
-//    unsigned char mp3_buffer[MP3_SIZE];
-//    
-//    lame_t lame = lame_init();
-//    
-//    lame_set_in_samplerate(lame, 44100);
-//    
-//    lame_set_VBR(lame, vbr_default);
-//    
-//    lame_init_params(lame);
-//    
-//    do {
-//        
-//        read = fread(pcm_buffer, 2*sizeof(short int), PCM_SIZE, pcm);
-//        
-//        if (read == 0)
-//            
-//            write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
-//        
-//        else
-//            
-//            write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
-//        
-//        fwrite(mp3_buffer, write, 1, mp3);
-//        
-//    } while (read != 0);
-//    
-//    lame_close(lame);
-//    
-//    fclose(mp3);
-//    
-//    fclose(pcm);
+    NSString *documentDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path =[documentDir stringByAppendingPathComponent:@"soundFile.mp3"];
+    NSLog(@"kMP3AudioFile:%@",path);
+    return path;
+}
+
+#pragma mark --- 将音频转换为MP3格式并播放
+-(void)turnSoundToMP3AndPlay
+{
+    //转换mp3文件路径
+    NSString *mp3AudioPath=[self saveMP3Path];
+    NSLog(@"mp3AudioPath:%@",mp3AudioPath);
+    //原文件路径
+    NSString *WAVFilePath= [self getSavePath];
+    NSLog(@"WAVFilePath:%@",WAVFilePath);
+    //进入转换
+    NSFileManager* fileManager=[NSFileManager defaultManager];
+    if([fileManager removeItemAtPath:mp3AudioPath error:nil])
+    {
+        NSLog(@"删除");
+    }
+    @try {
+        int read, write;
+        
+        FILE *pcm = fopen([WAVFilePath cStringUsingEncoding:1], "rb");  //source 被转换的音频文件位置
+        fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
+        FILE *mp3 = fopen([mp3AudioPath cStringUsingEncoding:1], "wb");  //output 输出生成的Mp3文件位置
+        
+        const int PCM_SIZE = 8192;
+        const int MP3_SIZE = 8192;
+        short int pcm_buffer[PCM_SIZE*2];
+        unsigned char mp3_buffer[MP3_SIZE];
+        
+        lame_t lame = lame_init();
+        lame_set_in_samplerate(lame, 22050.0);
+        lame_set_VBR(lame, vbr_default);
+        lame_init_params(lame);
+        
+        do {
+            read = fread(pcm_buffer, 2*sizeof(short int), PCM_SIZE, pcm);
+            if (read == 0)
+                write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
+            else
+                write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
+            
+            fwrite(mp3_buffer, write, 1, mp3);
+            
+        } while (read != 0);
+        
+        lame_close(lame);
+        fclose(mp3);
+        fclose(pcm);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",[exception description]);
+    }
+    @finally {
+        NSError *playerError;
+        AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSURL alloc] initFileURLWithPath:mp3AudioPath]error:&playerError];
+        _audioPlayer = audioPlayer;
+        _audioPlayer.volume = 1.0f;
+        if (_audioPlayer == nil)
+        {
+            NSLog(@"ERror creating player: %@", [playerError description]);
+        }
+        [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategorySoloAmbient error: nil];
+        _audioPlayer.delegate = self;
+        
+    }
+    if (mp3AudioPath != nil) {
+        NSLog(@"转换mp3格式");
+         [self playing];
+    }
+}
+- (void)playing
+{
+    if([_audioPlayer isPlaying])
+    {
+        [_audioPlayer pause];
+        NSLog(@"播放。。");
+    }
+    
+    else
+    {
+        [_audioPlayer play];
+        NSLog(@"正在播放录音。。");
+    }
+    
 }
 
 @end

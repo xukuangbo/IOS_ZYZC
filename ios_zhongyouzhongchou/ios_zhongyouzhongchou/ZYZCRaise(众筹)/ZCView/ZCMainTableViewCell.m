@@ -113,7 +113,7 @@
     _placeBgImg.width=placeStrWidth+40;
     
     //计算名字的文字长度
-    NSString *name=@"杨小小小";
+    NSString *name=@"杨大大";
     CGFloat nameStrWidth=[ZYZCTool calculateStrLengthByText:name andFont:_nameLab.font andMaxWidth:KSCREEN_W].width;
     CGFloat width=KSCREEN_W-250;
     CGFloat edgToName=nameStrWidth;
@@ -145,7 +145,7 @@
     _sceneryImg.hidden=YES;
     _placeBgImg.hidden=YES;
     //计算名字的文字长度
-    NSString *name=@"杨小小小";
+    NSString *name=@"杨小小";
     CGFloat nameStrWidth=[ZYZCTool calculateStrLengthByText:name andFont:_nameLab.font andMaxWidth:KSCREEN_W].width;
     CGFloat width=KSCREEN_W-160;
     CGFloat edgToName=nameStrWidth;
