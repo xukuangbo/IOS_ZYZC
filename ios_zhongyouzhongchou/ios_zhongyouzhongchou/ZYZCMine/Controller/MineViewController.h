@@ -6,8 +6,12 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-@interface MineViewController : UIViewController
+//#import <UIKit/UIKit.h>
+//
+//@interface MineViewController : UIViewController
+//
+//@end
+#import "ZYZCBaseViewController.h"
+@interface MineViewController : ZYZCBaseViewController
 
 @end
