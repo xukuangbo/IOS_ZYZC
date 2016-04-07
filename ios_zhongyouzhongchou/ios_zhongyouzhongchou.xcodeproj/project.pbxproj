@@ -81,6 +81,7 @@
 		2CA113581CA8C5D2003B9530 /* TravelFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA113541CA8C5D2003B9530 /* TravelFirstCell.m */; };
 		2CA113591CA8C5D2003B9530 /* TravelSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA113561CA8C5D2003B9530 /* TravelSecondCell.m */; };
 		2CA1135D1CA8C5F2003B9530 /* FZCContentEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA1135B1CA8C5F2003B9530 /* FZCContentEntryView.m */; };
+		2CA7DDB81CB50900001E32BE /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CA7DDB71CB50900001E32BE /* libmp3lame.a */; };
 		2CAE2F0D1CB4BD93009D0991 /* RecordSoundObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE2F0C1CB4BD93009D0991 /* RecordSoundObj.m */; };
 		2CC45F0C1C9FD27900FD63F3 /* MoreFZCChooseSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CC45F0B1C9FD27900FD63F3 /* MoreFZCChooseSceneController.m */; };
 		2CC45F0F1C9FE91600FD63F3 /* GoalScheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CC45F0E1C9FE91600FD63F3 /* GoalScheduleView.m */; };
@@ -259,6 +260,8 @@
 		2CA113561CA8C5D2003B9530 /* TravelSecondCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelSecondCell.m; sourceTree = "<group>"; };
 		2CA1135A1CA8C5F2003B9530 /* FZCContentEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZCContentEntryView.h; sourceTree = "<group>"; };
 		2CA1135B1CA8C5F2003B9530 /* FZCContentEntryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZCContentEntryView.m; sourceTree = "<group>"; };
+		2CA7DDB61CB50900001E32BE /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
+		2CA7DDB71CB50900001E32BE /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		2CAE2F0B1CB4BD93009D0991 /* RecordSoundObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordSoundObj.h; sourceTree = "<group>"; };
 		2CAE2F0C1CB4BD93009D0991 /* RecordSoundObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordSoundObj.m; sourceTree = "<group>"; };
 		2CC45F0A1C9FD27900FD63F3 /* MoreFZCChooseSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCChooseSceneController.h; sourceTree = "<group>"; };
@@ -288,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				773C9B15B394065770448BFF /* libPods.a in Frameworks */,
+				2CA7DDB81CB50900001E32BE /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,6 +635,7 @@
 			children = (
 				2C901DBE1C89788C004B844B /* AppDelegate.h */,
 				2C901DBF1C89788C004B844B /* AppDelegate.m */,
+				2CA7DDB51CB50900001E32BE /* lame */,
 				2C901DEF1C8981CC004B844B /* ZYZCBase */,
 				2C901DF01C8981CC004B844B /* ZYZCGlobal */,
 				2C01A60E1C8AB7ED005B74DF /* ZYZCRaise(众筹) */,
@@ -725,6 +730,15 @@
 				2CA113561CA8C5D2003B9530 /* TravelSecondCell.m */,
 			);
 			path = TravelCell;
+			sourceTree = "<group>";
+		};
+		2CA7DDB51CB50900001E32BE /* lame */ = {
+			isa = PBXGroup;
+			children = (
+				2CA7DDB61CB50900001E32BE /* lame.h */,
+				2CA7DDB71CB50900001E32BE /* libmp3lame.a */,
+			);
+			path = lame;
 			sourceTree = "<group>";
 		};
 		2CD8969C1C901B7F00241391 /* ZYZCCenterContent */ = {
@@ -1157,6 +1171,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/ios_zhongyouzhongchou/ZYZCPch.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1172,6 +1187,10 @@
 				INFOPLIST_FILE = ios_zhongyouzhongchou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ios_zhongyouzhongchou/lame",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ll.createCode.ios-zhonyouzhongchou.zyzc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1186,6 +1205,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/ios_zhongyouzhongchou/ZYZCPch.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1201,6 +1221,10 @@
 				INFOPLIST_FILE = ios_zhongyouzhongchou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ios_zhongyouzhongchou/lame",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ll.createCode.ios-zhonyouzhongchou.zyzc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -9,10 +9,10 @@
 #import "SoundView.h"
 #import "RecordSoundObj.h"
 @interface SoundView ()
-@property (nonatomic, strong)NSTimer *timer;
-@property (nonatomic, assign)BOOL    isRecord;
-@property (nonatomic, assign)NSInteger secRecord;
-@property (nonatomic, assign)NSInteger millisecRecord;
+@property (nonatomic, strong)NSTimer        *timer;
+@property (nonatomic, assign)BOOL           isRecord;
+@property (nonatomic, assign)NSInteger      secRecord;
+@property (nonatomic, assign)NSInteger      millisecRecord;
 @property (nonatomic, strong)RecordSoundObj *soundObj;
 @end
 
@@ -54,17 +54,18 @@
     [_soundBtn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_p"] forState:UIControlStateNormal];
     [_soundBtn addTarget:self action:@selector(recordSound) forControlEvents:UIControlEventTouchDown];
     [_soundBtn addTarget:self action:@selector(stopRecordSound) forControlEvents:UIControlEventTouchUpInside];
+    [_soundBtn addTarget:self action:@selector(stopRecordSound) forControlEvents:UIControlEventTouchUpOutside];
     [self addSubview:_soundBtn];
     
     //语音播放按钮
     _playerBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _playerBtn.frame=CGRectMake((self.width-90)/2, _secLab.bottom+10, 90, 90);
-    [_playerBtn setBackgroundImage:[UIImage imageNamed:@"btn_pzd"] forState:UIControlStateNormal];
+    [_playerBtn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
     [_playerBtn addTarget:self action:@selector(playerSound) forControlEvents:UIControlEventTouchUpInside];
     _playerBtn.hidden=YES;
     [self addSubview:_playerBtn];
     
-    //删除按钮
+    //语音删除按钮
     UIButton *deleteBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     deleteBtn.frame=CGRectMake((self.width-40)/2, _soundBtn.bottom+10, 40, 20) ;
     [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
@@ -77,9 +78,6 @@
     
     //圆环进度条
     [self createDrawCircle];
-    
-    //创建语音录制对象
-    _soundObj=[[RecordSoundObj alloc]init];
     
 }
 
@@ -101,6 +99,11 @@
 #pragma mark --- 语音录制
 -(void)recordSound
 {
+    if (!_soundObj) {
+        //创建语音录制对象
+        _soundObj=[[RecordSoundObj alloc]init];
+        _soundObj.soundFileName=_soundFileName;
+    }
     
     if (!_timer) {
         _timer=[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(changeProgressValue) userInfo:nil repeats:YES];

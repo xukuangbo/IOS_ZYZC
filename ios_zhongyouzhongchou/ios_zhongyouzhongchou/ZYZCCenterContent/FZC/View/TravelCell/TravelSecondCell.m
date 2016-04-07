@@ -87,6 +87,12 @@
     }
 }
 
+-(void)setSoundFileName:(NSString *)soundFileName
+{
+    _soundFileName=soundFileName;
+    _contentEntryView.soundFileName=soundFileName;
+}
+
 #pragma mark --- 存储数据到模型中
 -(void)saveTravelOneDayDetailData
 {

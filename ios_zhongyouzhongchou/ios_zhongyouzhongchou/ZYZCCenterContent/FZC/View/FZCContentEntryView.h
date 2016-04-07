@@ -26,4 +26,5 @@ typedef NS_ENUM(NSInteger, ContentViewType)
 @interface FZCContentEntryView : UIView
 @property (nonatomic, strong) UIButton *preClickBtn;
 @property (nonatomic, strong) UIView   *selectLineView;
+@property (nonatomic, copy  ) NSString *soundFileName;
 @end

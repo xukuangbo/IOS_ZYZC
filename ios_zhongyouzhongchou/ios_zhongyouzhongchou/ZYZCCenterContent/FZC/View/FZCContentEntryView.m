@@ -103,4 +103,13 @@
             break;
     }
 }
+
+#pragma mark --- 定义语音文件名
+-(void)setSoundFileName:(NSString *)soundFileName
+{
+    _soundFileName=soundFileName;
+    SoundView *soundView=(SoundView *)[self viewWithTag:SoundViewType];
+    soundView.soundFileName=soundFileName;
+}
+
 @end

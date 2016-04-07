@@ -91,9 +91,10 @@
         };
         return cell;
     }else{//这里是第二个cell
-        MoreFZCRaiseMoneySecondCell *cell = [[MoreFZCRaiseMoneySecondCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MoreFZCRaiseMoneySecondCell"];
-        
-        
+        NSString *cellId=@"MoreFZCRaiseMoneySecondCell";
+        MoreFZCRaiseMoneySecondCell *cell = [[MoreFZCRaiseMoneySecondCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell.soundFileName=cellId;
+
         return cell;
         
     }

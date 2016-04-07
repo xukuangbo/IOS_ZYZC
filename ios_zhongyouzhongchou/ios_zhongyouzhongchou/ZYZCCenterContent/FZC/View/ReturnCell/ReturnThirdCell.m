@@ -186,6 +186,11 @@
     return YES;
 }
 
+-(void)setSoundFileName:(NSString *)soundFileName
+{
+    _soundFileName=soundFileName;
+    _entryView.soundFileName=soundFileName;
+}
 
 
 
