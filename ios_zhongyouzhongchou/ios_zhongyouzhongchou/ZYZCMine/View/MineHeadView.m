@@ -20,6 +20,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
+        self.userInteractionEnabled = YES;
         //0头像遮盖
         UIView *shadowIconView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 76, 76)];
         shadowIconView.centerX = self.centerX;
@@ -56,12 +58,14 @@
         sexView.origin = CGPointMake(nameLabel.right, nameLabel.top);
         sexView.centerY = nameLabel.centerY;
         [self addSubview:sexView];
+        self.sexView = sexView;
         
         //4.加V用户
         UIImageView *vipView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ico_renzheng"]];
         vipView.origin = CGPointMake(sexView.right, nameLabel.top);
         vipView.centerY = nameLabel.centerY;
         [self addSubview:vipView];
+        self.vipView = vipView;
         
         //5.职业
         UILabel *professionLabel = [[UILabel alloc] init];
@@ -74,6 +78,7 @@
         professionLabel.textColor = [UIColor whiteColor];
         professionLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:professionLabel];
+        self.professionLabel = professionLabel;
         
         //6.描述
         UILabel *descLabel = [[UILabel alloc] init];
@@ -86,41 +91,59 @@
         descLabel.textColor = [UIColor whiteColor];
         descLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:descLabel];
+        self.descLabel = descLabel;
         
-        
+        //7.两个切换按钮的容器
         UIView *centerAndFootMapView = [[UIView alloc] init];
         centerAndFootMapView.left = 10;
         centerAndFootMapView.width = self.width - centerAndFootMapView.left * 2;
         centerAndFootMapView.top = descLabel.bottom + mineMargin;
-        centerAndFootMapView.height = 20;
-        centerAndFootMapView.backgroundColor = [UIColor redColor];
+        centerAndFootMapView.height = self.height - descLabel.bottom - mineMargin;
+        centerAndFootMapView.layer.cornerRadius = 5;
+        centerAndFootMapView.layer.masksToBounds = YES;
+        
+//        centerAndFootMapView.backgroundColor = [UIColor colorWithRed:161 / 255.0 green:152 / 255.0 blue:111 / 255.0 alpha:1.0];
         [self addSubview:centerAndFootMapView];
+
+        //8.我的中心
+        UIButton *myCenterButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        myCenterButton.size = CGSizeMake(centerAndFootMapView.width * 0.5, centerAndFootMapView.height);
+        myCenterButton.origin = CGPointMake(0, 0);
+        myCenterButton.tag = KMineHeadViewChangeType;
+        [myCenterButton setTitle:@"我的中心" forState:UIControlStateNormal];
+        [myCenterButton addTarget:self action:@selector(centerAndFootAction:) forControlEvents:UIControlEventTouchUpInside];
+        [centerAndFootMapView addSubview:myCenterButton];
+        self.myCenterButton = myCenterButton;
+        myCenterButton.backgroundColor = [UIColor whiteColor];
+        [myCenterButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         
-        
-        
-        
-        
-//        UIButton *myCenterButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        myCenterButton.size = CGSizeMake(100, 50);
-//        myCenterButton.bottom = self.height - 40;
-//        myCenterButton.backgroundColor = [UIColor blueColor];
-//        myCenterButton.left = 40;
-//        [myCenterButton setTitle:@"我的中心" forState:UIControlStateNormal];
-//        [self addSubview:myCenterButton];
-//        
-//        UIButton *myFootButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        myFootButton.size = CGSizeMake(100, 50);
-//        myFootButton.bottom = self.height - 40;
-//        myFootButton.backgroundColor = [UIColor blueColor];
-//        myFootButton.right = self.width - 40;
-//        [myFootButton setTitle:@"我的足迹" forState:UIControlStateNormal];
-//        [self addSubview:myFootButton];
-       
-        
+        //9.我的足迹
+        UIButton *myFootButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        myFootButton.size = CGSizeMake(centerAndFootMapView.width * 0.5, centerAndFootMapView.height);
+        myFootButton.origin = CGPointMake(myCenterButton.right, 0);
+        myFootButton.tag = KMineHeadViewChangeType + 1;
+        [myFootButton addTarget:self action:@selector(centerAndFootAction:) forControlEvents:UIControlEventTouchUpInside];
+        [myFootButton setTitle:@"我的足迹" forState:UIControlStateNormal];
+        [centerAndFootMapView addSubview:myFootButton];
+        self.myFootButton = myFootButton;
+        myFootButton.backgroundColor = kMineChangeButtonNormalColor;
+        [myFootButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
     return self;
 }
 
+- (void)centerAndFootAction:(UIButton *)button
+{
+    NSLog(@"button点击啦！！！！");
+    //让两个tableView的隐藏相反一下
+    self.headChangeBlock(button);
+//    if (button.tag == KMineHeadViewChangeType) {
+//        //是center
+//    }else if(button.tag == KMineHeadViewChangeType + 1)
+//    {
+//        
+//    }
+}
 /**
  *  model的赋值，数据的赋值
  */

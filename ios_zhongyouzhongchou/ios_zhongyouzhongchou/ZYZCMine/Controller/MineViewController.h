@@ -12,6 +12,12 @@
 //
 //@end
 #import "ZYZCBaseViewController.h"
-@interface MineViewController : ZYZCBaseViewController
 
+#define MineTopViewH 200
+@class MineHeadView;
+@interface MineViewController : ZYZCBaseViewController
+/**
+ *  头视图
+ */
+@property (nonatomic, weak) MineHeadView *topView;
 @end

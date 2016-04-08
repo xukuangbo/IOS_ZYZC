@@ -13,6 +13,9 @@
 		040DE0E81CA3ED9D00BF3AF6 /* ReturnSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 040DE0E71CA3ED9D00BF3AF6 /* ReturnSecondCell.m */; };
 		040DE0EB1CA3F8EB00BF3AF6 /* ReturnThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 040DE0EA1CA3F8EB00BF3AF6 /* ReturnThirdCell.m */; };
 		04119C0A1CB63FB700508168 /* MineUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04119C091CB63FB700508168 /* MineUserModel.m */; };
+		04119C101CB74E8B00508168 /* MineCenterTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04119C0F1CB74E8B00508168 /* MineCenterTableView.m */; };
+		04119C131CB74EA700508168 /* MineFootTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04119C121CB74EA700508168 /* MineFootTableView.m */; };
+		04119C191CB77D7900508168 /* MineCenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04119C181CB77D7900508168 /* MineCenterTableViewCell.m */; };
 		0426F6101CB5EDDE00FE5AFA /* MineHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0426F60F1CB5EDDE00FE5AFA /* MineHeadView.m */; };
 		045E967C1CB367D600EA34BF /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E967B1CB367D500EA34BF /* MineViewController.m */; };
 		04CDBEC31CA22B47008AFF41 /* MoreFZCDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CDBEBA1CA22B47008AFF41 /* MoreFZCDataManager.m */; };
@@ -123,6 +126,12 @@
 		040DE0EA1CA3F8EB00BF3AF6 /* ReturnThirdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnThirdCell.m; sourceTree = "<group>"; };
 		04119C081CB63FB700508168 /* MineUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineUserModel.h; sourceTree = "<group>"; };
 		04119C091CB63FB700508168 /* MineUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineUserModel.m; sourceTree = "<group>"; };
+		04119C0E1CB74E8B00508168 /* MineCenterTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineCenterTableView.h; sourceTree = "<group>"; };
+		04119C0F1CB74E8B00508168 /* MineCenterTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineCenterTableView.m; sourceTree = "<group>"; };
+		04119C111CB74EA700508168 /* MineFootTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineFootTableView.h; sourceTree = "<group>"; };
+		04119C121CB74EA700508168 /* MineFootTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineFootTableView.m; sourceTree = "<group>"; };
+		04119C171CB77D7900508168 /* MineCenterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineCenterTableViewCell.h; sourceTree = "<group>"; };
+		04119C181CB77D7900508168 /* MineCenterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineCenterTableViewCell.m; sourceTree = "<group>"; };
 		0426F60E1CB5EDDE00FE5AFA /* MineHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineHeadView.h; sourceTree = "<group>"; };
 		0426F60F1CB5EDDE00FE5AFA /* MineHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineHeadView.m; sourceTree = "<group>"; };
 		045E967A1CB367D500EA34BF /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
@@ -345,6 +354,12 @@
 			children = (
 				0426F60E1CB5EDDE00FE5AFA /* MineHeadView.h */,
 				0426F60F1CB5EDDE00FE5AFA /* MineHeadView.m */,
+				04119C0E1CB74E8B00508168 /* MineCenterTableView.h */,
+				04119C0F1CB74E8B00508168 /* MineCenterTableView.m */,
+				04119C111CB74EA700508168 /* MineFootTableView.h */,
+				04119C121CB74EA700508168 /* MineFootTableView.m */,
+				04119C171CB77D7900508168 /* MineCenterTableViewCell.h */,
+				04119C181CB77D7900508168 /* MineCenterTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -960,6 +975,7 @@
 				2C7DCAA91C8EDDE2009133DA /* ZYZCTool.m in Sources */,
 				2C901E081C898AC3004B844B /* ZYZCHTTPTool.m in Sources */,
 				2C897DA01C98215800CDEC7D /* NSDate+RMCalendarLogic.m in Sources */,
+				04119C131CB74EA700508168 /* MineFootTableView.m in Sources */,
 				2CA1135D1CA8C5F2003B9530 /* FZCContentEntryView.m in Sources */,
 				2C8260811C93FC28008C16A7 /* UIViewExt.m in Sources */,
 				2C632AE31CA0D52700B4316E /* SelectImageViewController.m in Sources */,
@@ -970,6 +986,7 @@
 				2C901DFE1C898473004B844B /* ZYZCTabBarController.m in Sources */,
 				2C901DC01C89788C004B844B /* AppDelegate.m in Sources */,
 				2C901E051C8984B4004B844B /* ZYZCBaseViewController.m in Sources */,
+				04119C191CB77D7900508168 /* MineCenterTableViewCell.m in Sources */,
 				2CDA02ED1CB3BADA00DFD634 /* MovieView.m in Sources */,
 				2C645FF51C91795700CA463F /* UINavigationBar+Background.m in Sources */,
 				2C8260801C93FC28008C16A7 /* UIView+ViewController.m in Sources */,
@@ -1014,6 +1031,7 @@
 				2CDA02F01CB3C16A00DFD634 /* DrawCircleView.m in Sources */,
 				2C3EA8521C9BA64C006C5E7A /* MoreFZCToolBar.m in Sources */,
 				045E967C1CB367D600EA34BF /* MineViewController.m in Sources */,
+				04119C101CB74E8B00508168 /* MineCenterTableView.m in Sources */,
 				0426F6101CB5EDDE00FE5AFA /* MineHeadView.m in Sources */,
 				2C3EA8501C9BA64C006C5E7A /* MoreFZCRaiseMoneyTableView.m in Sources */,
 				04CDBEC61CA22B47008AFF41 /* RaiseMoneyFirstModel.m in Sources */,

@@ -40,6 +40,8 @@
 #define KFZC_COURSE_TYPE            60//tag取值范围60～63
 #define KFZC_CONTENTCOURSE_TYPE     70//tag取值范围70～72
 
+#define KMineHeadViewChangeType 100//tag取值范围100～101
+
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]
 

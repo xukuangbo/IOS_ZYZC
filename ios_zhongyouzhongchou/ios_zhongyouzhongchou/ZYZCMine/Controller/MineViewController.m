@@ -8,20 +8,23 @@
 
 #import "MineViewController.h"
 #import "MineHeadView.h"
+#import "MineCenterTableView.h"
+#import "MineFootTableView.h"
 
-const CGFloat MineTopViewH = 200;
+//const CGFloat MineTopViewH = 200;
 @interface MineViewController ()<UITableViewDelegate,UITableViewDataSource>
-/**
- *  头视图
- */
-@property (nonatomic, weak) MineHeadView *topView;
-@property (nonatomic, weak) UITableView *tableView;
+
+@property (nonatomic, weak) MineCenterTableView *centerTableView;
+@property (nonatomic, weak) MineFootTableView *footTableView;
 @end
 
 @implementation MineViewController
 #pragma mark - 系统方法
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setBackItem];
     
     /**
@@ -30,7 +33,7 @@ const CGFloat MineTopViewH = 200;
     [self setUpNavi];
     
     /**
-     *  创建tableView
+     *  创建2个tableView
      */
     [self createTableView];
     
@@ -64,15 +67,35 @@ const CGFloat MineTopViewH = 200;
 - (void)createHeadView
 {
     CGFloat topViewX = 0;
-    CGFloat topViewY = -MineTopViewH * KCOFFICIEMNT;
+//    CGFloat topViewY = -MineTopViewH * KCOFFICIEMNT;
+    CGFloat topViewY = 0;
     CGFloat topViewW = KSCREEN_W;
     CGFloat topViewH = MineTopViewH * KCOFFICIEMNT;
     MineHeadView *topView = [[MineHeadView alloc] initWithFrame:CGRectMake(topViewX,topViewY, topViewW, topViewH)];
     
     topView.image = [UIImage imageNamed:@"abc"];
     topView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.tableView insertSubview:topView atIndex:0];
-//    [self.view addSubview:topView];
+    __weak typeof(&*self) weakSelf = self;
+    topView.headChangeBlock = ^(UIButton *button){
+        if (button.tag == KMineHeadViewChangeType) {//是我的中心
+            weakSelf.topView.myCenterButton.backgroundColor = [UIColor whiteColor];
+            [weakSelf.topView.myCenterButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            weakSelf.topView.myFootButton.backgroundColor = kMineChangeButtonNormalColor;
+            [weakSelf.topView.myFootButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            //这里开始让tableview显示跟隐藏
+            weakSelf.centerTableView.hidden = NO;
+            weakSelf.footTableView.hidden = YES;
+        }else if (button.tag == KMineHeadViewChangeType + 1){
+            //我的足迹
+            weakSelf.topView.myFootButton.backgroundColor = [UIColor whiteColor];
+            [weakSelf.topView.myFootButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            weakSelf.topView.myCenterButton.backgroundColor = kMineChangeButtonNormalColor;
+            [weakSelf.topView.myCenterButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            weakSelf.centerTableView.hidden = YES;
+            weakSelf.footTableView.hidden = NO;
+        }
+    };
+    [self.view addSubview:topView];
     self.topView = topView;
 }
 
@@ -82,32 +105,19 @@ const CGFloat MineTopViewH = 200;
 - (void)createTableView
 {
     /**
-     *  创建tableView
+     *  创建centertableView
      */
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H) style:UITableViewStylePlain];
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
+//    UITableView *centerTableView = [[UITableView alloc] initWithFrame:CGRectMake(KEDGE_DISTANCE, 0, KSCREEN_W - KEDGE_DISTANCE * 2, KSCREEN_H - KTABBAR_HEIGHT - KEDGE_DISTANCE) style:UITableViewStylePlain];
+    MineCenterTableView *centerTableView = [[MineCenterTableView alloc] initWithFrame:CGRectMake(KEDGE_DISTANCE, 0, KSCREEN_W - KEDGE_DISTANCE * 2, KSCREEN_H - KTABBAR_HEIGHT - KEDGE_DISTANCE) style:UITableViewStylePlain];
+    [self.view addSubview:centerTableView];
+    self.centerTableView = centerTableView;
     
-    self.tableView.backgroundColor = [UIColor blackColor];
-    __weak typeof(&*self) weakSelf = self;
-    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
-        NSLog(@"---------下拉刷新一次");
-        
-        [weakSelf.tableView.mj_header endRefreshing];
-    }];
-    // 设置内边距(让cell往下移动一段距离)
-    self.tableView.contentInset = UIEdgeInsetsMake(MineTopViewH * KCOFFICIEMNT, 0, 0, 0);
-    NSLog(@"%@",NSStringFromCGRect(self.tableView.bounds));
-    //
-    //  UIImageView *topView = [[UIImageView alloc] init];
-    //    topView.image = [UIImage imageNamed:@"biaoqingdi"];
-    //    topView.frame = CGRectMake(0, -MineTopViewH, 320, MineTopViewH);
-    //    topView.contentMode = UIViewContentModeScaleAspectFill;
-    //    [self.tableView insertSubview:topView atIndex:0];
-    //    self.topView = topView;
-    
+    /**
+    *  创建foottableView
+    */
+    MineFootTableView *footTableView = [[MineFootTableView alloc] initWithFrame:CGRectMake(KEDGE_DISTANCE, 0, KSCREEN_W - KEDGE_DISTANCE * 2, KSCREEN_H - KTABBAR_HEIGHT - KEDGE_DISTANCE) style:UITableViewStylePlain];
+    [self.view insertSubview:footTableView belowSubview:centerTableView];
+    self.footTableView = footTableView;
 }
 
 
@@ -122,6 +132,7 @@ const CGFloat MineTopViewH = 200;
     if (indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         cell.contentView.backgroundColor = [UIColor greenColor];
+//        cell.textLabel.text = [NSString stringWithFormat:@"第%zd个cell",indexPath.row];
         return cell;
     }
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
@@ -131,26 +142,32 @@ const CGFloat MineTopViewH = 200;
 /**
  *  暂时不做下拉放大
  */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    // 向下拽了多少距离
+    CGFloat down = -(MineTopViewH * KCOFFICIEMNT) - scrollView.contentOffset.y;
+    if (down < 0){
+        self.topView.top = down;
+        return;
+    }else{
+        self.topView.top = 0;
+        CGRect frame = self.topView.frame;
+        // 5决定图片变大的速度,值越大,速度越快
+        frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 1;
+        self.topView.frame = frame;
+    }
+}
+
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 //{
 //    // 向下拽了多少距离
 //    CGFloat down = -(MineTopViewH * KCOFFICIEMNT * 0.7) - scrollView.contentOffset.y;
 //    if (down < 0) return;
 //    
-//    CGRect frame = self.topView.frame;
+//    CGRect frame = se lf.topView.frame;
 //    // 5决定图片变大的速度,值越大,速度越快
 //    frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 3;
 //    self.topView.frame = frame;
 //}
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    // 向下拽了多少距离
-//    CGFloat down = -(MineTopViewH * KCOFFICIEMNT * 0.7) - scrollView.contentOffset.y;
-//    if (down > 0) {
-//        return;
-//    }
-//    
-//    self.topView.top += down;
-//}
 @end
