@@ -18,6 +18,9 @@
 		04119C191CB77D7900508168 /* MineCenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04119C181CB77D7900508168 /* MineCenterTableViewCell.m */; };
 		0426F6101CB5EDDE00FE5AFA /* MineHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0426F60F1CB5EDDE00FE5AFA /* MineHeadView.m */; };
 		045E967C1CB367D600EA34BF /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E967B1CB367D500EA34BF /* MineViewController.m */; };
+		04A99AF91CBB849C00C6F5F0 /* MineMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99AF41CBB849C00C6F5F0 /* MineMessageController.m */; };
+		04A99AFA1CBB849C00C6F5F0 /* MineMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99AF71CBB849C00C6F5F0 /* MineMessageModel.m */; };
+		04A99AFD1CBB84BA00C6F5F0 /* MineMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99AFC1CBB84BA00C6F5F0 /* MineMessageCell.m */; };
 		04CDBEC31CA22B47008AFF41 /* MoreFZCDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CDBEBA1CA22B47008AFF41 /* MoreFZCDataManager.m */; };
 		04CDBEC41CA22B47008AFF41 /* MoreFZCRaiseMoneyFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CDBEBC1CA22B47008AFF41 /* MoreFZCRaiseMoneyFirstCell.m */; };
 		04CDBEC51CA22B47008AFF41 /* MoreFZCRaiseMoneySecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CDBEBE1CA22B47008AFF41 /* MoreFZCRaiseMoneySecondCell.m */; };
@@ -136,6 +139,12 @@
 		0426F60F1CB5EDDE00FE5AFA /* MineHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineHeadView.m; sourceTree = "<group>"; };
 		045E967A1CB367D500EA34BF /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
 		045E967B1CB367D500EA34BF /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
+		04A99AF31CBB849C00C6F5F0 /* MineMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineMessageController.h; sourceTree = "<group>"; };
+		04A99AF41CBB849C00C6F5F0 /* MineMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineMessageController.m; sourceTree = "<group>"; };
+		04A99AF61CBB849C00C6F5F0 /* MineMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineMessageModel.h; sourceTree = "<group>"; };
+		04A99AF71CBB849C00C6F5F0 /* MineMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineMessageModel.m; sourceTree = "<group>"; };
+		04A99AFB1CBB84BA00C6F5F0 /* MineMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineMessageCell.h; sourceTree = "<group>"; };
+		04A99AFC1CBB84BA00C6F5F0 /* MineMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineMessageCell.m; sourceTree = "<group>"; };
 		04CDBEB91CA22B47008AFF41 /* MoreFZCDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCDataManager.h; sourceTree = "<group>"; };
 		04CDBEBA1CA22B47008AFF41 /* MoreFZCDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCDataManager.m; sourceTree = "<group>"; };
 		04CDBEBB1CA22B47008AFF41 /* MoreFZCRaiseMoneyFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCRaiseMoneyFirstCell.h; sourceTree = "<group>"; };
@@ -367,6 +376,7 @@
 		045E96761CB367AF00EA34BF /* ZYZCMine */ = {
 			isa = PBXGroup;
 			children = (
+				04A99AF11CBB849C00C6F5F0 /* Message(消息) */,
 				04119C071CB63FA000508168 /* Model */,
 				0426F60D1CB5EDDE00FE5AFA /* View */,
 				045E96771CB367AF00EA34BF /* Controller */,
@@ -381,6 +391,43 @@
 				045E967B1CB367D500EA34BF /* MineViewController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		04A99AF11CBB849C00C6F5F0 /* Message(消息) */ = {
+			isa = PBXGroup;
+			children = (
+				04A99AF21CBB849C00C6F5F0 /* Controller */,
+				04A99AF51CBB849C00C6F5F0 /* Model */,
+				04A99AF81CBB849C00C6F5F0 /* View */,
+			);
+			path = "Message(消息)";
+			sourceTree = "<group>";
+		};
+		04A99AF21CBB849C00C6F5F0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				04A99AF31CBB849C00C6F5F0 /* MineMessageController.h */,
+				04A99AF41CBB849C00C6F5F0 /* MineMessageController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		04A99AF51CBB849C00C6F5F0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04A99AF61CBB849C00C6F5F0 /* MineMessageModel.h */,
+				04A99AF71CBB849C00C6F5F0 /* MineMessageModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		04A99AF81CBB849C00C6F5F0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04A99AFB1CBB84BA00C6F5F0 /* MineMessageCell.h */,
+				04A99AFC1CBB84BA00C6F5F0 /* MineMessageCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		04CDBEB81CA22B47008AFF41 /* RaiseCell */ = {
@@ -978,6 +1025,7 @@
 				04119C131CB74EA700508168 /* MineFootTableView.m in Sources */,
 				2CA1135D1CA8C5F2003B9530 /* FZCContentEntryView.m in Sources */,
 				2C8260811C93FC28008C16A7 /* UIViewExt.m in Sources */,
+				04A99AFA1CBB849C00C6F5F0 /* MineMessageModel.m in Sources */,
 				2C632AE31CA0D52700B4316E /* SelectImageViewController.m in Sources */,
 				2C4214EF1C9689680056265E /* ZYZCCenterContentView.m in Sources */,
 				2C897DA31C98215800CDEC7D /* RMCalendarLogic.m in Sources */,
@@ -1014,11 +1062,13 @@
 				2C3EA8511C9BA64C006C5E7A /* MoreFZCReturnTableView.m in Sources */,
 				2C7E5A361C9A5C0C00DDE517 /* ZCPersonInfoController.m in Sources */,
 				2C3EA8641C9BEACC006C5E7A /* GoalFirstCell.m in Sources */,
+				04A99AFD1CBB84BA00C6F5F0 /* MineMessageCell.m in Sources */,
 				2CC45F0F1C9FE91600FD63F3 /* GoalScheduleView.m in Sources */,
 				2C3EA86D1C9BF823006C5E7A /* GoalSecondCell.m in Sources */,
 				2CA113591CA8C5D2003B9530 /* TravelSecondCell.m in Sources */,
 				04CDBEC71CA22B47008AFF41 /* RaiseMoneySecondCellView.m in Sources */,
 				2CC45F0C1C9FD27900FD63F3 /* MoreFZCChooseSceneController.m in Sources */,
+				04A99AF91CBB849C00C6F5F0 /* MineMessageController.m in Sources */,
 				2C901DBD1C89788C004B844B /* main.m in Sources */,
 				2C4214DF1C966E370056265E /* ZCFilterModel.m in Sources */,
 				2C3EA84E1C9BA64C006C5E7A /* MoreFZCBaseTableView.m in Sources */,
