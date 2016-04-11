@@ -17,23 +17,26 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
-    
-    
-    
-    
-    
-    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor=[UIColor whiteColor];
     self.window.layer.cornerRadius=5;
     self.window.layer.masksToBounds=YES;
     [self.window makeKeyAndVisible];
+    //设置状态栏
+    [self setStatusBarStyle];
+    //设置根控制器
     [self getRootViewController];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    //更改appBadge
     [self changeAppBadge];
-    [MoreFZCDataManager sharedMoreFZCDataManager];
+    
     return YES;
+}
+
+#pragma mark --- 设置状态栏
+-(void)setStatusBarStyle
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:
+     UIStatusBarStyleLightContent];
 }
 
 #pragma mark --- 设置根控制器
@@ -44,6 +47,24 @@
     self.window.rootViewController=mainTab;
 }
 
+#pragma mark --- 删除临时文件
+-(void)cleanTmpFile
+{
+    NSString *tmpDir = NSTemporaryDirectory();
+    
+    NSFileManager *manager=[NSFileManager defaultManager];
+    
+    NSArray *fileArr=[manager subpathsAtPath:tmpDir];
+    
+    for (NSString *fileName in fileArr) {
+        
+        NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
+        
+        [manager removeItemAtPath:filePath error:nil];
+    }
+}
+
+#pragma mark --- 更改app的Badge
 -(void)changeAppBadge{
     UIApplication *app = [UIApplication sharedApplication];
     //IOS8以后,需要先注册权限
@@ -82,6 +103,9 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    //删除临时文件
+    [self cleanTmpFile];
+    
 }
 
 @end

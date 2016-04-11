@@ -59,7 +59,8 @@
     
     //语音播放按钮
     _playerBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    _playerBtn.frame=CGRectMake((self.width-90)/2, _secLab.bottom+10, 90, 90);
+    _playerBtn.frame=CGRectMake(0, 0, 68, 68);
+    _playerBtn.center=_soundBtn.center;
     [_playerBtn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
     [_playerBtn addTarget:self action:@selector(playerSound) forControlEvents:UIControlEventTouchUpInside];
     _playerBtn.hidden=YES;
@@ -67,14 +68,14 @@
     
     //语音删除按钮
     UIButton *deleteBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    deleteBtn.frame=CGRectMake((self.width-40)/2, _soundBtn.bottom+10, 40, 20) ;
+    deleteBtn.frame=CGRectMake((self.width-80)/2, _soundBtn.bottom+10, 80, 25) ;
     [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
     deleteBtn.titleLabel.font=[UIFont systemFontOfSize:16];
     [deleteBtn setTitleColor:[UIColor ZYZC_TextBlackColor] forState:UIControlStateNormal];
     [deleteBtn addTarget:self action:@selector(deleteSound) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:deleteBtn];
     
-    [deleteBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, deleteBtn.height-1, deleteBtn.width, 1) andColor:[UIColor ZYZC_TextBlackColor]]];
+    [deleteBtn addSubview:[UIView lineViewWithFrame:CGRectMake((deleteBtn.width-40)/2, deleteBtn.height-1, 40, 1) andColor:[UIColor ZYZC_TextBlackColor]]];
     
     //圆环进度条
     [self createDrawCircle];
@@ -151,6 +152,7 @@
     if (_circleView.progressValue>=1.f) {
         [_timer invalidate];
         _timer=nil;
+        [_soundObj stopRecordSound];
     }
     else{
         _millisecRecord+=1;

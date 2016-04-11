@@ -8,6 +8,7 @@
 
 #import "WSMBaseView.h"
 
-@interface MovieView : WSMBaseView
-
+@interface MovieView : WSMBaseView<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@property (nonatomic, strong) UIImageView *movieImg;
+@property (nonatomic, strong) NSData      *fileData;
 @end

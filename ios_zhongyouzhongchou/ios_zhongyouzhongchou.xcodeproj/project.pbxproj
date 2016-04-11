@@ -196,6 +196,8 @@
 		2C700C5B1CACCF1900A9F040 /* WordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordView.m; sourceTree = "<group>"; };
 		2C700C5D1CAD1EF900A9F040 /* WordEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordEditViewController.h; sourceTree = "<group>"; };
 		2C700C5E1CAD1EF900A9F040 /* WordEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordEditViewController.m; sourceTree = "<group>"; };
+		2C72BCC21CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		2C72BCC31CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		2C7DCAA71C8EDDE2009133DA /* ZYZCTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCTool.h; sourceTree = "<group>"; };
 		2C7DCAA81C8EDDE2009133DA /* ZYZCTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCTool.m; sourceTree = "<group>"; };
 		2C7E5A341C9A5C0C00DDE517 /* ZCPersonInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPersonInfoController.h; sourceTree = "<group>"; };
@@ -813,6 +815,7 @@
 				TargetAttributes = {
 					2C901DB71C89788C004B844B = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = DQ7SR7TT5M;
 					};
 					2C901DD01C89788C004B844B = {
 						CreatedOnToolsVersion = 7.1;
@@ -1039,6 +1042,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2C901DC51C89788C004B844B /* Base */,
+				2C72BCC21CB7A36300E733F2 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1047,6 +1051,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2C901DCA1C89788C004B844B /* Base */,
+				2C72BCC31CB7A36300E733F2 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1163,7 +1168,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/lame",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ll.createCode.ios-zhonyouzhongchou.zyzc";
+				PRODUCT_BUNDLE_IDENTIFIER = "ll.createCode.ios-zhonyouzhongchou.zyzcs";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";
@@ -1197,7 +1202,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/lame",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ll.createCode.ios-zhonyouzhongchou.zyzc";
+				PRODUCT_BUNDLE_IDENTIFIER = "ll.createCode.ios-zhonyouzhongchou.zyzcs";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";
