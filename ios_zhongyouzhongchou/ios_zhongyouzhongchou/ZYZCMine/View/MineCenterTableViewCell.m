@@ -52,6 +52,15 @@
         self.rightTin = rightTin;
         
         //红色点点
+        CGFloat pointViewWH = 4;
+        UIView *redPointView = [UIView lineViewWithFrame:CGRectMake(0, 0, pointViewWH, pointViewWH) andColor:[UIColor redColor]];
+        redPointView.top = rightTin.top;
+        redPointView.right = rightTin.left - 1;
+        redPointView.layer.cornerRadius = pointViewWH * 0.5;
+        redPointView.layer.masksToBounds = YES;
+        [self.contentView addSubview:redPointView];
+        redPointView.hidden = YES;
+        self.redPointView = redPointView;
         
         
     }

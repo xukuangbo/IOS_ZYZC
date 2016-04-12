@@ -10,6 +10,7 @@
 #import "MineViewController.h"
 #import "MineHeadView.h"
 #import "MineCenterTableViewCell.h"
+#import "MineMessageController.h"
 @interface MineCenterTableView()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSArray *titleArray;
@@ -93,6 +94,18 @@
     return nil;
 }
 
-
+/**
+ *  点击时候调用
+ */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 1) {
+        NSLog(@"消息点击了!!!!!");
+        
+//        这里弹到消息界面
+        MineMessageController *messageVC = [[MineMessageController alloc] init];
+        [[self getVC].navigationController pushViewController:messageVC animated:YES];
+    }
+}
 
 @end

@@ -57,7 +57,7 @@
  *  设置导航栏的颜色
  */
 - (void)setUpNavi{
-    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor clearColor]];
+//    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor clearColor]];
     //    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
 
@@ -169,5 +169,7 @@
 //    frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 3;
 //    self.topView.frame = frame;
 //}
+
+
 
 @end
