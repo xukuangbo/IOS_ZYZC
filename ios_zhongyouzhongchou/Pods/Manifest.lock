@@ -14,6 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
+  - AliyunOSSiOS (2.2.0)
   - FXBlurView (1.6.4)
   - Masonry (0.6.4)
   - MBProgressHUD (0.9.2)
@@ -25,6 +26,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0.4)
+  - AliyunOSSiOS (~> 2.2.0)
   - FXBlurView (~> 1.6.4)
   - Masonry (~> 0.6.4)
   - MBProgressHUD (~> 0.9.2)
@@ -34,6 +36,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  AliyunOSSiOS: da89ea3c5c591c805d82f079a2b12c78c61f81f1
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1

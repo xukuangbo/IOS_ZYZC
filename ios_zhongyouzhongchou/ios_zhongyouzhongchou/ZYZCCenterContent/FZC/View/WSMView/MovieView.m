@@ -26,7 +26,6 @@
 @property (nonatomic, strong) UIImagePickerController *mediaPickerController;
 @property (nonatomic, strong) UIImagePickerController *mediaRecordController;
 @property (nonatomic, assign) BOOL isRecordResoure;
-@property (nonatomic, strong) NSURL *movPath;
 @property (nonatomic, strong) UIImage *preMovImg;
 @property (nonatomic, assign) BOOL isBigFile;
 @end
@@ -75,13 +74,13 @@
 {
     _isRecordResoure=NO;
     _isBigFile=NO;
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     
-    __weak typeof (&*self)weakSelf=self;
+//    __weak typeof (&*self)weakSelf=self;
 #pragma mark --- 选择本地视屏
-    UIAlertAction *localMediaAction = [UIAlertAction actionWithTitle:@"从相册中选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action)
-    {
+//    UIAlertAction *localMediaAction = [UIAlertAction actionWithTitle:@"从相册中选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action)
+//    {
         //相册是否允许访问
         ALAuthorizationStatus author =[ALAssetsLibrary authorizationStatus];
         if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied)
@@ -93,21 +92,23 @@
         }
         
         //创建图像选取控制器
-        weakSelf.mediaPickerController=[[UIImagePickerController alloc]init];
+        self.mediaPickerController=[[UIImagePickerController alloc]init];
         //设置图像选取控制器的类型
-        weakSelf.mediaPickerController.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+        self.mediaPickerController.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
         //允许用户进行编辑
-        weakSelf.mediaPickerController.allowsEditing = NO;
+        self.mediaPickerController.allowsEditing = NO;
         //设置委托对象
-        weakSelf.mediaPickerController.delegate = self;
+        self.mediaPickerController.delegate = self;
         //视频上传质量
-        weakSelf.mediaPickerController.videoQuality=UIImagePickerControllerQualityTypeHigh;
+        self.mediaPickerController.videoQuality=UIImagePickerControllerQualityTypeHigh;
         //设置图像选取控制器的来源模式为相册模式
-          weakSelf.mediaPickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+          self.mediaPickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+       //视屏时长限制
+         self.mediaPickerController.videoMaximumDuration=3;
         //以模视图控制器的形式显示
-          [weakSelf.viewController presentViewController:weakSelf.mediaPickerController animated:YES completion:nil];
-    }];
-    
+          [self.viewController presentViewController:self.mediaPickerController animated:YES completion:nil];
+//    }];
+/*
 #pragma mark --- 视屏录制
     UIAlertAction *recordMdiaAction = [UIAlertAction actionWithTitle:@"视屏录制" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
     {
@@ -152,7 +153,7 @@
     [alertController addAction:recordMdiaAction];
     
     [self.viewController presentViewController:alertController animated:YES completion:nil];
-    
+    */
 }
 
 #pragma mark --- imagePickerController方法回调
@@ -163,17 +164,92 @@
         NSString* mediaType = [info objectForKey:UIImagePickerControllerMediaType];
         //判断是不是视频
         if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
-            [MBProgressHUD showHUDAddedTo:picker.view animated:YES];
+//            [MBProgressHUD showHUDAddedTo:picker.view animated:YES];
+            
             //获取视频文件的url
             NSURL *mediaURL = [info objectForKey:UIImagePickerControllerMediaURL];
-            self.movPath=mediaURL;
-             NSLog(@"mediaURL:%@",mediaURL);
-            //获取视屏第一帧
+            NSLog(@"mediaURL:%@",mediaURL);
+            
+//            //获取视屏第一帧
             _preMovImg=[self thumbnailImageForVideo:mediaURL atTime:1.0];
+            
+            //计算文件时长
+            int mediaTime=[self getMovieTimeByMovieStr:mediaURL.absoluteString];
+            NSLog(@"mediaTime:%d",mediaTime);
+            if (mediaTime>3*60) {
+                 _preMovImg=nil;
+                //选择器消失
+                __weak typeof (&*self)weakSelf=self;
+                [picker dismissViewControllerAnimated:YES completion:^{
+//                    [MBProgressHUD hideHUDForView:picker.view animated:YES];
+                    if (weakSelf.preMovImg) {
+                        weakSelf.movieImg.image=weakSelf.preMovImg;
+                    }
+                    UIAlertView *alertView= [[UIAlertView alloc]initWithTitle:@"视屏时长超过限制，请重新选择" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alertView show];
+                }];
+            }
+            else
+            {
+                //如果此处已存在文件删除已保存的文件
+                if (self.myVideoPath) {
+                    //开启线程删除
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        NSError *error03=nil;
+                        NSFileManager *manager=[NSFileManager defaultManager];
+                        BOOL isRemovePreMP4File=[manager removeItemAtURL:self.myVideoPath error:&error03];
+                        if (isRemovePreMP4File) {
+                            NSLog(@"pre_mp4文件已移出");
+                        }
+                        else
+                        {
+                            NSLog(@"pre_mp4文件移出失败");
+                        }
+                    });
+                }
+                //将文件转换成MP4格式
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    NSURL  *inputURL  = mediaURL;
+                    NSURL  *outputURL = [NSURL fileURLWithPath:[self pathForMP4File]];
+//                    __weak typeof (&*self)weakSelf=self;
+                    [self turntoMP4WithInputURL:inputURL
+                                      outputURL:outputURL
+                                   blockHandler:^(AVAssetExportSession *hander){
+                                       NSFileManager *manager=[NSFileManager defaultManager];
+                                       //另起线程移除原mov文件
+                                       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                           NSError *error=nil;
+                                           BOOL isRemoveMovFile=[manager removeItemAtURL:inputURL error:&error];
+                                           if (isRemoveMovFile) {
+                                               NSLog(@"mov文件已移除");
+                                           }
+                                           else
+                                           {
+                                               NSLog(@"mov文件未移出");
+                                           }
+                                       });
+                                       //记录文件路径
+                                       self.myVideoPath=outputURL;
+                                   }];
+                });
+                
+                //选择器消失
+                __weak typeof (&*self)weakSelf=self;
+                [picker dismissViewControllerAnimated:YES completion:^{
+//                    [MBProgressHUD hideHUDForView:picker.view animated:YES];
+                    if (weakSelf.preMovImg) {
+                        weakSelf.movieImg.image=weakSelf.preMovImg;
+                    }
+                }];
+            }
+        }
+    
+        /*
             //计算文件大小
             NSData *movData= [NSData dataWithContentsOfURL:mediaURL];
             NSUInteger  movLength=movData.length;
             NSLog(@"mov文件大小:%ud",movLength);
+            
             //如果是视屏录制另起线程保存视屏到相册中
             if (self.isRecordResoure) {
                 NSString *urlStr = [mediaURL path];
@@ -234,7 +310,7 @@
                                        //开启线程删除
                                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                            NSError *error03=nil;
-                                           BOOL isRemovePreMP4File=[manager removeItemAtURL:outputURL error:&error03];
+                                           BOOL isRemovePreMP4File=[manager removeItemAtURL:weakSelf.myVideoPath error:&error03];
                                            if (isRemovePreMP4File) {
                                                NSLog(@"pre_mp4文件已移出");
                                            }
@@ -263,8 +339,8 @@
                                    }
                                }];
                             }];
-
-        }
+            */
+            
 }
 
 #pragma mark --- alertView方法回调
@@ -281,6 +357,7 @@
         });
     }
 }
+
 #pragma mark 视频保存完毕的回调
 - (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInf{
     if (error) {
@@ -300,7 +377,13 @@
  */
 - (UIImage*) thumbnailImageForVideo:(NSURL *)videoURL atTime:(NSTimeInterval)time {
     
-
+    MPMoviePlayerController *mp = [[MPMoviePlayerController alloc]
+                                   initWithContentURL:videoURL];
+    UIImage *images = [mp thumbnailImageAtTime:0.0
+                                    timeOption:MPMovieTimeOptionNearestKeyFrame];
+    return images;
+    
+    /*
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil] ;
     NSParameterAssert(asset);
     AVAssetImageGenerator *assetImageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset] ;
@@ -325,8 +408,25 @@
     UIImage *thumbnailImage = thumbnailImageRef ? [[UIImage alloc] initWithCGImage:thumbnailImageRef] : nil;
     
     return thumbnailImage;
+     */
 }
 
+
+/**
+ *  获取视屏时长
+ */
+-(int )getMovieTimeByMovieStr:(NSString *)movieStr
+{
+    NSURL    *movieURL = [NSURL URLWithString:movieStr];
+    NSDictionary *opts = [NSDictionary dictionaryWithObject:
+                          [NSNumber numberWithBool:NO]
+                                                     forKey:
+                          AVURLAssetPreferPreciseDurationAndTimingKey];
+    AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:movieURL options:opts];  // 初始化视频媒体文件
+    int second = 0;
+    second = (int)urlAsset.duration.value / urlAsset.duration.timescale; // 获取视频总时长,单位秒
+    return second;
+}
 
 /**
  *  视屏压缩（MP4格式转换）
@@ -395,7 +495,6 @@
              }
              
          }];
-        
     }
 }
 
