@@ -903,7 +903,7 @@
 				TargetAttributes = {
 					2C901DB71C89788C004B844B = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = DQ7SR7TT5M;
+						DevelopmentTeam = 29SK9NNETD;
 					};
 					2C901DD01C89788C004B844B = {
 						CreatedOnToolsVersion = 7.1;
@@ -1264,7 +1264,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/lame",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ll.createCode.ios-zhonyouzhongchou.zyzcs";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.www.zhongyouzhongchou110;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";
@@ -1298,7 +1298,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/lame",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ll.createCode.ios-zhonyouzhongchou.zyzcs";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.www.zhongyouzhongchou110;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";
