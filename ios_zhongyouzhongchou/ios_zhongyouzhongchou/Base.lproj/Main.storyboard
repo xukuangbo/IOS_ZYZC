@@ -158,10 +158,10 @@
             </objects>
             <point key="canvasLocation" x="-873" y="-96.75"/>
         </scene>
-        <!--Base View Controller-->
+        <!--Tactic Main View Controller-->
         <scene sceneID="Uzg-kP-PnY">
             <objects>
-                <viewController id="SO0-5J-cVZ" customClass="ZYZCBaseViewController" sceneMemberID="viewController">
+                <viewController id="SO0-5J-cVZ" customClass="TacticMainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9G7-Yt-2Yf"/>
                         <viewControllerLayoutGuide type="bottom" id="Ljj-on-ell"/>

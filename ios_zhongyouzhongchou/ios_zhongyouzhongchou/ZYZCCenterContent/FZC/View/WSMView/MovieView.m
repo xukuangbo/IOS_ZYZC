@@ -6,7 +6,7 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 #define TEXT_01 @"点击上传视屏文件"
-#define TEXT_02 @"提示:视屏不能大于20M"
+#define TEXT_02 @"提示:视屏不能长于3分钟"
 #import "MovieView.h"
 #import "MBProgressHUD.h"
 

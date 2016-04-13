@@ -131,6 +131,8 @@
 #pragma mark --- 删除语音
 -(void)deleteMySound
 {
+    [_audioPlayer stop];
+    
     NSString *urlStr=[self getSavePath];
     NSError *error=nil;
     if ([[NSFileManager defaultManager] fileExistsAtPath:urlStr]) {

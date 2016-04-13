@@ -14,12 +14,13 @@
 +(void)getHttpDataByURL:(NSString *)url withSuccessGetBlock:(SuccessGetBlock)successGet  andFailBlock:(FailBlock)fail
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
     [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress)
     {
     }
     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
-        successGet(responseObject,NO);
+        successGet(responseObject,YES);
     }
     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
@@ -33,11 +34,11 @@
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:parameters];
     if (needLogin)
     {
-        [newParameters addEntriesFromDictionary:[self loginPortNeedEncrypt]];
+//        [newParameters addEntriesFromDictionary:[self loginPortNeedEncrypt]];
     }
     else
     {
-        [newParameters addEntriesFromDictionary:[self noneLoginPortNeedEncrypt]];
+//        [newParameters addEntriesFromDictionary:[self noneLoginPortNeedEncrypt]];
     }
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
