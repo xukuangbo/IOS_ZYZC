@@ -43,4 +43,22 @@
     return locationString;
 }
 
+#pragma  mark --- 保存用户id到NSUserDefaults
++(void)saveUserIdById:(NSString *)userId
+{
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    if (![user objectForKey:USER_ID]) {
+        [user setObject:userId forKey:USER_ID];
+        [user synchronize];
+    }
+}
+
+#pragma mark --- 获取用户Id
++(NSString *)getUserId
+{
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *userId=[user objectForKey:USER_ID];
+    return userId;
+}
+
 @end

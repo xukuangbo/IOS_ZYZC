@@ -27,4 +27,16 @@
  *
  */
 +(NSString *)turnDateToCustomDate:(NSDate *)date;
+
+/**
+ *  保存用户id
+ */
++(void)saveUserIdById:(NSString *)userId;
+
+/**
+ *  获取用户id
+ *
+ */
++(NSString *)getUserId;
+
 @end
