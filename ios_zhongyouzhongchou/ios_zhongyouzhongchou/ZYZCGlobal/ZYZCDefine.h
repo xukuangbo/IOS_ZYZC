@@ -33,12 +33,14 @@
 //设置圆角弧度
 #define KCORNERRADIUS  5
 
+//tag值使用
 #define KZYZC_CENTERCONTENT_BTN_TAG 20//tag取值范围20～25
 #define KFZC_PERSON_BTN_TAG         30//tag取值范围30～33
 #define KFZC_SAVE_TYPE              40//tag取值范围40～42
 #define KFZC_MOREFZCTABLEVIEW_TYPE  50//tag取值范围50～53
 #define KFZC_COURSE_TYPE            60//tag取值范围60～63
 #define KFZC_CONTENTCOURSE_TYPE     70//tag取值范围70～72
+#define KFZC_MOVIERECORDSAVE_TAG    80
 
 #define KMineHeadViewChangeType 100//tag取值范围100～101
 
