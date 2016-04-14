@@ -29,16 +29,14 @@
     [self getRootViewController];
     //更改appBadge
     [self changeAppBadge];
-
-//    [self getFileToTmp];
+    
+    [self getFileToTmp];
     
     return YES;
 }
 -(void)getFileToTmp
 {
-    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-    
-    [ossManager downloadObjectAsync];
+//    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
     
 }
 
