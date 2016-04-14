@@ -15,13 +15,18 @@ NSString * const AccessKey = @"ZEoTY0iktlhynuSO";
 NSString * const SecretKey = @"GQkbvA5jPY3gCFKjXQg3Pvw6DZQulM";
 NSString * const endPoint  = @"http://oss-cn-hangzhou.aliyuncs.com";
 NSString * const multipartUploadKey = @"multipartUploadObject";
+NSString * const _bucketName = @"zyzc-bucket01";
 
 static ZYZCOSSManager *ossManager;
 
 OSSClient * client;
 
+
+
 @implementation ZYZCOSSManager
-+(instancetype )deafultOSSManager
+
+
++(instancetype )defaultOSSManager
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken,^{
@@ -59,7 +64,7 @@ OSSClient * client;
 #pragma mark --- 创建存储空间
 - (void)createBucket {
     OSSCreateBucketRequest * create = [OSSCreateBucketRequest new];
-    create.bucketName = [self getBucketName];
+    create.bucketName = _bucketName;
     create.xOssACL = @"public-read";
     create.location = @"oss-cn-hangzhou";
     
@@ -78,7 +83,7 @@ OSSClient * client;
 #pragma mark --- 删除存储空间
 - (void)deleteBucket {
     OSSDeleteBucketRequest * delete = [OSSDeleteBucketRequest new];
-    delete.bucketName = [self getBucketName];
+    delete.bucketName = _bucketName;
     
     OSSTask * deleteTask = [client deleteBucket:delete];
     
@@ -95,7 +100,7 @@ OSSClient * client;
 #pragma mark --- 获取存储空间中的所有对象
 - (void)listObjectsInBucket {
     OSSGetBucketRequest * getBucket = [OSSGetBucketRequest new];
-    getBucket.bucketName = [self getBucketName];
+    getBucket.bucketName = _bucketName;
     getBucket.delimiter = @"";
     getBucket.prefix = @"";
 
@@ -118,13 +123,13 @@ OSSClient * client;
 }
 
 #pragma mark --- 异步上传对象
-- (void)uploadObjectAsyncBydocDir:(NSString *)docDir {
+- (void)uploadObjectAsyncBydocDir:(NSString *)docDir andFileName:(NSString *)fileName{
     OSSPutObjectRequest * put = [OSSPutObjectRequest new];
     
     // required fields
-    put.bucketName = [self getBucketName];
-    put.objectKey = @"file1m";
-    put.uploadingFileURL = [NSURL fileURLWithPath:[docDir stringByAppendingPathComponent:@"file1m"]];
+    put.bucketName = _bucketName;
+    put.objectKey  = fileName;
+    put.uploadingFileURL = [NSURL fileURLWithPath:docDir];
     
     // optional fields
     put.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
@@ -148,40 +153,47 @@ OSSClient * client;
     }];
 }
 
-
--(void)putObject
-{
-    OSSPutObjectRequest * put = [OSSPutObjectRequest new];
-    // 必填字段
-    put.bucketName = @"<bucketName>";
-    put.objectKey  = @"<objectKey>";
+// 异步下载
+- (void)downloadObjectAsync {
+    OSSGetObjectRequest * request = [OSSGetObjectRequest new];
+    // required
+    request.bucketName = _bucketName;
+    request.objectKey = @"file1";
     
-    put.uploadingFileURL = [NSURL fileURLWithPath:@"<filepath>"];
-    // put.uploadingData = <NSData *>; // 直接上传NSData
-    
-    // 可选字段，可不设置
-    put.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
-        // 当前上传段长度、当前已经上传总长度、一共需要上传的总长度
-        NSLog(@"%lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+    //optional
+    request.downloadProgress = ^(int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+        NSLog(@"%lld, %lld, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     };
-
+    
+    NSString *tmpDir = NSTemporaryDirectory();
+    NSURL *dataUrl=[NSURL fileURLWithPath:[tmpDir stringByAppendingPathComponent:@"downloadfile.caf"]];
+     request.downloadToFileURL = dataUrl;
+    NSLog(@"dataUrl:%@",dataUrl);
+    
+    OSSTask * getTask = [client getObject:request];
+    
+    [getTask continueWithBlock:^id(OSSTask *task) {
+        if (!task.error) {
+            NSLog(@"download object success!");
+            OSSGetObjectResult * getResult = task.result;
+            NSLog(@"download dota length: %lu", [getResult.downloadedData length]);
+            NSData *data=[NSData dataWithContentsOfURL:dataUrl];
+            NSLog(@"data.length:%d",data.length);
+            
+        } else {
+            NSLog(@"download object failed, error: %@" ,task.error);
+        }
+        return nil;
+    }];
 }
 
-#pragma mark --- 获取存储空间名(ZYZC_userId)
--(NSString *)getBucketName
-{
-    NSString *bucketName=[NSString stringWithFormat:@"ZYZC_%@",[ZYZCTool getUserId]];
-    return bucketName;
-}
-
-#pragma mark --- 给上传文件命名（用户id＋时间轴，保证文件名的唯一性）
--(NSString *)getPutFileName
+#pragma mark --- 给上传文件命名（时间轴+用户名＋文件类型（img，voice，movie）保证文件名的唯一性）
+-(NSString *)getPutFileNameByType:(NSString *)type
 {
     NSString *userId=[ZYZCTool getUserId];
     NSString *timestamp=[self getLocalTime];
-    NSString *fileName=[NSString stringWithFormat:@"%@%@",userId,timestamp];
+    NSString *fileName=[NSString stringWithFormat:@"%@%@",timestamp,userId];
     return fileName;
-    
 }
 
 #pragma mark --- 获取本地时间

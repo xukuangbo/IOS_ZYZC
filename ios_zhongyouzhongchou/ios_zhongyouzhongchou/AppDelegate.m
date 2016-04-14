@@ -8,6 +8,7 @@
 #define IOS8 [[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0
 #import "AppDelegate.h"
 #import "ZYZCTabBarController.h"
+#import "ZYZCOSSManager.h"
 @interface AppDelegate ()
 
 @end
@@ -28,8 +29,17 @@
     [self getRootViewController];
     //更改appBadge
     [self changeAppBadge];
+
+    [self getFileToTmp];
     
     return YES;
+}
+-(void)getFileToTmp
+{
+    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+    
+    [ossManager downloadObjectAsync];
+    
 }
 
 #pragma mark --- 设置状态栏

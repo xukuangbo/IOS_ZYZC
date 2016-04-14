@@ -5,7 +5,7 @@
 //  Created by liuliang on 16/4/6.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-
+#import "ZYZCOSSManager.h"
 #import "RecordSoundObj.h"
 
 @implementation RecordSoundObj
@@ -100,6 +100,9 @@
 -(void)stopRecordSound
 {
     [self.audioRecorder stop];
+    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+    [ossManager uploadObjectAsyncBydocDir:[self getSavePath]];
+    
 }
 
 #pragma mark --- 语音播放

@@ -208,11 +208,11 @@
                     });
                 }
                 //将文件转换成MP4格式
+                 __weak typeof (&*self)weakSelf=self;
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     NSURL  *inputURL  = mediaURL;
                     NSURL  *outputURL = [NSURL fileURLWithPath:[self pathForMP4File]];
-//                    __weak typeof (&*self)weakSelf=self;
-                    [self turntoMP4WithInputURL:inputURL
+                    [weakSelf turntoMP4WithInputURL:inputURL
                                       outputURL:outputURL
                                    blockHandler:^(AVAssetExportSession *hander){
                                        NSFileManager *manager=[NSFileManager defaultManager];
@@ -229,12 +229,11 @@
                                            }
                                        });
                                        //记录文件路径
-                                       self.myVideoPath=outputURL;
+                                       weakSelf.myVideoPath=outputURL;
                                    }];
                 });
                 
                 //选择器消失
-                __weak typeof (&*self)weakSelf=self;
                 [picker dismissViewControllerAnimated:YES completion:^{
 //                    [MBProgressHUD hideHUDForView:picker.view animated:YES];
                     if (weakSelf.preMovImg) {
