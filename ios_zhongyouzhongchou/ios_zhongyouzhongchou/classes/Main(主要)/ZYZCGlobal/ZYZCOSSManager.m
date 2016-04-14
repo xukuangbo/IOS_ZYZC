@@ -162,7 +162,7 @@ OSSClient * client;
     return fileName;
 }
 
-// 异步下载
+#pragma mark --- 异步下载数据
 - (void)downloadObjectAsyncByFileName:(NSString *)fileName {
     OSSGetObjectRequest * request = [OSSGetObjectRequest new];
     // required
@@ -195,6 +195,25 @@ OSSClient * client;
         return nil;
     }];
 }
+
+#pragma mark --- 删除文件
+- (void)deleteObjectByFileName:(NSString *)fileName {
+    OSSDeleteObjectRequest * delete = [OSSDeleteObjectRequest new];
+    delete.bucketName = _bucketName;
+    delete.objectKey = fileName;
+    
+    OSSTask * deleteTask = [client deleteObject:delete];
+    
+    [deleteTask continueWithBlock:^id(OSSTask *task) {
+        if (!task.error) {
+            NSLog(@"delete success !");
+        } else {
+            NSLog(@"delete erorr, error: %@", task.error);
+        }
+        return nil;
+    }];
+}
+
 
 #pragma mark --- 上传文件名（时间轴+用户id＋文件类型（png，caf，mp4）保证文件名的唯一性）
 -(NSString *)getPutFileNameByType:(NSString *)type

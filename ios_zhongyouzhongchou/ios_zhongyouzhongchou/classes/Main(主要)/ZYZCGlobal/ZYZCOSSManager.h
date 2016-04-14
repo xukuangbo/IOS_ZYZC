@@ -31,7 +31,11 @@
 /**
  *  异步下载
  */
+- (void)downloadObjectAsyncByFileName:(NSString *)fileName;
 
-- (void)downloadObjectAsync;
+/**
+ *  删除文件
+ */
+- (void)deleteObjectByFileName:(NSString *)fileName;
 
 @end
