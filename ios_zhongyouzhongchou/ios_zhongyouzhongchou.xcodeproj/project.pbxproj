@@ -71,6 +71,8 @@
 		2C897DB11C98215800CDEC7D /* RMCalendarCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C897D991C98215800CDEC7D /* RMCalendarCollectionViewLayout.m */; };
 		2C897DB21C98215800CDEC7D /* RMCalendarMonthHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C897D9B1C98215800CDEC7D /* RMCalendarMonthHeaderView.m */; };
 		2C897DB31C98215800CDEC7D /* RMCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C897D9D1C98215800CDEC7D /* RMCollectionCell.m */; };
+		2C8B15AB1CBDF29C00F33E29 /* ZYZCOSSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8B15AA1CBDF29C00F33E29 /* ZYZCOSSManager.m */; };
+		2C8B15AF1CBE2F2800F33E29 /* TacticMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8B15AE1CBE2F2800F33E29 /* TacticMainViewController.m */; };
 		2C901DBD1C89788C004B844B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DBC1C89788C004B844B /* main.m */; };
 		2C901DC01C89788C004B844B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DBF1C89788C004B844B /* AppDelegate.m */; };
 		2C901DC31C89788C004B844B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DC21C89788C004B844B /* ViewController.m */; };
@@ -246,6 +248,10 @@
 		2C897D9B1C98215800CDEC7D /* RMCalendarMonthHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCalendarMonthHeaderView.m; sourceTree = "<group>"; };
 		2C897D9C1C98215800CDEC7D /* RMCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMCollectionCell.h; sourceTree = "<group>"; };
 		2C897D9D1C98215800CDEC7D /* RMCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCollectionCell.m; sourceTree = "<group>"; };
+		2C8B15A91CBDF29C00F33E29 /* ZYZCOSSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCOSSManager.h; sourceTree = "<group>"; };
+		2C8B15AA1CBDF29C00F33E29 /* ZYZCOSSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCOSSManager.m; sourceTree = "<group>"; };
+		2C8B15AD1CBE2F2800F33E29 /* TacticMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticMainViewController.h; sourceTree = "<group>"; };
+		2C8B15AE1CBE2F2800F33E29 /* TacticMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMainViewController.m; sourceTree = "<group>"; };
 		2C901DB81C89788C004B844B /* ios_zhongyouzhongchou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_zhongyouzhongchou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C901DBC1C89788C004B844B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C901DBE1C89788C004B844B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -672,6 +678,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		2C8B15AC1CBE2EDE00F33E29 /* ZYZCTactic(攻略) */ = {
+			isa = PBXGroup;
+			children = (
+				2C8B15AD1CBE2F2800F33E29 /* TacticMainViewController.h */,
+				2C8B15AE1CBE2F2800F33E29 /* TacticMainViewController.m */,
+			);
+			path = "ZYZCTactic(攻略)";
+			sourceTree = "<group>";
+		};
 		2C901DAF1C89788C004B844B = {
 			isa = PBXGroup;
 			children = (
@@ -702,6 +717,7 @@
 				2CA7DDB51CB50900001E32BE /* lame */,
 				2C901DEF1C8981CC004B844B /* ZYZCBase */,
 				2C901DF01C8981CC004B844B /* ZYZCGlobal */,
+				2C8B15AC1CBE2EDE00F33E29 /* ZYZCTactic(攻略) */,
 				2C01A60E1C8AB7ED005B74DF /* ZYZCRaise(众筹) */,
 				2CD8969C1C901B7F00241391 /* ZYZCCenterContent */,
 				2C897D7B1C98215800CDEC7D /* ZYZCCalender */,
@@ -777,6 +793,8 @@
 				2C901E071C898AC3004B844B /* ZYZCHTTPTool.m */,
 				2C7DCAA71C8EDDE2009133DA /* ZYZCTool.h */,
 				2C7DCAA81C8EDDE2009133DA /* ZYZCTool.m */,
+				2C8B15A91CBDF29C00F33E29 /* ZYZCOSSManager.h */,
+				2C8B15AA1CBDF29C00F33E29 /* ZYZCOSSManager.m */,
 			);
 			path = ZYZCGlobal;
 			sourceTree = "<group>";
@@ -1046,6 +1064,7 @@
 				2C901E021C898484004B844B /* UIColor+ZYZCColors.m in Sources */,
 				2C700C5F1CAD1EF900A9F040 /* WordEditViewController.m in Sources */,
 				2C4214EE1C9689680056265E /* CustomItemView.m in Sources */,
+				2C8B15AB1CBDF29C00F33E29 /* ZYZCOSSManager.m in Sources */,
 				2C901DFF1C898473004B844B /* ZYZCNavigationController.m in Sources */,
 				040DE0E01CA26A8C00BF3AF6 /* ReturnFirstCell.m in Sources */,
 				2C3EA8611C9BE7D3006C5E7A /* MoreFZCBaseTableViewCell.m in Sources */,
@@ -1089,6 +1108,7 @@
 				2C3EA8501C9BA64C006C5E7A /* MoreFZCRaiseMoneyTableView.m in Sources */,
 				04CDBEC61CA22B47008AFF41 /* RaiseMoneyFirstModel.m in Sources */,
 				2CDA02EA1CB3B52900DFD634 /* SoundView.m in Sources */,
+				2C8B15AF1CBE2F2800F33E29 /* TacticMainViewController.m in Sources */,
 				2C4214FE1C96B8010056265E /* WeekDayView.m in Sources */,
 				04D4DEE91CA940280095A026 /* ReturnAttributesLabel.m in Sources */,
 				2C4214F31C968DCA0056265E /* FZCBaseViewController.m in Sources */,
