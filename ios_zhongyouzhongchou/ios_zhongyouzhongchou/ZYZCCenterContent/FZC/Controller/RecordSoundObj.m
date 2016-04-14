@@ -100,8 +100,7 @@
 -(void)stopRecordSound
 {
     [self.audioRecorder stop];
-    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-    [ossManager uploadObjectAsyncBydocDir:[self getSavePath]];
+//    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSbbb bbbbb b b  b bManager];
     
 }
 

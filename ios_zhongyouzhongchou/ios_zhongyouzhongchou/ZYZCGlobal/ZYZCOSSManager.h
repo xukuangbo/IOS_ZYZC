@@ -19,10 +19,14 @@
  */
 - (void)deleteBucket;
 /**
- *  异步上传数据
+ *  异步上传文件
  *
+ *  @param docDir   文件路径
+ *  @param fileType 文件类型（png，caf，mp4）
+ *
+ *  @return         文件名
  */
-- (void)uploadObjectAsyncBydocDir:(NSString *)docDir;
+- (NSString *)getfileNameWhenUploadObjectAsyncBydocDir:(NSString *)docDir andFileType:(NSString *)fileType;
 
 /**
  *  异步下载

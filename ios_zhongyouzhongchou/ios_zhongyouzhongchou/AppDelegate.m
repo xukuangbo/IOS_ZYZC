@@ -30,7 +30,7 @@
     //更改appBadge
     [self changeAppBadge];
 
-    [self getFileToTmp];
+//    [self getFileToTmp];
     
     return YES;
 }

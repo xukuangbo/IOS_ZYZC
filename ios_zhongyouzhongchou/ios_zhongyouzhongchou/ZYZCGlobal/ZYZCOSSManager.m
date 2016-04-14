@@ -123,9 +123,16 @@ OSSClient * client;
 }
 
 #pragma mark --- 异步上传对象
-- (void)uploadObjectAsyncBydocDir:(NSString *)docDir andFileName:(NSString *)fileName{
+- (NSString *)getfileNameWhenUploadObjectAsyncBydocDir:(NSString *)docDir andFileType:(NSString *)fileType{
+    //文件类型错误，上传失败
+    if (!([fileType isEqualToString:@"png"]||[fileType isEqualToString:@"caf"]||[fileType isEqualToString:@"mp4"])) {
+        NSLog(@"fileType 类型错误，上传失败");
+        return nil;
+    }
+    //文件类型正确
+    //获取文件名
+    NSString *fileName=[self getPutFileNameByType:fileType];
     OSSPutObjectRequest * put = [OSSPutObjectRequest new];
-    
     // required fields
     put.bucketName = _bucketName;
     put.objectKey  = fileName;
@@ -151,14 +158,16 @@ OSSClient * client;
         }
         return nil;
     }];
+    
+    return fileName;
 }
 
 // 异步下载
-- (void)downloadObjectAsync {
+- (void)downloadObjectAsyncByFileName:(NSString *)fileName {
     OSSGetObjectRequest * request = [OSSGetObjectRequest new];
     // required
     request.bucketName = _bucketName;
-    request.objectKey = @"file1";
+    request.objectKey =   fileName;
     
     //optional
     request.downloadProgress = ^(int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
@@ -166,7 +175,7 @@ OSSClient * client;
     };
     
     NSString *tmpDir = NSTemporaryDirectory();
-    NSURL *dataUrl=[NSURL fileURLWithPath:[tmpDir stringByAppendingPathComponent:@"downloadfile.caf"]];
+    NSURL *dataUrl=[NSURL fileURLWithPath:[tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"downloadfile/%@",request.objectKey]]];
      request.downloadToFileURL = dataUrl;
     NSLog(@"dataUrl:%@",dataUrl);
     
@@ -178,7 +187,7 @@ OSSClient * client;
             OSSGetObjectResult * getResult = task.result;
             NSLog(@"download dota length: %lu", [getResult.downloadedData length]);
             NSData *data=[NSData dataWithContentsOfURL:dataUrl];
-            NSLog(@"data.length:%d",data.length);
+            NSLog(@"data.length:%zd",data.length);
             
         } else {
             NSLog(@"download object failed, error: %@" ,task.error);
@@ -187,12 +196,12 @@ OSSClient * client;
     }];
 }
 
-#pragma mark --- 给上传文件命名（时间轴+用户名＋文件类型（img，voice，movie）保证文件名的唯一性）
+#pragma mark --- 上传文件名（时间轴+用户id＋文件类型（png，caf，mp4）保证文件名的唯一性）
 -(NSString *)getPutFileNameByType:(NSString *)type
 {
     NSString *userId=[ZYZCTool getUserId];
     NSString *timestamp=[self getLocalTime];
-    NSString *fileName=[NSString stringWithFormat:@"%@%@",timestamp,userId];
+    NSString *fileName=[NSString stringWithFormat:@"%@%@.%@",timestamp,userId,type];
     return fileName;
 }
 
