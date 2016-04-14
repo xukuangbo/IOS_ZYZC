@@ -92,6 +92,14 @@
 		04A99CF11CBF851500C6F5F0 /* RMCalendarCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99CE81CBF851500C6F5F0 /* RMCalendarCollectionViewLayout.m */; };
 		04A99CF21CBF851500C6F5F0 /* RMCalendarMonthHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99CEA1CBF851500C6F5F0 /* RMCalendarMonthHeaderView.m */; };
 		04A99CF31CBF851500C6F5F0 /* RMCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99CEC1CBF851500C6F5F0 /* RMCollectionCell.m */; };
+		04A99CFA1CBF897A00C6F5F0 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99CF51CBF897A00C6F5F0 /* libWeChatSDK.a */; };
+		04A99CFB1CBF897A00C6F5F0 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 04A99CF61CBF897A00C6F5F0 /* read_me.txt */; };
+		04A99CFE1CBF89E600C6F5F0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99CFD1CBF89E600C6F5F0 /* SystemConfiguration.framework */; };
+		04A99D001CBF89F600C6F5F0 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99CFF1CBF89F600C6F5F0 /* libz.tbd */; };
+		04A99D021CBF8A1000C6F5F0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99D011CBF8A1000C6F5F0 /* libsqlite3.0.tbd */; };
+		04A99D041CBF8A1F00C6F5F0 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99D031CBF8A1F00C6F5F0 /* libc++.tbd */; };
+		04A99D061CBF8A4100C6F5F0 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99D051CBF8A4100C6F5F0 /* CoreTelephony.framework */; };
+		04A99D091CBF8ADA00C6F5F0 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D081CBF8ADA00C6F5F0 /* WXApiManager.m */; };
 		2C901DBD1C89788C004B844B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DBC1C89788C004B844B /* main.m */; };
 		2C901DC01C89788C004B844B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DBF1C89788C004B844B /* AppDelegate.m */; };
 		2C901DC31C89788C004B844B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DC21C89788C004B844B /* ViewController.m */; };
@@ -288,6 +296,18 @@
 		04A99CEA1CBF851500C6F5F0 /* RMCalendarMonthHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCalendarMonthHeaderView.m; sourceTree = "<group>"; };
 		04A99CEB1CBF851500C6F5F0 /* RMCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMCollectionCell.h; sourceTree = "<group>"; };
 		04A99CEC1CBF851500C6F5F0 /* RMCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCollectionCell.m; sourceTree = "<group>"; };
+		04A99CF51CBF897A00C6F5F0 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		04A99CF61CBF897A00C6F5F0 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		04A99CF71CBF897A00C6F5F0 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		04A99CF81CBF897A00C6F5F0 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		04A99CF91CBF897A00C6F5F0 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		04A99CFD1CBF89E600C6F5F0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		04A99CFF1CBF89F600C6F5F0 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		04A99D011CBF8A1000C6F5F0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		04A99D031CBF8A1F00C6F5F0 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		04A99D051CBF8A4100C6F5F0 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		04A99D071CBF8ADA00C6F5F0 /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXApiManager.h; path = libs/WXApiManager.h; sourceTree = "<group>"; };
+		04A99D081CBF8ADA00C6F5F0 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WXApiManager.m; path = libs/WXApiManager.m; sourceTree = "<group>"; };
 		2C72BCC21CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2C72BCC31CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		2C901DB81C89788C004B844B /* ios_zhongyouzhongchou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_zhongyouzhongchou.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -316,8 +336,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04A99D061CBF8A4100C6F5F0 /* CoreTelephony.framework in Frameworks */,
+				04A99D041CBF8A1F00C6F5F0 /* libc++.tbd in Frameworks */,
+				04A99D021CBF8A1000C6F5F0 /* libsqlite3.0.tbd in Frameworks */,
+				04A99D001CBF89F600C6F5F0 /* libz.tbd in Frameworks */,
+				04A99CFE1CBF89E600C6F5F0 /* SystemConfiguration.framework in Frameworks */,
 				773C9B15B394065770448BFF /* libPods.a in Frameworks */,
 				04A99C8A1CBF848D00C6F5F0 /* libmp3lame.a in Frameworks */,
+				04A99CFA1CBF897A00C6F5F0 /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +381,8 @@
 			isa = PBXGroup;
 			children = (
 				04A99BCE1CBF848C00C6F5F0 /* libs */,
+				04A99D071CBF8ADA00C6F5F0 /* WXApiManager.h */,
+				04A99D081CBF8ADA00C6F5F0 /* WXApiManager.m */,
 				04A99BD81CBF848C00C6F5F0 /* ZYZCGlobal */,
 			);
 			path = "Main(主要)";
@@ -363,6 +391,7 @@
 		04A99BCE1CBF848C00C6F5F0 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				04A99CF41CBF897A00C6F5F0 /* WeChatSDK1.6.2 */,
 				04A99BCF1CBF848C00C6F5F0 /* lame */,
 			);
 			path = libs;
@@ -800,6 +829,18 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		04A99CF41CBF897A00C6F5F0 /* WeChatSDK1.6.2 */ = {
+			isa = PBXGroup;
+			children = (
+				04A99CF51CBF897A00C6F5F0 /* libWeChatSDK.a */,
+				04A99CF61CBF897A00C6F5F0 /* read_me.txt */,
+				04A99CF71CBF897A00C6F5F0 /* WechatAuthSDK.h */,
+				04A99CF81CBF897A00C6F5F0 /* WXApi.h */,
+				04A99CF91CBF897A00C6F5F0 /* WXApiObject.h */,
+			);
+			path = WeChatSDK1.6.2;
+			sourceTree = "<group>";
+		};
 		2C901DAF1C89788C004B844B = {
 			isa = PBXGroup;
 			children = (
@@ -878,6 +919,11 @@
 		CDC4B29875A188191FA6B53D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04A99D051CBF8A4100C6F5F0 /* CoreTelephony.framework */,
+				04A99D031CBF8A1F00C6F5F0 /* libc++.tbd */,
+				04A99D011CBF8A1000C6F5F0 /* libsqlite3.0.tbd */,
+				04A99CFF1CBF89F600C6F5F0 /* libz.tbd */,
+				04A99CFD1CBF89E600C6F5F0 /* SystemConfiguration.framework */,
 				75DC679E6EF03FA415FEEF7D /* libPods.a */,
 			);
 			name = Frameworks;
@@ -994,6 +1040,7 @@
 				04A99CD51CBF848D00C6F5F0 /* ZCMainTableViewCell.xib in Resources */,
 				2C901DC61C89788C004B844B /* Main.storyboard in Resources */,
 				04A99CC31CBF848D00C6F5F0 /* WeekDayView.xib in Resources */,
+				04A99CFB1CBF897A00C6F5F0 /* read_me.txt in Resources */,
 				040DE0E21CA26C5E00BF3AF6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1070,6 +1117,7 @@
 				04A99C921CBF848D00C6F5F0 /* ZYZCHTTPTool.m in Sources */,
 				04A99CA01CBF848D00C6F5F0 /* FZCContentEntryView.m in Sources */,
 				04A99CB91CBF848D00C6F5F0 /* TravelFirstCell.m in Sources */,
+				04A99D091CBF8ADA00C6F5F0 /* WXApiManager.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
 				04A99C9C1CBF848D00C6F5F0 /* MoreFZCTravelOneDayDetailMdel.m in Sources */,
 				04A99C911CBF848D00C6F5F0 /* UIViewExt.m in Sources */,
