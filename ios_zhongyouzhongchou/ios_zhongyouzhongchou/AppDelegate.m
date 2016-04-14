@@ -9,6 +9,10 @@
 #import "AppDelegate.h"
 #import "ZYZCTabBarController.h"
 #import "ZYZCOSSManager.h"
+
+
+#import "WXApi.h"
+#import "WXApiManager.h"
 @interface AppDelegate ()
 
 @end
@@ -29,17 +33,43 @@
     [self getRootViewController];
     //更改appBadge
     [self changeAppBadge];
+    
+    
+    /**
+     初始化微信
+     */
+    [self initWithWechat];
 
 //    [self getFileToTmp];
     
     return YES;
 }
+/**
+ 初始化微信
+ */
+- (void)initWithWechat
+{
+    [WXApi registerApp:@"wx4f5dad0f41bb5a7d" withDescription:@"ZYZC"];
+}
+
+
+
+
 -(void)getFileToTmp
 {
     ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
     
     [ossManager downloadObjectAsync];
     
+}
+
+#pragma mark - 打开微信，回调微信
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return  [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
 }
 
 #pragma mark --- 设置状态栏

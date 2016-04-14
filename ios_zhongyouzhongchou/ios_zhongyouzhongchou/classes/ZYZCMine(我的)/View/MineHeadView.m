@@ -23,10 +23,6 @@
         
         self.userInteractionEnabled = YES;
         
-        
-        
-        
-        
         //0头像遮盖
         CGFloat shadowIconViewWH = 76;
         UIView *shadowIconView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, shadowIconViewWH, shadowIconViewWH)];
@@ -44,7 +40,7 @@
         [loginButton setImage:[UIImage imageNamed:@"wechat_icon"] forState:UIControlStateNormal];
 //        [loginButton setTitle:@"登录" forState:UIControlStateNormal];
 //        loginButton.backgroundColor = [UIColor redColor];
-        loginButton.origin = CGPointMake(self.width - loginButton.width, 30);
+        loginButton.origin = CGPointMake(self.width - loginButton.width, 20);
         [loginButton addTarget:self action:@selector(loginButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:loginButton];
         self.loginButton = loginButton;
