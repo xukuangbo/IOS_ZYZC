@@ -26,7 +26,7 @@
  *
  *  @return         文件名
  */
-- (NSString *)getfileNameWhenUploadObjectAsyncBydocDir:(NSString *)docDir andFileType:(NSString *)fileType;
+- (NSString *)getfileURLWhenUploadObjectAsyncBydocDir:(NSString *)docDir andFileType:(NSString *)fileType;
 
 /**
  *  异步下载

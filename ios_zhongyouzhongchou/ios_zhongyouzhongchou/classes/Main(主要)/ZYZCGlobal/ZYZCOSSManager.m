@@ -123,7 +123,7 @@ OSSClient * client;
 }
 
 #pragma mark --- 异步上传对象
-- (NSString *)getfileNameWhenUploadObjectAsyncBydocDir:(NSString *)docDir andFileType:(NSString *)fileType{
+- (NSString *)getfileURLWhenUploadObjectAsyncBydocDir:(NSString *)docDir andFileType:(NSString *)fileType{
     //文件类型错误，上传失败
     if (!([fileType isEqualToString:@"png"]||[fileType isEqualToString:@"caf"]||[fileType isEqualToString:@"mp4"])) {
         NSLog(@"fileType 类型错误，上传失败");
@@ -137,7 +137,6 @@ OSSClient * client;
     put.bucketName = _bucketName;
     put.objectKey  = fileName;
     put.uploadingFileURL = [NSURL fileURLWithPath:docDir];
-    
     // optional fields
     put.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
         NSLog(@"%lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
@@ -158,8 +157,8 @@ OSSClient * client;
         }
         return nil;
     }];
-    
-    return fileName;
+    NSString *fileUrl=[NSString stringWithFormat:@"http://%@%@/%@",_bucketName,[endPoint substringFromIndex:2],fileName];
+    return fileUrl;
 }
 
 #pragma mark --- 异步下载数据
@@ -215,12 +214,13 @@ OSSClient * client;
 }
 
 
-#pragma mark --- 上传文件名（时间轴+用户id＋文件类型（png，caf，mp4）保证文件名的唯一性）
+#pragma mark --- 上传文件名（用户id/时间轴+文件类型（png，caf，mp4）保证文件名的唯一性）
+
 -(NSString *)getPutFileNameByType:(NSString *)type
 {
     NSString *userId=[ZYZCTool getUserId];
     NSString *timestamp=[self getLocalTime];
-    NSString *fileName=[NSString stringWithFormat:@"%@%@.%@",timestamp,userId,type];
+    NSString *fileName=[NSString stringWithFormat:@"%@/%@.%@",userId,timestamp,type];
     return fileName;
 }
 
