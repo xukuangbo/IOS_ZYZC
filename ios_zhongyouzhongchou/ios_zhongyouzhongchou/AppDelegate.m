@@ -57,9 +57,7 @@
 
 -(void)getFileToTmp
 {
-    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-    
-    [ossManager downloadObjectAsync];
+//    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
     
 }
 
