@@ -27,7 +27,7 @@
         AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
         
         mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
-        NSLog(@"%@",mgr.responseSerializer.acceptableContentTypes);
+//        NSLog(@"%@",mgr.responseSerializer.acceptableContentTypes);
         self.userInteractionEnabled = YES;
         [WXApiManager sharedManager].delegate = self;
         //0头像遮盖
@@ -251,14 +251,14 @@
  */
 - (void)managerDidRecvAuthResponse:(SendAuthResp *)response
 {
-    NSLog(@"%@",response.code);
+//    NSLog(@"%@",response.code);
     NSString *url = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",kAppOpenid,kAppSercet,response.code];
 //    NSURL *zoneUrl = [NSURL URLWithString:url];
 //    NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
     AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
     mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * responseObject) {
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
         //这里还需要去请求个人信息，然后保存到本地
         ZYZCAccountModel *accountModel = [ZYZCAccountModel accountWithDict:responseObject];
         [ZYZCAccountTool saveAccount:accountModel];
