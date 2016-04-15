@@ -120,6 +120,7 @@
         //注册
         [app registerUserNotificationSettings:setting];
     }
+    [app setApplicationIconBadgeNumber:10];
 }
 
 

@@ -143,10 +143,8 @@
     
     //这里要存到单例里面去
     if (self.index == 2) {//说明是第三个cell
-        [MoreFZCDataManager sharedMoreFZCDataManager].returnThirdSelected = button.selected;
+        [MoreFZCDataManager sharedMoreFZCDataManager].return_returnPeopleStatus = [NSString stringWithFormat:@"%zd",button.selected];
     }
-    
-    
 }
 
 /**
@@ -157,9 +155,10 @@
     MoreFZCReturnTableView *tableView = ((MoreFZCReturnTableView *)self.getSuperTableView);
     button.selected = !button.selected;
     
+
     if (self.index == 2) {//第三个cell
-        [MoreFZCDataManager sharedMoreFZCDataManager].returnThirdDownbuttonOpen = ![MoreFZCDataManager sharedMoreFZCDataManager].returnThirdDownbuttonOpen;
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].returnThirdDownbuttonOpen == YES) {//展开
+         tableView.returnThirdDownbuttonOpen = !tableView.returnThirdDownbuttonOpen;
+        if (tableView.returnThirdDownbuttonOpen == YES) {//展开
             tableView.openArray[4] = @1;
             
             tableView.heightArray[4] = @(ReturnThirdCellHeight + 200);
@@ -172,9 +171,9 @@
         NSIndexPath *path = [tableView indexPathForCell:cell];
         [tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
     }else if (self.index == 3){
-        [MoreFZCDataManager sharedMoreFZCDataManager].returnThirdDownbuttonOpen = ![MoreFZCDataManager sharedMoreFZCDataManager].returnThirdDownbuttonOpen;
+        tableView.returnThirdDownbuttonOpen = !tableView.returnThirdDownbuttonOpen;
         
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].returnThirdDownbuttonOpen == YES) {//展开
+        if (tableView.returnThirdDownbuttonOpen == YES) {//展开
             tableView.openArray[6] = @1;
             tableView.heightArray[6] = @(ReturnFourthCellHeight + 200);
         }else{//收缩
@@ -183,7 +182,7 @@
         }
         //先拿到cell
         ReturnFourthCell *cell = (ReturnFourthCell *)self.superview.superview;
-        NSLog(@"%@",self.superview.superview);
+//        NSLog(@"%@",self.superview.superview);
         NSIndexPath *path = [tableView indexPathForCell:cell];
         [tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
     }

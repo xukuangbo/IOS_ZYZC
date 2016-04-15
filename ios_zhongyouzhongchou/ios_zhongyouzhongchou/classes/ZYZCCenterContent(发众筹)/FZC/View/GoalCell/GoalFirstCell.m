@@ -19,6 +19,7 @@
 @property(nonatomic,assign)CGPoint lastScenePoint;
 @property(nonatomic,strong)NSMutableArray *sceneArr;
 @property(nonatomic,strong)NSMutableArray *sceneTitleArr;
+@property(nonatomic,strong)UIButton *startBtn;
 @end
 
 @implementation GoalFirstCell
@@ -57,11 +58,21 @@
         [self.contentView addSubview:tavelTimeLab];
     }
     
+    //添加初始地址
+    _startBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    _startBtn.origin=_lastScenePoint;
+    _startBtn.size=CGSizeMake(80, 35);
+    [_startBtn setTitle:@"出发地" forState:UIControlStateNormal];
+    [_startBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
+    _startBtn.hidden=YES;
+    [_startBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, _startBtn.height-1, _startBtn.width, 1) andColor:nil]];
+    [_scroll addSubview:_startBtn];
+    
     //添加第一个地址
     [self addSceneByTitle:@"杭州"];
     [_sceneTitleArr addObject:@"杭州"];
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    manager.goalViewScenesArr=_sceneTitleArr;//单例纪录目的地
+    manager.goal_goals=_sceneTitleArr;//单例纪录目的地
     
     //添加旅行日程显示视图
     _scheduleView=[[GoalScheduleView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE*2, _scroll.bottom+40, KSCREEN_W-40, 40)];
@@ -85,12 +96,12 @@
     calendarVC.confirmBlock=^()
     {
         MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-        if (manager.goalViewStartDate.length) {
-            weakSelf.scheduleView.startLab.text=manager.goalViewStartDate;
+        if (manager.goal_startDate.length) {
+            weakSelf.scheduleView.startLab.text=manager.goal_startDate;
             weakSelf.scheduleView.startLab.textColor=[UIColor ZYZC_TextBlackColor];
         }
-        if (manager.goalViewBackDate.length) {
-            weakSelf.scheduleView.backLab.text=manager.goalViewBackDate;
+        if (manager.goal_backDate.length) {
+            weakSelf.scheduleView.backLab.text=manager.goal_backDate;
             weakSelf.scheduleView.backLab.textColor=[UIColor ZYZC_TextBlackColor];
         }
     };
@@ -106,7 +117,7 @@
     {
         [weakSelf.sceneTitleArr addObject:scene];//将目的地名称保存在数组中
         MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-        manager.goalViewScenesArr=weakSelf.sceneTitleArr;//单例纪录目的地
+        manager.goal_goals=weakSelf.sceneTitleArr;//单例纪录目的地
         [weakSelf addSceneByTitle:scene];
     };
     chooseScenceVC.mySceneArr=_sceneTitleArr;
@@ -133,6 +144,7 @@
 #pragma mark --- 添加某个目的地
 -(UIView *)createOneSceneWithOrigin:(CGPoint )origin andTitle:(NSString *)title
 {
+    _startBtn.hidden=YES;
     CGFloat titleWidth=[ZYZCTool calculateStrLengthByText:title andFont:[UIFont systemFontOfSize:17] andMaxWidth:KSCREEN_W].width;
     //view为底部视图
     UIView *view=[[UIView alloc]init];
@@ -178,7 +190,7 @@
     [_sceneTitleArr removeObject:sender.titleLabel.text];
     //单例纪录目的地
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    manager.goalViewScenesArr=_sceneTitleArr;
+    manager.goal_goals=_sceneTitleArr;
     //视图从父视图上删除
     [sceneView removeFromSuperview];
      _lastScenePoint=CGPointMake(10, 0);
@@ -195,15 +207,19 @@
             [self addSceneByTitle:_sceneTitleArr[i]];
         }
     }
+    else
+    {
+        _startBtn.hidden=NO;
+         manager.goal_goals=@[@"出发地"];
+    }
 }
 
 #pragma mark --- 刷新数据
 -(void)reloadViews
 {
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    NSLog(@"++++++%zd",manager.numberPeople);
-    if (manager.numberPeople) {
-        _peoplePickerView.numberPeople=manager.numberPeople;
+    if (manager.goal_numberPeople) {
+        _peoplePickerView.numberPeople=[manager.goal_numberPeople integerValue];
     }
     else
     {

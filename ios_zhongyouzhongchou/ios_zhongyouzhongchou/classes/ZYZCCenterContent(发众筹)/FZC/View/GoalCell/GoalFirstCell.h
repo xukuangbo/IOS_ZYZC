@@ -11,5 +11,8 @@
 #define FIRSTCELLHEIGHT 250
 @interface GoalFirstCell : MoreFZCBaseTableViewCell
 @property(nonatomic, strong) GoalPeoplePickerView *peoplePickerView;
+/**
+ *  刷新数据,人数改变
+ */
 -(void)reloadViews;
 @end

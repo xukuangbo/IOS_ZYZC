@@ -13,6 +13,8 @@
 #import "MoreFZCTravelTableView.h"
 #import "MoreFZCReturnTableView.h"
 
+#import "MoreFZCDataManager.h"
+
 #define kMoreFZCToolBar 20
 #define kNaviBar 64
 @interface MoreFZCViewController ()<MoreFZCToolBarDelegate>
@@ -31,6 +33,17 @@
     [self createBottomView];
 }
 #pragma mark - 自定义方法
+/**
+ *  重写返回键方法
+ */
+-(void)pressBack
+{
+    [super pressBack];
+    /**
+     *  释放单例中存储的内容
+     */
+    
+}
 
 /**
  *  创建空白容器，并创建4个tableview
@@ -144,11 +157,7 @@
             }
             NSLog(@"manager.travelDetailArr.count%zd",manager.travelDetailArr.count);
             NSLog(@"manager.travelDetailArr%@",manager.travelDetailArr);
-            //================================
-            NSLog(@"manager释放前：%@",manager);
-            manager=nil;
-            NSLog(@"manager释放后%@",manager);
-            
+
 
             break;
     }
@@ -161,19 +170,12 @@
     //把tableview带到前面去
     UITableView *tableView=(UITableView *)[self selectdView:buttonTag];
     [self.clearMapView bringSubviewToFront:tableView];
-    if (tableView.tag==MoreFZCToolBarTypeTravel) {
-//        _travelTableIsCover=0;
+
+    if (tableView.tag!=MoreFZCToolBarTypeRaiseMoney)
+    {
         [tableView reloadData];
     }
-    else if(tableView.tag==MoreFZCToolBarTypeGoal)
-    {
-//        _travelTableIsCover++;
-        [tableView reloadData];
-    }else if (tableView.tag == MoreFZCToolBarTypeRaiseMoney)
-    {
-//        _travelTableIsCover++;
-        [tableView reloadData];
-    }
+    
 //    if (_travelTableIsCover==1) {
 //        UITableView *tableView=(UITableView *)[self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
 //        [tableView reloadData];

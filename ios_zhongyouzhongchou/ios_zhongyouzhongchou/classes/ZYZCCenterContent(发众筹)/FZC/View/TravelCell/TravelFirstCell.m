@@ -85,16 +85,16 @@
     
     //将已确定日程显示到界面上
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    if (manager.goalViewStartDate.length) {
-        _scheduleView.startLab.text=manager.goalViewStartDate;
+    if (manager.goal_startDate.length) {
+        _scheduleView.startLab.text=manager.goal_startDate;
         _scheduleView.startLab.textColor=[UIColor ZYZC_TextBlackColor];
     }
-    if (manager.goalViewBackDate.length) {
-        _scheduleView.backLab.text=manager.goalViewBackDate;
+    if (manager.goal_backDate.length) {
+        _scheduleView.backLab.text=manager.goal_backDate;
         _scheduleView.backLab.textColor=[UIColor ZYZC_TextBlackColor];
     }
     //将目的地显示到scroll上
-    NSMutableArray *scenesArr=[NSMutableArray arrayWithArray:manager.goalViewScenesArr];
+    NSMutableArray *scenesArr=[NSMutableArray arrayWithArray:manager.goal_goals];
     if (scenesArr.count==1) {
         [scenesArr addObject:@"目的地"];
     }

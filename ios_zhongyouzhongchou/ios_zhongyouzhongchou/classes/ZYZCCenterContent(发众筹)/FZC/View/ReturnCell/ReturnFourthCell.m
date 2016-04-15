@@ -84,8 +84,8 @@
     //人数设置封装的view,给个属性接收
     GoalPeoplePickerView *pickerView = [[GoalPeoplePickerView alloc] initWithFrame:CGRectMake(ReturnFourthCellMargin, entryTitleLabel.bottom, 0, 0)];
     //读取第二个界面的人数
-    if ([MoreFZCDataManager sharedMoreFZCDataManager].numberPeople) {
-        pickerView.numberPeople = [MoreFZCDataManager sharedMoreFZCDataManager].numberPeople;
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].goal_numberPeople) {
+        pickerView.numberPeople = [[MoreFZCDataManager sharedMoreFZCDataManager].goal_numberPeople integerValue];
     }else{
         pickerView.numberPeople = 4;
     }
@@ -140,9 +140,7 @@
     moneyLabel.textAlignment = NSTextAlignmentCenter;
     [self.bigContentView addSubview:moneyLabel];
     
-    //先看看有没有单例有没有值
-    NSInteger returnCellSupportButton = [MoreFZCDataManager sharedMoreFZCDataManager].returnCellSupportButton;
-    
+    NSInteger returnCellSupportButton = 0;
     //这里是为了给他一个初始值
     [self changeMoneyCountByTag:returnCellSupportButton];
 }
@@ -172,7 +170,7 @@
     //百分比
     CGFloat f = tag * 0.05;
     //这里应该改变文字
-    CGFloat returnMoneyCount = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoneyCountText * f;
+    CGFloat returnMoneyCount = [[MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney floatValue] * f;
     
     NSString *moneyString = [NSString stringWithFormat:@"￥ %.2f 元",returnMoneyCount];
     [self changeMoneyLabelStringWithString:moneyString];
@@ -182,12 +180,18 @@
 - (void)reloadManagerData
 {
     MoreFZCDataManager *mgr = [MoreFZCDataManager sharedMoreFZCDataManager];
-    if (mgr.numberPeople) {
-        self.pickerView.numberPeople = mgr.numberPeople;
+    if (mgr.goal_numberPeople) {
+        self.pickerView.numberPeople = [mgr.goal_numberPeople integerValue];
     }
-    if (mgr.returnCellSupportButton) {
-        [self changeMoneyCountByTag:mgr.returnCellSupportButton];
+   
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSNumber *supportType=[user objectForKey:KMOREFZC_RETURN_SUPPORTTYPE];
+    if (supportType) {
+        [self changeMoneyCountByTag:[supportType integerValue]];
     }
+    
+    [user setObject:nil forKey:KMOREFZC_RETURN_SUPPORTTYPE];
+    [user synchronize];
 }
 
 - (void)setOpen:(BOOL)open
@@ -225,7 +229,9 @@
     }
     [self changeMoneyCountByTag:button.tag];
     self.lastButton = button;
-    [MoreFZCDataManager sharedMoreFZCDataManager].returnCellSupportButton = button.tag;
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [user setObject:[NSNumber numberWithInteger:button.tag] forKey:KMOREFZC_RETURN_SUPPORTTYPE];
+    [user synchronize];
 }
 
 /**

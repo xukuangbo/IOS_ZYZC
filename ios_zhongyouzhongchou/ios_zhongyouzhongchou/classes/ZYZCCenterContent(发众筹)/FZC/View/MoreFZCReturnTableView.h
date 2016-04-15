@@ -12,4 +12,10 @@
 @property (nonatomic, strong) NSMutableArray *openArray;
 
 @property (nonatomic, strong) NSMutableArray *heightArray;
+
+/**
+ *  return第三个cell的是否展开
+ */
+@property (nonatomic, assign) BOOL returnThirdDownbuttonOpen;
+
 @end

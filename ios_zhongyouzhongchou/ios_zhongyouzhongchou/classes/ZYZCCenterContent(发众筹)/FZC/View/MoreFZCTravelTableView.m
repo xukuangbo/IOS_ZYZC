@@ -26,7 +26,7 @@
 -(void)getTravelDays
 {
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    _travelDays=manager.goalViewTotalDays;
+    _travelDays=[manager.goal_TotalTravelDay integerValue];
     if (_travelDetailCellArr.count) {
         [_travelDetailCellArr removeAllObjects];
     }
@@ -72,11 +72,11 @@
         travelSecondCell.titleLab.text=[NSString stringWithFormat:@"第%.2zd天:",indexPath.row/2];
         //计算cell的日期
         NSDate *startDate=nil;
-        if (!manager.goalViewStartDate) {
+        if (!manager.goal_startDate) {
             startDate=[NSDate date];
         }
         else{
-            startDate=[NSDate dateFromString:manager.goalViewStartDate];
+            startDate=[NSDate dateFromString:manager.goal_startDate];
         }
         NSDate *cellDate=[NSDate dateWithTimeInterval:cellNumber*24*60*60 sinceDate:startDate];
         travelSecondCell.oneDetailModel.date=cellDate;
