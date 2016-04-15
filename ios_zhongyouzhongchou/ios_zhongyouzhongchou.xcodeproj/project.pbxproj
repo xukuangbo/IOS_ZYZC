@@ -24,7 +24,6 @@
 		04A99C991CBF848D00C6F5F0 /* ChooseSceneImgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BF71CBF848C00C6F5F0 /* ChooseSceneImgController.m */; };
 		04A99C9A1CBF848D00C6F5F0 /* ChooseSiteImgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BF91CBF848C00C6F5F0 /* ChooseSiteImgController.m */; };
 		04A99C9B1CBF848D00C6F5F0 /* MoreFZCChooseSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */; };
-		04A99C9C1CBF848D00C6F5F0 /* MoreFZCTravelOneDayDetailMdel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BFD1CBF848C00C6F5F0 /* MoreFZCTravelOneDayDetailMdel.m */; };
 		04A99C9D1CBF848D00C6F5F0 /* MoreFZCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BFF1CBF848C00C6F5F0 /* MoreFZCViewController.m */; };
 		04A99C9E1CBF848D00C6F5F0 /* RecordSoundObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C011CBF848C00C6F5F0 /* RecordSoundObj.m */; };
 		04A99C9F1CBF848D00C6F5F0 /* SelectImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C031CBF848C00C6F5F0 /* SelectImageViewController.m */; };
@@ -108,6 +107,7 @@
 		2C901DE11C89788C004B844B /* ios_zhongyouzhongchouUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DE01C89788C004B844B /* ios_zhongyouzhongchouUITests.m */; };
 		2CC075591CBF8E9F00E49DE9 /* collectionView.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CC075581CBF8E9F00E49DE9 /* collectionView.png */; };
 		2CE21A771CC074CC00C7A797 /* MoreFZCDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE21A761CC074CC00C7A797 /* MoreFZCDataManager.m */; };
+		2CE21A7B1CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE21A7A1CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.m */; };
 		773C9B15B394065770448BFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DC679E6EF03FA415FEEF7D /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -163,8 +163,6 @@
 		04A99BF91CBF848C00C6F5F0 /* ChooseSiteImgController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseSiteImgController.m; sourceTree = "<group>"; };
 		04A99BFA1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCChooseSceneController.h; sourceTree = "<group>"; };
 		04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCChooseSceneController.m; sourceTree = "<group>"; };
-		04A99BFC1CBF848C00C6F5F0 /* MoreFZCTravelOneDayDetailMdel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCTravelOneDayDetailMdel.h; sourceTree = "<group>"; };
-		04A99BFD1CBF848C00C6F5F0 /* MoreFZCTravelOneDayDetailMdel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCTravelOneDayDetailMdel.m; sourceTree = "<group>"; };
 		04A99BFE1CBF848C00C6F5F0 /* MoreFZCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCViewController.h; sourceTree = "<group>"; };
 		04A99BFF1CBF848C00C6F5F0 /* MoreFZCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCViewController.m; sourceTree = "<group>"; };
 		04A99C001CBF848C00C6F5F0 /* RecordSoundObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordSoundObj.h; sourceTree = "<group>"; };
@@ -328,6 +326,8 @@
 		2CC075581CBF8E9F00E49DE9 /* collectionView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collectionView.png; sourceTree = "<group>"; };
 		2CE21A751CC074CC00C7A797 /* MoreFZCDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCDataManager.h; sourceTree = "<group>"; };
 		2CE21A761CC074CC00C7A797 /* MoreFZCDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCDataManager.m; sourceTree = "<group>"; };
+		2CE21A791CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCTravelOneDayDetailMdel.h; sourceTree = "<group>"; };
+		2CE21A7A1CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCTravelOneDayDetailMdel.m; sourceTree = "<group>"; };
 		5F74EDEB5AED9D3FE531BA3F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		75DC679E6EF03FA415FEEF7D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A975BB3FB47993D61E1FF732 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -461,6 +461,7 @@
 		04A99BF41CBF848C00C6F5F0 /* FZC */ = {
 			isa = PBXGroup;
 			children = (
+				2CE21A781CC076AD00C7A797 /* Model */,
 				04A99BF51CBF848C00C6F5F0 /* Controller */,
 				04A99C041CBF848C00C6F5F0 /* View */,
 			);
@@ -476,8 +477,6 @@
 				04A99BF91CBF848C00C6F5F0 /* ChooseSiteImgController.m */,
 				04A99BFA1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.h */,
 				04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */,
-				04A99BFC1CBF848C00C6F5F0 /* MoreFZCTravelOneDayDetailMdel.h */,
-				04A99BFD1CBF848C00C6F5F0 /* MoreFZCTravelOneDayDetailMdel.m */,
 				04A99BFE1CBF848C00C6F5F0 /* MoreFZCViewController.h */,
 				04A99BFF1CBF848C00C6F5F0 /* MoreFZCViewController.m */,
 				04A99C021CBF848C00C6F5F0 /* SelectImageViewController.h */,
@@ -910,6 +909,15 @@
 			path = ios_zhongyouzhongchouUITests;
 			sourceTree = "<group>";
 		};
+		2CE21A781CC076AD00C7A797 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2CE21A791CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.h */,
+				2CE21A7A1CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		9FE36A97B99958C14BC6C7AA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1123,7 +1131,6 @@
 				04A99CB91CBF848D00C6F5F0 /* TravelFirstCell.m in Sources */,
 				04A99D091CBF8ADA00C6F5F0 /* WXApiManager.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
-				04A99C9C1CBF848D00C6F5F0 /* MoreFZCTravelOneDayDetailMdel.m in Sources */,
 				04A99C911CBF848D00C6F5F0 /* UIViewExt.m in Sources */,
 				04A99CBC1CBF848D00C6F5F0 /* MovieView.m in Sources */,
 				04A99CBA1CBF848D00C6F5F0 /* TravelSecondCell.m in Sources */,
@@ -1181,6 +1188,7 @@
 				04A99CC71CBF848D00C6F5F0 /* MineViewController.m in Sources */,
 				04A99CA31CBF848D00C6F5F0 /* GoalScheduleView.m in Sources */,
 				04A99CAE1CBF848D00C6F5F0 /* MoreFZCRaiseMoneySecondCell.m in Sources */,
+				2CE21A7B1CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.m in Sources */,
 				04A99CBB1CBF848D00C6F5F0 /* DrawCircleView.m in Sources */,
 				04A99CD11CBF848D00C6F5F0 /* ZCFilterModel.m in Sources */,
 				04A99C971CBF848D00C6F5F0 /* ZYZCNavigationController.m in Sources */,
