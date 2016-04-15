@@ -40,7 +40,7 @@
      */
     [self initWithWechat];
 
-    [self getFileToTmp];
+//    [self getFileToTmp];
     
     return YES;
 }

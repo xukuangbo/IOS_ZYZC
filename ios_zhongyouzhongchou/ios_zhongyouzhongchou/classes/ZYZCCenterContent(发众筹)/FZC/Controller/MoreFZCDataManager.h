@@ -87,11 +87,11 @@
 
 
 //第四界面属性
-@property (nonatomic, assign) CGSize realSize;
 
 /**
  *  return第三个cell是否选中
  */
+//return_people_status
 @property (nonatomic, assign) BOOL returnThirdSelected;
 /**
  *  return第三个cell的金钱

@@ -116,9 +116,9 @@
     //保存当日旅游文字描述
     _oneDetailModel.travelDes=@"";
     //保存当日旅游语音描述
-    _oneDetailModel.voiceData=[NSData data];
+    _oneDetailModel.voiceUrl=nil;
     //保存当日旅游视屏描述
-    _oneDetailModel.movieData=[NSData data];
+    _oneDetailModel.movieUrl=nil;
 }
 
 @end

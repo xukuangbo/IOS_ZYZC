@@ -44,10 +44,10 @@
 /**
  *  当天旅游的语音录入
  */
-@property (nonatomic, strong) NSData *voiceData;
+@property (nonatomic, strong) NSURL  *voiceUrl;
 /**
  *  当天旅游视屏录入
  */
-@property (nonatomic, strong) NSData *movieData;
+@property (nonatomic, strong) NSURL *movieUrl;
 
 @end

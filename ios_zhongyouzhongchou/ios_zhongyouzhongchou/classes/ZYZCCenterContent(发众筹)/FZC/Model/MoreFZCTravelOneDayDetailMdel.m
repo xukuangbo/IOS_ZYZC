@@ -11,6 +11,6 @@
 @implementation MoreFZCTravelOneDayDetailMdel
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@", _date,_siteDes,_trafficDes,_accommodateDes,_foodDes,_sitesArr,_travelDes,_travelImgArr,_voiceData,_movieData];
+    return [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@", _date,_siteDes,_trafficDes,_accommodateDes,_foodDes,_sitesArr,_travelDes,_travelImgArr,_voiceUrl,_movieUrl];
 }
 @end
