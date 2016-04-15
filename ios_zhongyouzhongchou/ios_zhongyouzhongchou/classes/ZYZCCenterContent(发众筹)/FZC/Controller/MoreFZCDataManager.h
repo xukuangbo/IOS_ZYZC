@@ -31,7 +31,14 @@
  *  一起游人数
  */
 @property (nonatomic, assign) NSInteger numberPeople;
-
+/**
+ *  旅行主题名
+ */
+@property (nonatomic, copy  ) NSString  *travelTheme;
+/**
+ *  旅行主题图片路径
+ */
+@property (nonatomic, copy  ) NSString  *travelThemeImgUrl;
 
 //第二界面
 /**
@@ -55,6 +62,22 @@
  *  总金额数目
  */
 @property (nonatomic, assign) CGFloat raiseMoneyCountText;
+/**
+ *  筹路费文字描述
+ */
+@property (nonatomic, copy  ) NSString *raiseMoney_wordDes;
+/**
+ *  筹路费图片描述
+ */
+@property (nonatomic, copy  ) NSArray  *raiseMoney_imgDes;
+/**
+ *  筹路费语音描述
+ */
+@property (nonatomic, copy  ) NSString *raiseMoney_voiceUrl;
+/**
+ *  筹路费视屏描述
+ */
+@property (nonatomic, copy  ) NSString *raiseMoney_movieUrl;
 
 //第三界面属性
 /**

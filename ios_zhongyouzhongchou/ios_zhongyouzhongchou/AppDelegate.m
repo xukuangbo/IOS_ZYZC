@@ -40,7 +40,7 @@
      */
     [self initWithWechat];
 
-//    [self getFileToTmp];
+    [self getFileToTmp];
     
     return YES;
 }
@@ -57,7 +57,10 @@
 
 -(void)getFileToTmp
 {
-//    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+    [ZYZCTool saveUserIdById:@"110"];
+    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"collectionView" ofType:@"png"];
+    NSLog(@"++++%@", [ossManager getfileURLWhenUploadObjectAsyncBydocDir:path andFileType:@"png"] );
     
 }
 

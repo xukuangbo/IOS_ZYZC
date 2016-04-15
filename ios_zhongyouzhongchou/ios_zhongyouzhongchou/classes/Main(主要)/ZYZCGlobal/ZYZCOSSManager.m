@@ -97,12 +97,12 @@ OSSClient * client;
     }];
 }
 
-#pragma mark --- 获取存储空间中的所有对象
-- (void)listObjectsInBucket {
+#pragma mark --- 获取存储空间中的对象
+- (void)listObjectsInBucketByPrefix:(NSString *)prefix{
     OSSGetBucketRequest * getBucket = [OSSGetBucketRequest new];
     getBucket.bucketName = _bucketName;
     getBucket.delimiter = @"";
-    getBucket.prefix = @"";
+    getBucket.prefix = prefix;
 
     OSSTask * getBucketTask = [client getBucket:getBucket];
     
@@ -157,7 +157,7 @@ OSSClient * client;
         }
         return nil;
     }];
-    NSString *fileUrl=[NSString stringWithFormat:@"http://%@%@/%@",_bucketName,[endPoint substringFromIndex:2],fileName];
+    NSString *fileUrl=[NSString stringWithFormat:@"http://%@.%@/%@",_bucketName,[endPoint substringFromIndex:7],fileName];
     return fileUrl;
 }
 
@@ -200,7 +200,6 @@ OSSClient * client;
     OSSDeleteObjectRequest * delete = [OSSDeleteObjectRequest new];
     delete.bucketName = _bucketName;
     delete.objectKey = fileName;
-    
     OSSTask * deleteTask = [client deleteObject:delete];
     
     [deleteTask continueWithBlock:^id(OSSTask *task) {
@@ -213,14 +212,40 @@ OSSClient * client;
     }];
 }
 
+#pragma mark --- 删除某文件下的所有子文件
+-(void)deleteObjectsByPrefix:(NSString *)prefix
+{
+    OSSGetBucketRequest * getBucket = [OSSGetBucketRequest new];
+    getBucket.bucketName = _bucketName;
+    getBucket.delimiter = @"";
+    getBucket.prefix = prefix;
+    
+    OSSTask * getBucketTask = [client getBucket:getBucket];
+    
+    [getBucketTask continueWithBlock:^id(OSSTask *task) {
+        if (!task.error) {
+            OSSGetBucketResult * result = task.result;
+//            NSLog(@"get bucket success!");
+            for (NSDictionary * objectInfo in result.contents) {
+                NSString *objectKey=objectInfo[@"Key"];
+                [self deleteObjectByFileName:objectKey];
+            }
+        }
+        else{
+            NSLog(@"get bucket failed, error: %@", task.error);
+        }
+        return nil;
+    }];
 
-#pragma mark --- 上传文件名（用户id/时间轴+文件类型（png，caf，mp4）保证文件名的唯一性）
+}
 
+
+#pragma mark --- 上传文件名（用户id/文件类型/时间轴.文件类型（png，caf，mp4）保证文件名的唯一性）
 -(NSString *)getPutFileNameByType:(NSString *)type
 {
     NSString *userId=[ZYZCTool getUserId];
     NSString *timestamp=[self getLocalTime];
-    NSString *fileName=[NSString stringWithFormat:@"%@/%@.%@",userId,timestamp,type];
+    NSString *fileName=[NSString stringWithFormat:@"%@/%@/%@.%@",userId,type,timestamp,type];
     return fileName;
 }
 
