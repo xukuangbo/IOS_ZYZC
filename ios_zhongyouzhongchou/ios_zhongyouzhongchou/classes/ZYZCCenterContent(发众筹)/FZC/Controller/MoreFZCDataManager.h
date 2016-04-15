@@ -107,10 +107,6 @@
 @property (nonatomic, copy  ) NSString *return_returnPeopleNumber;
 
 
-//这里应该定义一个长度的数组
-//@property (nonatomic, strong) NSArray *returnCellHeights;
-
-
 
 + (instancetype)sharedMoreFZCDataManager;
 
