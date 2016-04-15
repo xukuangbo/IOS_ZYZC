@@ -10,6 +10,9 @@
 #define kMineChangeButtonNormalColor [UIColor colorWithRed:161 / 255.0 green:152 / 255.0 blue:111 / 255.0 alpha:1.0]
 @class MineUserModel;
 typedef void (^HeadChangeBlock)();
+
+typedef void (^HeadOpenWeChatBlock)();
+
 @interface MineHeadView : UIImageView
 
 /**
@@ -23,7 +26,7 @@ typedef void (^HeadChangeBlock)();
 /**
  *  名字
  */
-@property (nonatomic, weak) UIButton *nameLabel;
+@property (nonatomic, weak) UILabel *nameLabel;
 /**
  *  性别
  */
@@ -54,4 +57,8 @@ typedef void (^HeadChangeBlock)();
 @property (nonatomic, strong) MineUserModel *userModel;
 
 @property (nonatomic, copy) HeadChangeBlock headChangeBlock;
+
+
+@property (nonatomic, copy) HeadOpenWeChatBlock headOpenWeChatBlock;
+
 @end

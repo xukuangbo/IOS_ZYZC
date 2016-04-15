@@ -103,6 +103,9 @@
 		04A99D201CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D181CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m */; };
 		04A99D211CC07E1800C6F5F0 /* SendMessageToWXReq+requestWithTextOrMediaMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D1A1CC07E1800C6F5F0 /* SendMessageToWXReq+requestWithTextOrMediaMessage.m */; };
 		04A99D221CC07E1800C6F5F0 /* WXMediaMessage+messageConstruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D1C1CC07E1800C6F5F0 /* WXMediaMessage+messageConstruct.m */; };
+		04A99D271CC0924E00C6F5F0 /* ZYZCAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D261CC0924E00C6F5F0 /* ZYZCAccountModel.m */; };
+		04A99D2A1CC0926400C6F5F0 /* ZYZCAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D291CC0926400C6F5F0 /* ZYZCAccountTool.m */; };
+		04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */; };
 		2C901DBD1C89788C004B844B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DBC1C89788C004B844B /* main.m */; };
 		2C901DC01C89788C004B844B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DBF1C89788C004B844B /* AppDelegate.m */; };
 		2C901DC31C89788C004B844B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DC21C89788C004B844B /* ViewController.m */; };
@@ -320,6 +323,12 @@
 		04A99D1A1CC07E1800C6F5F0 /* SendMessageToWXReq+requestWithTextOrMediaMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SendMessageToWXReq+requestWithTextOrMediaMessage.m"; sourceTree = "<group>"; };
 		04A99D1B1CC07E1800C6F5F0 /* WXMediaMessage+messageConstruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WXMediaMessage+messageConstruct.h"; sourceTree = "<group>"; };
 		04A99D1C1CC07E1800C6F5F0 /* WXMediaMessage+messageConstruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WXMediaMessage+messageConstruct.m"; sourceTree = "<group>"; };
+		04A99D251CC0924E00C6F5F0 /* ZYZCAccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCAccountModel.h; sourceTree = "<group>"; };
+		04A99D261CC0924E00C6F5F0 /* ZYZCAccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCAccountModel.m; sourceTree = "<group>"; };
+		04A99D281CC0926400C6F5F0 /* ZYZCAccountTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCAccountTool.h; sourceTree = "<group>"; };
+		04A99D291CC0926400C6F5F0 /* ZYZCAccountTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCAccountTool.m; sourceTree = "<group>"; };
+		04A99D2B1CC0C6EE00C6F5F0 /* MineMessageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineMessageTool.h; sourceTree = "<group>"; };
+		04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineMessageTool.m; sourceTree = "<group>"; };
 		2C72BCC21CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2C72BCC31CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		2C901DB81C89788C004B844B /* ios_zhongyouzhongchou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_zhongyouzhongchou.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -663,6 +672,8 @@
 		04A99C5D1CBF848D00C6F5F0 /* Login(登录授权) */ = {
 			isa = PBXGroup;
 			children = (
+				04A99D231CC0922500C6F5F0 /* Model */,
+				04A99D241CC0922500C6F5F0 /* Tool */,
 			);
 			path = "Login(登录授权)";
 			sourceTree = "<group>";
@@ -890,6 +901,26 @@
 				04A99D1C1CC07E1800C6F5F0 /* WXMediaMessage+messageConstruct.m */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		04A99D231CC0922500C6F5F0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04A99D251CC0924E00C6F5F0 /* ZYZCAccountModel.h */,
+				04A99D261CC0924E00C6F5F0 /* ZYZCAccountModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		04A99D241CC0922500C6F5F0 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				04A99D281CC0926400C6F5F0 /* ZYZCAccountTool.h */,
+				04A99D291CC0926400C6F5F0 /* ZYZCAccountTool.m */,
+				04A99D2B1CC0C6EE00C6F5F0 /* MineMessageTool.h */,
+				04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */,
+			);
+			path = Tool;
 			sourceTree = "<group>";
 		};
 		2C901DAF1C89788C004B844B = {
@@ -1204,14 +1235,17 @@
 				04A99CF21CBF851500C6F5F0 /* RMCalendarMonthHeaderView.m in Sources */,
 				04A99CB61CBF848D00C6F5F0 /* ReturnThirdCell.m in Sources */,
 				04A99CC21CBF848D00C6F5F0 /* WeekDayView.m in Sources */,
+				04A99D271CC0924E00C6F5F0 /* ZYZCAccountModel.m in Sources */,
 				04A99CA91CBF848D00C6F5F0 /* MoreFZCReturnTableView.m in Sources */,
 				04A99CA61CBF848D00C6F5F0 /* MoreFZCBaseTableViewCell.m in Sources */,
+				04A99D2A1CC0926400C6F5F0 /* ZYZCAccountTool.m in Sources */,
 				04A99C8D1CBF848D00C6F5F0 /* UIColor+ZYZCColors.m in Sources */,
 				04A99C991CBF848D00C6F5F0 /* ChooseSceneImgController.m in Sources */,
 				04A99CD71CBF848D00C6F5F0 /* ZCPersonInfoController.m in Sources */,
 				04A99CBD1CBF848D00C6F5F0 /* SoundView.m in Sources */,
 				04A99CC81CBF848D00C6F5F0 /* MineMessageController.m in Sources */,
 				04A99CA51CBF848D00C6F5F0 /* MoreFZCBaseTableView.m in Sources */,
+				04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */,
 				04A99CCC1CBF848D00C6F5F0 /* MineCenterTableView.m in Sources */,
 				04A99CA81CBF848D00C6F5F0 /* MoreFZCRaiseMoneyTableView.m in Sources */,
 				04A99CCB1CBF848D00C6F5F0 /* MineUserModel.m in Sources */,

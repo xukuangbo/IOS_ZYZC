@@ -8,8 +8,8 @@
 
 #import "MineHeadView.h"
 #import "MineUserModel.h"
-
-
+#import "ZYZCAccountModel.h"
+#import "ZYZCAccountTool.h"
 #import "WXApiManager.h"
 #import "WXApiObject.h"
 #define mineCornerRadius 5
@@ -24,9 +24,12 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
         
+        mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
+        NSLog(@"%@",mgr.responseSerializer.acceptableContentTypes);
         self.userInteractionEnabled = YES;
-        
+        [WXApiManager sharedManager].delegate = self;
         //0头像遮盖
         CGFloat shadowIconViewWH = 76;
         UIView *shadowIconView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, shadowIconViewWH, shadowIconViewWH)];
@@ -71,6 +74,7 @@
         //在赋值完名字后应该计算一下，调用一下方法吧
 //        nameLabel.backgroundColor = [UIColor redColor];
         [self addSubview:nameLabel];
+        self.nameLabel = nameLabel;
         
         //3.性别
         UIImageView *sexView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn_sex_fem"]];
@@ -177,6 +181,8 @@
 
 - (void)loginButtonAction:(UIButton *)button
 {
+    
+    
     UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"众游众筹登录" message:@"众游众筹使用微信登陆" preferredStyle:UIAlertControllerStyleAlert];
     [loginAlert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [loginAlert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -192,4 +198,83 @@
     
 }
 
+#pragma mark - 刷新数据
+/**
+ *  刷新用户数据
+ */
+- (void)reloadAccountData
+{
+    ZYZCAccountModel *account = [ZYZCAccountTool account];
+    if (account) {
+        
+        NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",account.access_token,account.openid];
+        AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
+        mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
+        [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//            NSLog(@"%@",responseObject);
+            //这里可以请求到数据，然后加载给account
+            
+            
+            
+//            [self.iconButton sd_setImageWithURL:[NSURL URLWithString:account.headimgurl] forState:UIControlStateNormal];
+//            self.nameLabel.text = account.name;
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+        }];
+    }
+    
+    
+}
+#pragma mark - WXApiManagerDelegate
+- (void)managerDidRecvGetMessageReq:(GetMessageFromWXReq *)request
+{
+    NSLog(@"_____接受到啦1");
+}
+
+- (void)managerDidRecvShowMessageReq:(ShowMessageFromWXReq *)request
+{
+    NSLog(@"_____接受到啦1111111");
+}
+
+- (void)managerDidRecvLaunchFromWXReq:(LaunchFromWXReq *)request
+{
+    NSLog(@"_____接受到啦2222222");
+}
+
+- (void)managerDidRecvMessageResponse:(SendMessageToWXResp *)response
+{
+    NSLog(@"_____接受到啦13333333");
+}
+
+/**
+ *  登陆验证请求
+ */
+- (void)managerDidRecvAuthResponse:(SendAuthResp *)response
+{
+    NSLog(@"%@",response.code);
+    NSString *url = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",kAppOpenid,kAppSercet,response.code];
+//    NSURL *zoneUrl = [NSURL URLWithString:url];
+//    NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+    AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
+    mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
+    [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * responseObject) {
+        NSLog(@"%@",responseObject);
+        //这里还需要去请求个人信息，然后保存到本地
+        ZYZCAccountModel *accountModel = [ZYZCAccountModel accountWithDict:responseObject];
+        [ZYZCAccountTool saveAccount:accountModel];
+        
+        
+        //这里可以让headview刷新一下数据
+        [self reloadAccountData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+    
+    
+}
+
+- (void)managerDidRecvAddCardResponse:(AddCardToWXCardPackageResp *)response
+{
+    NSLog(@"_____接受到啦555555555");
+}
 @end
