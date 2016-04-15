@@ -99,7 +99,7 @@
 		04A99D021CBF8A1000C6F5F0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99D011CBF8A1000C6F5F0 /* libsqlite3.0.tbd */; };
 		04A99D041CBF8A1F00C6F5F0 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99D031CBF8A1F00C6F5F0 /* libc++.tbd */; };
 		04A99D061CBF8A4100C6F5F0 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99D051CBF8A4100C6F5F0 /* CoreTelephony.framework */; };
-		04A99D091CBF8ADA00C6F5F0 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D081CBF8ADA00C6F5F0 /* WXApiManager.m */; };
+		04A99D0D1CC0777700C6F5F0 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D0C1CC0777700C6F5F0 /* WXApiManager.m */; };
 		2C901DBD1C89788C004B844B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DBC1C89788C004B844B /* main.m */; };
 		2C901DC01C89788C004B844B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DBF1C89788C004B844B /* AppDelegate.m */; };
 		2C901DC31C89788C004B844B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DC21C89788C004B844B /* ViewController.m */; };
@@ -306,8 +306,8 @@
 		04A99D011CBF8A1000C6F5F0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		04A99D031CBF8A1F00C6F5F0 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		04A99D051CBF8A4100C6F5F0 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		04A99D071CBF8ADA00C6F5F0 /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXApiManager.h; path = libs/WXApiManager.h; sourceTree = "<group>"; };
-		04A99D081CBF8ADA00C6F5F0 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WXApiManager.m; path = libs/WXApiManager.m; sourceTree = "<group>"; };
+		04A99D0B1CC0777700C6F5F0 /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
+		04A99D0C1CC0777700C6F5F0 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		2C72BCC21CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2C72BCC31CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		2C901DB81C89788C004B844B /* ios_zhongyouzhongchou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_zhongyouzhongchou.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -380,9 +380,8 @@
 		04A99BCD1CBF848C00C6F5F0 /* Main(主要) */ = {
 			isa = PBXGroup;
 			children = (
+				04A99D0A1CC0777700C6F5F0 /* WeChatTool */,
 				04A99BCE1CBF848C00C6F5F0 /* libs */,
-				04A99D071CBF8ADA00C6F5F0 /* WXApiManager.h */,
-				04A99D081CBF8ADA00C6F5F0 /* WXApiManager.m */,
 				04A99BD81CBF848C00C6F5F0 /* ZYZCGlobal */,
 			);
 			path = "Main(主要)";
@@ -841,6 +840,16 @@
 			path = WeChatSDK1.6.2;
 			sourceTree = "<group>";
 		};
+		04A99D0A1CC0777700C6F5F0 /* WeChatTool */ = {
+			isa = PBXGroup;
+			children = (
+				04A99D0B1CC0777700C6F5F0 /* WXApiManager.h */,
+				04A99D0C1CC0777700C6F5F0 /* WXApiManager.m */,
+			);
+			name = WeChatTool;
+			path = libs/WeChatTool;
+			sourceTree = "<group>";
+		};
 		2C901DAF1C89788C004B844B = {
 			isa = PBXGroup;
 			children = (
@@ -1117,7 +1126,7 @@
 				04A99C921CBF848D00C6F5F0 /* ZYZCHTTPTool.m in Sources */,
 				04A99CA01CBF848D00C6F5F0 /* FZCContentEntryView.m in Sources */,
 				04A99CB91CBF848D00C6F5F0 /* TravelFirstCell.m in Sources */,
-				04A99D091CBF8ADA00C6F5F0 /* WXApiManager.m in Sources */,
+				04A99D0D1CC0777700C6F5F0 /* WXApiManager.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
 				04A99C9C1CBF848D00C6F5F0 /* MoreFZCTravelOneDayDetailMdel.m in Sources */,
 				04A99C911CBF848D00C6F5F0 /* UIViewExt.m in Sources */,

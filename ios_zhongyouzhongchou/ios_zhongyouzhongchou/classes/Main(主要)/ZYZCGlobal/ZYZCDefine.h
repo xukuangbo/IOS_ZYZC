@@ -49,4 +49,13 @@
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]
 
+
+//登陆授权
+NSString * const kWechatAuthScope = @"snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact";
+NSString * const kWechatAuthOpenID = @"0c806938e2413ce73eef92cc3";
+NSString * const kWechatAuthState = @"xxx";
+
+#define kAppOpenid @"wx4f5dad0f41bb5a7d"
+#define kAppSercet @"cbb6bf01c64e64aa869d497f600b1270"
+
 #endif /* ZYZCDefine_h */
