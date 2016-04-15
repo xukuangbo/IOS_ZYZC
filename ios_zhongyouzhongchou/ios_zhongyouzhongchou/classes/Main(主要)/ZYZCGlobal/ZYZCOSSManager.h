@@ -38,4 +38,9 @@
  */
 - (void)deleteObjectByFileName:(NSString *)fileName;
 
+/**
+ *  删除某文件下的所有子文件
+ */
+-(void)deleteObjectsByPrefix:(NSString *)prefix;
+
 @end
