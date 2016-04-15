@@ -14,54 +14,54 @@
 /**
  *  目的地数组
  */
-@property (nonatomic, strong) NSArray *goalViewScenesArr;
+@property (nonatomic, strong) NSArray *goal_goals;
 /**
  *  出发日期
  */
-@property (nonatomic, copy)   NSString *goalViewStartDate;
+@property (nonatomic, copy  ) NSString *goal_startDate;
 /**
  *  返回日期
  */
-@property (nonatomic, copy)   NSString *goalViewBackDate;
+@property (nonatomic, copy  ) NSString *goal_backDate;
 /**
  *  旅游总时间
  */
-@property (nonatomic, assign) NSInteger goalViewTotalDays;
+@property (nonatomic, strong) NSNumber *goal_TotalTravelDay;
 /**
  *  一起游人数
  */
-@property (nonatomic, assign) NSInteger numberPeople;
+@property (nonatomic, strong) NSNumber *goal_numberPeople;
 /**
  *  旅行主题名
  */
-@property (nonatomic, copy  ) NSString  *travelTheme;
+@property (nonatomic, copy  ) NSString  *goal_travelTheme;
 /**
  *  旅行主题图片路径
  */
-@property (nonatomic, copy  ) NSString  *travelThemeImgUrl;
+@property (nonatomic, copy  ) NSString  *goal_travelThemeImgUrl;
 
 //第二界面
 /**
  *  景点金额
  */
-@property (nonatomic, copy  ) NSString *sightTextfiledText;
+@property (nonatomic, copy  ) NSString *raiseMoney_sightMoney;
 /**
  *  行程金额
  */
-@property (nonatomic, copy  ) NSString *transportTextfiledText;
+@property (nonatomic, copy  ) NSString *raiseMoney_transMoney;
 /**
  *  居住金额
  */
-@property (nonatomic, copy  ) NSString *liveTextfiledText;
+@property (nonatomic, copy  ) NSString *raiseMoney_liveMoney;
 /**
  *  餐饮金额
  */
-@property (nonatomic, copy  ) NSString *eatTextfiledText;
+@property (nonatomic, copy  ) NSString *raiseMoney_eatMoney;
 
 /**
  *  总金额数目
  */
-@property (nonatomic, assign) CGFloat raiseMoneyCountText;
+@property (nonatomic, strong) NSNumber *raiseMoney_totalMoney;
 /**
  *  筹路费文字描述
  */
@@ -69,7 +69,7 @@
 /**
  *  筹路费图片描述
  */
-@property (nonatomic, copy  ) NSArray  *raiseMoney_imgDes;
+@property (nonatomic, copy  ) NSArray  *raiseMoney_imgsDes;
 /**
  *  筹路费语音描述
  */
@@ -83,7 +83,7 @@
 /**
  *  旅游行程安排
  */
-@property (nonatomic, strong) NSMutableArray *travelDetailArr;
+@property (nonatomic, strong) NSMutableArray *travelDetailArr; 
 
 
 //第四界面属性
@@ -92,32 +92,22 @@
  *  return第三个cell是否选中
  */
 //return_people_status
-@property (nonatomic, assign) BOOL returnThirdSelected;
+@property (nonatomic, strong) NSString *return_supportOneYuanStatus;
+
+@property (nonatomic, strong) NSString *return_supportAnyYuanStatus;
+
+@property (nonatomic, strong) NSString *return_returnPeopleStatus;
 /**
  *  return第三个cell的金钱
  */
-@property (nonatomic, copy) NSString *returnThirdMoney;
+@property (nonatomic, copy  ) NSString *return_returnPeopleMoney;
 /**
  *  return第三个cell的人数
  */
-@property (nonatomic, copy) NSString *returnThirdPeople;
-/**
- *  return第三个cell的是否展开
- */
-@property (nonatomic, assign) BOOL returnThirdDownbuttonOpen;
-/**
- *  return第四个cell的是否展开
- */
-@property (nonatomic, assign) BOOL returnFourthDownbuttonOpen;
-/**
- *  return第四个cell支持金额点击了第几个
- */
-@property (nonatomic, assign) NSInteger returnCellSupportButton;
-
-//这里应该定义一个长度的数组
-@property (nonatomic, strong) NSArray *returnCellHeights;
+@property (nonatomic, copy  ) NSString *return_returnPeopleNumber;
 
 
 
 + (instancetype)sharedMoreFZCDataManager;
+
 @end

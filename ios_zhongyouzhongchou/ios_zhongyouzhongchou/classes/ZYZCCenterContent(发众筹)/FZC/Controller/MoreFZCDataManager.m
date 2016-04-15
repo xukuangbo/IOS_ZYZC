@@ -41,10 +41,10 @@ static id _instace;
     self = [super init];
     if (self) {
         //这里写要初始化的东西！！！
-        self.returnCellHeights = @[@20, @150, @20, @150, @20];
-        _goalViewTotalDays=1;
+        _goal_TotalTravelDay=@1;
         _travelDetailArr=[NSMutableArray array];
-        
+        _return_supportOneYuanStatus=@"1";
+        _return_supportAnyYuanStatus=@"1";
         //第四个界面
     }
     return self;

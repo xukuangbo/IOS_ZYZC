@@ -50,13 +50,13 @@
     
     self.peopleTextfiled = [self viewWithFrame:CGRectMake(0, 1, self.peopleView.width, 81) titleName:@"人数设置:" leftViewName:nil textfiledPlaceholder:@"请输入人数  人"];
     
-    if ([MoreFZCDataManager sharedMoreFZCDataManager].returnThirdPeople) {
-        self.peopleTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].returnThirdPeople;
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].return_returnPeopleNumber) {
+        self.peopleTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].return_returnPeopleNumber;
     }
     
     self.moneyTextFiled = [self viewWithFrame:CGRectMake(0, self.peopleTextfiled.bottom + 2, self.peopleView.width, 81) titleName:@"支持金额:" leftViewName:@"￥" textfiledPlaceholder:@"00.00元"];
-    if ([MoreFZCDataManager sharedMoreFZCDataManager].returnThirdPeople) {
-        self.moneyTextFiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].returnThirdMoney;
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].return_returnPeopleNumber) {
+        self.moneyTextFiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].return_returnPeopleMoney;
     }
     
     //先创建一个标题view
@@ -164,18 +164,18 @@
  */
 - (void)keyboardWillHide:(NSNotification *)noti
 {
-    [MoreFZCDataManager sharedMoreFZCDataManager].returnThirdMoney = self.moneyTextFiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].returnThirdPeople = self.peopleTextfiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].return_returnPeopleMoney = self.moneyTextFiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].return_returnPeopleNumber = self.peopleTextfiled.text;
 }
 
 - (void)reloadManagerData
 {
     MoreFZCDataManager *mgr = [MoreFZCDataManager sharedMoreFZCDataManager];
-    if (mgr.returnThirdPeople) {
-        self.peopleTextfiled.text = mgr.returnThirdPeople;
+    if (mgr.return_returnPeopleNumber) {
+        self.peopleTextfiled.text = mgr.return_returnPeopleNumber;
     }
-    if (mgr.returnThirdMoney) {
-        self.moneyTextFiled.text = mgr.returnThirdMoney;
+    if (mgr.return_returnPeopleMoney) {
+        self.moneyTextFiled.text = mgr.return_returnPeopleMoney;
     }
 }
 

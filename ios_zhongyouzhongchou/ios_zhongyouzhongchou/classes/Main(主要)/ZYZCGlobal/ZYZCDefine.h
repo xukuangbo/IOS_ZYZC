@@ -44,7 +44,8 @@
 #define KMineHeadViewChangeType     100//tag取值范围100～101
 
 //NSUserDefaults-key使用
-#define USER_ID  @"userId"            //用于保存用户id
+#define KUSER_ID  @"userId"            //用于保存用户id
+#define KMOREFZC_RETURN_SUPPORTTYPE  @"return_supportType"  //用于保存用户id
 
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]

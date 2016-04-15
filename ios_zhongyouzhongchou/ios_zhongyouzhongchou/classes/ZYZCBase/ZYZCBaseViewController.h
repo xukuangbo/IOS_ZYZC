@@ -12,8 +12,14 @@
 
 
 //-(UIBarButtonItem *)customItemByImgName:(NSString *)imgName andAction:(SEL)action;
-
+/**
+ *  只有返回键
+ */
 -(void)setBackItem;
+/**
+ *  自定义反回键返回操作
+ */
+-(void)pressBack;
 
 -(void)customNavWithLeftBtnImgName:(NSString *)leftName andRightImgName:(NSString *)rightName  andLeftAction:(SEL)leftAction andRightAction:(SEL)rightAction;
 

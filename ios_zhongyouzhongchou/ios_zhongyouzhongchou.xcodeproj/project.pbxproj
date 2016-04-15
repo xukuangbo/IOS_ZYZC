@@ -494,14 +494,14 @@
 		04A99BF51CBF848C00C6F5F0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04A99BFE1CBF848C00C6F5F0 /* MoreFZCViewController.h */,
+				04A99BFF1CBF848C00C6F5F0 /* MoreFZCViewController.m */,
 				04A99BF61CBF848C00C6F5F0 /* ChooseSceneImgController.h */,
 				04A99BF71CBF848C00C6F5F0 /* ChooseSceneImgController.m */,
 				04A99BF81CBF848C00C6F5F0 /* ChooseSiteImgController.h */,
 				04A99BF91CBF848C00C6F5F0 /* ChooseSiteImgController.m */,
 				04A99BFA1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.h */,
 				04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */,
-				04A99BFE1CBF848C00C6F5F0 /* MoreFZCViewController.h */,
-				04A99BFF1CBF848C00C6F5F0 /* MoreFZCViewController.m */,
 				04A99C021CBF848C00C6F5F0 /* SelectImageViewController.h */,
 				04A99C031CBF848C00C6F5F0 /* SelectImageViewController.m */,
 				04A99C001CBF848C00C6F5F0 /* RecordSoundObj.h */,

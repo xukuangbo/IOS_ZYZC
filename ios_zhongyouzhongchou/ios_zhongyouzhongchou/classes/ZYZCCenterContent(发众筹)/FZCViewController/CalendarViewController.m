@@ -308,11 +308,11 @@ static NSString *DayCell = @"DayCell";
 {
     //单例纪录开始时间
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    manager.goalViewStartDate=_scheduleView.startLab.text;
+    manager.goal_startDate=_scheduleView.startLab.text;
     //单例纪录返回时间
-    manager.goalViewBackDate=_scheduleView.backLab.text;
+    manager.goal_backDate=_scheduleView.backLab.text;
     //单例纪录旅行总天数
-    manager.goalViewTotalDays=_travelTotalDays;
+    manager.goal_TotalTravelDay=[NSNumber numberWithInteger:_travelTotalDays];
     if (self.confirmBlock) {
         self.confirmBlock();
     }

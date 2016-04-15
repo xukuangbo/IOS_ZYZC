@@ -47,8 +47,8 @@
 +(void)saveUserIdById:(NSString *)userId
 {
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    if (![[user objectForKey:USER_ID] isEqualToString:userId]) {
-        [user setObject:userId forKey:USER_ID];
+    if (![[user objectForKey:KUSER_ID] isEqualToString:userId]) {
+        [user setObject:userId forKey:KUSER_ID];
         [user synchronize];
     }
 }
@@ -57,7 +57,7 @@
 +(NSString *)getUserId
 {
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    NSString *userId=[user objectForKey:USER_ID];
+    NSString *userId=[user objectForKey:KUSER_ID];
     return userId;
 }
 

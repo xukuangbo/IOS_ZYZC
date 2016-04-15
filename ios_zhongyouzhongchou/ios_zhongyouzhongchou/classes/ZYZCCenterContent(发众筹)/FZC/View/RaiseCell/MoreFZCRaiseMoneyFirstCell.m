@@ -39,23 +39,23 @@
     
     [self createDetailView];
     
-    if ([MoreFZCDataManager sharedMoreFZCDataManager].sightTextfiledText) {
-        self.moneyTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].sightTextfiledText;
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney) {
+        self.moneyTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney;
     }else{
         self.sightTextfiled.text = @"0.00元";
     }
-    if ([MoreFZCDataManager sharedMoreFZCDataManager].transportTextfiledText) {
-        self.transportTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].transportTextfiledText;
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney) {
+        self.transportTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney;
     }else{
         self.transportTextfiled.text = @"0.00元";
     }
-    if ([MoreFZCDataManager sharedMoreFZCDataManager].liveTextfiledText) {
-        self.liveTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].liveTextfiledText;
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney) {
+        self.liveTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney;
     }else{
         self.liveTextfiled.text = @"0.00元";
     }
-    if ([MoreFZCDataManager sharedMoreFZCDataManager].eatTextfiledText) {
-        self.eatTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].eatTextfiledText;
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney) {
+        self.eatTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney;
     }else{
         self.eatTextfiled.text = @"0.00元";
     }
@@ -177,28 +177,28 @@
 //        self.eatTextfiled.text = model.eatMoney;
         //这里应该去读取一下单例的内容
         //1.
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].sightTextfiledText) {
-            self.sightTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].sightTextfiledText;
+        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney) {
+            self.sightTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney;
         }else{
             self.sightTextfiled.text = @"0.00元";
         }
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].transportTextfiledText) {
-            self.transportTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].transportTextfiledText;
+        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney) {
+            self.transportTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney;
         }else{
             self.transportTextfiled.text = @"0.00元";
         }
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].liveTextfiledText) {
-            self.liveTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].liveTextfiledText;
+        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney) {
+            self.liveTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney;
         }else{
             self.liveTextfiled.text = @"0.00元";
         }
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].eatTextfiledText) {
-            self.eatTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].eatTextfiledText;
+        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney) {
+            self.eatTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney;
         }else{
             self.eatTextfiled.text = @"0.00元";
         }
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoneyCountText) {
-            self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",[MoreFZCDataManager sharedMoreFZCDataManager].raiseMoneyCountText];
+        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney) {
+            self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",[[MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney floatValue]] ;
         }else{
             self.moneyTextfiled.text = @"0.00元";
         }
@@ -229,11 +229,11 @@
 //    self.model.eatMoney = self.eatTextfiled.text;
     
     //这里应该把钱赋值给单例
-    [MoreFZCDataManager sharedMoreFZCDataManager].sightTextfiledText = self.sightTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].transportTextfiledText = self.transportTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].liveTextfiledText = self.liveTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].eatTextfiledText = self.eatTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoneyCountText = totalMoney;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney = self.sightTextfiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney = self.transportTextfiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney = self.liveTextfiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney = self.eatTextfiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSNumber numberWithFloat: totalMoney];
     
     if (self.changeHeightBlock) {
          self.changeHeightBlock(self.model);
@@ -248,7 +248,7 @@
     self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",totalMoney];
     
     //这里可以拿到数据，存到单例里面去
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoneyCountText = totalMoney;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSNumber numberWithFloat:totalMoney];
     return YES;
 }
 
@@ -257,13 +257,13 @@
 {
     CGFloat totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
     //这里可以拿到数据，存到单例里面去
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoneyCountText = totalMoney;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSNumber numberWithFloat:totalMoney];
     
     self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",totalMoney];
-    [MoreFZCDataManager sharedMoreFZCDataManager].sightTextfiledText = self.sightTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].transportTextfiledText = self.transportTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].liveTextfiledText = self.liveTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].eatTextfiledText = self.eatTextfiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney = self.sightTextfiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney = self.transportTextfiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney = self.liveTextfiled.text;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney = self.eatTextfiled.text;
     
     
 }
@@ -281,7 +281,7 @@
     [self.eatTextfiled endEditing:YES];
     
     CGFloat totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoneyCountText = totalMoney;
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSNumber numberWithFloat:totalMoney];
     self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f 元",totalMoney];
 }
 @end
