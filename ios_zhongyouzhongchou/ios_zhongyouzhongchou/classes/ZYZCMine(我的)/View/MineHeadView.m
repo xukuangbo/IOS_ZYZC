@@ -8,9 +8,13 @@
 
 #import "MineHeadView.h"
 #import "MineUserModel.h"
+
+
+#import "WXApiManager.h"
+#import "WXApiObject.h"
 #define mineCornerRadius 5
 #define mineMargin 4
-@interface MineHeadView ()
+@interface MineHeadView ()<WXApiManagerDelegate>
 
 
 @end
@@ -149,15 +153,8 @@
 
 - (void)centerAndFootAction:(UIButton *)button
 {
-    NSLog(@"button点击啦！！！！");
     //让两个tableView的隐藏相反一下
     self.headChangeBlock(button);
-//    if (button.tag == KMineHeadViewChangeType) {
-//        //是center
-//    }else if(button.tag == KMineHeadViewChangeType + 1)
-//    {
-//        
-//    }
 }
 /**
  *  model的赋值，数据的赋值
@@ -184,7 +181,11 @@
     [loginAlert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [loginAlert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //从这里开始，我将进行登陆操作
-        
+        SendAuthReq* req = [[SendAuthReq alloc] init];
+        req.scope = kWechatAuthScope; // @"post_timeline,sns"
+        req.state = kWechatAuthState;
+        req.openID = kWechatAuthOpenID;
+        [WXApi sendAuthReq:req viewController:self delegate:[WXApiManager sharedManager]];
     }]];
     
     [self.viewController presentViewController:loginAlert animated:YES completion:nil];
