@@ -185,7 +185,7 @@
         req.scope = kWechatAuthScope; // @"post_timeline,sns"
         req.state = kWechatAuthState;
         req.openID = kWechatAuthOpenID;
-        [WXApi sendAuthReq:req viewController:self delegate:[WXApiManager sharedManager]];
+        [WXApi sendAuthReq:req viewController:self.viewController delegate:[WXApiManager sharedManager]];
     }]];
     
     [self.viewController presentViewController:loginAlert animated:YES completion:nil];
