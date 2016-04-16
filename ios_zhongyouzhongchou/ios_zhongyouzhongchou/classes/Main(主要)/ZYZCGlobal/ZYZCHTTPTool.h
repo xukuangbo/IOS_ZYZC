@@ -14,7 +14,7 @@ typedef void(^FailBlock)(id failResult);
 #pragma mark --- 获取数据
 //get请求
 +(void)getHttpDataByURL:(NSString *)url withSuccessGetBlock:(SuccessGetBlock)successGet andFailBlock:(FailBlock)fail;
-//post请求(加密)
+//post请求
 +(void)postHttpDataWithEncrypt:(BOOL)needLogin andURL:(NSString *)url andParameters:(NSDictionary *)parameters andSuccessGetBlock:(SuccessGetBlock)successGet andFailBlock:(FailBlock)fail;
 
 #pragma mark --- 加密
