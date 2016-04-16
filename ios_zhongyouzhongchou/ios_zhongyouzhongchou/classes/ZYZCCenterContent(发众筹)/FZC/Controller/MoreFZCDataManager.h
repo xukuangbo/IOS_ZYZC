@@ -92,11 +92,11 @@
  *  return第三个cell是否选中
  */
 //return_people_status
-@property (nonatomic, strong) NSString *return_supportOneYuanStatus;
+@property (nonatomic, copy  ) NSString *return_supportOneYuanStatus;
 
-@property (nonatomic, strong) NSString *return_supportAnyYuanStatus;
+@property (nonatomic, copy  ) NSString *return_supportAnyYuanStatus;
 
-@property (nonatomic, strong) NSString *return_returnPeopleStatus;
+@property (nonatomic, copy  ) NSString *return_returnPeopleStatus;
 /**
  *  return第三个cell的金钱
  */
@@ -106,6 +106,17 @@
  */
 @property (nonatomic, copy  ) NSString *return_returnPeopleNumber;
 
+@property (nonatomic, copy  ) NSString *return_wordDes;
+
+@property (nonatomic, copy  ) NSString *return_voiceUrl;
+
+@property (nonatomic, copy  ) NSString *return_movieUrl;
+
+@property (nonatomic, copy  ) NSString *return_togetherPeopleStatus;
+
+@property (nonatomic, copy  ) NSString *return_togetherPeopleNumber;
+
+@property (nonatomic, copy  ) NSString *return_togetherMoney_percent;
 
 
 + (instancetype)sharedMoreFZCDataManager;

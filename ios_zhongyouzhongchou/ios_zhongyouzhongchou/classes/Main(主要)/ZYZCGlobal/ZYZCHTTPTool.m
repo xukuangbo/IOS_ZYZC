@@ -28,21 +28,22 @@
     }];
 }
 
-#pragma mark --- post请求(加密)
+#pragma mark --- post请求
 +(void)postHttpDataWithEncrypt:(BOOL)needLogin andURL:(NSString *)url andParameters:(NSDictionary *)parameters andSuccessGetBlock:(SuccessGetBlock)successGet andFailBlock:(FailBlock)fail
 {
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:parameters];
     if (needLogin)
     {
-//        [newParameters addEntriesFromDictionary:[self loginPortNeedEncrypt]];
+        //此处添加需登录的操作
     }
     else
     {
-//        [newParameters addEntriesFromDictionary:[self noneLoginPortNeedEncrypt]];
+        //此处添加不需要登录的操作
     }
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
+    manager.responseSerializer.acceptableContentTypes =
+    [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     
     [manager POST:url parameters:newParameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
     {
@@ -53,7 +54,6 @@
     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
         successGet(responseObject,YES);
-        successGet(responseObject,NO);
     }
     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
@@ -65,21 +65,6 @@
 +(NSDictionary *)loginPortNeedEncrypt
 {
     NSMutableDictionary *strDic=[NSMutableDictionary dictionary];
-    //timestamp
-    NSString *timestamp=[self getTime];
-    [strDic setObject:timestamp forKey:@"timestamp"];
-    //user_id
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    NSString *user_id=[user objectForKey:@"user_id"];
-    [strDic setObject:user_id forKey:@"user_id"];
-    //nonceStr
-    NSString *nonceStr=@"abc123";
-    [strDic setObject:nonceStr forKey:@"nonceStr"];
-    //signature
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *loginHash=[defaults objectForKey:@"loginHash"];
-    NSString *signature=[NSString stringWithFormat:@"%@%@%@%@",timestamp,user_id,nonceStr,[self turnStrToMD5:loginHash]];
-    [strDic setObject:[self turnStrToMD5:signature] forKey:@"signature"];
     
     return strDic;
 }
@@ -88,18 +73,6 @@
 +(NSDictionary *)noneLoginPortNeedEncrypt
 {
     NSMutableDictionary *strDic=[NSMutableDictionary dictionary];
-    //timestamp
-    NSString *timestamp=[self getTime];
-    [strDic setObject:timestamp forKey:@"timestamp"];
-    //nonceStr
-    NSString *nonceStr=@"abc123";
-    [strDic setObject:nonceStr forKey:@"nonceStr"];
-    //signature
-    NSString *token=@"kuaihaitao20160128";
-    NSString *scret=@"3339D912BDEF6CA4EC9AEB5325EAB60B";
-    NSString *signature=[NSString stringWithFormat:@"%@%@%@%@",timestamp,token,nonceStr,[self turnStrToMD5:scret]];
-    [strDic setObject:[self turnStrToMD5:signature] forKey:@"signature"];
-    
     return strDic;
 }
 
