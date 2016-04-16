@@ -264,6 +264,9 @@
         [ZYZCAccountTool saveAccount:accountModel];
         
         
+        
+        
+        
         //这里可以让headview刷新一下数据
         [self reloadAccountData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
