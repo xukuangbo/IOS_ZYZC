@@ -12,7 +12,6 @@
 
 
 
-
 #define hostUrl @"http://121.40.225.119:8080:"
 #define regisUrl @"/register/saveWeixinInfo.action?"
 @interface MineMessageTool ()
@@ -22,16 +21,27 @@
 @end
 
 @implementation MineMessageTool
+
+/**
+ *  注册
+ */
 +(void)sendRegisActionMessage
 {
+    
     NSString *registerString = [NSString stringWithFormat:@"%@%@",hostUrl,regisUrl];
     //注册的请求
     AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
     mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
-    NSDictionary *parameters = @{
-                                 
-                                 };
+    ZYZCAccountModel *account = [ZYZCAccountTool account];
+    if (account) {
+        NSDictionary *parameters = @{
+                                     @"openid":account.openid,
+                                         };
+    }
+    
 //    mgr POST:registerString parameters:<#(nullable id)#> progress:<#^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)failure#><#^(NSProgress * _Nonnull uploadProgress)uploadProgress#> success:<#^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)success#> failure:
     
 }
+
+
 @end
