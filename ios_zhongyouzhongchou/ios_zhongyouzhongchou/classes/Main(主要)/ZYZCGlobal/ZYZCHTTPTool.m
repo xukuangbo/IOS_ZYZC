@@ -28,17 +28,17 @@
     }];
 }
 
-#pragma mark --- post请求(加密)
+#pragma mark --- post请求
 +(void)postHttpDataWithEncrypt:(BOOL)needLogin andURL:(NSString *)url andParameters:(NSDictionary *)parameters andSuccessGetBlock:(SuccessGetBlock)successGet andFailBlock:(FailBlock)fail
 {
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:parameters];
     if (needLogin)
     {
-//        [newParameters addEntriesFromDictionary:[self loginPortNeedEncrypt]];
+        //此处添加需登录的操作
     }
     else
     {
-//        [newParameters addEntriesFromDictionary:[self noneLoginPortNeedEncrypt]];
+        //此处添加不需要登录的操作
     }
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -54,7 +54,6 @@
     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
         successGet(responseObject,YES);
-        successGet(responseObject,NO);
     }
     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
