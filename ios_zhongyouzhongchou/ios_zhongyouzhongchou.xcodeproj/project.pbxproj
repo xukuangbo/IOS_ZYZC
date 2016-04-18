@@ -1473,7 +1473,7 @@
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/classes/Main(主要)/libs/lame",
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/classes/Main(主要)/libs/WeChatSDK1.6.2",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.www.zhongyouzhongchou110;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.zhongyouzhongchou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";
@@ -1509,7 +1509,7 @@
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/classes/Main(主要)/libs/lame",
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/classes/Main(主要)/libs/WeChatSDK1.6.2",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.www.zhongyouzhongchou110;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.zhongyouzhongchou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";

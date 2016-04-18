@@ -138,31 +138,33 @@
 {
     switch (sender.tag) {
         case SkimType:
-            NSLog(@"SkimType");
+           
             break;
         case NextType:
-            NSLog(@"NextType");
+           
             break;
         default:
         case SaveType:
-            NSLog(@"SaveType");
-            //保存旅游每日行程安排到单例中
-            MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-            [manager.travelDetailArr removeAllObjects];
-            MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
-            for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
-                TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
-                [travelSecondCell saveTravelOneDayDetailData];
-                [manager.travelDetailArr addObject:travelSecondCell.oneDetailModel];
-            }
-            NSLog(@"manager.travelDetailArr.count%zd",manager.travelDetailArr.count);
-            NSLog(@"manager.travelDetailArr%@",manager.travelDetailArr);
-
-
+            //保存数据
+            [self saveData];
             break;
     }
 }
 
+#pragma mark --- 保存数据
+-(void)saveData
+{
+    //保存旅游每日行程安排到单例中
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    
+    [manager.travelDetailArr removeAllObjects];
+    MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
+    for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
+        TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
+        [travelSecondCell saveTravelOneDayDetailData];
+        [manager.travelDetailArr addObject:travelSecondCell.oneDetailModel];
+    }
+}
 
 #pragma mark - MoreFZCToolBarDelegate
 - (void)toolBarWithButton:(NSInteger)buttonTag

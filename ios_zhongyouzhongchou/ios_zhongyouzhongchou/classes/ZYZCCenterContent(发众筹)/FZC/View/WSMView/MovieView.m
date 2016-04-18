@@ -156,8 +156,14 @@
     */
 }
 
-#pragma mark --- imagePickerController方法回调
+#pragma mark --- imagePickerController 点击退出方法回调
 
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    
+}
+
+#pragma mark --- imagePickerController 选择后方法回调
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
         //获取媒体类型
@@ -192,12 +198,12 @@
             else
             {
                 //如果此处已存在文件删除已保存的文件
-                if (self.myVideoPath) {
+                if (self.movieFilePath) {
                     //开启线程删除
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                         NSError *error03=nil;
                         NSFileManager *manager=[NSFileManager defaultManager];
-                        BOOL isRemovePreMP4File=[manager removeItemAtURL:self.myVideoPath error:&error03];
+                        BOOL isRemovePreMP4File=[manager removeItemAtURL:self.movieFilePath error:&error03];
                         if (isRemovePreMP4File) {
                             NSLog(@"pre_mp4文件已移出");
                         }
@@ -207,11 +213,12 @@
                         }
                     });
                 }
-                //将文件转换成MP4格式
+                //开启线程将文件转换成MP4格式
                  __weak typeof (&*self)weakSelf=self;
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     NSURL  *inputURL  = mediaURL;
-                    NSURL  *outputURL = [NSURL fileURLWithPath:[self pathForMP4File]];
+                    NSString *outPutURLStr=[self pathForMP4File];
+                    NSURL  *outputURL = [NSURL fileURLWithPath:outPutURLStr];
                     [weakSelf turntoMP4WithInputURL:inputURL
                                       outputURL:outputURL
                                    blockHandler:^(AVAssetExportSession *hander){
@@ -229,7 +236,17 @@
                                            }
                                        });
                                        //记录文件路径
-                                       weakSelf.myVideoPath=outputURL;
+                                       weakSelf.movieFilePath=outputURL;
+                                       
+                                       //将门MP4文件路径保存到单例中
+                                       MoreFZCDataManager *dataManager=[MoreFZCDataManager sharedMoreFZCDataManager];
+                                       if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
+                                           dataManager.raiseMoney_movieUrl=outPutURLStr;
+                                       }
+                                       else if ([self.contentBelong isEqualToString:RETURN_CONTENTBELONG])
+                                       {
+                                            dataManager.return_movieUrl=outPutURLStr;
+                                       }
                                    }];
                 });
                 
@@ -348,7 +365,7 @@
     
     if (alertView.tag==KFZC_MOVIERECORDSAVE_TAG||buttonIndex==1) {
         //保存视频至相册（异步线程）
-        NSString *urlStr = [self.myVideoPath path];
+        NSString *urlStr = [self.movieFilePath path];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(urlStr)) {
                 UISaveVideoAtPathToSavedPhotosAlbum(urlStr, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);

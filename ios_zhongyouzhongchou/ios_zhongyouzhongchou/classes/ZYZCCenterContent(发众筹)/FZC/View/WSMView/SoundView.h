@@ -27,5 +27,7 @@
  */
 @property (nonatomic, strong)  DrawCircleView *circleView;
 
+@property (nonatomic, copy  )  NSString *soundFilePath;
+
 
 @end

@@ -110,6 +110,16 @@
     }
     _soundObj.soundFileName=[ZYZCTool getLocalTime];
     [_soundObj recordMySound];
+    self.soundFilePath=[_soundObj getSavePath];
+    //保存语音路径到单例中
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
+        manager.raiseMoney_voiceUrl=self.soundFilePath;
+    }
+    else if ([self.contentBelong isEqualToString:RETURN_CONTENTBELONG])
+    {
+        manager.return_voiceUrl=self.soundFilePath;
+    }
 }
 
 #pragma mark --- 停止语音录制
@@ -146,6 +156,18 @@
     [self changeTimeRecordLab];
     
     [_soundObj deleteMySound];
+    
+    self.soundFilePath=nil;
+    //删除单例中语音路径，赋值为@“”
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
+        manager.raiseMoney_voiceUrl= self.soundFilePath;
+    }
+    else if ([self.contentBelong isEqualToString:RETURN_CONTENTBELONG])
+    {
+        manager.return_voiceUrl= self.soundFilePath;
+    }
+
 }
 
 #pragma mark --- 进度条改变

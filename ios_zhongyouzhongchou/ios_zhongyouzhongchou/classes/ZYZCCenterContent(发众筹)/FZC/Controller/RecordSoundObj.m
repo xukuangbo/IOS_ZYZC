@@ -93,6 +93,7 @@
     [self setAudioSession];
     
     [self.audioRecorder record];//首次使用应用时如果调用record方法会询问用户是否允许使用麦克风
+    
 }
 
 #pragma mark --- 停止录制

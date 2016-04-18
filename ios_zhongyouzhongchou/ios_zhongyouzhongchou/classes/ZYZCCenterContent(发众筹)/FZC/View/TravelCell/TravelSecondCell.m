@@ -100,27 +100,32 @@
 {
     AddSceneView *sceneContentView=[_addView viewWithTag:SceneContentType];
     //保存景点描述文字
-    _oneDetailModel.siteDes=sceneContentView.placeholdLab.text;
+    _oneDetailModel.siteDes=sceneContentView.textView.text;
     //保存景点图库标示符
     _oneDetailModel.sitesArr=sceneContentView.siteTagArr;
     
     AddSceneView *trafficContentView=[_addView viewWithTag:TrafficContentType];
     //保存交通描述文字
-    _oneDetailModel.trafficDes=trafficContentView.placeholdLab.text;
+    _oneDetailModel.trafficDes=trafficContentView.textView.text;
     
     AddSceneView *accommodateContentView=[_addView viewWithTag:AccommodateContentType];
     //保存住宿描述文字
-    _oneDetailModel.accommodateDes=accommodateContentView.placeholdLab.text;
+    _oneDetailModel.accommodateDes=accommodateContentView.textView.text;
     
      AddSceneView *foodContentView=[_addView viewWithTag:FoodContentType];
     //保存餐饮描述文字
-    _oneDetailModel.foodDes=foodContentView.placeholdLab.text;
+    _oneDetailModel.foodDes=foodContentView.textView.text;
+    
     //保存当日旅游文字描述
-    _oneDetailModel.travelDes=@"";
+    WordView *wordView=(WordView *)[_contentEntryView viewWithTag:WordViewType];
+    _oneDetailModel.travelDes=wordView.textView.text;
+    
     //保存当日旅游语音描述
-    _oneDetailModel.voiceUrl=nil;
+    SoundView *soundView=(SoundView *)[_contentEntryView viewWithTag:SoundViewType];
+    _oneDetailModel.voiceUrl=soundView.soundFilePath;
     //保存当日旅游视屏描述
-    _oneDetailModel.movieUrl=nil;
+    MovieView *movieView=(MovieView *)[_contentEntryView viewWithTag:MovieViewType];
+    _oneDetailModel.movieUrl=[movieView.movieFilePath path];
 }
 
 @end
