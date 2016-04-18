@@ -38,7 +38,7 @@
 /**
  *  性别
  */
-@property (nonatomic, assign) NSInteger sex;
+@property (nonatomic, assign) NSNumber *sex;
 /**
  *  语言
  */
@@ -59,5 +59,12 @@
  *  头像
  */
 @property (nonatomic, copy) NSString *headimgurl;
+
+
 + (instancetype)accountWithDict:(NSDictionary *)dict;
+
+/**
+ *  把微信的部分注册信息存储起来
+ */
++ (instancetype)accountWithPersonalMessage:(NSDictionary *)dict;
 @end

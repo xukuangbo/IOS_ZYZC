@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		040DE0E21CA26C5E00BF3AF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040DE0E11CA26C5E00BF3AF6 /* Assets.xcassets */; };
+		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
 		04A99C8A1CBF848D00C6F5F0 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99BD11CBF848C00C6F5F0 /* libmp3lame.a */; };
 		04A99C8D1CBF848D00C6F5F0 /* UIColor+ZYZCColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BDA1CBF848C00C6F5F0 /* UIColor+ZYZCColors.m */; };
 		04A99C8E1CBF848D00C6F5F0 /* UIView+GetSuperTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BDC1CBF848C00C6F5F0 /* UIView+GetSuperTableView.m */; };
@@ -138,6 +139,8 @@
 
 /* Begin PBXFileReference section */
 		040DE0E11CA26C5E00BF3AF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		048DDE9A1CC229F600136C7A /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
+		048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
 		04A99BD01CBF848C00C6F5F0 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
 		04A99BD11CBF848C00C6F5F0 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		04A99BD91CBF848C00C6F5F0 /* UIColor+ZYZCColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ZYZCColors.h"; sourceTree = "<group>"; };
@@ -390,6 +393,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		048DDE991CC229F600136C7A /* MBProgressHUD+MJ */ = {
+			isa = PBXGroup;
+			children = (
+				048DDE9A1CC229F600136C7A /* MBProgressHUD+MJ.h */,
+				048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */,
+			);
+			path = "MBProgressHUD+MJ";
+			sourceTree = "<group>";
+		};
 		04A99BCC1CBF848C00C6F5F0 /* classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +428,7 @@
 		04A99BCE1CBF848C00C6F5F0 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				048DDE991CC229F600136C7A /* MBProgressHUD+MJ */,
 				04A99CF41CBF897A00C6F5F0 /* WeChatSDK1.6.2 */,
 				04A99BCF1CBF848C00C6F5F0 /* lame */,
 			);
@@ -1245,6 +1258,7 @@
 				04A99CBD1CBF848D00C6F5F0 /* SoundView.m in Sources */,
 				04A99CC81CBF848D00C6F5F0 /* MineMessageController.m in Sources */,
 				04A99CA51CBF848D00C6F5F0 /* MoreFZCBaseTableView.m in Sources */,
+				048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */,
 				04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */,
 				04A99CCC1CBF848D00C6F5F0 /* MineCenterTableView.m in Sources */,
 				04A99CA81CBF848D00C6F5F0 /* MoreFZCRaiseMoneyTableView.m in Sources */,
@@ -1467,7 +1481,7 @@
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/classes/Main(主要)/libs/lame",
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/classes/Main(主要)/libs/WeChatSDK1.6.2",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.www.zhongyouzhongchou110;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.zhongyouzhongchou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";
@@ -1503,7 +1517,7 @@
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/classes/Main(主要)/libs/lame",
 					"$(PROJECT_DIR)/ios_zhongyouzhongchou/classes/Main(主要)/libs/WeChatSDK1.6.2",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.www.zhongyouzhongchou110;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sosona.zhongyouzhongchou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/**";

@@ -12,6 +12,9 @@
 #import "ZYZCAccountTool.h"
 #import "WXApiManager.h"
 #import "WXApiObject.h"
+
+
+#import "MBProgressHUD+MJ.h"
 #define mineCornerRadius 5
 #define mineMargin 4
 @interface MineHeadView ()<WXApiManagerDelegate>
@@ -92,7 +95,7 @@
         
         //5.职业
         UILabel *professionLabel = [[UILabel alloc] init];
-        professionLabel.text = @"摄影师";
+        professionLabel.text = @"暂无职业";
         professionLabel.font = [UIFont systemFontOfSize:13];
         professionLabel.top = vipView.bottom + mineMargin;
         professionLabel.left = 0;
@@ -105,7 +108,7 @@
         
         //6.描述
         UILabel *descLabel = [[UILabel alloc] init];
-        descLabel.text = @"24岁，白羊座，168cm，爱潜水，爱阅读，爱旅行";
+        descLabel.text = @"点击设置添加个人描述";
         descLabel.font = [UIFont systemFontOfSize:13];
         descLabel.top = professionLabel.bottom + mineMargin;
         descLabel.left = 0;
@@ -200,22 +203,51 @@
 
 #pragma mark - 刷新数据
 /**
- *  刷新用户数据
+ *  刷新微信用户数据（头像等）
  */
 - (void)reloadAccountData
 {
     ZYZCAccountModel *account = [ZYZCAccountTool account];
+    __block typeof(&*account) weakAccount = account;
     if (account) {
         
         NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",account.access_token,account.openid];
         AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
         mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
-        [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        __block typeof(mgr) weakMgr = mgr;
+        [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *responseObject) {
             NSLog(@"%@",responseObject);
-            //这里可以请求到数据，然后加载给account
+            //这里可以请求到数据，然后加载给account,注册并加载数据
             
+            [MBProgressHUD showMessage:@"正在加载个人数据"];
+            /**
+             *  记录到账号模型
+             */
+            weakAccount = [ZYZCAccountModel accountWithPersonalMessage:responseObject];
+            [ZYZCAccountTool saveAccount:weakAccount];
             
-            
+            NSDictionary *parameter = @{
+                @"openid": weakAccount.openid,
+                @"nickname": weakAccount.nickname,
+                @"sex": weakAccount.sex,
+                @"language": weakAccount.language,
+                @"city": weakAccount.city,
+                @"province": weakAccount.province,
+                @"country": weakAccount.country,
+                @"headimgurl": weakAccount.headimgurl
+                };
+//            NSData *data = [NSJSONSerialization dataWithJSONObject :parameter options : NSJSONWritingPrettyPrinted error:NULL];
+//            
+//            NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+            [weakMgr POST:@"http://121.40.225.119:8080/register/saveWeixinInfo.action" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                NSLog(@"%@",responseObject);
+                //这里可以显示注册的信息，如果注册成功的话，就显示，如果失败的话，就
+                [self showRegisMessage:(NSDictionary *)responseObject];
+                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                NSLog(@"%@",error);
+            }];
 //            [self.iconButton sd_setImageWithURL:[NSURL URLWithString:account.headimgurl] forState:UIControlStateNormal];
 //            self.nameLabel.text = account.name;
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -224,7 +256,28 @@
     }
     
     
+    
+    
 }
+
+#pragma mark - 展示注册完成后的信息
+- (void)showRegisMessage:(NSDictionary *)responseObject
+{
+    //作请求成功与否的判断
+    if ([responseObject[@"code"] isEqual:@0]) {//注册成功,显示信息
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"注册成功，正在加载个人数据"];
+        ZYZCAccountModel *account = [ZYZCAccountTool account];
+        self.nameLabel.text = account.nickname;
+        SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
+        [self.iconButton sd_setImageWithURL:[NSURL URLWithString:account.headimgurl] forState:UIControlStateNormal placeholderImage:nil options:options completed:nil];
+        
+        [MBProgressHUD hideHUD];
+    }else if([responseObject[@"code"] isEqual:@1]){
+        [MBProgressHUD showError:@"注册失败"];
+    }
+}
+
 #pragma mark - WXApiManagerDelegate
 - (void)managerDidRecvGetMessageReq:(GetMessageFromWXReq *)request
 {
