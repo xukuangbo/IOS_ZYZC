@@ -20,7 +20,19 @@
     }
     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
-        successGet(responseObject,YES);
+        if (responseObject[@"code"]) {
+            if ([responseObject[@"code"] isEqual:@0]) {
+                successGet(responseObject,YES);
+            }
+            else
+            {
+                successGet(responseObject,NO);
+            }
+        }
+        else
+        {
+            successGet(responseObject,nil);
+        }
     }
     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
@@ -57,12 +69,18 @@
     }
     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
-        if ([responseObject[@"code"] isEqual:@0]) {
-            successGet(responseObject,YES);
+        if (responseObject[@"code"]) {
+            if ([responseObject[@"code"] isEqual:@0]) {
+                successGet(responseObject,YES);
+            }
+            else
+            {
+                successGet(responseObject,NO);
+            }
         }
         else
         {
-            successGet(responseObject,NO);
+            successGet(responseObject,nil);
         }
         
     }
