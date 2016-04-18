@@ -41,7 +41,6 @@
     [self initWithWechat];
 
 //    [self getFileToTmp];
-    
     return YES;
 }
 /**

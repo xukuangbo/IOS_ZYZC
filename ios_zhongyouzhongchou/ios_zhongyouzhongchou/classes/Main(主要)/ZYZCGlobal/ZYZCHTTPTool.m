@@ -14,13 +14,26 @@
 +(void)getHttpDataByURL:(NSString *)url withSuccessGetBlock:(SuccessGetBlock)successGet  andFailBlock:(FailBlock)fail
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
+    manager.responseSerializer.acceptableContentTypes =
+    [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress)
     {
     }
     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
-        successGet(responseObject,YES);
+        if (responseObject[@"code"]) {
+            if ([responseObject[@"code"] isEqual:@0]) {
+                successGet(responseObject,YES);
+            }
+            else
+            {
+                successGet(responseObject,NO);
+            }
+        }
+        else
+        {
+            successGet(responseObject,nil);
+        }
     }
     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
@@ -57,12 +70,18 @@
     }
     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
-        if ([responseObject[@"code"] isEqual:@0]) {
-            successGet(responseObject,YES);
+        if (responseObject[@"code"]) {
+            if ([responseObject[@"code"] isEqual:@0]) {
+                successGet(responseObject,YES);
+            }
+            else
+            {
+                successGet(responseObject,NO);
+            }
         }
         else
         {
-            successGet(responseObject,NO);
+            successGet(responseObject,nil);
         }
         
     }
