@@ -7,7 +7,7 @@
 //
 
 #import "ZYZCAccountModel.h"
-
+#import "ZYZCAccountTool.h"
 @implementation ZYZCAccountModel
 + (instancetype)accountWithDict:(NSDictionary *)dict
 {
@@ -18,6 +18,48 @@
     // 获得账号存储的时间（accessToken的产生时间）
     account.created_time = [NSDate date];
     return account;
+}
+
+
+/**
+ *  获取微信的个人信息，再存到本地
+ */
++ (instancetype)accountWithPersonalMessage:(NSDictionary *)dict
+{
+    ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
+    /**
+     *  openid
+     */
+    accountModel.openid = dict[@"openid"];
+    /** 用户的昵称 */
+    accountModel.nickname = dict[@"nickname"];
+    /**
+     *  性别
+     */
+    accountModel.sex = dict[@"sex"];
+    /**
+     *  语言
+     */
+    accountModel.language = dict[@"language"];
+    /**
+     *  城市
+     */
+    accountModel.city = dict[@"city"];
+    /**
+     *  省
+     */
+    accountModel.province = dict[@"province"];
+    /**
+     *  国家
+     */
+    accountModel.country = dict[@"country"];
+    /**
+     *  头像
+     */
+    accountModel.headimgurl = dict[@"headimgurl"];
+    
+    return accountModel;
+    
 }
 
 /**
@@ -32,6 +74,10 @@
     [encoder encodeObject:self.unionid forKey:@"unionid"];
     [encoder encodeObject:self.created_time forKey:@"created_time"];
     [encoder encodeObject:self.nickname forKey:@"nickname"];
+    [encoder encodeObject:self.sex forKey:@"sex"];
+    [encoder encodeObject:self.language forKey:@"language"];
+    [encoder encodeObject:self.city forKey:@"city"];
+    
 }
 
 /**
@@ -47,6 +93,9 @@
         self.unionid = [decoder decodeObjectForKey:@"unionid"];
         self.created_time = [decoder decodeObjectForKey:@"created_time"];
         self.nickname = [decoder decodeObjectForKey:@"nickname"];
+        self.sex = [decoder decodeObjectForKey:@"sex"];
+        self.language = [decoder decodeObjectForKey:@"language"];
+        self.city = [decoder decodeObjectForKey:@"city"];
     }
     return self;
 }

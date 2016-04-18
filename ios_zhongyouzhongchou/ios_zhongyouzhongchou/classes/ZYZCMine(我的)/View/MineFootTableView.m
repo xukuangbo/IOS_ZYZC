@@ -79,5 +79,37 @@
     return nil;
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"---------------");
+    
+//    NSURLSessionConfiguration *config = [[NSURLSessionConfiguration defaultSessionConfiguration];
+//    config
+//    NSURLSession *session = [NSURLSession sessionWithConfiguration:<#(nonnull NSURLSessionConfiguration *)#> delegate:<#(nullable id<NSURLSessionDelegate>)#> delegateQueue:<#(nullable NSOperationQueue *)#>];
+    
+    
+    AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
+    mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
+    NSDictionary *parameter = @{
+                                @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
+                                @"nickname": @"Band",
+                                @"sex": @1,
+                                @"language": @"zh_CN",
+                                @"city": @"广州",
+                                @"province": @"广东",
+                                @"country": @"中国",
+                                @"headimgurl":  @"http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0"
+                                };
+    NSData *data = [NSJSONSerialization dataWithJSONObject :parameter options : NSJSONWritingPrettyPrinted error:NULL];
+    
+    NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+//    NSLog(@"%@",jsonStr);
+    [mgr POST:@"http://121.40.225.119:8080/register/saveWeixinInfo.action" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+    //            [self.iconButton sd_setImageWithURL:[NSURL URLWithString:account.headimgurl] forState:UIControlStateNormal];
+    //            self.nameLabel.text = account.name;
+}
 @end
