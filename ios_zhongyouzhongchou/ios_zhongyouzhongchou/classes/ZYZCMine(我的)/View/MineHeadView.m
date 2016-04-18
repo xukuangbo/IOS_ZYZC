@@ -211,7 +211,7 @@
         AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
         mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
         [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//            NSLog(@"%@",responseObject);
+            NSLog(@"%@",responseObject);
             //这里可以请求到数据，然后加载给account
             
             
@@ -262,6 +262,9 @@
         //这里还需要去请求个人信息，然后保存到本地
         ZYZCAccountModel *accountModel = [ZYZCAccountModel accountWithDict:responseObject];
         [ZYZCAccountTool saveAccount:accountModel];
+        
+        
+        
         
         
         //这里可以让headview刷新一下数据
