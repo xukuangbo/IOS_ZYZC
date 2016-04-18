@@ -14,7 +14,8 @@
 +(void)getHttpDataByURL:(NSString *)url withSuccessGetBlock:(SuccessGetBlock)successGet  andFailBlock:(FailBlock)fail
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
+    manager.responseSerializer.acceptableContentTypes =
+    [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress)
     {
     }
