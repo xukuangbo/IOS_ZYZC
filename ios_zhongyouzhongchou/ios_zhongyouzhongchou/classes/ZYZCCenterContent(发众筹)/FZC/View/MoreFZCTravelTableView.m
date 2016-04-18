@@ -80,7 +80,7 @@
         }
         NSDate *cellDate=[NSDate dateWithTimeInterval:cellNumber*24*60*60 sinceDate:startDate];
         travelSecondCell.oneDetailModel.date=cellDate;
-        travelSecondCell.soundFileName=cellId;
+        travelSecondCell.contentBelong=TRAVEL_CONTENTBELONG(indexPath.row/2);
         return travelSecondCell;
     }
     else

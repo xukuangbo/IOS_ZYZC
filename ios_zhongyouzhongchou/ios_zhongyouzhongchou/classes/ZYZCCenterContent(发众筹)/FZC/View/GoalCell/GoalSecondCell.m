@@ -5,12 +5,19 @@
 //  Created by liuliang on 16/3/18.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
+#define TRAVELPLACEHOLDER @"编写旅行主题名"
 #define ALERTTEXT @"上传诱人的美景做封面"//添加风景图提示文字
 #import "GoalSecondCell.h"
 #import "ChooseSceneImgController.h"
 #import "SelectImageViewController.h"
 #import "UIView+GetSuperTableView.h"
 #import "MoreFZCViewController.h"
+#import "ZYZCTool+getLocalTime.h"
+@interface GoalSecondCell()
+@property (nonatomic,strong)UILabel *alertLab;
+@property (nonatomic,strong)UIImageView *iconImg;
+@end
+
 @implementation GoalSecondCell
 
 /*
@@ -28,7 +35,7 @@
     [self.titleLab removeFromSuperview];
     _textField= [[UITextField alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 15, KSCREEN_W-40, 20)];
     _textField.borderStyle=UITextBorderStyleNone;
-    _textField.placeholder=@"编写旅行主题名";
+    _textField.placeholder=TRAVELPLACEHOLDER;
     _textField.font=[UIFont systemFontOfSize:17];
     _textField.delegate=self;
     _textField.returnKeyType=UIReturnKeyDone;
@@ -51,11 +58,13 @@
     alertLab.textColor=[UIColor ZYZC_TextGrayColor01];
     [alertLab setSize:CGSizeMake(labWidth, 20)];
     [frameImg addSubview:alertLab];
+    _alertLab=alertLab;
     //添加图片标示
     UIImageView *iconImg=[[UIImageView alloc]initWithFrame:CGRectMake(alertLab.right, (frameImg.height-19)/2,26, 19)];
     iconImg.userInteractionEnabled=NO;
     iconImg.image=[UIImage imageNamed:@"ico_fmpic"];
     [frameImg addSubview:iconImg];
+    _iconImg=iconImg;
     
     //给图片添加点击手势
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHappen:)];
@@ -80,11 +89,13 @@
     //选择本地相册
     UIAlertAction *draftsAction = [UIAlertAction actionWithTitle:@"本地相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         weakSelf.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+         weakSelf.imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
         [weakSelf.viewController presentViewController:weakSelf.imagePicker animated:YES completion:nil];
     }];
     //选择拍照
     UIAlertAction *giftCardAction = [UIAlertAction actionWithTitle:@"拍照获取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         weakSelf.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        weakSelf.imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
         [weakSelf.viewController presentViewController:weakSelf.imagePicker animated:YES completion:nil];
     }];
     [alertController addAction:cancelAction];
@@ -97,22 +108,53 @@
 
 #pragma mark --- 获取本地照片
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    __weak typeof (&*self)weakSelf=self;
-    [picker dismissViewControllerAnimated:YES completion:^{
-        SelectImageViewController *selectImgVC=[[SelectImageViewController alloc]init];
-        selectImgVC.selectImage=[info objectForKey:UIImagePickerControllerOriginalImage];
-        selectImgVC.imageBlock=^(UIImage *img)
-        {
-            weakSelf.frameImg.image=img;
-        };
-        [weakSelf.viewController.navigationController pushViewController:selectImgVC animated:YES];
-    }];
+    NSLog(@"info:%@",info);
+    if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*)kUTTypeImage])
+    {
+        __weak typeof (&*self)weakSelf=self;
+        [picker dismissViewControllerAnimated:YES completion:^{
+            SelectImageViewController *selectImgVC=[[SelectImageViewController alloc]init];
+            selectImgVC.selectImage=[info objectForKey:UIImagePickerControllerEditedImage];
+            selectImgVC.imageBlock=^(UIImage *img)
+            {
+                weakSelf.frameImg.image=img;
+                weakSelf.alertLab.hidden=YES;
+                weakSelf.iconImg.hidden=YES;
+                // Write image to PNG
+                NSString *filePath=[weakSelf getImagePath];
+                [UIImagePNGRepresentation(img)
+                 writeToFile:filePath atomically:YES];
+                NSLog(@"png_filePath:%@",filePath);
+                //将图片路径保存到单例中
+                MoreFZCDataManager  *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+                manager.goal_travelThemeImgUrl=filePath;
+            };
+            [weakSelf.viewController.navigationController pushViewController:selectImgVC animated:YES];
+        }];
+
+    }
+}
+
+#pragma mark --- 获取图片在存储在本地的路径
+-(NSString *)getImagePath
+{
+    NSString *documentDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *localTime=[ZYZCTool getLocalTime];
+    NSString *pngPath =[documentDir stringByAppendingPathComponent:[NSString stringWithFormat:@"img/%@.png",localTime]];
+    return pngPath;
+   
 }
 
 #pragma mark --- textField代理方法
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [_textField endEditing:YES];
+    if(textField ==_textField){
+        [_textField endEditing:YES];
+        if (![_textField.text isEqualToString:@""]) {
+            MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+            manager.goal_travelTheme=_textField.text;
+        }
+    }
     return YES;
 }
 
@@ -144,5 +186,6 @@
     self.getSuperTableView.contentInset = UIEdgeInsetsMake(64 + 40, 0, 49, 0);
     [[NSNotificationCenter defaultCenter] removeObserver: self name:UIKeyboardWillHideNotification object:nil];
 }
+
 
 @end

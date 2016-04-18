@@ -31,7 +31,13 @@
 #pragma mark --- post请求
 +(void)postHttpDataWithEncrypt:(BOOL)needLogin andURL:(NSString *)url andParameters:(NSDictionary *)parameters andSuccessGetBlock:(SuccessGetBlock)successGet andFailBlock:(FailBlock)fail
 {
-    NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:parameters];
+//    NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:parameters];
+    //转换成json
+//    NSData *data = [NSJSONSerialization dataWithJSONObject :newParameters options : NSJSONWritingPrettyPrinted error:NULL];
+//    
+//    NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+    
+
     if (needLogin)
     {
         //此处添加需登录的操作
@@ -45,15 +51,20 @@
     manager.responseSerializer.acceptableContentTypes =
     [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     
-    [manager POST:url parameters:newParameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+    [manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress)
     {
-    }
-    progress:^(NSProgress * _Nonnull uploadProgress)
-    {
+        
     }
     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
-        successGet(responseObject,YES);
+        if ([responseObject[@"code"] isEqual:@0]) {
+            successGet(responseObject,YES);
+        }
+        else
+        {
+            successGet(responseObject,NO);
+        }
+        
     }
     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
@@ -92,7 +103,7 @@
 #pragma mark --- 获取本地时间
 +(NSString *)getTime {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMddHHmmssSSS"];
+    [formatter setDateFormat:@"yyyyMMddHHmmss"];
     return [formatter stringFromDate:[NSDate date]];
 }
 

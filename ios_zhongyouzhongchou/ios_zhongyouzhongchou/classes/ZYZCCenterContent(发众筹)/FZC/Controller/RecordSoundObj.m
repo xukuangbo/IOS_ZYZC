@@ -7,7 +7,6 @@
 //
 #import "ZYZCOSSManager.h"
 #import "RecordSoundObj.h"
-
 @implementation RecordSoundObj
 
 - (instancetype)init
@@ -31,12 +30,12 @@
 /**
  *  取得录音文件保存路径
  *
- *  @return 录音文件路径
+ *  @return 录音文件路径，放在临时文件夹下
  */
 -(NSString *)getSavePath{
     
-    NSString *documentDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *path =[documentDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",_soundFileName]];
+    NSString *tmpDir = NSTemporaryDirectory();
+    NSString *path =[tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",_soundFileName]];
     NSLog(@"kWAVAudioFile_path:%@",path);
     return path;
 }
@@ -94,6 +93,7 @@
     [self setAudioSession];
     
     [self.audioRecorder record];//首次使用应用时如果调用record方法会询问用户是否允许使用麦克风
+    
 }
 
 #pragma mark --- 停止录制
@@ -143,12 +143,6 @@
     
 }
 
--(void)setSoundFileName:(NSString *)soundFileName
-{
-    _soundFileName=soundFileName;
-}
-
-
 #pragma mark - 录音机代理方法
 /**
  *  录音完成，录音完成后播放录音
@@ -160,6 +154,8 @@
         NSLog(@"录音完成!");
 }
 
+
+/*
 #pragma mark --- 存储MP3格式文件路径
 -(NSString *)saveMP3Path
 {
@@ -252,5 +248,6 @@
     }
     
 }
+ */
 
 @end

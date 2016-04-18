@@ -41,7 +41,7 @@ static id _instace;
     self = [super init];
     if (self) {
         //这里写要初始化的东西！！！
-        _goal_TotalTravelDay=@1;
+        _goal_TotalTravelDay=@"1";
         _travelDetailArr=[NSMutableArray array];
         _return_supportOneYuanStatus=@"1";
         _return_supportAnyYuanStatus=@"1";

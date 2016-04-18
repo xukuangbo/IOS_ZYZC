@@ -9,7 +9,7 @@
 #import "ZYZCOSSManager.h"
 #import <AliyunOSSiOS/OSSService.h>
 #import <AliyunOSSiOS/OSSCompat.h>
-
+#import "ZYZCTool+getLocalTime.h"
 
 NSString * const AccessKey = @"ZEoTY0iktlhynuSO";
 NSString * const SecretKey = @"GQkbvA5jPY3gCFKjXQg3Pvw6DZQulM";
@@ -244,18 +244,9 @@ OSSClient * client;
 -(NSString *)getPutFileNameByType:(NSString *)type
 {
     NSString *userId=[ZYZCTool getUserId];
-    NSString *timestamp=[self getLocalTime];
+    NSString *timestamp=[ZYZCTool getLocalTime];
     NSString *fileName=[NSString stringWithFormat:@"%@/%@/%@.%@",userId,type,timestamp,type];
     return fileName;
-}
-
-#pragma mark --- 获取本地时间
--(NSString *)getLocalTime
-{
-    NSDateFormatter *formater = [[NSDateFormatter alloc] init];
-    [formater setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *localTime=[formater stringFromDate:[NSDate date]];
-    return localTime;
 }
 
 @end

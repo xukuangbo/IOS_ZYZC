@@ -26,9 +26,8 @@
  *  圆环进度条
  */
 @property (nonatomic, strong)  DrawCircleView *circleView;
-/**
- *  语音文件名
- */
-@property (nonatomic, copy  )  NSString *soundFileName;
+
+@property (nonatomic, copy  )  NSString *soundFilePath;
+
 
 @end

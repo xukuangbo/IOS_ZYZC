@@ -104,12 +104,14 @@
     }
 }
 
-#pragma mark --- 定义语音文件名
--(void)setSoundFileName:(NSString *)soundFileName
+#pragma mark --- 记录FZCContentEntryView的来源模块：（筹旅费，行程，回报）
+-(void)setContentBelong:(NSString *)contentBelong
 {
-    _soundFileName=soundFileName;
-    SoundView *soundView=(SoundView *)[self viewWithTag:SoundViewType];
-    soundView.soundFileName=soundFileName;
+    _contentBelong=contentBelong;
+    for (int i=0; i<3; i++) {
+        WSMBaseView *typeView=(WSMBaseView *)[self viewWithTag:WordViewType+i];
+        typeView.contentBelong=contentBelong;
+    }
 }
 
 @end

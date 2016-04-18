@@ -40,14 +40,14 @@
 /**
  *  当天旅游图片描述
  */
-@property (nonatomic, strong) NSArray *travelImgArr;
+@property (nonatomic, strong) NSArray  *travelImgArr;
 /**
  *  当天旅游的语音录入
  */
-@property (nonatomic, strong) NSURL  *voiceUrl;
+@property (nonatomic, copy  ) NSString *voiceUrl;
 /**
  *  当天旅游视屏录入
  */
-@property (nonatomic, strong) NSURL *movieUrl;
+@property (nonatomic, copy  ) NSString *movieUrl;
 
 @end

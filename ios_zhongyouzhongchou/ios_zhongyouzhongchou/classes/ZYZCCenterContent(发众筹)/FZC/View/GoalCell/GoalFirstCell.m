@@ -214,7 +214,7 @@
     }
 }
 
-#pragma mark --- 刷新数据
+#pragma mark --- 刷新数据 人数是否发生改变
 -(void)reloadViews
 {
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];

@@ -312,7 +312,7 @@ static NSString *DayCell = @"DayCell";
     //单例纪录返回时间
     manager.goal_backDate=_scheduleView.backLab.text;
     //单例纪录旅行总天数
-    manager.goal_TotalTravelDay=[NSNumber numberWithInteger:_travelTotalDays];
+    manager.goal_TotalTravelDay=[NSString stringWithFormat:@"%zd", _travelTotalDays];
     if (self.confirmBlock) {
         self.confirmBlock();
     }

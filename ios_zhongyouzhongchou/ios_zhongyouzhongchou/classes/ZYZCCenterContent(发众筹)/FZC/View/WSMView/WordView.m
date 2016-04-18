@@ -54,7 +54,6 @@
 #pragma mark --- tap点击事件
 -(void)tapHappen:(UITapGestureRecognizer *)tap
 {
-    
     WordEditViewController *wordEditVC=[[WordEditViewController alloc]init];
     wordEditVC.myTitle=@"图文描述";
     wordEditVC.preText=_textView.text;
@@ -69,6 +68,20 @@
             weakSelf.placeHolderLab.hidden=NO;
         }
         weakSelf.textView.text=textStr;
+        
+        //文字描述存入单例中
+        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+        //筹旅费文字描述
+        if([weakSelf.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG])
+        {
+            manager.raiseMoney_wordDes=textStr;
+        }
+        //回报文字描述
+        else if ([weakSelf.contentBelong isEqualToString:RETURN_CONTENTBELONG])
+        {
+            manager.return_wordDes=textStr;
+        }
+        
     };
 
     [self.viewController presentViewController:wordEditVC animated:YES completion:nil];
