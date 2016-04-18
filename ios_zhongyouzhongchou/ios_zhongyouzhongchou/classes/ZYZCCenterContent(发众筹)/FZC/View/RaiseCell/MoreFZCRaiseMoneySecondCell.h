@@ -25,7 +25,5 @@ typedef enum{
 
 @property (nonatomic, weak) UILabel *discLab;
 
-@property (nonatomic, copy) NSString *soundFileName;
-
 @property (nonatomic, weak) FZCContentEntryView *contentEntryView;
 @end

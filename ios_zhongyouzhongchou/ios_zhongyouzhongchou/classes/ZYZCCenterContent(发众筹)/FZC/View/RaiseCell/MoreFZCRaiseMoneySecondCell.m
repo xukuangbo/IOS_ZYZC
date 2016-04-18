@@ -5,7 +5,9 @@
 //  Created by mac on 16/3/22.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
+
 #define kRaiseMoneySecondCellMargin 10
+
 #import "MoreFZCRaiseMoneySecondCell.h"
 #import "RaiseMoneySecondCellView.h"
 #import "FZCContentEntryView.h"
@@ -48,6 +50,7 @@
     
     
     FZCContentEntryView *contentEntryView = [[FZCContentEntryView alloc] initWithFrame:CGRectMake(kRaiseMoneySecondCellMargin, lianView.bottom, recordView.width - 2 * kRaiseMoneySecondCellMargin, recordView.height - lianView.bottom - kRaiseMoneySecondCellMargin)];
+    contentEntryView.contentBelong=RAISEMONEY_CONTENTBELONG;
     [recordView addSubview:contentEntryView];
     self.contentEntryView = contentEntryView;
 }
@@ -63,12 +66,6 @@
         }
     }
     return nil;
-}
-
--(void)setSoundFileName:(NSString *)soundFileName
-{
-    _soundFileName=soundFileName;
-    _contentEntryView.soundFileName=soundFileName;
 }
 
 

@@ -113,6 +113,7 @@
 		2C901DCB1C89788C004B844B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C901DC91C89788C004B844B /* LaunchScreen.storyboard */; };
 		2C901DD61C89788C004B844B /* ios_zhongyouzhongchouTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DD51C89788C004B844B /* ios_zhongyouzhongchouTests.m */; };
 		2C901DE11C89788C004B844B /* ios_zhongyouzhongchouUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DE01C89788C004B844B /* ios_zhongyouzhongchouUITests.m */; };
+		2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */; };
 		2CC075591CBF8E9F00E49DE9 /* collectionView.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CC075581CBF8E9F00E49DE9 /* collectionView.png */; };
 		2CE21A771CC074CC00C7A797 /* MoreFZCDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE21A761CC074CC00C7A797 /* MoreFZCDataManager.m */; };
 		2CE21A7B1CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE21A7A1CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.m */; };
@@ -347,6 +348,8 @@
 		2C901DE01C89788C004B844B /* ios_zhongyouzhongchouUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ios_zhongyouzhongchouUITests.m; sourceTree = "<group>"; };
 		2C901DE21C89788C004B844B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C901DEE1C89809A004B844B /* ZYZCPch.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZYZCPch.pch; sourceTree = "<group>"; };
+		2CAAB26C1CC23FD6006D4827 /* ZYZCTool+getLocalTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZYZCTool+getLocalTime.h"; sourceTree = "<group>"; };
+		2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZYZCTool+getLocalTime.m"; sourceTree = "<group>"; };
 		2CC075581CBF8E9F00E49DE9 /* collectionView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collectionView.png; sourceTree = "<group>"; };
 		2CE21A751CC074CC00C7A797 /* MoreFZCDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCDataManager.h; sourceTree = "<group>"; };
 		2CE21A761CC074CC00C7A797 /* MoreFZCDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCDataManager.m; sourceTree = "<group>"; };
@@ -451,6 +454,8 @@
 				04A99BE71CBF848C00C6F5F0 /* ZYZCOSSManager.m */,
 				04A99BE81CBF848C00C6F5F0 /* ZYZCTool.h */,
 				04A99BE91CBF848C00C6F5F0 /* ZYZCTool.m */,
+				2CAAB26C1CC23FD6006D4827 /* ZYZCTool+getLocalTime.h */,
+				2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */,
 			);
 			path = ZYZCGlobal;
 			sourceTree = "<group>";
@@ -521,20 +526,20 @@
 				04A99C111CBF848C00C6F5F0 /* MoreFZCBaseTableView.m */,
 				04A99C121CBF848C00C6F5F0 /* MoreFZCBaseTableViewCell.h */,
 				04A99C131CBF848C00C6F5F0 /* MoreFZCBaseTableViewCell.m */,
+				04A99C1A1CBF848C00C6F5F0 /* MoreFZCToolBar.h */,
+				04A99C1B1CBF848C00C6F5F0 /* MoreFZCToolBar.m */,
 				04A99C141CBF848C00C6F5F0 /* MoreFZCGoalTableView.h */,
 				04A99C151CBF848C00C6F5F0 /* MoreFZCGoalTableView.m */,
 				04A99C161CBF848C00C6F5F0 /* MoreFZCRaiseMoneyTableView.h */,
 				04A99C171CBF848C00C6F5F0 /* MoreFZCRaiseMoneyTableView.m */,
-				04A99C181CBF848C00C6F5F0 /* MoreFZCReturnTableView.h */,
-				04A99C191CBF848C00C6F5F0 /* MoreFZCReturnTableView.m */,
-				04A99C1A1CBF848C00C6F5F0 /* MoreFZCToolBar.h */,
-				04A99C1B1CBF848C00C6F5F0 /* MoreFZCToolBar.m */,
 				04A99C1C1CBF848C00C6F5F0 /* MoreFZCTravelTableView.h */,
 				04A99C1D1CBF848C00C6F5F0 /* MoreFZCTravelTableView.m */,
+				04A99C181CBF848C00C6F5F0 /* MoreFZCReturnTableView.h */,
+				04A99C191CBF848C00C6F5F0 /* MoreFZCReturnTableView.m */,
 				04A99C071CBF848C00C6F5F0 /* GoalCell */,
 				04A99C1E1CBF848C00C6F5F0 /* RaiseCell */,
-				04A99C291CBF848D00C6F5F0 /* ReturnCell */,
 				04A99C361CBF848D00C6F5F0 /* TravelCell */,
+				04A99C291CBF848D00C6F5F0 /* ReturnCell */,
 				04A99C3F1CBF848D00C6F5F0 /* WSMView */,
 			);
 			path = View;
@@ -545,12 +550,12 @@
 			children = (
 				04A99C081CBF848C00C6F5F0 /* GoalFirstCell.h */,
 				04A99C091CBF848C00C6F5F0 /* GoalFirstCell.m */,
+				04A99C0E1CBF848C00C6F5F0 /* GoalSecondCell.h */,
+				04A99C0F1CBF848C00C6F5F0 /* GoalSecondCell.m */,
 				04A99C0A1CBF848C00C6F5F0 /* GoalPeoplePickerView.h */,
 				04A99C0B1CBF848C00C6F5F0 /* GoalPeoplePickerView.m */,
 				04A99C0C1CBF848C00C6F5F0 /* GoalScheduleView.h */,
 				04A99C0D1CBF848C00C6F5F0 /* GoalScheduleView.m */,
-				04A99C0E1CBF848C00C6F5F0 /* GoalSecondCell.h */,
-				04A99C0F1CBF848C00C6F5F0 /* GoalSecondCell.m */,
 			);
 			path = GoalCell;
 			sourceTree = "<group>";
@@ -579,12 +584,12 @@
 				04A99C2D1CBF848D00C6F5F0 /* ReturnCellBaseBGView.m */,
 				04A99C2E1CBF848D00C6F5F0 /* ReturnFirstCell.h */,
 				04A99C2F1CBF848D00C6F5F0 /* ReturnFirstCell.m */,
-				04A99C301CBF848D00C6F5F0 /* ReturnFourthCell.h */,
-				04A99C311CBF848D00C6F5F0 /* ReturnFourthCell.m */,
 				04A99C321CBF848D00C6F5F0 /* ReturnSecondCell.h */,
 				04A99C331CBF848D00C6F5F0 /* ReturnSecondCell.m */,
 				04A99C341CBF848D00C6F5F0 /* ReturnThirdCell.h */,
 				04A99C351CBF848D00C6F5F0 /* ReturnThirdCell.m */,
+				04A99C301CBF848D00C6F5F0 /* ReturnFourthCell.h */,
+				04A99C311CBF848D00C6F5F0 /* ReturnFourthCell.m */,
 			);
 			path = ReturnCell;
 			sourceTree = "<group>";
@@ -609,16 +614,16 @@
 			children = (
 				04A99C401CBF848D00C6F5F0 /* DrawCircleView.h */,
 				04A99C411CBF848D00C6F5F0 /* DrawCircleView.m */,
-				04A99C421CBF848D00C6F5F0 /* MovieView.h */,
-				04A99C431CBF848D00C6F5F0 /* MovieView.m */,
-				04A99C441CBF848D00C6F5F0 /* SoundView.h */,
-				04A99C451CBF848D00C6F5F0 /* SoundView.m */,
-				04A99C461CBF848D00C6F5F0 /* WordEditViewController.h */,
-				04A99C471CBF848D00C6F5F0 /* WordEditViewController.m */,
-				04A99C481CBF848D00C6F5F0 /* WordView.h */,
-				04A99C491CBF848D00C6F5F0 /* WordView.m */,
 				04A99C4A1CBF848D00C6F5F0 /* WSMBaseView.h */,
 				04A99C4B1CBF848D00C6F5F0 /* WSMBaseView.m */,
+				04A99C481CBF848D00C6F5F0 /* WordView.h */,
+				04A99C491CBF848D00C6F5F0 /* WordView.m */,
+				04A99C441CBF848D00C6F5F0 /* SoundView.h */,
+				04A99C451CBF848D00C6F5F0 /* SoundView.m */,
+				04A99C421CBF848D00C6F5F0 /* MovieView.h */,
+				04A99C431CBF848D00C6F5F0 /* MovieView.m */,
+				04A99C461CBF848D00C6F5F0 /* WordEditViewController.h */,
+				04A99C471CBF848D00C6F5F0 /* WordEditViewController.m */,
 			);
 			path = WSMView;
 			sourceTree = "<group>";
@@ -1228,6 +1233,7 @@
 				04A99C8E1CBF848D00C6F5F0 /* UIView+GetSuperTableView.m in Sources */,
 				04A99CAF1CBF848D00C6F5F0 /* RaiseMoneyFirstModel.m in Sources */,
 				2C901DC31C89788C004B844B /* ViewController.m in Sources */,
+				2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */,
 				04A99C9B1CBF848D00C6F5F0 /* MoreFZCChooseSceneController.m in Sources */,
 				04A99CEF1CBF851500C6F5F0 /* RMCalendarLogic.m in Sources */,
 				04A99CC51CBF848D00C6F5F0 /* CalendarViewController.m in Sources */,

@@ -70,6 +70,7 @@
     
     //创建完后可以创建那个语音录入的内容
     FZCContentEntryView *entryView = [[FZCContentEntryView alloc] initWithFrame:CGRectMake(0, entryTitleLabel.bottom, self.peopleView.width, 200)];
+    entryView.contentBelong=RETURN_CONTENTBELONG;
     [self.peopleView addSubview:entryView];
     self.entryView = entryView;
     
@@ -185,13 +186,5 @@
     [textField endEditing:YES];
     return YES;
 }
-
--(void)setSoundFileName:(NSString *)soundFileName
-{
-    _soundFileName=soundFileName;
-    _entryView.soundFileName=soundFileName;
-}
-
-
 
 @end

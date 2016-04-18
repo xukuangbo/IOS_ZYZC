@@ -9,7 +9,7 @@
 #define TEXT_02 @"提示:视屏不能长于3分钟"
 #import "MovieView.h"
 #import "MBProgressHUD.h"
-
+#import "ZYZCTool+getLocalTime.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AVFoundation/AVAssetImageGenerator.h>
 #import <AVFoundation/AVAsset.h>
@@ -498,15 +498,13 @@
 }
 
 /**
- *  视屏文件转换为MP4格式后的存储路径
+ *  视屏文件转换为MP4格式后的存储路径,放到临时文件夹中
  */
 -(NSString *)pathForMP4File
 {
     //用时间给文件全名，以免重复，在测试的时候其实可以判断文件是否存在若存在，则删除，重新生成文件即可
-    NSDateFormatter *formater = [[NSDateFormatter alloc] init];
-    [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
-    NSString *documentDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString * filePath = [documentDir stringByAppendingPathComponent:[NSString stringWithFormat:@"output-%@.mp4",[formater stringFromDate:[NSDate date]]]];
+    NSString *tmpDir = NSTemporaryDirectory();
+    NSString * filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4",[ZYZCTool getLocalTime]]];
     return filePath;
 }
 

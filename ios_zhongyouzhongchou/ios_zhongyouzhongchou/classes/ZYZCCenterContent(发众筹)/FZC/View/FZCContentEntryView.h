@@ -10,6 +10,7 @@
 #import "WordView.h"
 #import "SoundView.h"
 #import "MovieView.h"
+
 #define CONTENTHEIGHT 200
 typedef NS_ENUM(NSInteger, InputContentType)
 {
@@ -26,5 +27,5 @@ typedef NS_ENUM(NSInteger, ContentViewType)
 @interface FZCContentEntryView : UIView
 @property (nonatomic, strong) UIButton *preClickBtn;
 @property (nonatomic, strong) UIView   *selectLineView;
-@property (nonatomic, copy  ) NSString *soundFileName;
+@property (nonatomic, copy  ) NSString *contentBelong;;
 @end

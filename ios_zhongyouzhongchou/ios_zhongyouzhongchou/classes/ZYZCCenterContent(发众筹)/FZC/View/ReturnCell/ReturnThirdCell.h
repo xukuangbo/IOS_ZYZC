@@ -23,8 +23,6 @@
 @property (nonatomic, weak) UITextField *moneyTextFiled;
 @property (nonatomic, assign) BOOL open;
 
-@property (nonatomic, copy  ) NSString *soundFileName;
-
 /**
  *  人数设置view
  */

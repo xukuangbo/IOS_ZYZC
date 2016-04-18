@@ -233,7 +233,7 @@
     [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney = self.transportTextfiled.text;
     [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney = self.liveTextfiled.text;
     [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney = self.eatTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSNumber numberWithFloat: totalMoney];
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
     
     if (self.changeHeightBlock) {
          self.changeHeightBlock(self.model);
@@ -248,7 +248,7 @@
     self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",totalMoney];
     
     //这里可以拿到数据，存到单例里面去
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSNumber numberWithFloat:totalMoney];
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
     return YES;
 }
 
@@ -257,7 +257,7 @@
 {
     CGFloat totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
     //这里可以拿到数据，存到单例里面去
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSNumber numberWithFloat:totalMoney];
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString  stringWithFormat:@"%.2f",totalMoney];
     
     self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",totalMoney];
     [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney = self.sightTextfiled.text;
@@ -281,7 +281,7 @@
     [self.eatTextfiled endEditing:YES];
     
     CGFloat totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSNumber numberWithFloat:totalMoney];
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
     self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f 元",totalMoney];
 }
 @end

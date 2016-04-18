@@ -88,6 +88,22 @@
     self.window.rootViewController=mainTab;
 }
 
+-(void)createFilefolderInDoucuments
+{
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *createPath = [NSString stringWithFormat:@"%@/Image", pathDocuments];
+    NSString *createDir = [NSString stringWithFormat:@"%@/MessageQueueImage", pathDocuments];
+    
+    // 判断文件夹是否存在，如果不存在，则创建
+    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
+        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
+        [fileManager createDirectoryAtPath:createDir withIntermediateDirectories:YES attributes:nil error:nil];
+    } else {
+        NSLog(@"FileDir is exists.");
+    }
+}
+
 #pragma mark --- 删除临时文件
 -(void)cleanTmpFile
 {

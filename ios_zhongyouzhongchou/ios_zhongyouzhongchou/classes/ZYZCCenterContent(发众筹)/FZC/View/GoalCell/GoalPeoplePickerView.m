@@ -76,7 +76,7 @@
     _numberLab.attributedText=[self changeTextFontAndColorByString:[NSString stringWithFormat:@"%zd人",myNumberPeople]];
     
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    manager.goal_numberPeople=[NSNumber numberWithInteger:myNumberPeople];
+    manager.goal_numberPeople=[NSString stringWithFormat:@"%zd",myNumberPeople];
 }
 
 #pragma mark --- numberPeople的set方法

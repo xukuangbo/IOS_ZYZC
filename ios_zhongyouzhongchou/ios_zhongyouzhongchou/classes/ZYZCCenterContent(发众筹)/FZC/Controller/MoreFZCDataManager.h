@@ -26,11 +26,11 @@
 /**
  *  旅游总时间
  */
-@property (nonatomic, strong) NSNumber *goal_TotalTravelDay;
+@property (nonatomic, copy  ) NSString *goal_TotalTravelDay;
 /**
  *  一起游人数
  */
-@property (nonatomic, strong) NSNumber *goal_numberPeople;
+@property (nonatomic, copy  ) NSString *goal_numberPeople;
 /**
  *  旅行主题名
  */
@@ -61,7 +61,7 @@
 /**
  *  总金额数目
  */
-@property (nonatomic, strong) NSNumber *raiseMoney_totalMoney;
+@property (nonatomic, copy  ) NSString *raiseMoney_totalMoney;
 /**
  *  筹路费文字描述
  */

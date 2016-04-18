@@ -87,10 +87,12 @@
     }
 }
 
--(void)setSoundFileName:(NSString *)soundFileName
+
+#pragma mark --- 记录FZCContentEntryView的来源模块：（筹旅费，行程，回报）
+-(void)setContentBelong:(NSString *)contentBelong
 {
-    _soundFileName=soundFileName;
-    _contentEntryView.soundFileName=soundFileName;
+    _contentBelong=contentBelong;
+    _contentEntryView.contentBelong=contentBelong;
 }
 
 #pragma mark --- 存储数据到模型中

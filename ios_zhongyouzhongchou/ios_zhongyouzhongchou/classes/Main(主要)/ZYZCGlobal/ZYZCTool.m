@@ -17,7 +17,7 @@
     CGSize maxSize = CGSizeMake(maxW, MAXFLOAT);
     return [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
 }
-#pragma mark --- 获取本地时间
+#pragma mark --- 获取本地日期
 +(NSString *)getLocalDate
 {
     NSDate *  sendDate=[NSDate date];

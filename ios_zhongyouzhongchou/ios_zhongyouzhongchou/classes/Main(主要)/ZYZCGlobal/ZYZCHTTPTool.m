@@ -32,6 +32,12 @@
 +(void)postHttpDataWithEncrypt:(BOOL)needLogin andURL:(NSString *)url andParameters:(NSDictionary *)parameters andSuccessGetBlock:(SuccessGetBlock)successGet andFailBlock:(FailBlock)fail
 {
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:parameters];
+    //转换成json
+//    NSData *data = [NSJSONSerialization dataWithJSONObject :newParameters options : NSJSONWritingPrettyPrinted error:NULL];
+//    
+//    NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+    
+
     if (needLogin)
     {
         //此处添加需登录的操作
@@ -92,7 +98,7 @@
 #pragma mark --- 获取本地时间
 +(NSString *)getTime {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMddHHmmssSSS"];
+    [formatter setDateFormat:@"yyyyMMddHHmmss"];
     return [formatter stringFromDate:[NSDate date]];
 }
 

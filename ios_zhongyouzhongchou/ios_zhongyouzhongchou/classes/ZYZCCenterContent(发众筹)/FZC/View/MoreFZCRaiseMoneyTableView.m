@@ -93,7 +93,6 @@
     }else{//这里是第二个cell
         NSString *cellId=@"MoreFZCRaiseMoneySecondCell";
         MoreFZCRaiseMoneySecondCell *cell = [[MoreFZCRaiseMoneySecondCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        cell.soundFileName=cellId;
 
         return cell;
         

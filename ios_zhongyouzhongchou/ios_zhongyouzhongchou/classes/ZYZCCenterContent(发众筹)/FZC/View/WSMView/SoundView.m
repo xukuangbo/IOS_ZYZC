@@ -8,6 +8,7 @@
 
 #import "SoundView.h"
 #import "RecordSoundObj.h"
+#import "ZYZCTool+getLocalTime.h"
 @interface SoundView ()
 @property (nonatomic, strong)NSTimer        *timer;
 @property (nonatomic, assign)BOOL           isRecord;
@@ -53,9 +54,8 @@
     _soundBtn.frame=CGRectMake((self.width-90)/2, _secLab.bottom+10, 90, 90);
     [_soundBtn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_p"] forState:UIControlStateNormal];
     [_soundBtn addTarget:self action:@selector(recordSound) forControlEvents:UIControlEventTouchDown];
-    [_soundBtn addTarget:self action:@selector(stopRecordSound) forControlEvents:UIControlEventTouchUpInside];
-    [_soundBtn addTarget:self action:@selector(stopRecordSound) forControlEvents:UIControlEventTouchUpOutside];
-    [self addSubview:_soundBtn];
+    [_soundBtn addTarget:self action:@selector(stopRecordSound) forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchUpOutside];
+        [self addSubview:_soundBtn];
     
     //语音播放按钮
     _playerBtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -103,13 +103,12 @@
     if (!_soundObj) {
         //创建语音录制对象
         _soundObj=[[RecordSoundObj alloc]init];
-        _soundObj.soundFileName=_soundFileName;
     }
     
     if (!_timer) {
         _timer=[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(changeProgressValue) userInfo:nil repeats:YES];
     }
-    
+    _soundObj.soundFileName=[ZYZCTool getLocalTime];
     [_soundObj recordMySound];
 }
 
@@ -123,6 +122,10 @@
         _soundBtn.hidden=YES;
         [self insertSubview:_playerBtn aboveSubview:_soundBtn];
         [_soundObj stopRecordSound];
+    }
+    else
+    {
+        [self deleteSound];
     }
 }
 

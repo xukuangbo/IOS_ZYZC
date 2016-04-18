@@ -102,7 +102,6 @@
             cell = [[ReturnThirdCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         }
         cell.open = [self.openArray[indexPath.row] floatValue];
-        cell.soundFileName=cellId;
         [cell reloadManagerData];
         return cell;
     }else{
