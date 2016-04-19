@@ -9,6 +9,9 @@
 #import "MoreFZCDataManager.h"
 
 @implementation MoreFZCDataManager
+
+MJCodingImplementation
+
 // 用来保存唯一的单例对象
 static id _instace;
 
@@ -50,6 +53,20 @@ static id _instace;
     return self;
 }
 
-#pragma mark - 第四个cell
+
++ (NSDictionary *)objectClassInArray
+{
+    return @{
+             @"travelDetailArr" : [MoreFZCTravelOneDayDetailMdel class],
+            };
+}
+
++ (Class)objectClassInArray:(NSString *)propertyName
+{
+    if ([propertyName isEqualToString:@"travelDetailArr"]) {
+        return [MoreFZCTravelOneDayDetailMdel class];
+    }
+    return nil;
+}
 
 @end

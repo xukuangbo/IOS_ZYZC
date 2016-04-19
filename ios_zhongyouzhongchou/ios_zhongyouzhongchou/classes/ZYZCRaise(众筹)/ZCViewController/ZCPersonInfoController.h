@@ -7,7 +7,12 @@
 //
 
 #import "ZYZCBaseViewController.h"
-
+typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
+{
+    WantToType=KZCDETAIL_ATTITUDETYPE,
+    SupportType,
+    ShareType
+};
 @interface ZCPersonInfoController : ZYZCBaseViewController
 
 @end

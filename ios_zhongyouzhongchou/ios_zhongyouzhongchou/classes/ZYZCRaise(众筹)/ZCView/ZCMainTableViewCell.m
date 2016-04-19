@@ -141,9 +141,21 @@
 -(void)setDetailInfoModel:(ZCDetailInfoModel *)detailInfoModel
 {
     _detailInfoModel=detailInfoModel;
+    _titleLab.hidden=YES;
     _lineView.hidden=NO;
     _sceneryImg.hidden=YES;
     _placeBgImg.hidden=YES;
+    
+    UIImageView *planeImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, -20, 18, 17)];
+    planeImg.image=[UIImage imageNamed:@"btn_p_green"];
+    [_lineView addSubview:planeImg];
+    
+    UILabel *destinationLab=[[UILabel alloc]initWithFrame:CGRectMake(planeImg.right+5, -22, KSCREEN_W-planeImg.width-_recommendLab.width-2*KEDGE_DISTANCE, 20)];
+    destinationLab.text=@"清迈－普吉岛";
+    destinationLab.textColor=[UIColor ZYZC_TextBlackColor];
+    destinationLab.font=[UIFont systemFontOfSize:17];
+    [_lineView addSubview:destinationLab];
+    
     //计算名字的文字长度
     NSString *name=@"杨小小";
     CGFloat nameStrWidth=[ZYZCTool calculateStrLengthByText:name andFont:_nameLab.font andMaxWidth:KSCREEN_W].width;
@@ -180,7 +192,7 @@
         lab.font=[UIFont systemFontOfSize:13];
         lab.textAlignment=NSTextAlignmentCenter;
         CGFloat width=[ZYZCTool calculateStrLengthByText:name andFont:lab.font andMaxWidth:KSCREEN_W].width;
-        lab.frame=CGRectMake((edg+width-21)*i, 4, width-21, 16) ;
+        lab.frame=CGRectMake((edg+width-5)*i, 4, width-5, 16) ;
         lab.layer.borderWidth=1;
         lab.layer.borderColor=[UIColor ZYZC_MainColor].CGColor;
         lab.text=specialties[i];

@@ -198,6 +198,7 @@
     if (tableView==_table) {
         //推出信息详情页
         ZCPersonInfoController *personInfoVC=[[ZCPersonInfoController alloc]init];
+        personInfoVC.hidesBottomBarWhenPushed=YES;
         [self.navigationController pushViewController:personInfoVC animated:YES];
     }
     else
@@ -205,6 +206,7 @@
         
     }
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated
 {
