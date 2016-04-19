@@ -210,62 +210,63 @@
     ZYZCAccountModel *account = [ZYZCAccountTool account];
     __block typeof(&*account) weakAccount = account;
     if (account) {
-        
+        [MBProgressHUD showMessage:@"正在加载个人数据"];
         NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",account.access_token,account.openid];
         
         [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
-            NSLog(@"%@",result);
+            //这里可以请求到数据，然后加载给account,注册并加载数据
+            
+            //记录到账号模型
+            weakAccount = [ZYZCAccountModel accountWithPersonalMessage:result];
+            [ZYZCAccountTool saveAccount:weakAccount];
+            
+            //有微信的数据后可以向我们的服务器发送注册信息
+            [self regisPersonalMessageWith:weakAccount];
+            
+            
         } andFailBlock:^(id failResult) {
             NSLog(@"%@",failResult);
         }];
-//        AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
-//        mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
-//        
-//        __block typeof(mgr) weakMgr = mgr;
-//        [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *responseObject) {
-//            NSLog(@"%@",responseObject);
-//            //这里可以请求到数据，然后加载给account,注册并加载数据
-//            
-//            [MBProgressHUD showMessage:@"正在加载个人数据"];
-//            /**
-//             *  记录到账号模型
-//             */
-//            weakAccount = [ZYZCAccountModel accountWithPersonalMessage:responseObject];
-//            [ZYZCAccountTool saveAccount:weakAccount];
-//            
-//            NSDictionary *parameter = @{
-//                @"openid": weakAccount.openid,
-//                @"nickname": weakAccount.nickname,
-//                @"sex": weakAccount.sex,
-//                @"language": weakAccount.language,
-//                @"city": weakAccount.city,
-//                @"province": weakAccount.province,
-//                @"country": weakAccount.country,
-//                @"headimgurl": weakAccount.headimgurl
-//                };
-////            NSData *data = [NSJSONSerialization dataWithJSONObject :parameter options : NSJSONWritingPrettyPrinted error:NULL];
-////            
-////            NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
-//            [weakMgr POST:@"http://121.40.225.119:8080/register/saveWeixinInfo.action" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//                NSLog(@"%@",responseObject);
-//                //这里可以显示注册的信息，如果注册成功的话，就显示，如果失败的话，就
-//                [self showRegisMessage:(NSDictionary *)responseObject];
-//                
-//            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//                NSLog(@"%@",error);
-//            }];
-////            [self.iconButton sd_setImageWithURL:[NSURL URLWithString:account.headimgurl] forState:UIControlStateNormal];
-////            self.nameLabel.text = account.name;
-//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//            NSLog(@"%@",error);
-//        }];
+        
+
     }
     
     
     
     
 }
+#pragma mark - 注册个人资料
+- (void)regisPersonalMessageWith:(ZYZCAccountModel *)weakAccount
+{
+    
+    NSDictionary *parameter = @{
+                                 @"openid": @"wdsdbsfgndfnzsgf",
+                                };
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:@"http://121.40.225.119:8080/register/saveWeixinInfo.action" andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            
+            [NSThread sleepForTimeInterval:2];
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showSuccess:@"注册成功"];
+            //展示数据
+            weakSelf.nameLabel.text = weakAccount.nickname;
+            [weakSelf.iconButton sd_setImageWithURL:[NSURL URLWithString:weakAccount.headimgurl] forState:UIControlStateNormal];
+        }else{
+            [MBProgressHUD hideHUD];
+            [NSThread sleepForTimeInterval:2];
+            [MBProgressHUD showError:@"注册失败"];
+            
+            //展示数据
+            weakSelf.nameLabel.text = weakAccount.nickname;
+            [weakSelf.iconButton sd_setImageWithURL:[NSURL URLWithString:weakAccount.headimgurl] forState:UIControlStateNormal];
+        }
+    } andFailBlock:^(id failResult) {
+        NSLog(@"__________%@",failResult);
+    }];
+    
 
+}
 #pragma mark - 展示注册完成后的信息
 - (void)showRegisMessage:(NSDictionary *)responseObject
 {

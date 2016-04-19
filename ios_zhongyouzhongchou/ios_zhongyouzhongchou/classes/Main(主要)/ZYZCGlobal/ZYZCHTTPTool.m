@@ -14,6 +14,8 @@
 +(void)getHttpDataByURL:(NSString *)url withSuccessGetBlock:(SuccessGetBlock)successGet  andFailBlock:(FailBlock)fail
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes =
     [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress)
@@ -46,9 +48,10 @@
 {
 //    NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:parameters];
     //转换成json
-//    NSData *data = [NSJSONSerialization dataWithJSONObject :newParameters options : NSJSONWritingPrettyPrinted error:NULL];
+//    NSData *data = [NSJSONSerialization dataWithJSONObject :parameters options : NSJSONWritingPrettyPrinted error:NULL];
 //    
 //    NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+//    
     
 
     if (needLogin)
@@ -61,9 +64,10 @@
     }
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes =
     [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
-    
     [manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress)
     {
         
