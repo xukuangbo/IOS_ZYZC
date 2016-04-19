@@ -180,7 +180,7 @@
         lab.font=[UIFont systemFontOfSize:13];
         lab.textAlignment=NSTextAlignmentCenter;
         CGFloat width=[ZYZCTool calculateStrLengthByText:name andFont:lab.font andMaxWidth:KSCREEN_W].width;
-        lab.frame=CGRectMake((edg+width-21)*i, 4, width-21, 16) ;
+        lab.frame=CGRectMake((edg+width-5)*i, 4, width-5, 16) ;
         lab.layer.borderWidth=1;
         lab.layer.borderColor=[UIColor ZYZC_MainColor].CGColor;
         lab.text=specialties[i];
