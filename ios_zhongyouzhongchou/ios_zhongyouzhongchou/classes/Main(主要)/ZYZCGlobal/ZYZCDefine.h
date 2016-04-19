@@ -46,6 +46,7 @@
 //NSUserDefaults-key使用
 #define KUSER_ID  @"userId"            //用于保存用户id
 #define KMOREFZC_RETURN_SUPPORTTYPE  @"return_supportType"  //用于保存用户id
+#define KMOREFZCDATAMANAGER_FILEPATH @"moreFZCDataManagerFilePath" //发众筹数据存储
 
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]

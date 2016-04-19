@@ -164,6 +164,18 @@
         [travelSecondCell saveTravelOneDayDetailData];
         [manager.travelDetailArr addObject:travelSecondCell.oneDetailModel];
     }
+    
+    //归档
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *filePath=[docDir stringByAppendingPathComponent:@"WSMContentData.data"];
+    [NSKeyedArchiver archiveRootObject:manager toFile:filePath];
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [user setObject:filePath forKey:KMOREFZCDATAMANAGER_FILEPATH];
+    [user synchronize];
+//    //解档
+//    MoreFZCDataManager *fileManager=[NSKeyedUnarchiver  unarchiveObjectWithFile:filePath];
+    
 }
 
 #pragma mark - MoreFZCToolBarDelegate

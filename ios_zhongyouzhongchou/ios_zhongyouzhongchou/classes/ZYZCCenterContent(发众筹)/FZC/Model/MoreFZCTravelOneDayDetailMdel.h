@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MoreFZCTravelOneDayDetailMdel : NSObject
+@interface MoreFZCTravelOneDayDetailMdel : NSObject<MJCoding>
 /**
  *  日期
  */

@@ -31,9 +31,10 @@
     [self setStatusBarStyle];
     //设置根控制器
     [self getRootViewController];
+    //在Documents中创建WSM（文字，语音，视屏录入）的文件夹
+    [self createWSMFilefolderInDocuments];
     //更改appBadge
     [self changeAppBadge];
-    
     
     /**
      初始化微信
@@ -87,19 +88,16 @@
     self.window.rootViewController=mainTab;
 }
 
--(void)createFilefolderInDoucuments
+#pragma mark --- 在Documents中创建WSM（文字，语音，视屏录入）的文件夹
+-(void)createWSMFilefolderInDocuments
 {
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *createPath = [NSString stringWithFormat:@"%@/Image", pathDocuments];
-    NSString *createDir = [NSString stringWithFormat:@"%@/MessageQueueImage", pathDocuments];
-    
+    NSString *createPath = [NSString stringWithFormat:@"%@/WSMContent", pathDocuments];
+    NSLog(@"%@",createPath);
     // 判断文件夹是否存在，如果不存在，则创建
     if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
         [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
-        [fileManager createDirectoryAtPath:createDir withIntermediateDirectories:YES attributes:nil error:nil];
-    } else {
-        NSLog(@"FileDir is exists.");
     }
 }
 
