@@ -34,7 +34,7 @@
         }
         else
         {
-            successGet(responseObject,nil);
+            successGet(responseObject,YES);
         }
     }
     failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)

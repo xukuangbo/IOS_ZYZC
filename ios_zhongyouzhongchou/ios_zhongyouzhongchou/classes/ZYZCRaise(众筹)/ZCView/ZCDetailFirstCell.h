@@ -7,7 +7,7 @@
 //
 
 #import "MoreFZCBaseTableViewCell.h"
-
+#define ZCDETAIL_FIRSTCELL_HEIGHT 120
 @interface ZCDetailFirstCell : MoreFZCBaseTableViewCell
 
 @end

@@ -74,7 +74,7 @@
 //    blurView.blurRadius=10;
     [self.view addSubview:blurView];
     //给毛玻璃润色
-    UIView *blackView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 302.5)];
+    UIView *blackView=[[UIView alloc]initWithFrame:blurView.bounds];
     blackView.backgroundColor=[UIColor blackColor];
     blackView.alpha=0.35;
     [blurView addSubview:blackView];

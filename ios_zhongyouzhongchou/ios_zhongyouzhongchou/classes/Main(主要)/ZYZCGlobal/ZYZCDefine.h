@@ -41,7 +41,9 @@
 #define KFZC_COURSE_TYPE            60//tag取值范围60～63
 #define KFZC_CONTENTCOURSE_TYPE     70//tag取值范围70～72
 #define KFZC_MOVIERECORDSAVE_TAG    80
+#define KZCDETAIL_ATTITUDETYPE      90//tag取值范围90～92
 #define KMineHeadViewChangeType     100//tag取值范围100～101
+
 
 //NSUserDefaults-key使用
 #define KUSER_ID  @"userId"            //用于保存用户id

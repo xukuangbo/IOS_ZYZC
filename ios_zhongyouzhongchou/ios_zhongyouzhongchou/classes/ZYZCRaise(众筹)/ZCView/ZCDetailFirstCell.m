@@ -17,5 +17,12 @@
     // Drawing code
 }
 */
+-(void)configUI
+{
+    [super configUI];
+    self.bgImg.height=ZCDETAIL_FIRSTCELL_HEIGHT;
+    self.titleLab.text=@"联合发起人";
+    self.titleLab.textColor=[UIColor ZYZC_TextBlackColor];
+}
 
 @end
