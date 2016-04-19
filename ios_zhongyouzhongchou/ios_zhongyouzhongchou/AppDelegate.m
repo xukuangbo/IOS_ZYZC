@@ -94,7 +94,6 @@
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *createPath = [NSString stringWithFormat:@"%@/WSMContent", pathDocuments];
-    NSLog(@"%@",createPath);
     // 判断文件夹是否存在，如果不存在，则创建
     if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
         [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];

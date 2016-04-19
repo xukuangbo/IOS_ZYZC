@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NSObject+MJCoding.h"
+#import "MoreFZCTravelOneDayDetailMdel.h"
 #import <UIKit/UIKit.h>
 @interface MoreFZCDataManager : NSObject<NSCopying,MJCoding>
 //第一界面

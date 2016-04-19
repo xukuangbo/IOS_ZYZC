@@ -53,4 +53,20 @@ static id _instace;
     return self;
 }
 
+
++ (NSDictionary *)objectClassInArray
+{
+    return @{
+             @"travelDetailArr" : [MoreFZCTravelOneDayDetailMdel class],
+            };
+}
+
++ (Class)objectClassInArray:(NSString *)propertyName
+{
+    if ([propertyName isEqualToString:@"travelDetailArr"]) {
+        return [MoreFZCTravelOneDayDetailMdel class];
+    }
+    return nil;
+}
+
 @end

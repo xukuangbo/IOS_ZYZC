@@ -173,8 +173,20 @@
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     [user setObject:filePath forKey:KMOREFZCDATAMANAGER_FILEPATH];
     [user synchronize];
-//    //解档
-//    MoreFZCDataManager *fileManager=[NSKeyedUnarchiver  unarchiveObjectWithFile:filePath];
+    //解档
+    MoreFZCDataManager *fileManager=[NSKeyedUnarchiver  unarchiveObjectWithFile:filePath];
+    
+    // 将模型转为字典
+    NSDictionary *statusDict = fileManager.mj_keyValues;
+    
+    NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:statusDict];
+    [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:mutDic andSuccessGetBlock:^(id result, BOOL isSuccess)
+    {
+        NSLog(@"%@",result);
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
     
 }
 
