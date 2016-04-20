@@ -17,6 +17,12 @@ typedef NS_ENUM(NSInteger, ZCDetailContentType)
     ReturnType
 };
 
+typedef void(^ClickChangeContent)(ZCDetailContentType contentType);
+
 @interface ZCDetailTableHeadView : UIView
+
 @property (nonatomic, strong) UIButton *preClickBtn;
+
+@property (nonatomic, copy ) ClickChangeContent clickChangeContent;
+
 @end

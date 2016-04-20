@@ -156,13 +156,6 @@
     */
 }
 
-#pragma mark --- imagePickerController 点击退出方法回调
-
--(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    
-}
-
 #pragma mark --- imagePickerController 选择后方法回调
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {

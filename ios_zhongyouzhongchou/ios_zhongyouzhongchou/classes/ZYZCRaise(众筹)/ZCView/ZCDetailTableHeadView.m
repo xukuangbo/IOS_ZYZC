@@ -31,17 +31,19 @@
 
 -(void)configUI
 {
+    UIView *view=[[UIView alloc]initWithFrame:self.bounds];
+    view.backgroundColor=[UIColor ZYZC_BgGrayColor];
+    [self addSubview:view];
     UIView *bgView=[[UIView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, (self.height-BG_HEIGHT)/2, self.width-2*KEDGE_DISTANCE, BG_HEIGHT)];
     bgView.backgroundColor=[UIColor ZYZC_BgGrayColor02];
     bgView.layer.cornerRadius=KCORNERRADIUS;
     bgView.layer.masksToBounds=YES;
-    [self addSubview:bgView];
+    [view addSubview:bgView];
     
     NSArray *titleArr=@[@"介绍",@"行程",@"回报"];
     for (int i=0; i<3; i++) {
-        [bgView addSubview:[self setButton:i withTitle:titleArr[i] withMoreFZCToolBarType:KZCDETAIL_CONTENTTYPE+i]];
+        [bgView addSubview:[self setButton:i withTitle:titleArr[i] withMoreFZCToolBarType:IntroType+i]];
     }
-    
 }
 
 /**
@@ -84,6 +86,10 @@
         [self getButtonNormalState:_preClickBtn];
     }
     _preClickBtn=button;
+    
+    if (self.clickChangeContent) {
+        self.clickChangeContent(button.tag);
+    }
 }
 
 
@@ -100,7 +106,6 @@
     [button setTitleColor:[UIColor ZYZC_MainColor] forState:UIControlStateNormal];
     button.backgroundColor=[UIColor whiteColor];
 }
-
 
 @end
 

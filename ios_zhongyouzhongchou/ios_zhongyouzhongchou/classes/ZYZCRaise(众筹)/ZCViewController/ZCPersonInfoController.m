@@ -11,6 +11,9 @@
 #import "ZCPersonInfoController.h"
 #import "ZCMainTableViewCell.h"
 #import "ZCDetailFirstCell.h"
+#import "ZCDetailIntroShowCell.h"
+#import "ZCDetailArrangeShowCell.h"
+#import "ZCDetailReturnShowCell.h"
 #import "ZCDetailTableHeadView.h"
 #import "FXBlurView.h"
 @interface ZCPersonInfoController ()<UITableViewDelegate,UITableViewDataSource>
@@ -20,6 +23,7 @@
 @property (nonatomic, strong) FXBlurView *blurView;
 @property (nonatomic, strong) UILabel *travelThemeLab;
 @property (nonatomic, strong) ZCDetailTableHeadView *headView;
+@property (nonatomic, assign) ZCDetailContentType contentType;
 @end
 @implementation ZCPersonInfoController
 
@@ -30,6 +34,7 @@
      [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     _isAddCosponsor=NO;//添加联和发起人项
+    self.contentType=IntroType;
     [self setBackItem];
     [self configUI];
     [self createBottomView];
@@ -41,6 +46,7 @@
     _table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H-KTABBAR_HEIGHT) style:UITableViewStylePlain];
     _table.dataSource=self;
     _table.delegate=self;
+//    _table.showsVerticalScrollIndicator=NO;
     _table.contentInset=UIEdgeInsetsMake(BGIMAGEHEIGHT-64, 0, 0, 0);
     _table.tableFooterView=[[UIView alloc]init];
     _table.backgroundColor=[UIColor ZYZC_BgGrayColor];
@@ -94,7 +100,7 @@
     }
     else
     {
-        return 1;
+        return 2;
     }
     
 }
@@ -111,7 +117,7 @@
             mainCell.detailInfoModel=model;
             return mainCell;
         }
-        else if (indexPath.row==1+_isAddCosponsor*2&&indexPath.row!=1)
+        else if (indexPath.row == 1+_isAddCosponsor*2&&indexPath.row!=1)
         {
             NSString *cellId02=@"detailFirstCell";
             ZCDetailFirstCell *detailFirstCell=[tableView dequeueReusableCellWithIdentifier:cellId02];
@@ -130,10 +136,45 @@
     }
     else
     {
-        UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
-        return cell;
+        if (indexPath.row==0) {
+            //查看介绍内容
+            if (self.contentType == IntroType)
+            {
+                NSString *cellId03=@"introShowCell";
+                ZCDetailIntroShowCell *introShowCell=[tableView dequeueReusableCellWithIdentifier:cellId03];
+                if (!introShowCell) {
+                    introShowCell=[[ZCDetailIntroShowCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId03];
+                }
+                
+                return introShowCell;
+            }
+            //查看行程内容
+            else if (self.contentType == ArrangeType)
+            {
+                NSString *cellId04=@"introShowCell";
+                ZCDetailArrangeShowCell *arrangeShowCell=[tableView dequeueReusableCellWithIdentifier:cellId04];
+                if (!arrangeShowCell) {
+                    arrangeShowCell=[[ZCDetailArrangeShowCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId04];
+                }
+                return arrangeShowCell;
+            }
+            //查看回报内容
+            else
+            {
+                NSString *cellId05=@"ReturnShowCell";
+                ZCDetailReturnShowCell *returnShowCell=[tableView dequeueReusableCellWithIdentifier:cellId05];
+                if (!returnShowCell) {
+                    returnShowCell=[[ZCDetailReturnShowCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId05];
+                }
+                return returnShowCell;
+            }
+        }
+        else{
+            UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+            cell.selectionStyle=UITableViewCellSelectionStyleNone;
+            cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+            return cell;
+        }
     }
 }
 
@@ -156,7 +197,24 @@
     }
     else
     {
-        return 500;
+        if (indexPath.row==0) {
+            
+            if (self.contentType == IntroType) {
+                return ZCDETAIL_INTROSHOW_HEIGHT;
+            }
+            else if (self.contentType == ArrangeType)
+            {
+                return ZCDETAIL_ARRANGESHOW_HEIGHT;
+            }
+            else
+            {
+                return ZCDETAIL_RETURNSHOW_HEIGHT;
+            }
+        }
+        else
+        {
+            return KEDGE_DISTANCE;
+        }
     }
 }
 
@@ -164,6 +222,14 @@
 {
     if (section==1) {
         _headView=[[ZCDetailTableHeadView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W,ZCDETAIL_SECONDSECTION_HEIGHT)];
+        __weak typeof (&*self)weakSelf=self;
+        _headView.clickChangeContent=^(ZCDetailContentType contentType)
+        {
+            weakSelf.contentType=contentType;
+            
+           [weakSelf.table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:section],nil] withRowAnimation:UITableViewRowAnimationFade];
+        };
+        
         return _headView;
     }
     return nil;
@@ -202,9 +268,11 @@
         
         if ((height + offsetY)/height>=1) {
             scrollView.contentInset=UIEdgeInsetsMake(64, 0, 0, 0);
+            self.title= _travelThemeLab.text;
         }
         else
         {
+            self.title=nil;
             scrollView.contentInset=UIEdgeInsetsMake(BGIMAGEHEIGHT, 0, 0, 0);
         }
         
@@ -241,7 +309,9 @@
         sureBtn.layer.masksToBounds=YES;
         [sureBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         sureBtn.tag=KZCDETAIL_ATTITUDETYPE+i;
-        [sureBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, 7, 1, sureBtn.height-2*7) andColor:[UIColor ZYZC_TextGrayColor]]];
+        if (sureBtn.tag!=KZCDETAIL_ATTITUDETYPE) {
+             [sureBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, 7, 1, sureBtn.height-2*7) andColor:[UIColor ZYZC_TextGrayColor]]];
+        }
         [bottomView addSubview:sureBtn];
     }
 }
