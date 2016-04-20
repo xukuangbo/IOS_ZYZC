@@ -15,6 +15,7 @@
 #import "TacticTableViewCell.h"
 @interface TacticTableView ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 
+@property (nonatomic, strong) NSArray *headImageArray;
 @end
 
 @implementation TacticTableView
@@ -35,7 +36,7 @@
             [weakSelf.mj_header endRefreshing];
         }];
         
-//        [self.mj_header beginRefreshing];
+        [self.mj_header beginRefreshing];
     }
     return self;
 }
@@ -54,7 +55,9 @@
     TacticModel *model = [TacticModel mj_objectWithKeyValues:JsonObject[@"data"]];
     _tacticModel = model;
     
+    _headImageArray = model.pics;
     
+   
 }
 
 #pragma mark - UITableDelegate和Datasource
@@ -96,15 +99,7 @@
     headView.titlesGroup = titles;
     headView.currentPageDotColor = [UIColor ZYZC_MainColor]; // 自定义分页控件小圆标颜色
     //         --- 模拟加载延迟
-    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    headView.imageURLStringsGroup = @[
-                                      @"http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lLRF.jpg",
-                                      @"http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lLBA.jpg",
-                                      @"http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lKnA.jpg",
-                                      @"http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lK7A.jpg",
-                                      @"http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lKRA.jpg"
-                                      ];
-    //    });
+    headView.imageURLStringsGroup = self.headImageArray;
     return headView;
 }
 

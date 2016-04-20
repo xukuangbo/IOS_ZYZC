@@ -29,4 +29,9 @@
 //"videos": [
 @property (nonatomic, strong) NSArray *videos;
 
+/**
+ *  热门目的地模型
+ */
+@property (nonatomic, strong) NSArray *mgViews;
+
 @end

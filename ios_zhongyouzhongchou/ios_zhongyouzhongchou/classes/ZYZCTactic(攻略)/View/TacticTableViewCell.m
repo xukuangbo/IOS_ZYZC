@@ -4,6 +4,7 @@
 #import "TacticModel.h"
 #import "TacticVideoModel.h"
 #import "TacticThreeMapView.h"
+#import "ZYZCTool.h"
 @interface TacticTableViewCell()
 /**
  *  视频view
@@ -20,7 +21,7 @@
 /**
  *  热门目的地容器view
  */
-@property (nonatomic, weak) UIView *hotDestMapView;
+@property (nonatomic, weak) TacticThreeMapView *hotDestMapView;
 
 
 @end
@@ -32,13 +33,17 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.contentView.backgroundColor = [UIColor ZYZC_BgGrayColor];
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         /**
          *  创建视频view
          */
         [self createVideoView];
         
-        
-        
+        /**
+         *  创建目的地view
+         */
+        [self createDestView];
     }
     return self;
 }
@@ -47,15 +52,29 @@
  */
 - (void)createVideoView
 {
-    CGFloat videoViewX = 10;
-    CGFloat videoViewY = 10;
+    CGFloat videoViewX = TacticTableViewCellMargin;
+    CGFloat videoViewY = TacticTableViewCellMargin;
     CGFloat videoViewW = KSCREEN_W - videoViewX * 2;
-    CGFloat videoViewH = 160;
+    CGFloat videoViewH = videoViewHeight;
     UIView *videoView = [self viewWithIndex:1 frame:CGRectMake(videoViewX, videoViewY, videoViewW, videoViewH) Title:@"视频攻略" desc:@"3分钟看懂旅行目的地核心攻略"];
     [self.contentView addSubview:videoView];
     self.videoView = videoView;
     //创建3个view放到视频view里面
     
+}
+
+/**
+ *  创建目的地view
+ */
+- (void)createDestView
+{
+    CGFloat hotDestViewX = TacticTableViewCellMargin;
+    CGFloat hotDestViewY = self.videoView.bottom + TacticTableViewCellMargin;
+    CGFloat hotDestViewW = KSCREEN_W - hotDestViewX * 2;
+    CGFloat hotDestViewH = videoViewHeight;
+    UIView *hotDestView = [self viewWithIndex:2 frame:CGRectMake(hotDestViewX, hotDestViewY, hotDestViewW, hotDestViewH) Title:@"热门目的地" desc:@"根据兴趣标签精准匹配更靠谱"];
+    [self.contentView addSubview:hotDestView];
+    self.hotDestView = hotDestView;
 }
 
 - (UIView *)viewWithIndex:(NSInteger)index frame:(CGRect)rect Title:(NSString *)title desc:(NSString *)desc
@@ -77,8 +96,29 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH)];
     titleLabel.text = title;
     titleLabel.textColor = [UIColor colorWithRed:84/256.0 green:84/256.0 blue:84/256.0 alpha:1];
+    titleLabel.font = titleFont;
     [mapView addSubview:titleLabel];
     
+    //创建向右的箭头
+    CGFloat rightButtonW = 60;
+    CGFloat rightButtonH = 15;
+    CGFloat rightButtonX = mapView.width - margin - rightButtonW;
+    CGFloat rightButtonY = margin;
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame = CGRectMake(rightButtonX, rightButtonY, rightButtonW, rightButtonH);
+    [rightButton setImage:[UIImage imageNamed:@"btn_rig_mor"] forState:UIControlStateNormal];
+    [rightButton setTitle:@"更多" forState:UIControlStateNormal];
+    [rightButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
+    rightButton.titleLabel.font = descFont;
+    
+    //得出文字的宽度,交换两个的位置
+    CGSize rightButtonTitleSize = [ZYZCTool calculateStrLengthByText:@"更多" andFont:descFont andMaxWidth:MAXFLOAT];
+    CGFloat labelWidth = rightButtonTitleSize.width + 2;
+    rightButton.imageEdgeInsets = UIEdgeInsetsMake(0, labelWidth, 0, -labelWidth);
+    CGFloat imageWith = rightButton.currentImage.size.width + 2;
+    rightButton.titleEdgeInsets = UIEdgeInsetsMake(0, -imageWith, 0, imageWith);
+    
+    [mapView addSubview:rightButton];
     //创建描述
     CGFloat descLabelX = margin * 2;
     CGFloat descLabelY = titleLabel.bottom + 4;
@@ -86,6 +126,7 @@
     CGFloat descLabelH = lineHeight;
     UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(descLabelX, descLabelY, descLabelW, descLabelH)];
     descLabel.text = desc;
+    descLabel.font = descFont;
     descLabel.textColor = [UIColor ZYZC_TextGrayColor];
     [mapView addSubview:descLabel];
     
@@ -113,6 +154,12 @@
             
         }else{
 //            self.videoMapView.hidden = YES;
+        }
+        
+        //目的地内容显示
+        if (tacticModel.mgViews.count >= 3) {
+            self.hotDestView.hidden = NO;
+            self.hotDestMapView.videos = tacticModel.mgViews;
         }
     }
 }
