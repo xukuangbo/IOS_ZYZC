@@ -157,12 +157,12 @@
     //保存旅游每日行程安排到单例中
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     
-    [manager.travelDetailArr removeAllObjects];
+    [manager.travelDetailDays removeAllObjects];
     MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
     for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
         TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
         [travelSecondCell saveTravelOneDayDetailData];
-        [manager.travelDetailArr addObject:travelSecondCell.oneDetailModel];
+        [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
     }
     
     //归档
@@ -176,12 +176,52 @@
     //解档
     MoreFZCDataManager *fileManager=[NSKeyedUnarchiver  unarchiveObjectWithFile:filePath];
     
-    // 将模型转为字典
+    // 模型转字典
     NSDictionary *statusDict = fileManager.mj_keyValues;
     
     NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:statusDict];
     [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
-    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:mutDic andSuccessGetBlock:^(id result, BOOL isSuccess)
+    
+    NSDictionary *dic=@{
+        @"openid":@"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
+//        @"title": @"众筹主题",
+//        @"productCountryId":@"12",
+//        @"dest": @"泰国",
+//        @"spell_buy_price": @200,
+//        @"spell_end_time": @"2016-07-15",
+//        @"start_time": @"2016-08-15",
+//        @"end_time": @"2016-08-20",
+//        @"people": @8,
+//        @"status": @1,
+//        @"cover": @"www.baidu.com",
+//        @"desc": @"这是测试",
+//        @"schedule": @[
+//                     @"第一天，去吃饭",
+//                     @"第二天，起玩"
+//                     ],
+//        @"report": @[
+//                   @{
+//                       @"style": @1,
+//                       @"price": @1
+//                   },
+//                   @{
+//                       @"style": @2,
+//                       @"price": @0
+//                   },
+//                   @{
+//                       @"style": @3,
+//                       @"price": @200,
+//                       @"people": @5,
+//                       @"desc": @"回报目的"
+//                   },
+//                   @{
+//                       @"style": @4,
+//                       @"people": @8,
+//                       @"price": @100
+//                   }
+//                   ]
+        };
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:dic andSuccessGetBlock:^(id result, BOOL isSuccess)
     {
         NSLog(@"%@",result);
     } andFailBlock:^(id failResult) {

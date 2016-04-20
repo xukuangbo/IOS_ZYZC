@@ -17,6 +17,8 @@
 + (UIColor *)ZYZC_BgGrayColor;
 
 + (UIColor *)ZYZC_BgGrayColor01;
+
++ (UIColor *)ZYZC_BgGrayColor02;
 //自定义TabBar背景色
 + (UIColor *)ZYZC_TabBarGrayColor;
 //文字灰色

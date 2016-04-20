@@ -14,5 +14,6 @@ typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
     ShareType
 };
 @interface ZCPersonInfoController : ZYZCBaseViewController
+@property (nonatomic, assign) BOOL isAddCosponsor;
 
 @end

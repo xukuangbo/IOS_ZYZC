@@ -1,14 +1,14 @@
 //
-//  ZCDetailSecondCell.m
+//  ZCDetailContentShowBaseCell.m
 //  ios_zhongyouzhongchou
 //
-//  Created by liuliang on 16/4/19.
+//  Created by liuliang on 16/4/20.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#import "ZCDetailSecondCell.h"
+#import "ZCDetailContentShowBaseCell.h"
 
-@implementation ZCDetailSecondCell
+@implementation ZCDetailContentShowBaseCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -23,6 +23,7 @@
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.selectionStyle=UITableViewCellSelectionStyleNone;
         [self configUI];
     }
     return self;
@@ -32,5 +33,6 @@
 {
     
 }
+
 
 @end

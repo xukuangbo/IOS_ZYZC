@@ -85,7 +85,7 @@
 /**
  *  旅游行程安排
  */
-@property (nonatomic, strong) NSMutableArray *travelDetailArr; 
+@property (nonatomic, strong) NSMutableArray *travelDetailDays;
 
 
 //第四界面属性
@@ -110,6 +110,8 @@
 
 @property (nonatomic, copy  ) NSString *return_wordDes;
 
+@property (nonatomic, copy  ) NSString *return_imgsDes;
+
 @property (nonatomic, copy  ) NSString *return_voiceUrl;
 
 @property (nonatomic, copy  ) NSString *return_movieUrl;
@@ -118,7 +120,9 @@
 
 @property (nonatomic, copy  ) NSString *return_togetherPeopleNumber;
 
-@property (nonatomic, copy  ) NSString *return_togetherMoney_percent;
+@property (nonatomic, copy  ) NSString *return_togetherMoneyPercent;
+
+@property (nonatomic, copy  ) NSString *return_togetherRateMoney;
 
 
 + (instancetype)sharedMoreFZCDataManager;

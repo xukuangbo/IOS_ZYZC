@@ -102,7 +102,7 @@
     //保存景点描述文字
     _oneDetailModel.siteDes=sceneContentView.textView.text;
     //保存景点图库标示符
-    _oneDetailModel.sitesArr=sceneContentView.siteTagArr;
+    _oneDetailModel.sites=sceneContentView.siteTagArr;
     
     AddSceneView *trafficContentView=[_addView viewWithTag:TrafficContentType];
     //保存交通描述文字
@@ -110,7 +110,7 @@
     
     AddSceneView *accommodateContentView=[_addView viewWithTag:AccommodateContentType];
     //保存住宿描述文字
-    _oneDetailModel.accommodateDes=accommodateContentView.textView.text;
+    _oneDetailModel.liveDes=accommodateContentView.textView.text;
     
      AddSceneView *foodContentView=[_addView viewWithTag:FoodContentType];
     //保存餐饮描述文字
@@ -118,7 +118,7 @@
     
     //保存当日旅游文字描述
     WordView *wordView=(WordView *)[_contentEntryView viewWithTag:WordViewType];
-    _oneDetailModel.travelDes=wordView.textView.text;
+    _oneDetailModel.wordDes=wordView.textView.text;
     
     //保存当日旅游语音描述
     SoundView *soundView=(SoundView *)[_contentEntryView viewWithTag:SoundViewType];

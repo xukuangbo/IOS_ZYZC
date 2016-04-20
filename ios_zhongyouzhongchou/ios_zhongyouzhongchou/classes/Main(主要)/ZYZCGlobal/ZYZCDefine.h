@@ -43,6 +43,7 @@
 #define KFZC_MOVIERECORDSAVE_TAG    80
 #define KZCDETAIL_ATTITUDETYPE      90//tag取值范围90～92
 #define KMineHeadViewChangeType     100//tag取值范围100～101
+#define KZCDETAIL_CONTENTTYPE       110//tag取值范围110～102
 
 
 //NSUserDefaults-key使用

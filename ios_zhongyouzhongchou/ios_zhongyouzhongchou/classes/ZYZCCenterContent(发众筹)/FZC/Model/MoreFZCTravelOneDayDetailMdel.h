@@ -24,7 +24,7 @@
 /**
  *  住宿描述
  */
-@property (nonatomic, copy  ) NSString *accommodateDes;
+@property (nonatomic, copy  ) NSString *liveDes;
 /**
  *  餐饮描述
  */
@@ -32,15 +32,15 @@
 /**
  *  当天旅游景点
  */
-@property (nonatomic, strong) NSArray  *sitesArr;
+@property (nonatomic, strong) NSArray  *sites;
 /**
  *  当天旅游的文字描述
  */
-@property (nonatomic, strong) NSString *travelDes;
+@property (nonatomic, strong) NSString *wordDes;
 /**
  *  当天旅游图片描述
  */
-@property (nonatomic, strong) NSArray  *travelImgArr;
+@property (nonatomic, strong) NSArray  *imgsDes;
 /**
  *  当天旅游的语音录入
  */
