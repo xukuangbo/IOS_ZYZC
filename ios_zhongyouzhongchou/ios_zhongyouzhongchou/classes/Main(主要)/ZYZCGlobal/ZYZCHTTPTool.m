@@ -85,7 +85,7 @@
         }
         else
         {
-            successGet(responseObject,nil);
+            successGet(responseObject,YES);
         }
         
     }

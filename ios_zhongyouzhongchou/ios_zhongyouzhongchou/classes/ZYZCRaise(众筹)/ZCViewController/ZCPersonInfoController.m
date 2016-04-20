@@ -7,11 +7,11 @@
 //
 
 #define BGIMAGEHEIGHT  200*KCOFFICIEMNT
-#define BLURHEIGHT     40
+#define BLURHEIGHT     44
 #import "ZCPersonInfoController.h"
 #import "ZCMainTableViewCell.h"
 #import "ZCDetailFirstCell.h"
-#import "ZCDetailSecondCell.h"
+#import "ZCDetailTableHeadView.h"
 #import "FXBlurView.h"
 @interface ZCPersonInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *table;
@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UIColor *navColor;
 @property (nonatomic, strong) FXBlurView *blurView;
 @property (nonatomic, strong) UILabel *travelThemeLab;
+@property (nonatomic, strong) ZCDetailTableHeadView *headView;
 @end
 @implementation ZCPersonInfoController
 
@@ -28,6 +29,7 @@
     _navColor=[UIColor ZYZC_NavColor];
      [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    _isAddCosponsor=NO;//添加联和发起人项
     [self setBackItem];
     [self configUI];
     [self createBottomView];
@@ -60,44 +62,71 @@
     //给毛玻璃润色
     UIView *blackView=[[UIView alloc]initWithFrame:_blurView.bounds];
     blackView.backgroundColor=[UIColor blackColor];
-    blackView.alpha=0.2;
+    blackView.alpha=0.1;
     [_blurView addSubview:blackView];
     
     //创建旅行主题标签
     _travelThemeLab=[[UILabel alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 5, KSCREEN_W, 30)];
     _travelThemeLab.font=[UIFont boldSystemFontOfSize:20];
     _travelThemeLab.text=@"暖冬海岛 遇见烂漫";
+    _travelThemeLab.shadowOffset=CGSizeMake(1 , 1);
+    _travelThemeLab.shadowColor=[UIColor ZYZC_TextBlackColor];
     _travelThemeLab.textColor=[UIColor whiteColor];
     [_blurView addSubview:_travelThemeLab];
     
     
 }
 
+
 #pragma mark --- tableView代理方法
+-(NSInteger )numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
 -(NSInteger )tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    
+    if (section==0) {
+        if (_isAddCosponsor) {
+            return 4;
+        }
+        return 2;
+    }
+    else
+    {
+        return 1;
+    }
+    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row==1)
-    {
-       NSString *cellId=@"ZCMainTableViewCell";
-        ZCMainTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId];
-        ZCDetailInfoModel *model=[[ZCDetailInfoModel alloc]init];
-        cell.detailInfoModel=model;
-        return cell;
-    }
-    else if (indexPath.row==3)
-    {
-        NSString *cellId=@"detailFirstCell";
-        ZCDetailFirstCell *detailFirstCell=[tableView dequeueReusableCellWithIdentifier:cellId];
-        if (!detailFirstCell) {
-            detailFirstCell=[[ZCDetailFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        }
-         return detailFirstCell;
+    if (indexPath.section==0) {
         
+        if(indexPath.row==1)
+        {
+           NSString *cellId01=@"ZCMainTableViewCell";
+            ZCMainTableViewCell *mainCell=[tableView dequeueReusableCellWithIdentifier:cellId01];
+            ZCDetailInfoModel *model=[[ZCDetailInfoModel alloc]init];
+            mainCell.detailInfoModel=model;
+            return mainCell;
+        }
+        else if (indexPath.row==1+_isAddCosponsor*2&&indexPath.row!=1)
+        {
+            NSString *cellId02=@"detailFirstCell";
+            ZCDetailFirstCell *detailFirstCell=[tableView dequeueReusableCellWithIdentifier:cellId02];
+            if (!detailFirstCell) {
+                detailFirstCell=[[ZCDetailFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId02];
+            }
+             return detailFirstCell;
+        }
+        else
+        {
+            UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+            cell.selectionStyle=UITableViewCellSelectionStyleNone;
+            cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+            return cell;
+        }
     }
     else
     {
@@ -106,49 +135,90 @@
         cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
         return cell;
     }
-    
-    return nil;
-    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 1:
-            return 210;
-            break;
-        case 3:
-            return ZCDETAIL_FIRSTCELL_HEIGHT;
-            break;
-        default:
-            return KEDGE_DISTANCE;
-            break;
+    if (indexPath.section==0) {
+    
+        if (indexPath.row ==1)
+        {
+         return 210;
+        }
+        else if (indexPath.row==1+_isAddCosponsor*2&&indexPath.row!=1)
+        {
+           return ZCDETAIL_FIRSTCELL_HEIGHT;
+        }
+        else
+        {
+           return KEDGE_DISTANCE;
+        }
+    }
+    else
+    {
+        return 500;
     }
 }
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section==1) {
+        _headView=[[ZCDetailTableHeadView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W,ZCDETAIL_SECONDSECTION_HEIGHT)];
+        return _headView;
+    }
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section==1) {
+        return ZCDETAIL_SECONDSECTION_HEIGHT;
+    }
+    return 0.0;
+}
+
 #pragma mark --- tableView的滑动效果
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView==self.table) {
-        CGFloat y = scrollView.contentOffset.y;
-        if (y <= -BGIMAGEHEIGHT)
+        CGFloat offsetY = scrollView.contentOffset.y;
+        
+        if (offsetY <= -BGIMAGEHEIGHT)
         {
             CGRect frame = _topImgView.frame;
-            frame.origin.y = y;
-            frame.size.height = -y;
+            frame.origin.y = offsetY;
+            frame.size.height = -offsetY;
             _topImgView.frame = frame;
             _blurView.top=_topImgView.height-BLURHEIGHT;
         }
-        CGFloat offsetY = scrollView.contentOffset.y;
+        
         CGFloat height=BGIMAGEHEIGHT;
         if (offsetY >= -height) {
             CGFloat alpha = MIN(1, (height + offsetY)/height);
             [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:alpha]];
-
         } else {
             [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
         }
+        
+        if ((height + offsetY)/height>=1) {
+            scrollView.contentInset=UIEdgeInsetsMake(64, 0, 0, 0);
+        }
+        else
+        {
+            scrollView.contentInset=UIEdgeInsetsMake(BGIMAGEHEIGHT, 0, 0, 0);
+        }
+        
+//        if(offsetY>=KEDGE_DISTANCE +210 +_isAddCosponsor *ZCDETAIL_FIRSTCELL_HEIGHT-64)
+//        {
+//            _headView.backgroundColor=[UIColor ZYZC_MainColor];
+//        }
+//        else
+//        {
+//            _headView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+//        }
     }
 }
+
 
 #pragma mark --- 创建底部点击按钮
 -(void)createBottomView

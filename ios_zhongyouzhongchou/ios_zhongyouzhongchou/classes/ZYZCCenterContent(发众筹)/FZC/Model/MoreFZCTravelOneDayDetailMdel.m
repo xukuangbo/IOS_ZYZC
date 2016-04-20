@@ -14,6 +14,6 @@ MJCodingImplementation
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@", _date,_siteDes,_trafficDes,_accommodateDes,_foodDes,_sitesArr,_travelDes,_travelImgArr,_voiceUrl,_movieUrl];
+    return [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@", _date,_siteDes,_trafficDes,_liveDes,_foodDes,_sites,_wordDes,_imgsDes,_voiceUrl,_movieUrl];
 }
 @end

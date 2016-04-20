@@ -39,6 +39,7 @@
     
     [bottomView addSubview:[UIView lineViewWithFrame:CGRectMake(0, 0, KSCREEN_W, 0.5) andColor:[UIColor grayColor]]];
 }
+
 -(void)clickBtn
 {
     

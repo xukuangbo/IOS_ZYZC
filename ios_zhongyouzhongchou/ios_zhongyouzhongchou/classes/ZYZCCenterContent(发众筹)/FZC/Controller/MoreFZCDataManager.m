@@ -45,7 +45,7 @@ static id _instace;
     if (self) {
         //这里写要初始化的东西！！！
         _goal_TotalTravelDay=@"1";
-        _travelDetailArr=[NSMutableArray array];
+        _travelDetailDays=[NSMutableArray array];
         _return_supportOneYuanStatus=@"1";
         _return_supportAnyYuanStatus=@"1";
         //第四个界面
@@ -57,7 +57,7 @@ static id _instace;
 + (NSDictionary *)objectClassInArray
 {
     return @{
-             @"travelDetailArr" : [MoreFZCTravelOneDayDetailMdel class],
+             @"travelDetailDays" : [MoreFZCTravelOneDayDetailMdel class],
             };
 }
 

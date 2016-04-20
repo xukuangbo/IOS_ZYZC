@@ -24,6 +24,10 @@
 + (UIColor *)ZYZC_BgGrayColor01{
     return KCOLOR_RGB(246, 246, 246);
 }
++ (UIColor *)ZYZC_BgGrayColor02{
+    return KCOLOR_RGB(201, 201, 201);
+}
+
 + (UIColor *)ZYZC_TabBarGrayColor{
     return KCOLOR_RGBA(231, 231, 231,0.95);
 }
