@@ -6,11 +6,11 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#define ZCDETAIL_INTROSHOW_HEIGHT KSCREEN_H-64-49-53
+
 
 #import "ZCDetailContentShowBaseCell.h"
+#import "ZCDetailIntroFirstCellModel.h"
 
-@interface ZCDetailIntroShowCell : ZCDetailContentShowBaseCell<UITableViewDataSource,UITableViewDelegate>
-
-
+@interface ZCDetailIntroShowCell : ZCDetailContentShowBaseCell
+@property (nonatomic, strong) ZCDetailIntroFirstCellModel *firstCellMdel;
 @end

@@ -23,6 +23,7 @@
     [super configUI];
     self.bgImg.height=ZCDETAILINTRO_THIRDCELL_HEIGHT;
     self.titleLab.text=@"动画攻略";
+    self.titleLab.font=[UIFont boldSystemFontOfSize:15];
 }
 
 @end

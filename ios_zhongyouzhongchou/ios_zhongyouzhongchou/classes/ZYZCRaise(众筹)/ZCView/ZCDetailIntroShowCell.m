@@ -19,17 +19,15 @@
     // Drawing code
 }
 */
--(void)configUI
+
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self.cellTable=[[UITableView alloc]initWithFrame:CGRectMake(0, KCORNERRADIUS, KSCREEN_H, ZCDETAIL_INTROSHOW_HEIGHT-KCORNERRADIUS) style:UITableViewStylePlain];
-    self.cellTable.dataSource=self;
-    self.cellTable.delegate=self;
-    self.cellTable.scrollEnabled=NO;
-    self.cellTable.separatorStyle=UITableViewCellSeparatorStyleNone;
-    self.cellTable.tableFooterView=[[UIView alloc]init];
-    self.cellTable.backgroundColor=[UIColor ZYZC_BgGrayColor];
-    [self.contentView addSubview:self.cellTable];
+    if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        _firstCellMdel=[[ZCDetailIntroFirstCellModel alloc]init];
+    }
+    return self;
 }
+
 
 -(NSInteger ) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -46,6 +44,8 @@
             introFirstCell= [[ZCDetailIntroFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId01];
         }
         introFirstCell.layer.cornerRadius=KCORNERRADIUS;
+        
+        introFirstCell.cellModel=_firstCellMdel;
         return introFirstCell;
     }
     else if (indexPath.row == 2)
@@ -67,17 +67,19 @@
         return introThirdCell;
         
     }
-
-    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
-    return cell;
+    else
+    {
+        UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+        return cell;
+    }
 }
 
 -(CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0) {
-        return ZCDETAILINTRO_FIRSTCELL_HEIGHT;
+        return _firstCellMdel.cellHeight;
     }
     else if (indexPath.row == 2)
     {
@@ -91,10 +93,6 @@
     {
         return KEDGE_DISTANCE;
     }
-}
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
 }
 
 @end

@@ -22,6 +22,7 @@
     [super configUI];
     self.bgImg.height=ZCDETAILINTRO_SECONDCELL_HEIGHT;
     self.titleLab.text=@"目的地介绍";
+    self.titleLab.font=[UIFont boldSystemFontOfSize:15];
 }
 
 @end

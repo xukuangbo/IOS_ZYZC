@@ -48,7 +48,7 @@
     _table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H-KTABBAR_HEIGHT) style:UITableViewStylePlain];
     _table.dataSource=self;
     _table.delegate=self;
-//    _table.showsVerticalScrollIndicator=NO;
+    _table.showsVerticalScrollIndicator=NO;
     _table.contentInset=UIEdgeInsetsMake(BGIMAGEHEIGHT-64, 0, 0, 0);
     _table.tableFooterView=[[UIView alloc]init];
     _table.backgroundColor=[UIColor ZYZC_BgGrayColor];
@@ -109,7 +109,6 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.cellTableShow=NO;
     if (indexPath.section==0) {
         
         if(indexPath.row==1)
@@ -150,7 +149,6 @@
                 if (!introShowCell) {
                     introShowCell=[[ZCDetailIntroShowCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId03];
                 }
-                
                 return introShowCell;
             }
             //查看行程内容
@@ -203,18 +201,7 @@
     else
     {
         if (indexPath.row==0) {
-            
-            if (self.contentType == IntroType) {
-                return ZCDETAIL_INTROSHOW_HEIGHT;
-            }
-            else if (self.contentType == ArrangeType)
-            {
-                return ZCDETAIL_ARRANGESHOW_HEIGHT;
-            }
-            else
-            {
-                return ZCDETAIL_RETURNSHOW_HEIGHT;
-            }
+            return ZCDETAIL_CONTENTSHOW_HEIGHT;
         }
         else
         {
@@ -232,10 +219,10 @@
         {
             if (weakSelf.contentType!=contentType) {
                 weakSelf.contentType=contentType;
-                CGFloat offSetY=KEDGE_DISTANCE +210 +_isAddCosponsor *ZCDETAIL_FIRSTCELL_HEIGHT-64;
-                if (weakSelf.table.contentOffset.y>=offSetY) {
-                     weakSelf.table.contentOffset=CGPointMake(0, offSetY);
-                }
+//                CGFloat offSetY=KEDGE_DISTANCE +210 +_isAddCosponsor *ZCDETAIL_FIRSTCELL_HEIGHT-64;
+//                if (weakSelf.table.contentOffset.y>=offSetY) {
+//                     weakSelf.table.contentOffset=CGPointMake(0, offSetY);
+//                }
                [weakSelf.table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:section],nil] withRowAnimation:UITableViewRowAnimationFade];
             }
         };
@@ -290,7 +277,7 @@
         if (self.cellTableShow) {
             ZCDetailContentShowBaseCell *contentShowCell= [_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
             
-            if(offsetY>=KEDGE_DISTANCE +210 +_isAddCosponsor *ZCDETAIL_FIRSTCELL_HEIGHT-66)
+            if(offsetY>=KEDGE_DISTANCE +210 +_isAddCosponsor *ZCDETAIL_FIRSTCELL_HEIGHT-70)
             {
                 contentShowCell.cellTable.scrollEnabled=YES;
             }
@@ -301,7 +288,6 @@
         }
     }
 }
-
 
 #pragma mark --- 创建底部点击按钮
 -(void)createBottomView
