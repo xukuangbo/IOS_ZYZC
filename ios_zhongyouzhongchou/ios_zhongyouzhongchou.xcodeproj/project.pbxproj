@@ -16,6 +16,12 @@
 		040651271CC62FC7003FD539 /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 040651201CC62FC7003FD539 /* UIView+SDExtension.m */; };
 		0406512D1CC6356C003FD539 /* TacticMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0406512A1CC6356C003FD539 /* TacticMainViewController.m */; };
 		040651301CC635A9003FD539 /* TacticTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0406512F1CC635A9003FD539 /* TacticTableView.m */; };
+		040651321CC715E7003FD539 /* HomeMessage.json in Resources */ = {isa = PBXBuildFile; fileRef = 040651311CC715E7003FD539 /* HomeMessage.json */; };
+		040651351CC71A99003FD539 /* TacticModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040651341CC71A99003FD539 /* TacticModel.m */; };
+		040651381CC728E9003FD539 /* TacticTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 040651371CC728E9003FD539 /* TacticTableViewCell.m */; };
+		0406513B1CC7597A003FD539 /* TacticVideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0406513A1CC7597A003FD539 /* TacticVideoModel.m */; };
+		0406513E1CC76B4F003FD539 /* TacticThreeMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0406513D1CC76B4E003FD539 /* TacticThreeMapView.m */; };
+		040651411CC78877003FD539 /* TacticImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040651401CC78877003FD539 /* TacticImageView.m */; };
 		040DE0E21CA26C5E00BF3AF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040DE0E11CA26C5E00BF3AF6 /* Assets.xcassets */; };
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
 		04A99C8A1CBF848D00C6F5F0 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99BD11CBF848C00C6F5F0 /* libmp3lame.a */; };
@@ -174,6 +180,17 @@
 		0406512A1CC6356C003FD539 /* TacticMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMainViewController.m; sourceTree = "<group>"; };
 		0406512E1CC635A9003FD539 /* TacticTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticTableView.h; sourceTree = "<group>"; };
 		0406512F1CC635A9003FD539 /* TacticTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticTableView.m; sourceTree = "<group>"; };
+		040651311CC715E7003FD539 /* HomeMessage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HomeMessage.json; sourceTree = "<group>"; };
+		040651331CC71A99003FD539 /* TacticModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticModel.h; sourceTree = "<group>"; };
+		040651341CC71A99003FD539 /* TacticModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticModel.m; sourceTree = "<group>"; };
+		040651361CC728E9003FD539 /* TacticTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticTableViewCell.h; sourceTree = "<group>"; };
+		040651371CC728E9003FD539 /* TacticTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticTableViewCell.m; sourceTree = "<group>"; };
+		040651391CC7597A003FD539 /* TacticVideoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticVideoModel.h; sourceTree = "<group>"; };
+		0406513A1CC7597A003FD539 /* TacticVideoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticVideoModel.m; sourceTree = "<group>"; };
+		0406513C1CC76B4E003FD539 /* TacticThreeMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticThreeMapView.h; sourceTree = "<group>"; };
+		0406513D1CC76B4E003FD539 /* TacticThreeMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticThreeMapView.m; sourceTree = "<group>"; };
+		0406513F1CC78877003FD539 /* TacticImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticImageView.h; sourceTree = "<group>"; };
+		040651401CC78877003FD539 /* TacticImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticImageView.m; sourceTree = "<group>"; };
 		040DE0E11CA26C5E00BF3AF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		048DDE9A1CC229F600136C7A /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
 		048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
@@ -488,6 +505,10 @@
 		0406512B1CC6356C003FD539 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				040651331CC71A99003FD539 /* TacticModel.h */,
+				040651341CC71A99003FD539 /* TacticModel.m */,
+				040651391CC7597A003FD539 /* TacticVideoModel.h */,
+				0406513A1CC7597A003FD539 /* TacticVideoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -497,6 +518,12 @@
 			children = (
 				0406512E1CC635A9003FD539 /* TacticTableView.h */,
 				0406512F1CC635A9003FD539 /* TacticTableView.m */,
+				040651361CC728E9003FD539 /* TacticTableViewCell.h */,
+				040651371CC728E9003FD539 /* TacticTableViewCell.m */,
+				0406513C1CC76B4E003FD539 /* TacticThreeMapView.h */,
+				0406513D1CC76B4E003FD539 /* TacticThreeMapView.m */,
+				0406513F1CC78877003FD539 /* TacticImageView.h */,
+				040651401CC78877003FD539 /* TacticImageView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1108,6 +1135,7 @@
 			children = (
 				2C4EEFB81CC6087D00AA99F6 /* outboundCity.plist */,
 				2C901DBC1C89788C004B844B /* main.m */,
+				040651311CC715E7003FD539 /* HomeMessage.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1301,6 +1329,7 @@
 				2C4EEFB91CC6087D00AA99F6 /* outboundCity.plist in Resources */,
 				2C4EEFC11CC60D8600AA99F6 /* WeekDayView.xib in Resources */,
 				04A99CFB1CBF897A00C6F5F0 /* read_me.txt in Resources */,
+				040651321CC715E7003FD539 /* HomeMessage.json in Resources */,
 				040DE0E21CA26C5E00BF3AF6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1375,9 +1404,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				04A99C921CBF848D00C6F5F0 /* ZYZCHTTPTool.m in Sources */,
+				0406513E1CC76B4F003FD539 /* TacticThreeMapView.m in Sources */,
 				04A99CA01CBF848D00C6F5F0 /* FZCContentEntryView.m in Sources */,
 				2CF7EAFA1CC7765B007074FE /* ZCDetailReturnShowCell.m in Sources */,
 				04A99CB91CBF848D00C6F5F0 /* TravelFirstCell.m in Sources */,
+				040651351CC71A99003FD539 /* TacticModel.m in Sources */,
 				04A99D201CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */,
 				04A99D1D1CC07E1800C6F5F0 /* WXApiManager.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
@@ -1395,6 +1426,7 @@
 				04A99C9E1CBF848D00C6F5F0 /* RecordSoundObj.m in Sources */,
 				04A99CC91CBF848D00C6F5F0 /* MineMessageModel.m in Sources */,
 				04A99D1F1CC07E1800C6F5F0 /* WXApiResponseHandler.m in Sources */,
+				040651411CC78877003FD539 /* TacticImageView.m in Sources */,
 				04A99D221CC07E1800C6F5F0 /* WXMediaMessage+messageConstruct.m in Sources */,
 				040651301CC635A9003FD539 /* TacticTableView.m in Sources */,
 				04A99CA11CBF848D00C6F5F0 /* GoalFirstCell.m in Sources */,
@@ -1403,6 +1435,7 @@
 				0406512D1CC6356C003FD539 /* TacticMainViewController.m in Sources */,
 				04A99C8E1CBF848D00C6F5F0 /* UIView+GetSuperTableView.m in Sources */,
 				04A99CAF1CBF848D00C6F5F0 /* RaiseMoneyFirstModel.m in Sources */,
+				0406513B1CC7597A003FD539 /* TacticVideoModel.m in Sources */,
 				2C901DC31C89788C004B844B /* ViewController.m in Sources */,
 				2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */,
 				04A99C9B1CBF848D00C6F5F0 /* MoreFZCChooseSceneController.m in Sources */,
@@ -1471,6 +1504,7 @@
 				04A99CD01CBF848D00C6F5F0 /* ZCDetailInfoModel.m in Sources */,
 				04A99CB71CBF848D00C6F5F0 /* AddDetailView.m in Sources */,
 				04A99D1E1CC07E1800C6F5F0 /* WXApiRequestHandler.m in Sources */,
+				040651381CC728E9003FD539 /* TacticTableViewCell.m in Sources */,
 				2C901DBD1C89788C004B844B /* main.m in Sources */,
 				040651231CC62FC7003FD539 /* TADotView.m in Sources */,
 				04A99CF11CBF851500C6F5F0 /* RMCalendarCollectionViewLayout.m in Sources */,

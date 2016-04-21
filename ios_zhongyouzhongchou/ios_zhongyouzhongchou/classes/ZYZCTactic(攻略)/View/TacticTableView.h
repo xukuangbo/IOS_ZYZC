@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class TacticModel;
 @interface TacticTableView : UITableView
 
+
+
+@property (nonatomic, strong) TacticModel *tacticModel;
 @end

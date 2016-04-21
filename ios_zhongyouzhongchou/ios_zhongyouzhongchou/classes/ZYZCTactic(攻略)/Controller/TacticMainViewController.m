@@ -55,6 +55,8 @@
      */
     [self getLocation];
     
+    
+    
 }
 /**
  *  设置导航栏
@@ -179,9 +181,9 @@
                 [self.cityChoseButton setTitle:self.currentCity forState:UIControlStateNormal];
             });
     } else if (error == nil && placemarks.count == 0) {
-//        NSLog(@No location and error returned);
+        NSLog(@"No location and error returned");
     } else if (error) {
-//        NSLog(@Location error: %@, error);
+        NSLog(@"Location error: %@", error);
     }
      }];
     

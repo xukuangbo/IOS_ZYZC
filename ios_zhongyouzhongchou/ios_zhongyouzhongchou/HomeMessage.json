@@ -1,0 +1,127 @@
+{
+    "code": 0,
+    "data": {
+        "id": 7,
+        "mgViewsName": "双龙寺,日本,越南",
+        "pics": [
+                 "http://imgsrc.baidu.com/forum/w%3D580/sign=31e8598c72cf3bc7e800cde4e102babd/441076094b36acaf783c337d7ed98d1003e99c56.jpg",
+                 "http://imgsrc.baidu.com/forum/pic/item/355ecd11728b47101f4a594dc1cec3fdfe0323cd.jpg",
+                 "http://imgsrc.baidu.com/forum/pic/item/2810ce1b9d16fdfac12e626fb68f8c5496ee7bf4.jpg",
+                 "http://imgsrc.baidu.com/forum/pic/item/ed26f2d3572c11dfafea18a2612762d0f603c273.jpg",
+                 "http://imgsrc.baidu.com/forum/pic/item/79db6b600c338744c3ad88fd530fd9f9d52aa0c2.jpg"
+                 ],
+        "status": 1,
+        "videosName": "双龙寺,日本,越南,双龙寺",
+        "videos": [
+                   {
+                   "destDate": 1459762032000,
+                   "glid": "1",
+                   "id": 14,
+                   "name": "双龙寺",
+                   "status": 1,
+                   "viewImg": "http://imgsrc.baidu.com/forum/w%3D580/sign=274d877f34d3d539c13d0fcb0a86e927/b985dab44aed2e73657321ad8501a18b85d6fa9d.jpg",
+                   "viewType": 3
+                   },
+                   {
+                   "destDate": 1459742275000,
+                   "foods": "5,2",
+                   "foodsName": "小笼包,酸辣粉",
+                   "glid": "1459742264190.jpg",
+                   "id": 13,
+                   "mgViews": "12,9",
+                   "mgViewsName": "越南,双龙寺",
+                   "name": "日本",
+                   "pics": "1459742267040.jpg,1459742269835.jpg,1459742272737.jpg",
+                   "status": 1,
+                   "tipsId": 1,
+                   "videoUrl": "http://www.baidu.com/",
+                   "viewImg": "http://imgsrc.baidu.com/forum/w%3D580/sign=a131bc6ca1cc7cd9fa2d34d109002104/ed2ff703918fa0ec0564c38c249759ee3f6ddb8b.jpg",
+                   "viewText": "日本啊1北海道啊 哈哈",
+                   "viewType": 1
+                   },
+                   {
+                   "destDate": 1459735343000,
+                   "foods": "5,2",
+                   "foodsName": "小笼包,酸辣粉",
+                   "glid": "1459735341303.jpg",
+                   "id": 12,
+                   "mgViews": "10,7",
+                   "mgViewsName": "双龙寺,dds",
+                   "name": "越南",
+                   "pics": "1459735341704.jpg,1459735342245.jpg,1459735342780.jpg",
+                   "status": 1,
+                   "tipsId": 1,
+                   "videoUrl": "http://www.baidu.com/",
+                   "viewImg": "http://imgsrc.baidu.com/forum/w%3D580%3Bcp%3Dtieba%2C10%2C342%3Bap%3D%CB%C4%F4%E9%C4%CB%B0%C9%2C90%2C350/sign=7af267d88435e5dd902ca5d746fdc49f/b46903738bd4b31cb231133186d6277f9f2ff8b4.jpg",
+                   "viewText": "这里是越南",
+                   "viewType": 1
+                   },
+                   {
+                   "country": "泰国",
+                   "destDate": 1459673978000,
+                   "foods": "2,5",
+                   "foodsName": "酸辣粉,小笼包",
+                   "glid": "/productImg/show/indexImg/1459673978082.jpg",
+                   "id": 10,
+                   "mgViews": "4,9",
+                   "mgViewsName": "泰国,双龙寺",
+                   "name": "双龙寺",
+                   "pics": ",a - 副本.jpg,a.jpg",
+                   "status": 1,
+                   "tipsId": 1,
+                   "videoUrl": "http://www.baidu.com",
+                   "viewImg": "http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lKnA.jpg",
+                   "viewText": "这里是清迈，可以出家",
+                   "viewType": 2
+                   }
+                   ],
+        "destDate": 1459781051000,
+        "mgViews": [
+                    {
+                    "destDate": 1459762032000,
+                    "glid": "1",
+                    "id": 14,
+                    "name": "日本",
+                    "status": 1,
+                    "viewImg": "http://e.hiphotos.baidu.com/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=1245a60b8194a4c21e2eef796f9d70b0/4e4a20a4462309f7549fea16740e0cf3d6cad6c6.jpg",
+                    "viewType": 3
+                    },
+                    {
+                    "destDate": 1459742275000,
+                    "foods": "5,2",
+                    "foodsName": "小笼包,酸辣粉",
+                    "glid": "1459742264190.jpg",
+                    "id": 13,
+                    "mgViews": "12,9",
+                    "mgViewsName": "越南,双龙寺",
+                    "name": "老挝",
+                    "pics": "1459742267040.jpg,1459742269835.jpg,1459742272737.jpg",
+                    "status": 1,
+                    "tipsId": 1,
+                    "videoUrl": "http://www.baidu.com/",
+                    "viewImg": "http://e.hiphotos.baidu.com/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=e18281c8af51f3ded7bfb136f5879b7a/024f78f0f736afc305a57667b319ebc4b7451202.jpg",
+                    "viewText": "日本啊1北海道啊 哈哈",
+                    "viewType": 1
+                    },
+                    {
+                    "destDate": 1459735343000,
+                    "foods": "5,2",
+                    "foodsName": "小笼包,酸辣粉",
+                    "glid": "1459735341303.jpg",
+                    "id": 12,
+                    "mgViews": "10,7",
+                    "mgViewsName": "双龙寺,dds",
+                    "name": "缅甸",
+                    "pics": "1459735341704.jpg,1459735342245.jpg,1459735342780.jpg",
+                    "status": 1,
+                    "tipsId": 1,
+                    "videoUrl": "http://www.baidu.com/",
+                    "viewImg": "http://img2.imgtn.bdimg.com/it/u=1032021123,2582676089&fm=21&gp=0.jpg",
+                    "viewText": "这里是越南",
+                    "viewType": 1
+                    }
+                    ]
+        
+    },
+    "errorMsg": ""
+}
