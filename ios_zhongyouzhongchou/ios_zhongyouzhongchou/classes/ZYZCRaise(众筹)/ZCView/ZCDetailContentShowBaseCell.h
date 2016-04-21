@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#define ZCDETAIL_INTROSHOW_HEIGHT     500
+
 #define ZCDETAIL_ARRANGESHOW_HEIGHT   800
 #define ZCDETAIL_RETURNSHOW_HEIGHT    1000
 @interface ZCDetailContentShowBaseCell : UITableViewCell

@@ -24,12 +24,14 @@
 @property (nonatomic, strong) UILabel *travelThemeLab;
 @property (nonatomic, strong) ZCDetailTableHeadView *headView;
 @property (nonatomic, assign) ZCDetailContentType contentType;
+@property (nonatomic, assign) BOOL cellTableShow;
 @end
 @implementation ZCPersonInfoController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor=[UIColor ZYZC_BgGrayColor];
     _navColor=[UIColor ZYZC_NavColor];
      [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
@@ -107,6 +109,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.cellTableShow=NO;
     if (indexPath.section==0) {
         
         if(indexPath.row==1)
@@ -137,6 +140,8 @@
     else
     {
         if (indexPath.row==0) {
+            self.cellTableShow=YES;
+            NSLog(@"self.contentType:%zd",self.contentType);
             //查看介绍内容
             if (self.contentType == IntroType)
             {
@@ -151,7 +156,7 @@
             //查看行程内容
             else if (self.contentType == ArrangeType)
             {
-                NSString *cellId04=@"introShowCell";
+                NSString *cellId04=@"arrangeShowCell";
                 ZCDetailArrangeShowCell *arrangeShowCell=[tableView dequeueReusableCellWithIdentifier:cellId04];
                 if (!arrangeShowCell) {
                     arrangeShowCell=[[ZCDetailArrangeShowCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId04];
@@ -161,7 +166,7 @@
             //查看回报内容
             else
             {
-                NSString *cellId05=@"ReturnShowCell";
+                NSString *cellId05=@"returnShowCell";
                 ZCDetailReturnShowCell *returnShowCell=[tableView dequeueReusableCellWithIdentifier:cellId05];
                 if (!returnShowCell) {
                     returnShowCell=[[ZCDetailReturnShowCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId05];
@@ -225,9 +230,14 @@
         __weak typeof (&*self)weakSelf=self;
         _headView.clickChangeContent=^(ZCDetailContentType contentType)
         {
-            weakSelf.contentType=contentType;
-            
-           [weakSelf.table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:section],nil] withRowAnimation:UITableViewRowAnimationFade];
+            if (weakSelf.contentType!=contentType) {
+                weakSelf.contentType=contentType;
+                CGFloat offSetY=KEDGE_DISTANCE +210 +_isAddCosponsor *ZCDETAIL_FIRSTCELL_HEIGHT-64;
+                if (weakSelf.table.contentOffset.y>=offSetY) {
+                     weakSelf.table.contentOffset=CGPointMake(0, offSetY);
+                }
+               [weakSelf.table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:section],nil] withRowAnimation:UITableViewRowAnimationFade];
+            }
         };
         
         return _headView;
@@ -276,14 +286,19 @@
             scrollView.contentInset=UIEdgeInsetsMake(BGIMAGEHEIGHT, 0, 0, 0);
         }
         
-//        if(offsetY>=KEDGE_DISTANCE +210 +_isAddCosponsor *ZCDETAIL_FIRSTCELL_HEIGHT-64)
-//        {
-//            _headView.backgroundColor=[UIColor ZYZC_MainColor];
-//        }
-//        else
-//        {
-//            _headView.backgroundColor=[UIColor ZYZC_BgGrayColor];
-//        }
+        
+        if (self.cellTableShow) {
+            ZCDetailContentShowBaseCell *contentShowCell= [_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            
+            if(offsetY>=KEDGE_DISTANCE +210 +_isAddCosponsor *ZCDETAIL_FIRSTCELL_HEIGHT-66)
+            {
+                contentShowCell.cellTable.scrollEnabled=YES;
+            }
+            else
+            {
+                contentShowCell.cellTable.scrollEnabled=NO;
+            }
+        }
     }
 }
 
