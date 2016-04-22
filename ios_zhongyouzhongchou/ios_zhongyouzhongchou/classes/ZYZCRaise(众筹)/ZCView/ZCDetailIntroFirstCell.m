@@ -35,10 +35,7 @@
     self.titleLab.text=@"众筹目的";
     self.titleLab.font=[UIFont boldSystemFontOfSize:17];
     
-    _movieImg=[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 0, KSCREEN_W-4*KEDGE_DISTANCE, (KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
-    _movieImg.layer.cornerRadius=KCORNERRADIUS;
-    _movieImg.layer.masksToBounds=YES;
-    _movieImg.backgroundColor=[UIColor orangeColor];
+    _movieImg=[[ZYZCCusomMovieImage alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 0, KSCREEN_W-4*KEDGE_DISTANCE, (KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
     [self.contentView addSubview:_movieImg];
     
     _voiceShow=[[ZCDetailIntroFirstCellVoiceShowView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE,0, KSCREEN_W-4*KEDGE_DISTANCE, 40)];
@@ -69,6 +66,7 @@
     }
     else
     {
+        
         
     }
     //是否有语音

@@ -9,11 +9,11 @@
 #import "MoreFZCBaseTableViewCell.h"
 #import "ZCDetailIntroFirstCellVoiceShowView.h"
 #import "ZCDetailIntroFirstCellModel.h"
-#import <MediaPlayer/MediaPlayer.h>
+#import "ZYZCCusomMovieImage.h"
 @interface ZCDetailIntroFirstCell : MoreFZCBaseTableViewCell
 
-@property (nonatomic, strong) UIImageView *movieImg;
-@property (nonatomic, strong) UILabel     *textLab;
+@property (nonatomic, strong) ZYZCCusomMovieImage *movieImg;
+@property (nonatomic, strong) UILabel             *textLab;
 @property (nonatomic, strong) ZCDetailIntroFirstCellVoiceShowView *voiceShow;
 @property (nonatomic, strong) ZCDetailIntroFirstCellModel *cellModel;
 @property (nonatomic, assign) BOOL hasMovie;

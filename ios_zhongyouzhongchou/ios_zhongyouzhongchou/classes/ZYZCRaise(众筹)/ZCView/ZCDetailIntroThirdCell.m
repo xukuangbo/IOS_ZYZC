@@ -38,10 +38,7 @@
     _subDesLab.text=SUBDES_FORMOVIE(@"");
     [self.contentView addSubview:_subDesLab];
     
-    _movieImg =[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _subDesLab.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE,(KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
-    _movieImg.backgroundColor= [UIColor greenColor];
-    _movieImg.layer.cornerRadius=KCORNERRADIUS;
-    _movieImg.layer.masksToBounds=YES;
+    _movieImg =[[ZYZCCusomMovieImage alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _subDesLab.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE,(KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
     [self.contentView addSubview:_movieImg];
 }
 
