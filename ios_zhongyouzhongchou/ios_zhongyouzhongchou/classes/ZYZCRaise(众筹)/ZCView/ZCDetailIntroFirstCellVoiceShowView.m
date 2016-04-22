@@ -35,13 +35,22 @@
     [self addSubview:_iconImg];
     
     _voiceView=[[UIImageView alloc]initWithFrame:CGRectMake(_iconImg.right +KEDGE_DISTANCE, self.height-38, 50, 38)];
-    _voiceView.image=KPULLIMG(@"icon_voice",0,44,0,5);;
+    _voiceView.image=KPULLIMG(@"icon_voice",0,44,0,5);
     [self addSubview:_voiceView];
+    _voiceView.userInteractionEnabled=YES;
+    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(listenVoice:)];
+    [_voiceView addGestureRecognizer:tap];
     
     _timeLab=[[UILabel alloc]initWithFrame:CGRectMake(_voiceView.right+KEDGE_DISTANCE, self.height-38, self.width-_voiceView.right-KEDGE_DISTANCE, 38)];
     _timeLab.font=[UIFont systemFontOfSize:20];
     _timeLab.textColor=[UIColor ZYZC_TextGrayColor04];
     [self addSubview:_timeLab];
+}
+
+-(void)listenVoice:(UITapGestureRecognizer *)tap
+{
+    //播放语音
+    NSLog(@"播放语音");
 }
 
 @end

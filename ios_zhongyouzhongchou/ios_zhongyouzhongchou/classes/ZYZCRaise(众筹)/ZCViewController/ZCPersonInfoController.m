@@ -170,6 +170,7 @@
                 if (!introSecondCell) {
                     introSecondCell= [[ZCDetailIntroSecondCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:introCellId02];
                 }
+                introSecondCell.goals=@[@"普吉岛",@"清迈",@"烧麦"];
                 return introSecondCell;
             }
             else if (indexPath.row == 4)
