@@ -11,9 +11,8 @@
 @class TacticModel;
 
 
-//#define videoViewHeight 150
 
-#define videoViewHeight ((KSCREEN_W - 10 * 6) / 3.0 + 44 + 10)
+
 
 @interface TacticTableViewCell : UITableViewCell
 

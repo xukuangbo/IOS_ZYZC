@@ -7,7 +7,7 @@
 //
 
 #import "TacticSingleHeadView.h"
-
+#import "TacticSingleViewController.h"
 @implementation TacticSingleHeadView
 - (instancetype)initWithFrame:(CGRect)frame
 {
