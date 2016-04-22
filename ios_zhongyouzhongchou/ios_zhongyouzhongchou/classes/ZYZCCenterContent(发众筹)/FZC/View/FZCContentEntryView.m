@@ -36,7 +36,7 @@
     _selectLineView.backgroundColor=[UIColor ZYZC_MainColor];
     [self addSubview:_selectLineView];
 
-    NSArray *titleArr=@[@"图文描述",@"语音录入",@"上传视屏"];
+    NSArray *titleArr=@[@"图文描述",@"语音录入",@"上传视频"];
     NSArray *classArr=@[[WordView class],[SoundView class],[MovieView class]];
     for (int i=0; i<titleArr.count; i++) {
         //创建切换按钮
