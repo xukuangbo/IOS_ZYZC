@@ -67,7 +67,7 @@
     CGFloat flashViewX = TacticTableViewCellMargin;
     CGFloat flashViewY = descView.bottom + TacticTableViewCellMargin;
     CGFloat flashViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-    CGFloat flashViewH = 210;
+    CGFloat flashViewH = oneViewHeight;
     UIImageView * flashView = [UIView viewWithIndex:1 frame:CGRectMake(flashViewX, flashViewY, flashViewW, flashViewH) Title:@"动画攻略" desc:@"趣味动画教你畅游景点"];
     [self.contentView addSubview:flashView];
     self.flashView = flashView;
@@ -86,7 +86,7 @@
     CGFloat pictureViewX = TacticTableViewCellMargin;
     CGFloat pictureViewY = flashView.bottom + TacticTableViewCellMargin;
     CGFloat pictureViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-    CGFloat pictureViewH = 210;
+    CGFloat pictureViewH = oneViewHeight;
     UIImageView * pictureView = [UIView viewWithIndex:1 frame:CGRectMake(pictureViewX, pictureViewY, pictureViewW, pictureViewH) Title:@"图文攻略" desc:@"一张图玩转目的地"];
     [self.contentView addSubview:pictureView];
     self.pictureView = pictureView;
@@ -105,7 +105,7 @@
     CGFloat tipsViewX = TacticTableViewCellMargin;
     CGFloat tipsViewY = pictureView.bottom + TacticTableViewCellMargin;
     CGFloat tipsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-    CGFloat tipsViewH = 210;
+    CGFloat tipsViewH = oneViewHeight;
     UIImageView * tipsView = [UIView viewWithIndex:1 frame:CGRectMake(tipsViewX, tipsViewY, tipsViewW, tipsViewH) Title:@"众游小贴士" desc:@"最实用的旅游tips"];
     [self.contentView addSubview:tipsView];
     self.tipsView = tipsView;

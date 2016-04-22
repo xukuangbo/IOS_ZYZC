@@ -57,7 +57,7 @@
     CGFloat videoViewX = TacticTableViewCellMargin;
     CGFloat videoViewY = TacticTableViewCellMargin;
     CGFloat videoViewW = KSCREEN_W - videoViewX * 2;
-    CGFloat videoViewH = videoViewHeight;
+    CGFloat videoViewH = threeViewHeight;
     UIView *videoView = [UIView viewWithIndex:1 frame:CGRectMake(videoViewX, videoViewY, videoViewW, videoViewH) Title:@"视频攻略" desc:@"3分钟看懂旅行目的地核心攻略"];
     self.videoView = videoView;
     //添加点击手势
@@ -85,7 +85,7 @@
     CGFloat hotDestViewX = TacticTableViewCellMargin;
     CGFloat hotDestViewY = self.videoView.bottom + TacticTableViewCellMargin;
     CGFloat hotDestViewW = KSCREEN_W - hotDestViewX * 2;
-    CGFloat hotDestViewH = videoViewHeight;
+    CGFloat hotDestViewH = threeViewHeight;
     UIView *hotDestView = [UIView viewWithIndex:2 frame:CGRectMake(hotDestViewX, hotDestViewY, hotDestViewW, hotDestViewH) Title:@"热门目的地" desc:@"根据兴趣标签精准匹配更靠谱"];
     //创建3个图片的容器
 //    descLabel.bottom == 44

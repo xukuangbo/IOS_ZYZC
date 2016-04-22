@@ -109,7 +109,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (videoViewHeight * 2) + TacticTableViewCellMargin * 3;
+    return (threeViewHeight * 2) + TacticTableViewCellMargin * 3;
 }
 /**
  *  navi背景色渐变的效果

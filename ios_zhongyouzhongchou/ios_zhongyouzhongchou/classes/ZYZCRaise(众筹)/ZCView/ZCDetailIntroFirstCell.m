@@ -31,7 +31,7 @@
 
 -(void)configUI
 {
-    [super configUI]
+    [super configUI];
     self.titleLab.text=@"众筹目的";
     self.titleLab.font=[UIFont boldSystemFontOfSize:17];
     
