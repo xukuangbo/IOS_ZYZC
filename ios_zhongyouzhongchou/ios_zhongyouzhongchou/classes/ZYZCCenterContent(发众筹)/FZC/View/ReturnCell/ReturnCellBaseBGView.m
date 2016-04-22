@@ -69,11 +69,7 @@
 //        descLabel.backgroundColor = [UIColor greenColor];
         descLabel.numberOfLines = 3;
         
-        NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:desc];
-        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle1 setLineSpacing:10];
-        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, desc.length)];
-        [descLabel setAttributedText:attributedString];
+        descLabel.attributedText=[ZYZCTool setLineDistenceInText:desc];
         //    [descLabel sizeToFit];
         [self addSubview:descLabel];
 //        descLabel.backgroundColor = [UIColor greenColor];
@@ -109,22 +105,6 @@
     
     return self;
 }
-
-
-- (void)sizeWithDescLabelString:(UILabel *)label string:(NSString *)string
-{
-    NSMutableParagraphStyle *pStyle = [[NSMutableParagraphStyle alloc] init];
-    pStyle.lineSpacing = 10;
-    
-    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-    attrs[NSFontAttributeName] = label.font;
-    attrs[NSParagraphStyleAttributeName] = pStyle;
-    CGSize labelSize = [string boundingRectWithSize:CGSizeMake(label.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
-    self.realHeight = self.lineView.bottom + labelSize.height;
-    NSLog(@"%@",NSStringFromCGSize(labelSize));
-    
-}
-
 
 /**
  *  左上角按钮的可点击事件

@@ -6,8 +6,11 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
+
+
 #import "ZCDetailContentShowBaseCell.h"
+#import "ZCDetailIntroFirstCellModel.h"
 
 @interface ZCDetailIntroShowCell : ZCDetailContentShowBaseCell
-
+@property (nonatomic, strong) ZCDetailIntroFirstCellModel *firstCellMdel;
 @end

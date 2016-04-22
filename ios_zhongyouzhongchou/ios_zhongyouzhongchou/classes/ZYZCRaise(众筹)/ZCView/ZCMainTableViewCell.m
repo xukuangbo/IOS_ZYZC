@@ -146,6 +146,11 @@
     _sceneryImg.hidden=YES;
     _placeBgImg.hidden=YES;
     
+    
+    NSArray *views=[_lineView subviews];
+    for (NSInteger i=views.count-1; i>=0; i--) {
+        [views[i] removeFromSuperview];
+    }
     UIImageView *planeImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, -20, 18, 17)];
     planeImg.image=[UIImage imageNamed:@"btn_p_green"];
     [_lineView addSubview:planeImg];

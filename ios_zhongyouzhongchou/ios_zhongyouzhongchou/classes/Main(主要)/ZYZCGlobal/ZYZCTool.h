@@ -19,6 +19,16 @@
  */
 +(CGSize )calculateStrLengthByText:(NSString *)text andFont:(UIFont *)font andMaxWidth:(CGFloat )maxW;
 /**
+ *  设置文字间距
+ */
++(NSMutableAttributedString *)setLineDistenceInText:(NSString *)text;
+
+/**
+ *  计算有间距的文字的长度
+ */
++ (CGSize)calculateStrByLineSpace:(CGFloat)lineSpace andString:(NSString *)str andFont:(UIFont *)font andMaxWidth:(CGFloat )maxW;
+
+/**
  *  获取日期时间
  */
 +(NSString *)getLocalDate;

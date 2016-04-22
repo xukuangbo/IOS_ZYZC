@@ -17,6 +17,31 @@
     CGSize maxSize = CGSizeMake(maxW, MAXFLOAT);
     return [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
 }
+
+#pragma mark --- 设置文字间距
++(NSMutableAttributedString *)setLineDistenceInText:(NSString *)text
+{
+    NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:text];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:10];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, text.length)];
+    return attributedString;
+}
+
+#pragma mark --- 计算有间距的文字的长度
++ (CGSize)calculateStrByLineSpace:(CGFloat)lineSpace andString:(NSString *)str andFont:(UIFont *)font andMaxWidth:(CGFloat )maxW
+{
+    NSMutableParagraphStyle *pStyle = [[NSMutableParagraphStyle alloc] init];
+    pStyle.lineSpacing = lineSpace;
+    
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+    attrs[NSFontAttributeName] = font;
+    attrs[NSParagraphStyleAttributeName] = pStyle;
+    CGSize labelSize = [str boundingRectWithSize:CGSizeMake(maxW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
+    
+    return labelSize;
+}
+
 #pragma mark --- 获取本地日期
 +(NSString *)getLocalDate
 {
@@ -43,6 +68,7 @@
     return locationString;
 }
 
+
 #pragma  mark --- 保存用户id到NSUserDefaults
 +(void)saveUserIdById:(NSString *)userId
 {
@@ -60,5 +86,7 @@
     NSString *userId=[user objectForKey:KUSER_ID];
     return userId;
 }
+
+
 
 @end

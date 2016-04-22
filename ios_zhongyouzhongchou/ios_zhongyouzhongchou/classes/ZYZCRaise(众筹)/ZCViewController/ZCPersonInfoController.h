@@ -7,6 +7,8 @@
 //
 
 #import "ZYZCBaseViewController.h"
+#import "ZCDetailIntroFirstCellModel.h"
+
 typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
 {
     WantToType=KZCDETAIL_ATTITUDETYPE,
@@ -15,5 +17,6 @@ typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
 };
 @interface ZCPersonInfoController : ZYZCBaseViewController
 @property (nonatomic, assign) BOOL isAddCosponsor;
+@property (nonatomic, strong) ZCDetailIntroFirstCellModel *firstCellMdel;
 
 @end

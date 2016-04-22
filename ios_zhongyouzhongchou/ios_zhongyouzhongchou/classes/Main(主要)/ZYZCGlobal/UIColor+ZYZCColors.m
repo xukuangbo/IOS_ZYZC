@@ -43,6 +43,9 @@
 + (UIColor *)ZYZC_TextGrayColor03{
     return KCOLOR_RGB(138, 138, 138);
 }
++ (UIColor *)ZYZC_TextGrayColor04{
+    return KCOLOR_RGB(173, 173, 173);
+}
 + (UIColor *)ZYZC_LineGrayColor{
     return KCOLOR_RGB(223, 223, 223);
 }
