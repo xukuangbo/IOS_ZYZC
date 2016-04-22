@@ -20,11 +20,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        CGFloat buttonWH = 90;
-        CGFloat leftRightMargin = 10;
-        CGFloat centenMargin = (frame.size.width - leftRightMargin * 2 - buttonWH * 3) * 0.5;
+        CGFloat threeMapViewMargin = 10;
+        CGFloat buttonWH = (frame.size.width - threeMapViewMargin * 4) / 3.0;
         for (int i = 0; i < 3; i++) {
-            CGFloat buttonX = leftRightMargin + i * (centenMargin + buttonWH);
+            CGFloat buttonX = threeMapViewMargin + i * (threeMapViewMargin + buttonWH);
             CGFloat buttonY = 0;
             TacticImageView *button = [[TacticImageView alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonWH, buttonWH)];
             button.frame = CGRectMake(buttonX, buttonY, buttonWH, buttonWH);
