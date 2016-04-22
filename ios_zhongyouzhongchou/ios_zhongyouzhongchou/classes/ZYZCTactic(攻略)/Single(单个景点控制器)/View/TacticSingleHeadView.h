@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#define TacticSingleHeadViewHeight 200
+#define TacticSingleHeadViewHeight (KSCREEN_W * 5 / 8.0)
 @interface TacticSingleHeadView : UIImageView
 @property (nonatomic, weak) UILabel *nameLabel;
 

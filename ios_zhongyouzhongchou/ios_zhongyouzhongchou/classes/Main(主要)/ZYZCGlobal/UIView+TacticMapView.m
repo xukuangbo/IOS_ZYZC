@@ -70,6 +70,8 @@
     descLabel.textColor = [UIColor ZYZC_TextGrayColor];
     [mapView addSubview:descLabel];
     
+//    NSLog(@"$$$$$$$%f",descLabel.bottom);
+    
     return mapView;
 }
 @end

@@ -130,6 +130,7 @@
 #pragma mark - UITableDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    NSLog(@"%f",oneViewHeight);
     return TacticSingleHeadViewHeight;
 }
 
@@ -149,6 +150,7 @@
     return 1500;
 }
 
+
 /**
  *  navi背景色渐变的效果
  */
@@ -156,8 +158,8 @@
 {
     CGFloat offsetY = scrollView.contentOffset.y;
     
-    if (offsetY <= TacticSingleHeadViewHeight) {
-        CGFloat alpha = MAX(0, offsetY/TacticSingleHeadViewHeight);
+    if (offsetY <= oneViewHeight) {
+        CGFloat alpha = MAX(0, offsetY/oneViewHeight);
         
         [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(alpha)];
         self.title = @"";

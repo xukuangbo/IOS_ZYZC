@@ -12,6 +12,12 @@
 #define titleFont [UIFont systemFontOfSize:15]
 #define descFont [UIFont systemFontOfSize:13]
 #define descLabelBottom 44
+
+//我提供两种高度给他
+//这是视频播放，图文那种
+#define oneViewHeight ((KSCREEN_W - TacticTableViewCellMargin * 4) / 8.0 * 5 + descLabelBottom)
+//这是单个视频那种
+#define threeViewHeight 150
 @interface UIView (TacticMapView)
 + (UIImageView *)viewWithIndex:(NSInteger)index frame:(CGRect)rect Title:(NSString *)title desc:(NSString *)desc;
 @end
