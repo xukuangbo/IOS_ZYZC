@@ -38,17 +38,8 @@
     _subDesLab.text=SUBDES_FORMOVIE(@"");
     [self.contentView addSubview:_subDesLab];
     
-    _movieImg =[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _subDesLab.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE,(KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
-    _movieImg.backgroundColor= [UIColor greenColor];
-    _movieImg.layer.cornerRadius=KCORNERRADIUS;
-    _movieImg.layer.masksToBounds=YES;
+    _movieImg =[[ZYZCCusomMovieImage alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _subDesLab.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE,(KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
     [self.contentView addSubview:_movieImg];
-    
-    UIImageView *startImg=[[UIImageView alloc]init];
-    startImg.center=CGPointMake(_movieImg.width/2, _movieImg.height/2);
-    startImg.bounds=CGRectMake(0, 0, 60, 60);
-    startImg.image=[UIImage imageNamed:@"btn_v_on"];
-    [_movieImg addSubview:startImg];
 }
 
 @end

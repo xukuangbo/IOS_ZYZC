@@ -35,17 +35,8 @@
     self.titleLab.text=@"众筹目的";
     self.titleLab.font=[UIFont boldSystemFontOfSize:17];
     
-    _movieImg=[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 0, KSCREEN_W-4*KEDGE_DISTANCE, (KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
-    _movieImg.layer.cornerRadius=KCORNERRADIUS;
-    _movieImg.layer.masksToBounds=YES;
-    _movieImg.backgroundColor=[UIColor orangeColor];
+    _movieImg=[[ZYZCCusomMovieImage alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 0, KSCREEN_W-4*KEDGE_DISTANCE, (KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
     [self.contentView addSubview:_movieImg];
-    
-    UIImageView *startImg=[[UIImageView alloc]init];
-    startImg.center=CGPointMake(_movieImg.width/2, _movieImg.height/2);
-    startImg.bounds=CGRectMake(0, 0, 60, 60);
-    startImg.image=[UIImage imageNamed:@"btn_v_on"];
-    [_movieImg addSubview:startImg];
     
     _voiceShow=[[ZCDetailIntroFirstCellVoiceShowView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE,0, KSCREEN_W-4*KEDGE_DISTANCE, 40)];
     [self.contentView addSubview:_voiceShow];
