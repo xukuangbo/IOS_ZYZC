@@ -6,7 +6,6 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#define ZCDETAILINTRO_FIRSTCELL_HEIGHT  354
 #import "MoreFZCBaseTableViewCell.h"
 #import "ZCDetailIntroFirstCellVoiceShowView.h"
 #import "ZCDetailIntroFirstCellModel.h"
