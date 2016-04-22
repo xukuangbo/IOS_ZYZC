@@ -8,6 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TacticImageView : UIImageView
+@interface TacticImageView : UIButton
+/**
+ *  view类型
+ */
+@property (nonatomic, assign) NSInteger viewType;
+/**
+ *  城市的编号
+ */
+@property (nonatomic, assign) NSInteger viewId;
+/**
+ *  地名
+ */
 @property (nonatomic, weak) UILabel *nameLabel;
+
+
+
 @end

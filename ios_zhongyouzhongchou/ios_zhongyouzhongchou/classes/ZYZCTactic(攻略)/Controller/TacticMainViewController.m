@@ -91,7 +91,7 @@
      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
     self.messageButton = messageButton;
     
-    NSLog(@"%f,,,,,,%f",self.cityChoseButton.right,self.messageButton.left);
+//    NSLog(@"%f,,,,,,%f",self.cityChoseButton.right,self.messageButton.left);
     
     //设置中间的搜索栏
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -118,7 +118,7 @@
  *  城市选择
  */
 - (void)cityChoseButton:(UIButton *)button{
-    
+    NSLog(@"____________");
 }
 /**
  *  消息按钮
@@ -131,7 +131,8 @@
  *  中间的搜索按钮
  */
 - (void)searchButton:(UIButton *)button{
-    
+    MoreFZCChooseSceneController *chooseSceneVC = [[MoreFZCChooseSceneController alloc] init];
+    [self.navigationController pushViewController:chooseSceneVC animated:YES];
 }
 #pragma mark - 获取当前定位城市
 - (void)getLocation

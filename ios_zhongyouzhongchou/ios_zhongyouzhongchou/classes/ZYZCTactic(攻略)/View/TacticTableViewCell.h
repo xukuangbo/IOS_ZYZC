@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIView+TacticMapView.h"
+@class TacticModel;
+
 
 #define videoViewHeight 150
-#define TacticTableViewCellMargin 10
 
-#define titleFont [UIFont systemFontOfSize:15]
-#define descFont [UIFont systemFontOfSize:13]
-@class TacticModel;
+
+
 @interface TacticTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) TacticModel *tacticModel;

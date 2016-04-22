@@ -43,7 +43,7 @@
         shadowIconView.layer.masksToBounds = YES;
         [self addSubview:shadowIconView];
         
-        //0.5创建一个登陆按钮
+        //5创建一个登陆按钮
         UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
         loginButton.size = CGSizeMake(shadowIconViewWH * 0.5, shadowIconViewWH * 0.5);
         
@@ -73,6 +73,8 @@
         nameLabel.textAlignment = NSTextAlignmentCenter;
         nameLabel.textColor = [UIColor whiteColor];
         nameLabel.font = [UIFont systemFontOfSize:18];
+        nameLabel.shadowColor = [UIColor colorWithWhite:0.1f alpha:0.8f];    //设置文本的阴影色彩和透明度。
+        nameLabel.shadowOffset = CGSizeMake(1.0f, 1.0f);     //设置阴影的倾斜角度。
         nameLabel.text = @"李晓雅";
         //在赋值完名字后应该计算一下，调用一下方法吧
 //        nameLabel.backgroundColor = [UIColor redColor];
@@ -102,6 +104,8 @@
 //        professionLabel.backgroundColor = [UIColor redColor];
         professionLabel.size = CGSizeMake(self.width, 15);
         professionLabel.textColor = [UIColor whiteColor];
+        professionLabel.shadowColor = [UIColor colorWithWhite:0.1f alpha:0.8f];    //设置文本的阴影色彩和透明度。
+        professionLabel.shadowOffset = CGSizeMake(1.0f, 1.0f);     //设置阴影的倾斜角度。
         professionLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:professionLabel];
         self.professionLabel = professionLabel;
@@ -116,6 +120,8 @@
         descLabel.size = CGSizeMake(self.width, 15);
         descLabel.textColor = [UIColor whiteColor];
         descLabel.textAlignment = NSTextAlignmentCenter;
+        descLabel.shadowColor = [UIColor colorWithWhite:0.1f alpha:0.8f];    //设置文本的阴影色彩和透明度。
+        descLabel.shadowOffset = CGSizeMake(1.0f, 1.0f);     //设置阴影的倾斜角度。
         [self addSubview:descLabel];
         self.descLabel = descLabel;
         
