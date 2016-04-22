@@ -29,6 +29,12 @@
 + (CGSize)calculateStrByLineSpace:(CGFloat)lineSpace andString:(NSString *)str andFont:(UIFont *)font andMaxWidth:(CGFloat )maxW;
 
 /**
+ *  创建btn（文字在左图片在右）
+ *
+ */
++ (UIButton *)getCustomBtnByTilte:(NSString *)title andImageName:(NSString *)imageName andtitleFont:(UIFont *)titleFont;
+
+/**
  *  获取日期时间
  */
 +(NSString *)getLocalDate;

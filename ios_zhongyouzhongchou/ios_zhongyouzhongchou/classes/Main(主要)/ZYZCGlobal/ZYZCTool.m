@@ -42,6 +42,22 @@
     return labelSize;
 }
 
+
+#pragma mark --- 创建btn（文字在左图片在右）
++ (UIButton *)getCustomBtnByTilte:(NSString *)title andImageName:(NSString *)imageName andtitleFont:(UIFont *)titleFont
+{
+    CGSize rightButtonTitleSize = [self calculateStrLengthByText:title andFont:titleFont andMaxWidth:MAXFLOAT];
+    CGFloat labelWidth = rightButtonTitleSize.width + 2;
+    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+    btn.titleLabel.font=[UIFont systemFontOfSize:15];
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    btn.imageEdgeInsets = UIEdgeInsetsMake(0, labelWidth, 0, -labelWidth);
+    CGFloat imageWith = btn.currentImage.size.width + 2;
+    btn.titleEdgeInsets = UIEdgeInsetsMake(0, -imageWith, 0, imageWith);
+    return btn;
+}
+
 #pragma mark --- 获取本地日期
 +(NSString *)getLocalDate
 {

@@ -22,6 +22,7 @@
     [super configUI];
     self.bgImg.height=ZCDETAIL_FIRSTCELL_HEIGHT;
     self.titleLab.text=@"联合发起人";
+    self.titleLab.font=[UIFont boldSystemFontOfSize:15];
     self.titleLab.textColor=[UIColor ZYZC_TextBlackColor];
 }
 

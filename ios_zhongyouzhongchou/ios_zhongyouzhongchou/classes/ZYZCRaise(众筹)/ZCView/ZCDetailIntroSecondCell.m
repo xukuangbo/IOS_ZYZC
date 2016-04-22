@@ -30,7 +30,7 @@
     [super configUI];
     self.bgImg.height=ZCDETAILINTRO_SECONDCELL_HEIGHT;
     self.titleLab.text=@"目的地介绍";
-    self.titleLab.font=[UIFont boldSystemFontOfSize:15];
+    self.titleLab.font=[UIFont boldSystemFontOfSize:17];
     
     _goalsView=[[UIScrollView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.topLineView.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE, 30)];
     _goalsView.showsHorizontalScrollIndicator=NO;
@@ -38,12 +38,38 @@
     [self.contentView addSubview:_goalsView];
     _firstGetGoals=YES;
     
-    UIImageView *oneGoalImg=[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _goalsView.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE,(KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
-    oneGoalImg.backgroundColor= [UIColor redColor];
-    [self.contentView addSubview:oneGoalImg];
+    _oneGoalImg=[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _goalsView.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE,(KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
+    _oneGoalImg.backgroundColor= [UIColor redColor];
+    _oneGoalImg.layer.cornerRadius=KCORNERRADIUS;
+    _oneGoalImg.layer.masksToBounds=YES;
+    [self.contentView addSubview:_oneGoalImg];
     
+    UIView *view01=[UIView lineViewWithFrame:CGRectMake(2*KEDGE_DISTANCE, _oneGoalImg.bottom+KEDGE_DISTANCE, 2, 20) andColor:[UIColor ZYZC_MainColor]];
+    [self.contentView addSubview:view01];
+    
+    UILabel *generalTitleLab=[[UILabel alloc]initWithFrame:CGRectMake(view01.right+KEDGE_DISTANCE, _oneGoalImg.bottom+KEDGE_DISTANCE, 120, 20)];
+    generalTitleLab.text=@"目的地概况";
+    generalTitleLab.textColor=[UIColor ZYZC_TextBlackColor];
+    [self.contentView addSubview:generalTitleLab];
+    
+    UIButton *moreBtn=[ZYZCTool getCustomBtnByTilte:@"更多" andImageName:@"btn_rig_mor" andtitleFont:[UIFont systemFontOfSize:15]];
+    moreBtn.frame=CGRectMake(KSCREEN_W-2*KEDGE_DISTANCE-50, _oneGoalImg.bottom+KEDGE_DISTANCE, 50, 20) ;
+    [moreBtn setTitleColor:[UIColor ZYZC_TextGrayColor04] forState:UIControlStateNormal];
+    [moreBtn addTarget:self action:@selector(getMoregeneralText) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:moreBtn];
+    
+    //目的地概况内容
+    _generalLab=[[UILabel alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, generalTitleLab.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE, 80)];
+    _generalLab.font=[UIFont systemFontOfSize:15];
+    _generalLab.numberOfLines=3;
+    _generalLab.textColor=[UIColor ZYZC_TextGrayColor04];
+    [self.contentView addSubview:_generalLab];
+    
+    _generalLab.text=@"        三大纪律开始打架了扩大啊发哈肌肤恢复噶大是大非合适的接口发生地方就开始地方上独领风骚的护发素可点击发货速度快结束发生地方 i 松而我的大三大的发生地方首都发生地方是谁的冯绍峰发生地方是非得失";
+    _generalLab.attributedText=[ZYZCTool setLineDistenceInText:_generalLab.text];
 }
 
+#pragma mark --- 目的地set方法
 -(void)setGoals:(NSArray *)goals
 {
     _goals=goals;
@@ -73,10 +99,7 @@
     _firstGetGoals=NO;
 }
 
-/**
- *
- *  创建按钮
- */
+#pragma mark --- 创建目的地btn
 - (UIButton *)setButton:(NSInteger)index withTitle:(NSString *)title
 {
     UIFont *font=[UIFont  systemFontOfSize:15];
@@ -91,6 +114,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
     [button setTitle:title forState:UIControlStateNormal];
+    button.titleLabel.font=[UIFont systemFontOfSize:15];
     button.tag = index+FIRSTBTN_TAG;
     [button addTarget:self action:@selector(changeGoal:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -147,5 +171,10 @@
     
 }
 
+#pragma mark --- 获取更多目的地概况内容
+-(void)getMoregeneralText
+{
+    
+}
 
 @end

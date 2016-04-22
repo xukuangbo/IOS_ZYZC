@@ -6,12 +6,16 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#define ZCDETAILINTRO_SECONDCELL_HEIGHT  350
+#define ZCDETAILINTRO_SECONDCELL_HEIGHT  230+(KSCREEN_W-4*KEDGE_DISTANCE)*5/8
 
 #import "MoreFZCBaseTableViewCell.h"
 
 @interface ZCDetailIntroSecondCell : MoreFZCBaseTableViewCell
 
 @property (nonatomic, strong) NSArray *goals;
+
+@property (nonatomic, strong) UIImageView *oneGoalImg;
+
+@property (nonatomic, strong) UILabel *generalLab;
 
 @end

@@ -31,10 +31,9 @@
 
 -(void)configUI
 {
-    [super configUI];
-    self.bgImg.height=ZCDETAILINTRO_FIRSTCELL_HEIGHT;
+    [super configUI]
     self.titleLab.text=@"众筹目的";
-    self.titleLab.font=[UIFont boldSystemFontOfSize:15];
+    self.titleLab.font=[UIFont boldSystemFontOfSize:17];
     
     _movieImg=[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 0, KSCREEN_W-4*KEDGE_DISTANCE, (KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
     _movieImg.layer.cornerRadius=KCORNERRADIUS;
