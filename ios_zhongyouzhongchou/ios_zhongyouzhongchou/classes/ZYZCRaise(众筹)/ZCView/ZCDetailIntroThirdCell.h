@@ -6,7 +6,7 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#define ZCDETAILINTRO_THIRDCELL_HEIGHT  35+(KSCREEN_W-4*KEDGE_DISTANCE)*5/8
+#define ZCDETAILINTRO_THIRDCELL_HEIGHT  85+(KSCREEN_W-4*KEDGE_DISTANCE)*5/8
 
 #import "MoreFZCBaseTableViewCell.h"
 

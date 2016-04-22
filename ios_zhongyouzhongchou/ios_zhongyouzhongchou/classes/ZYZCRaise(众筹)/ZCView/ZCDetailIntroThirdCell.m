@@ -43,6 +43,12 @@
     _movieImg.layer.cornerRadius=KCORNERRADIUS;
     _movieImg.layer.masksToBounds=YES;
     [self.contentView addSubview:_movieImg];
+    
+    UIImageView *startImg=[[UIImageView alloc]init];
+    startImg.center=CGPointMake(_movieImg.width/2, _movieImg.height/2);
+    startImg.bounds=CGRectMake(0, 0, 60, 60);
+    startImg.image=[UIImage imageNamed:@"btn_v_on"];
+    [_movieImg addSubview:startImg];
 }
 
 @end
