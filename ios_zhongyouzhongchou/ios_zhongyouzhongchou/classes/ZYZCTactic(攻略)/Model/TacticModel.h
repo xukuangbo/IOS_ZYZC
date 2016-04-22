@@ -10,7 +10,7 @@
 
 @interface TacticModel : NSObject
 //id 7
-@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *ID;
 //"mgViewsName": "双龙寺,日本,越南",
 @property (nonatomic, copy) NSString *mgViewsName;
 //"pics": [

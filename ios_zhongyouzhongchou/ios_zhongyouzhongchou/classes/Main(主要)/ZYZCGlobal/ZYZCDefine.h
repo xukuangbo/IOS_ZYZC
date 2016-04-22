@@ -45,6 +45,7 @@
 #define KMineHeadViewChangeType     100//tag取值范围100～101
 #define KZCDETAIL_CONTENTTYPE       110//tag取值范围110～102
 
+#define KWebImage(urlImage) [NSString stringWithFormat:@"http://zhongyou-hz.oss-cn-hangzhou.aliyuncs.com/%@",urlImage] //网络访问阿里云的图片
 
 //NSUserDefaults-key使用
 #define KUSER_ID  @"userId"            //用于保存用户id

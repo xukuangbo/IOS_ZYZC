@@ -18,7 +18,7 @@
 //"glid": "1459735341303.jpg"
 @property (nonatomic, copy) NSString *glid;
 //"id": 12
-@property (nonatomic, assign) NSInteger id;
+@property (nonatomic, assign) NSInteger viewid;
 //"mgViews": "10,7",
 @property (nonatomic, copy) NSString *mgViews;
 //"mgViewsName": "双龙寺,dds",
@@ -28,13 +28,16 @@
 //"pics": "1459735341704.jpg,1459735342245.jpg,1459735342780.jpg",
 @property (nonatomic, copy) NSString *pics;
 /**
- *  图片
+ *  "viewImg": "1459735338339.jpg",
  */
 @property (nonatomic, copy) NSString *viewImg;
 //"status": 1,
 //"tipsId": 1,
+@property (nonatomic, assign) NSInteger tipsId;
 //"videoUrl": "http://www.baidu.com/",
-//"viewImg": "1459735338339.jpg",
+@property (nonatomic, copy) NSString *videoUrl;
 //"viewText": "这里是越南",
+@property (nonatomic, copy) NSString *viewText;
 //"viewType": 1
+@property (nonatomic, assign) NSInteger viewType;
 @end

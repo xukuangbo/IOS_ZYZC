@@ -53,16 +53,23 @@
             
                 TacticVideoModel *videoModel = (TacticVideoModel *)videos[i];
                 if (i == 0) {
-                    [self.firstView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg]];
+//                    [self.firstView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg]];
+                    [self.firstView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg] forState:UIControlStateNormal];
                     self.firstView.nameLabel.text = videoModel.name;
+                    self.firstView.viewId = videoModel.viewid;
+                    self.firstView.viewType = videoModel.viewType;
                 }
                 if (i == 1) {
-                    [self.secondView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg]];
+                    [self.secondView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg] forState:UIControlStateNormal];
                     self.secondView.nameLabel.text = videoModel.name;
+                    self.secondView.viewId = videoModel.viewid;
+                    self.secondView.viewType = videoModel.viewType;
                 }
                 if (i == 2) {
-                    [self.thirdView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg]];
+                    [self.thirdView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg] forState:UIControlStateNormal];
                     self.thirdView.nameLabel.text = videoModel.name;
+                    self.thirdView.viewId = videoModel.viewid;
+                    self.thirdView.viewType = videoModel.viewType;
                 }
                 
             }//如果大于三，以后再说

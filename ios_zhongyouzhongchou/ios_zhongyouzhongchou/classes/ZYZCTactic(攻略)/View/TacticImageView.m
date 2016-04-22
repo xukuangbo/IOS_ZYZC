@@ -7,14 +7,14 @@
 //
 
 #import "TacticImageView.h"
-
+#import "TacticSingleViewController.h"
 @implementation TacticImageView
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.userInteractionEnabled = YES;
-        
+//        self.userInteractionEnabled = YES;
+        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         //添加圆角
         self.layer.cornerRadius = 5;
         self.layer.masksToBounds = YES;
@@ -31,16 +31,19 @@
         self.nameLabel = nameLabel;
         [self addSubview:nameLabel];
         
-        //添加点击手势
-        UIGestureRecognizer *gesture = [[UIGestureRecognizer alloc] initWithTarget:self action:@selector(clickAction)];
-        [self addGestureRecognizer:gesture];
+        [self addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
-
-
-- (void)clickAction
+//这里写个跳转到单个景点
+- (void)clickAction:(UIButton *)button
 {
-    NSLog(@"点击了！！！");
+    if (self.viewType == 3) {
+        NSLog(@"这是一个景点的描述！！！！！");
+    }else if (self.viewType == 1 || self.viewType == 2){
+        TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:self.viewId];
+        [self.viewController.navigationController pushViewController:singleVC animated:YES];
+    }
+    
 }
 @end

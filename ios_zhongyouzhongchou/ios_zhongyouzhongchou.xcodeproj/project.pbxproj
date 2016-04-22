@@ -22,8 +22,17 @@
 		0406513B1CC7597A003FD539 /* TacticVideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0406513A1CC7597A003FD539 /* TacticVideoModel.m */; };
 		0406513E1CC76B4F003FD539 /* TacticThreeMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0406513D1CC76B4E003FD539 /* TacticThreeMapView.m */; };
 		040651411CC78877003FD539 /* TacticImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040651401CC78877003FD539 /* TacticImageView.m */; };
+		040651431CC8770E003FD539 /* SingleView.json in Resources */ = {isa = PBXBuildFile; fileRef = 040651421CC8770E003FD539 /* SingleView.json */; };
+		0406514D1CC87A89003FD539 /* TacticSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0406514C1CC87A89003FD539 /* TacticSingleViewController.m */; };
+		040651501CC8BF44003FD539 /* TacticSingleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0406514F1CC8BF44003FD539 /* TacticSingleModel.m */; };
+		040651561CC8DBB6003FD539 /* TacticSingleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 040651551CC8DBB6003FD539 /* TacticSingleTableViewCell.m */; };
 		040DE0E21CA26C5E00BF3AF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040DE0E11CA26C5E00BF3AF6 /* Assets.xcassets */; };
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
+		0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */; };
+		0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */; };
+		0490D1561CC9B4310064844C /* UIView+TacticMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1551CC9B4310064844C /* UIView+TacticMapView.m */; };
+		0490D1591CC9BFB60064844C /* TacticSingleModelFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1581CC9BFB60064844C /* TacticSingleModelFrame.m */; };
+		0490D15C1CC9FAA80064844C /* TacticSingleHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D15B1CC9FAA80064844C /* TacticSingleHeadView.m */; };
 		04A99C8A1CBF848D00C6F5F0 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99BD11CBF848C00C6F5F0 /* libmp3lame.a */; };
 		04A99C8D1CBF848D00C6F5F0 /* UIColor+ZYZCColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BDA1CBF848C00C6F5F0 /* UIColor+ZYZCColors.m */; };
 		04A99C8E1CBF848D00C6F5F0 /* UIView+GetSuperTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BDC1CBF848C00C6F5F0 /* UIView+GetSuperTableView.m */; };
@@ -193,9 +202,26 @@
 		0406513D1CC76B4E003FD539 /* TacticThreeMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticThreeMapView.m; sourceTree = "<group>"; };
 		0406513F1CC78877003FD539 /* TacticImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticImageView.h; sourceTree = "<group>"; };
 		040651401CC78877003FD539 /* TacticImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticImageView.m; sourceTree = "<group>"; };
+		040651421CC8770E003FD539 /* SingleView.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SingleView.json; sourceTree = "<group>"; };
+		0406514B1CC87A89003FD539 /* TacticSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleViewController.h; sourceTree = "<group>"; };
+		0406514C1CC87A89003FD539 /* TacticSingleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleViewController.m; sourceTree = "<group>"; };
+		0406514E1CC8BF44003FD539 /* TacticSingleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleModel.h; sourceTree = "<group>"; };
+		0406514F1CC8BF44003FD539 /* TacticSingleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleModel.m; sourceTree = "<group>"; };
+		040651541CC8DBB6003FD539 /* TacticSingleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleTableViewCell.h; sourceTree = "<group>"; };
+		040651551CC8DBB6003FD539 /* TacticSingleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleTableViewCell.m; sourceTree = "<group>"; };
 		040DE0E11CA26C5E00BF3AF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		048DDE9A1CC229F600136C7A /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
 		048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
+		0490D14E1CC92B350064844C /* TacticSingleFoodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleFoodModel.h; sourceTree = "<group>"; };
+		0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleFoodModel.m; sourceTree = "<group>"; };
+		0490D1511CC92BF40064844C /* TacticSingleTipsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleTipsModel.h; sourceTree = "<group>"; };
+		0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleTipsModel.m; sourceTree = "<group>"; };
+		0490D1541CC9B4310064844C /* UIView+TacticMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TacticMapView.h"; sourceTree = "<group>"; };
+		0490D1551CC9B4310064844C /* UIView+TacticMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TacticMapView.m"; sourceTree = "<group>"; };
+		0490D1571CC9BFB60064844C /* TacticSingleModelFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleModelFrame.h; sourceTree = "<group>"; };
+		0490D1581CC9BFB60064844C /* TacticSingleModelFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleModelFrame.m; sourceTree = "<group>"; };
+		0490D15A1CC9FAA80064844C /* TacticSingleHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleHeadView.h; sourceTree = "<group>"; };
+		0490D15B1CC9FAA80064844C /* TacticSingleHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleHeadView.m; sourceTree = "<group>"; };
 		04A99BD01CBF848C00C6F5F0 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
 		04A99BD11CBF848C00C6F5F0 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		04A99BD91CBF848C00C6F5F0 /* UIColor+ZYZCColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ZYZCColors.h"; sourceTree = "<group>"; };
@@ -534,6 +560,51 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		040651441CC87A1C003FD539 /* Single(单个景点控制器) */ = {
+			isa = PBXGroup;
+			children = (
+				040651451CC87A1C003FD539 /* Controller */,
+				040651461CC87A1C003FD539 /* Model */,
+				040651471CC87A1C003FD539 /* View */,
+			);
+			path = "Single(单个景点控制器)";
+			sourceTree = "<group>";
+		};
+		040651451CC87A1C003FD539 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0406514B1CC87A89003FD539 /* TacticSingleViewController.h */,
+				0406514C1CC87A89003FD539 /* TacticSingleViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		040651461CC87A1C003FD539 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0490D1571CC9BFB60064844C /* TacticSingleModelFrame.h */,
+				0490D1581CC9BFB60064844C /* TacticSingleModelFrame.m */,
+				0406514E1CC8BF44003FD539 /* TacticSingleModel.h */,
+				0406514F1CC8BF44003FD539 /* TacticSingleModel.m */,
+				0490D14E1CC92B350064844C /* TacticSingleFoodModel.h */,
+				0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */,
+				0490D1511CC92BF40064844C /* TacticSingleTipsModel.h */,
+				0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		040651471CC87A1C003FD539 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				040651541CC8DBB6003FD539 /* TacticSingleTableViewCell.h */,
+				040651551CC8DBB6003FD539 /* TacticSingleTableViewCell.m */,
+				0490D15A1CC9FAA80064844C /* TacticSingleHeadView.h */,
+				0490D15B1CC9FAA80064844C /* TacticSingleHeadView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		048DDE991CC229F600136C7A /* MBProgressHUD+MJ */ = {
 			isa = PBXGroup;
 			children = (
@@ -597,6 +668,8 @@
 				04A99BDE1CBF848C00C6F5F0 /* UIView+ViewController.m */,
 				04A99BDF1CBF848C00C6F5F0 /* UIView+ZYZCLineView.h */,
 				04A99BE01CBF848C00C6F5F0 /* UIView+ZYZCLineView.m */,
+				0490D1541CC9B4310064844C /* UIView+TacticMapView.h */,
+				0490D1551CC9B4310064844C /* UIView+TacticMapView.m */,
 				04A99BE11CBF848C00C6F5F0 /* UIViewExt.h */,
 				04A99BE21CBF848C00C6F5F0 /* UIViewExt.m */,
 				04A99BE31CBF848C00C6F5F0 /* ZYZCDefine.h */,
@@ -959,6 +1032,7 @@
 		04A99C871CBF848D00C6F5F0 /* ZYZCTactic(攻略) */ = {
 			isa = PBXGroup;
 			children = (
+				040651441CC87A1C003FD539 /* Single(单个景点控制器) */,
 				040651281CC6356C003FD539 /* Controller */,
 				0406512B1CC6356C003FD539 /* Model */,
 				0406512C1CC6356C003FD539 /* View */,
@@ -1144,6 +1218,7 @@
 				2C4EEFB81CC6087D00AA99F6 /* outboundCity.plist */,
 				2C901DBC1C89788C004B844B /* main.m */,
 				040651311CC715E7003FD539 /* HomeMessage.json */,
+				040651421CC8770E003FD539 /* SingleView.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1340,6 +1415,7 @@
 				2C4EEFC11CC60D8600AA99F6 /* WeekDayView.xib in Resources */,
 				04A99CFB1CBF897A00C6F5F0 /* read_me.txt in Resources */,
 				040651321CC715E7003FD539 /* HomeMessage.json in Resources */,
+				040651431CC8770E003FD539 /* SingleView.json in Resources */,
 				040DE0E21CA26C5E00BF3AF6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1416,6 +1492,7 @@
 				04A99C921CBF848D00C6F5F0 /* ZYZCHTTPTool.m in Sources */,
 				0406513E1CC76B4F003FD539 /* TacticThreeMapView.m in Sources */,
 				04A99CA01CBF848D00C6F5F0 /* FZCContentEntryView.m in Sources */,
+				040651561CC8DBB6003FD539 /* TacticSingleTableViewCell.m in Sources */,
 				2CF7EAFA1CC7765B007074FE /* ZCDetailReturnShowCell.m in Sources */,
 				04A99CB91CBF848D00C6F5F0 /* TravelFirstCell.m in Sources */,
 				040651351CC71A99003FD539 /* TacticModel.m in Sources */,
@@ -1423,6 +1500,7 @@
 				04A99D1D1CC07E1800C6F5F0 /* WXApiManager.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
 				2C4EEFC41CC6316900AA99F6 /* ZCDetailFirstCell.m in Sources */,
+				0406514D1CC87A89003FD539 /* TacticSingleViewController.m in Sources */,
 				04A99C911CBF848D00C6F5F0 /* UIViewExt.m in Sources */,
 				04A99CBC1CBF848D00C6F5F0 /* MovieView.m in Sources */,
 				2CF7EB041CC78582007074FE /* ZCDetailIntroSecondCell.m in Sources */,
@@ -1440,6 +1518,7 @@
 				04A99D221CC07E1800C6F5F0 /* WXMediaMessage+messageConstruct.m in Sources */,
 				040651301CC635A9003FD539 /* TacticTableView.m in Sources */,
 				04A99CA11CBF848D00C6F5F0 /* GoalFirstCell.m in Sources */,
+				0490D15C1CC9FAA80064844C /* TacticSingleHeadView.m in Sources */,
 				040651241CC62FC7003FD539 /* TAPageControl.m in Sources */,
 				04A99C9F1CBF848D00C6F5F0 /* SelectImageViewController.m in Sources */,
 				0406512D1CC6356C003FD539 /* TacticMainViewController.m in Sources */,
@@ -1452,8 +1531,12 @@
 				04A99CEF1CBF851500C6F5F0 /* RMCalendarLogic.m in Sources */,
 				04A99CC51CBF848D00C6F5F0 /* CalendarViewController.m in Sources */,
 				040651211CC62FC7003FD539 /* TAAbstractDotView.m in Sources */,
+				0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */,
+				0490D1591CC9BFB60064844C /* TacticSingleModelFrame.m in Sources */,
 				04A99CB51CBF848D00C6F5F0 /* ReturnSecondCell.m in Sources */,
+				0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */,
 				04A99CF21CBF851500C6F5F0 /* RMCalendarMonthHeaderView.m in Sources */,
+				040651501CC8BF44003FD539 /* TacticSingleModel.m in Sources */,
 				04A99CB61CBF848D00C6F5F0 /* ReturnThirdCell.m in Sources */,
 				2CF7EB011CC7856D007074FE /* ZCDetailIntroFirstCell.m in Sources */,
 				04A99D271CC0924E00C6F5F0 /* ZYZCAccountModel.m in Sources */,
@@ -1531,6 +1614,7 @@
 				04A99CB01CBF848D00C6F5F0 /* RaiseMoneySecondCellView.m in Sources */,
 				04A99CA21CBF848D00C6F5F0 /* GoalPeoplePickerView.m in Sources */,
 				04A99C9A1CBF848D00C6F5F0 /* ChooseSiteImgController.m in Sources */,
+				0490D1561CC9B4310064844C /* UIView+TacticMapView.m in Sources */,
 				04A99CB81CBF848D00C6F5F0 /* AddSceneView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -63,7 +63,7 @@
 #pragma mark - UITableDelegate和Datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -78,7 +78,6 @@
         cell.tacticModel = _tacticModel;
         
         return cell;
-        
     }
     static NSString *ID = @"UITableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
@@ -110,7 +109,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 500;
+    return (videoViewHeight * 2) + TacticTableViewCellMargin * 3;
 }
 /**
  *  navi背景色渐变的效果
