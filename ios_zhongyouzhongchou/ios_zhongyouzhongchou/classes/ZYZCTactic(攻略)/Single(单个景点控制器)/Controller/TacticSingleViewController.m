@@ -12,6 +12,7 @@
 #import "TacticSingleTipsModel.h"
 #import "TacticSingleTableViewCell.h"
 #import "TacticSingleHeadView.h"
+#import "UIView+TacticMapView.h"
 @interface TacticSingleViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, weak) UITableView *tableView;
 
@@ -130,7 +131,6 @@
 #pragma mark - UITableDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    NSLog(@"%f",oneViewHeight);
     return TacticSingleHeadViewHeight;
 }
 
@@ -147,7 +147,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 1500;
+    return (oneViewHeight * 3) + (TacticTableViewCellMargin * 5) + 120;
 }
 
 
