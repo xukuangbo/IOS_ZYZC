@@ -20,7 +20,7 @@
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _hasMovie=NO;
+        _hasMovie=YES;
         _hasVoice=YES;
         _hasWord =YES;
     }
@@ -47,6 +47,7 @@
     
     _textLab=[[UILabel alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 0, KSCREEN_W-4*KEDGE_DISTANCE, 0)];
     _textLab.font=[UIFont systemFontOfSize:14];
+    _textLab.textColor=[UIColor ZYZC_TextBlackColor];
     _textLab.numberOfLines=0;
     [self.contentView addSubview:_textLab];
     
@@ -55,7 +56,7 @@
 -(void)setCellModel:(ZCDetailIntroFirstCellModel *)cellModel
 {
     _cellModel=cellModel;
-    NSString *text=@"        大会精神上的咖啡开始的风景是否卢卡申科发生大量开发建设的繁花似锦粉红色看见繁花似锦匡扶汉室开发";
+    NSString *text=@"        打发时间的开发建设代理反馈圣诞节发生地方尖端放电繁华的风景快点恢复健康是否会电视大会精神上的咖啡开始的风景是否卢卡申科发生大量开发建设的繁花似锦粉红色看见繁花似锦匡扶汉室开发";
     
     CGFloat movieImgTop=self.topLineView.bottom +KEDGE_DISTANCE;
     _movieImg.top=movieImgTop;
@@ -77,9 +78,11 @@
     }
     else
     {
-        CGFloat voiceTime=50;
-        CGFloat totalLength=_voiceShow.width-_voiceShow.iconImg.right-2*KEDGE_DISTANCE-50;
+        CGFloat voiceTime=60;
+        CGFloat totalLength=_voiceShow.width-_voiceShow.iconImg.right-2*KEDGE_DISTANCE-80;
         _voiceShow.voiceView.width=50+voiceTime/60*totalLength;
+        _voiceShow.timeLab.left=_voiceShow.voiceView.right+KEDGE_DISTANCE;
+        _voiceShow.timeLab.text=[NSString stringWithFormat:@"%.f''",voiceTime];
     }
     //是否有文字
     if (!_hasWord) {

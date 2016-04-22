@@ -11,4 +11,5 @@
 @interface ZCDetailIntroFirstCellVoiceShowView : UIView
 @property (nonatomic, strong) UIImageView *iconImg;
 @property (nonatomic, strong) UIImageView *voiceView;
+@property (nonatomic, strong) UILabel *timeLab;
 @end

@@ -12,4 +12,10 @@
 
 @interface ZCDetailIntroSecondCell : MoreFZCBaseTableViewCell
 
+@property (nonatomic, strong)UIScrollView *goalsView;
+
+@property (nonatomic, strong) NSArray *goals;
+
+@property (nonatomic, strong) UIButton *preClickBtn;
+
 @end

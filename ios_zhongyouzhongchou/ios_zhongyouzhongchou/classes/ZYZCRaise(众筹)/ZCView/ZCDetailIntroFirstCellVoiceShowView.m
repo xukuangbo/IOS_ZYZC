@@ -38,6 +38,10 @@
     _voiceView.image=KPULLIMG(@"icon_voice",0,44,0,5);;
     [self addSubview:_voiceView];
     
+    _timeLab=[[UILabel alloc]initWithFrame:CGRectMake(_voiceView.right+KEDGE_DISTANCE, self.height-38, self.width-_voiceView.right-KEDGE_DISTANCE, 38)];
+    _timeLab.font=[UIFont systemFontOfSize:20];
+    _timeLab.textColor=[UIColor ZYZC_TextGrayColor04];
+    [self addSubview:_timeLab];
 }
 
 @end
