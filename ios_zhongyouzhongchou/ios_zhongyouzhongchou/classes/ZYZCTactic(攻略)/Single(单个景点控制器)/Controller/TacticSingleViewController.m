@@ -12,7 +12,8 @@
 #import "TacticSingleTipsModel.h"
 #import "TacticSingleTableViewCell.h"
 #import "TacticSingleHeadView.h"
-#import "UIView+TacticMapView.h"
+//#import "UIView+TacticMapView.h"
+#import "TacticCustomMapView.h"
 
 #import "TacticSingleModelFrame.h"
 @interface TacticSingleViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -167,11 +168,12 @@
 //    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     return headView;
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (oneViewHeight * 3) + (TacticTableViewCellMargin * 5) + 120;
+    return (oneViewMapHeight * 3) + (TacticTableViewCellMargin * 5) + 120;
 }
 
 
@@ -182,8 +184,8 @@
 {
     CGFloat offsetY = scrollView.contentOffset.y;
     
-    if (offsetY <= oneViewHeight) {
-        CGFloat alpha = MAX(0, offsetY/oneViewHeight);
+    if (offsetY <= oneViewMapHeight) {
+        CGFloat alpha = MAX(0, offsetY/oneViewMapHeight);
         
         [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(alpha)];
         self.title = @"";

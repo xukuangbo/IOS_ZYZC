@@ -67,11 +67,7 @@
     [descView addSubview:descLabel];
     self.descLabel = descLabel;
     self.descView = descView;
-    
-    NSLog(@"%f,,,,%f",oneViewHeight,oneViewMapHeight);
     //动画攻略
-//    CGFloat flashViewX = TacticTableViewCellMargin;
-//    CGFloat flashViewY = descView.bottom + TacticTableViewCellMargin;
     CGFloat flashViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
     CGFloat flashViewH = oneViewMapHeight;
     TacticCustomMapView *flashView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,flashViewW, flashViewH)];
@@ -80,18 +76,17 @@
     self.flashView = flashView;
     
     CGFloat flashPlayButtonX = TacticTableViewCellMargin;
-    CGFloat flashPlayButtonY = descLabelBottom;
+    CGFloat flashPlayButtonY = descLabelBottom + TacticTableViewCellTextMargin;
     CGFloat flashPlayButtonW = flashView.width - TacticTableViewCellMargin * 2;
     CGFloat flashPlayButtonH = oneViewHeight;
     UIButton *flashPlayButton = [[UIButton alloc] initWithFrame:CGRectMake(flashPlayButtonX, flashPlayButtonY, flashPlayButtonW, flashPlayButtonH)];
+    flashPlayButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     flashPlayButton.backgroundColor = [UIColor redColor];
     [flashView addSubview:flashPlayButton];
     [flashPlayButton addTarget:self action:@selector(playMoviewAction:) forControlEvents:UIControlEventTouchUpInside];
     self.flashPlayButton = flashPlayButton;
     
     //图文攻略
-//    CGFloat pictureViewX = TacticTableViewCellMargin;
-//    CGFloat pictureViewY = flashView.bottom + TacticTableViewCellMargin;
     CGFloat pictureViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
     CGFloat pictureViewH = oneViewMapHeight;
     TacticCustomMapView *pictureView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,pictureViewW, pictureViewH)];
@@ -104,6 +99,7 @@
     CGFloat pictureShowButtonW = pictureView.width - TacticTableViewCellMargin * 2;
     CGFloat pictureShowButtonH = oneViewHeight;
     UIButton *pictureShowButton = [[UIButton alloc] initWithFrame:CGRectMake(pictureShowButtonX, pictureShowButtonY, pictureShowButtonW, pictureShowButtonH)];
+    pictureShowButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     pictureShowButton.backgroundColor = [UIColor redColor];
     [pictureView addSubview:pictureShowButton];
     [pictureShowButton addTarget:self action:@selector(playPictureAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -122,6 +118,7 @@
     CGFloat tipsShowButtonW = tipsView.width - TacticTableViewCellMargin * 2;
     CGFloat tipsShowButtonH = oneViewHeight;
     UIButton *tipsShowButton = [[UIButton alloc] initWithFrame:CGRectMake(tipsShowButtonX, tipsShowButtonY, tipsShowButtonW, tipsShowButtonH)];
+    tipsShowButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     tipsShowButton.backgroundColor = [UIColor redColor];
     [tipsView addSubview:tipsShowButton];
     [tipsShowButton addTarget:self action:@selector(tipsShowButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -168,6 +165,8 @@
 #pragma mark - 模型赋值
 - (void)setTacticSingleModelFrame:(TacticSingleModelFrame *)tacticSingleModelFrame
 {
+    SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
+    
     _tacticSingleModelFrame = tacticSingleModelFrame;
     TacticSingleModel *tacticSingleModel = tacticSingleModelFrame.tacticSingleModel;
     
@@ -177,7 +176,9 @@
     
     self.flashView.frame = tacticSingleModelFrame.flashViewF;
     self.flashView.descLabel.text = [NSString stringWithFormat:@"%@最棒的旅行目的地",tacticSingleModel.name];
-    
+    self.flashPlayButton.frame = tacticSingleModelFrame.flashPlayButtonF;
+    [self.flashPlayButton sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.videoImage)] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    NSLog(@"%@",KWebImage(self.tacticSingleModelFrame.tacticSingleModel.videoImage));
     self.pictureView.frame = tacticSingleModelFrame.pictureViewF;
     
     

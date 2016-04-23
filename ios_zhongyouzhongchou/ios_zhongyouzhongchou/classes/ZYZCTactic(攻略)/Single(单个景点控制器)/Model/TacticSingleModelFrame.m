@@ -8,7 +8,7 @@
 
 #import "TacticSingleModelFrame.h"
 #import "TacticSingleModel.h"
-#import "UIView+TacticMapView.h"
+#import "TacticCustomMapView.h"
 @implementation TacticSingleModelFrame
 
 
@@ -23,10 +23,15 @@
     CGFloat flashViewY = CGRectGetMaxY(self.descViewF) + TacticTableViewCellMargin;
     if (tacticSingleModel.videoUrl && ![tacticSingleModel.videoUrl isEqualToString:@""]) {//有视频
         CGFloat flashViewX = TacticTableViewCellMargin;
-        
         CGFloat flashViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-        CGFloat flashViewH = oneViewHeight;
+        CGFloat flashViewH = oneViewMapHeight;
         self.flashViewF = CGRectMake(flashViewX, flashViewY, flashViewW, flashViewH);
+        
+        CGFloat flashPlayButtonX = TacticTableViewCellMargin;
+        CGFloat flashPlayButtonY = descLabelBottom + TacticTableViewCellTextMargin;
+        CGFloat flashPlayButtonW = flashViewW - TacticTableViewCellMargin * 2;
+        CGFloat flashPlayButtonH = oneViewHeight;
+        self.flashPlayButtonF = CGRectMake(flashPlayButtonX, flashPlayButtonY, flashPlayButtonW, flashPlayButtonH);
         
         pictureViewY = CGRectGetMaxY(self.flashViewF) + TacticTableViewCellMargin;
     }else{
@@ -39,7 +44,7 @@
     if(tacticSingleModel.glid){//有长图
         CGFloat pictureViewX = TacticTableViewCellMargin;
         CGFloat pictureViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-        CGFloat pictureViewH = oneViewHeight;
+        CGFloat pictureViewH = oneViewMapHeight;
         
         self.pictureViewF = CGRectMake(pictureViewX, pictureViewY, pictureViewW, pictureViewH);
         
@@ -55,7 +60,7 @@
     if(tacticSingleModel.tips){//有贴士
         CGFloat tipsViewX = TacticTableViewCellMargin;
         CGFloat tipsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-        CGFloat tipsViewH = oneViewHeight;
+        CGFloat tipsViewH = oneViewMapHeight;
         
         self.tipsViewF = CGRectMake(tipsViewX, tipsViewY, tipsViewW, tipsViewH);
         
