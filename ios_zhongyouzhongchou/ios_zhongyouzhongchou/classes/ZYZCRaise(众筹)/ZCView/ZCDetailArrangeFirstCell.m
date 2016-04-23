@@ -42,12 +42,12 @@
     [self reloadDataByModel];
     self.oneDaydetailModel.cellHeight=self.bgImg.height;
     
-    if (_isFirstConfigSightView && self.hasSight) {
-        NSString *text=@"圣诞节啊空间啊快放假放假啊啊季后赛大哥大姐哈哥啊撒上了扩大华师大大家哈空间大";
-        UIView *sightView=[self configSightViewByViewTop:self.bgImg.height andText:text andImages:nil];
-        [self.contentView addSubview:sightView];
-    }
-    _isFirstConfigSightView=NO;
+//    if (_isFirstConfigSightView && self.hasSight) {
+//        NSString *text=@"圣诞节啊空间啊快放假放假啊啊季后赛大哥大姐哈哥啊撒上了扩大华师大大家哈空间大";
+//        UIView *sightView=[self configSightViewByViewTop:self.bgImg.height andText:text andImages:nil];
+//        [self.contentView addSubview:sightView];
+//    }
+//    _isFirstConfigSightView=NO;
 }
 
 -(UIView *)configSightViewByViewTop:(CGFloat)top andText:(NSString *)text andImages:(NSArray *)images
