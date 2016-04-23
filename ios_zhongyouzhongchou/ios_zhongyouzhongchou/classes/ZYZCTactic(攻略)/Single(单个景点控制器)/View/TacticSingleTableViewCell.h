@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIView+TacticMapView.h"
+//#import "UIView+TacticMapView.h"
 
 
-@class TacticSingleModel;
+@class TacticSingleModelFrame;
 @interface TacticSingleTableViewCell : UITableViewCell
-
-@property (nonatomic, strong) TacticSingleModel *singleModel;
+@property (nonatomic, strong) TacticSingleModelFrame *tacticSingleModelFrame;
 @end
