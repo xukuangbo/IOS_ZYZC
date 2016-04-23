@@ -227,10 +227,12 @@
                 arrangeCell.oneDaydetailModel=_detailDays[indexPath.row/2];
                 return arrangeCell;
             }
-            UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-            cell.selectionStyle=UITableViewCellSelectionStyleNone;
-            cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
-            return cell;
+            else{
+                UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+                cell.selectionStyle=UITableViewCellSelectionStyleNone;
+                cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+                return cell;
+            }
         }
         //查看回报内容
         else
@@ -287,7 +289,9 @@
                 MoreFZCTravelOneDayDetailMdel *oneDetailModel=_detailDays[indexPath.row/2];
                 return oneDetailModel.cellHeight;
             }
-            return KEDGE_DISTANCE;
+            else{
+                return KEDGE_DISTANCE;
+            }
         }
         //回报部分cells高度
         else
@@ -308,36 +312,20 @@
         {
             if (weakSelf.contentType!=contentType) {
                 weakSelf.contentType=contentType;
-                BOOL changeContentOffSet=NO;
+                BOOL changeOffSet=NO;
                 CGFloat offSetY=210+2*KEDGE_DISTANCE+_hasCosponsor*ZCDETAIL_FIRSTCELL_HEIGHT-64;
-                CGPoint tableContentOffSet=weakSelf.table.contentOffset;
-                NSLog(@"+++%f,%f",weakSelf.table.contentOffset.y,offSetY);
-                if (weakSelf.table.contentOffset.y>offSetY) {
-                    changeContentOffSet=YES;
+                CGPoint offSet=weakSelf.table.contentOffset;
+                if (offSet.y>offSetY) {
+                    changeOffSet=YES;
                 }
-                
                 [weakSelf.table reloadData];
-                
-                if (changeContentOffSet) {
+                if (changeOffSet) {
                     weakSelf.table.contentOffset=CGPointMake(0, offSetY);
                 }
                 else
                 {
-                    NSLog(@"=====%f",tableContentOffSet.y);
-                    weakSelf.table.contentOffset=tableContentOffSet;
+                    weakSelf.table.contentOffset=offSet;
                 }
-                NSLog(@"++++%f",weakSelf.table.contentOffset.y);
-//                NSLog(@"+++%f",weakSelf.table.contentOffset.y);
-//                if (weakSelf.table.contentOffset.y>=286) {
-//                      weakSelf.table.contentOffset=CGPointMake(0, 286);
-//                }
-//                else
-//                {
-//                    weakSelf.table.contentOffset=tableContentOffSet;
-//                }
-//                weakSelf.table.contentOffset=tableContentOffSet;
-
-                
             }
         };
         

@@ -16,7 +16,7 @@ MJCodingImplementation
 {
     self = [super init];
     if (self) {
-        _cellHeight=1.0;
+        _cellHeight=100.0;
     }
     return self;
 }
