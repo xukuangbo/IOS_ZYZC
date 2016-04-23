@@ -13,10 +13,12 @@
 #import "TacticSingleTableViewCell.h"
 #import "TacticSingleHeadView.h"
 #import "UIView+TacticMapView.h"
+
+#import "TacticSingleModelFrame.h"
 @interface TacticSingleViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, weak) UITableView *tableView;
 
-@property (nonatomic, strong) TacticSingleModel *tacticSingleModel;
+@property (nonatomic, strong) TacticSingleModelFrame *tacticSingleModelFrame;
 @end
 
 
@@ -61,29 +63,51 @@
         
     }
 }
+
+- (TacticSingleModelFrame *)tacticSingleModelFrame
+{
+    if(!_tacticSingleModelFrame){
+        _tacticSingleModelFrame = [[TacticSingleModelFrame alloc] init];
+    }
+    return _tacticSingleModelFrame;
+}
 /**
  *  刷新数据
  */
 - (void)refreshDataWithViewId:(NSInteger)viewId
 {
-//    http://localhost:8080/viewSpot/getViewSpot.action?viewId=13
-    NSString *url = [NSString stringWithFormat:@"http://121.40.225.119:8080/viewSpot/getViewSpot.action?viewId=%ld",(long)viewId];
-    //访问网络
+    NSString *Json_path = [[NSBundle mainBundle] pathForResource:@"SingleView.json" ofType:nil];
+    //==Json数据
+    NSData *data=[NSData dataWithContentsOfFile:Json_path];
+    //==JsonObject
     
-    __weak typeof(&*self) weakSelf = self;
-    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
-        if (isSuccess) {
-            //请求成功，转化为数组
-//            NSLog(@"%@",result);
-            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
-            weakSelf.tacticSingleModel = tacticSingleModel;
-            
-            [weakSelf.tableView reloadData];
-        }
-        
-    } andFailBlock:^(id failResult) {
-        NSLog(@"%@",failResult);
-    }];
+    NSDictionary *JsonObject=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:JsonObject[@"data"]];
+    self.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
+    
+    NSLog(@"%@",self.tacticSingleModelFrame.tacticSingleModel.videoUrl);
+    [self.tableView reloadData];
+    
+    return ;
+    
+////    http://localhost:8080/viewSpot/getViewSpot.action?viewId=13
+//    NSString *url = [NSString stringWithFormat:@"http://121.40.225.119:8080/viewSpot/getViewSpot.action?viewId=%ld",(long)viewId];
+//    //访问网络
+//    
+//    __weak typeof(&*self) weakSelf = self;
+//    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+//        if (isSuccess) {
+//            //请求成功，转化为数组
+////            NSLog(@"%@",result);
+//            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
+//            weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
+//            
+//            [weakSelf.tableView reloadData];
+//        }
+//        
+//    } andFailBlock:^(id failResult) {
+//        NSLog(@"%@",failResult);
+//    }];
 }
 
 
@@ -124,7 +148,7 @@
     
     
     //这里进行模型的赋值
-    cell.singleModel = self.tacticSingleModel;
+    cell.tacticSingleModelFrame = self.tacticSingleModelFrame;
     return cell;
 }
 
@@ -137,11 +161,11 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     TacticSingleHeadView *headView = [[TacticSingleHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, 50)];
-    headView.nameLabel.text = self.tacticSingleModel.name;
+    headView.nameLabel.text = self.tacticSingleModelFrame.tacticSingleModel.name;
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     
-    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
-    headView.backgroundColor = [UIColor redColor];
+//    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     return headView;
 }
 
@@ -165,8 +189,8 @@
         self.title = @"";
     } else {
         [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(1)];
-        if (self.tacticSingleModel) {
-            self.title = self.tacticSingleModel.name;
+        if (self.tacticSingleModelFrame) {
+            self.title = self.tacticSingleModelFrame.tacticSingleModel.name;
         }
         
     }

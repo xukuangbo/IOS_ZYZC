@@ -10,6 +10,23 @@
 @class TacticSingleModel;
 @interface TacticSingleModelFrame : NSObject
 
-@property (nonatomic, weak) TacticSingleModel *tacticSingleModel;
+@property (nonatomic, strong) TacticSingleModel *tacticSingleModel;
 
+
+//描述
+@property (nonatomic, assign) CGRect descViewF;
+//@property (nonatomic, assign) CGRect descLabelF;
+//动画
+@property (nonatomic, assign) CGRect flashViewF;
+//@property (nonatomic, assign) CGRect flashPlayButtonF;
+//图文
+@property (nonatomic, assign) CGRect pictureViewF;
+//@property (nonatomic, assign) CGRect pictureShowButtonF;
+//小贴士
+@property (nonatomic, assign) CGRect tipsViewF;
+//@property (nonatomic, assign) CGRect tipsShowButtonF;
+
+//必玩景点
+@property (nonatomic, assign) CGRect mustPlayViewF;
+//@property (nonatomic, assign) CGRect mustPlayViewButtonF;
 @end

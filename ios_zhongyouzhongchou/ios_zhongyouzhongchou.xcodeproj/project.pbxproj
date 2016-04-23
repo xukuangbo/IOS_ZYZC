@@ -33,6 +33,7 @@
 		0490D1561CC9B4310064844C /* UIView+TacticMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1551CC9B4310064844C /* UIView+TacticMapView.m */; };
 		0490D1591CC9BFB60064844C /* TacticSingleModelFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1581CC9BFB60064844C /* TacticSingleModelFrame.m */; };
 		0490D15C1CC9FAA80064844C /* TacticSingleHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D15B1CC9FAA80064844C /* TacticSingleHeadView.m */; };
+		0490D15F1CCB6A3E0064844C /* TacticCustomMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D15E1CCB6A3E0064844C /* TacticCustomMapView.m */; };
 		04A99C8A1CBF848D00C6F5F0 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A99BD11CBF848C00C6F5F0 /* libmp3lame.a */; };
 		04A99C8D1CBF848D00C6F5F0 /* UIColor+ZYZCColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BDA1CBF848C00C6F5F0 /* UIColor+ZYZCColors.m */; };
 		04A99C8E1CBF848D00C6F5F0 /* UIView+GetSuperTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BDC1CBF848C00C6F5F0 /* UIView+GetSuperTableView.m */; };
@@ -220,6 +221,8 @@
 		0490D1581CC9BFB60064844C /* TacticSingleModelFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleModelFrame.m; sourceTree = "<group>"; };
 		0490D15A1CC9FAA80064844C /* TacticSingleHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleHeadView.h; sourceTree = "<group>"; };
 		0490D15B1CC9FAA80064844C /* TacticSingleHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleHeadView.m; sourceTree = "<group>"; };
+		0490D15D1CCB6A3E0064844C /* TacticCustomMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticCustomMapView.h; sourceTree = "<group>"; };
+		0490D15E1CCB6A3E0064844C /* TacticCustomMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticCustomMapView.m; sourceTree = "<group>"; };
 		04A99BD01CBF848C00C6F5F0 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
 		04A99BD11CBF848C00C6F5F0 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		04A99BD91CBF848C00C6F5F0 /* UIColor+ZYZCColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ZYZCColors.h"; sourceTree = "<group>"; };
@@ -593,6 +596,8 @@
 			children = (
 				040651541CC8DBB6003FD539 /* TacticSingleTableViewCell.h */,
 				040651551CC8DBB6003FD539 /* TacticSingleTableViewCell.m */,
+				0490D15D1CCB6A3E0064844C /* TacticCustomMapView.h */,
+				0490D15E1CCB6A3E0064844C /* TacticCustomMapView.m */,
 				0490D15A1CC9FAA80064844C /* TacticSingleHeadView.h */,
 				0490D15B1CC9FAA80064844C /* TacticSingleHeadView.m */,
 			);
@@ -1597,6 +1602,7 @@
 				04A99CAA1CBF848D00C6F5F0 /* MoreFZCToolBar.m in Sources */,
 				04A99C931CBF848D00C6F5F0 /* ZYZCOSSManager.m in Sources */,
 				04A99CCA1CBF848D00C6F5F0 /* MineMessageCell.m in Sources */,
+				0490D15F1CCB6A3E0064844C /* TacticCustomMapView.m in Sources */,
 				2CF7EB071CC78599007074FE /* ZCDetailIntroThirdCell.m in Sources */,
 				04A99CC61CBF848D00C6F5F0 /* FZCBaseViewController.m in Sources */,
 				04A99CB01CBF848D00C6F5F0 /* RaiseMoneySecondCellView.m in Sources */,
