@@ -9,31 +9,37 @@
 #define BGIMAGEHEIGHT  200*KCOFFICIEMNT
 #define BLURHEIGHT     44
 
-#define ZCDETAIL_CONTENTSHOW_HEIGHT KSCREEN_H-64-49-53
-
 #import "ZCPersonInfoController.h"
 #import "ZCMainTableViewCell.h"
 #import "ZCDetailFirstCell.h"
-//#import "ZCDetailIntroShowCell.h"
-#import "ZCDetailArrangeShowCell.h"
-#import "ZCDetailReturnShowCell.h"
 #import "ZCDetailTableHeadView.h"
 //介绍部分cells
 #import "ZCDetailIntroFirstCell.h"
 #import "ZCDetailIntroSecondCell.h"
 #import "ZCDetailIntroThirdCell.h"
+//行程部分cells
+#import "ZCDetailArrangeFirstCell.h"
 
 #import "FXBlurView.h"
 
 @interface ZCPersonInfoController ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic, strong) UITableView *table;
-@property (nonatomic, strong) UIImageView *topImgView;
-@property (nonatomic, strong) UIColor *navColor;
-@property (nonatomic, strong) FXBlurView *blurView;
-@property (nonatomic, strong) UILabel *travelThemeLab;
+@property (nonatomic, strong) UITableView           *table;
+@property (nonatomic, strong) UIImageView           *topImgView;
+@property (nonatomic, strong) UIColor               *navColor;
+@property (nonatomic, strong) FXBlurView            *blurView;
+@property (nonatomic, strong) UILabel               *travelThemeLab;
 @property (nonatomic, strong) ZCDetailTableHeadView *headView;
-@property (nonatomic, assign) ZCDetailContentType contentType;
-@property (nonatomic, assign) BOOL cellTableShow;
+
+@property (nonatomic, assign) ZCDetailContentType   contentType;
+
+@property (nonatomic, strong) ZCDetailIntroFirstCellModel * introFirstCellMdel;
+@property (nonatomic, strong) NSMutableArray *detailDays;//行程安排数组
+
+@property (nonatomic, assign) BOOL hasCosponsor;//联合发起人
+@property (nonatomic, assign) BOOL hasIntroGoal;//众筹目的
+@property (nonatomic, assign) BOOL hasIntroGeneral;//目的地介绍
+@property (nonatomic, assign) BOOL hasIntroMovie;//动画攻略
+
 @end
 @implementation ZCPersonInfoController
 
@@ -44,12 +50,29 @@
     _navColor=[UIColor ZYZC_NavColor];
      [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-    _isAddCosponsor = YES;//添加联和发起人项
-    self.contentType= IntroType;
-     _firstCellMdel = [[ZCDetailIntroFirstCellModel alloc]init];
+    [self initData];
     [self setBackItem];
     [self configUI];
     [self createBottomView];
+}
+
+#pragma mark --- 初始化数据
+-(void)initData
+{
+    _introFirstCellMdel = [[ZCDetailIntroFirstCellModel alloc]init];
+    _detailDays=[NSMutableArray array];
+    
+    for (int i=0; i<3; i++) {
+        MoreFZCTravelOneDayDetailMdel *oneDetailModel=[[MoreFZCTravelOneDayDetailMdel alloc]init];
+        [_detailDays addObject:oneDetailModel];
+    }
+    
+    self.contentType= IntroType;//展示介绍部分
+    _hasCosponsor = YES;//添加联和发起人项
+    _hasIntroGoal = NO;//添加众筹目的
+    _hasIntroGeneral=YES;//添加目的地介绍
+    _hasIntroMovie  =YES;//添加动画攻略
+
 }
 
 #pragma mark --- 创建控件
@@ -101,14 +124,15 @@
 }
 -(NSInteger )tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    int days=5;
+    NSInteger days=_detailDays.count;
     //第二组的cell数量
-    NSInteger secondSectionCellNumber=6*(self.contentType==IntroType?1:0) +
-    2*days*(self.contentType==ArrangeType?1:0)+3*(self.contentType==ReturnType?1:0);
+    NSInteger secondSectionCellNumber=
+    (2*_hasIntroGoal+2*_hasIntroGeneral+2*_hasIntroMovie)*(self.contentType==IntroType?1:0)
+    +2*days*(self.contentType==ArrangeType?1:0)
+    +3*(self.contentType==ReturnType?1:0);
     
     if (section==0) {
-        return 2 + 2*_isAddCosponsor;
+        return 2 + 2*_hasCosponsor;
     }
     else
     {
@@ -129,7 +153,7 @@
             mainCell.detailInfoModel=model;
             return mainCell;
         }
-        else if (indexPath.row == 1+_isAddCosponsor*2&&indexPath.row!=1)
+        else if (indexPath.row == 1+_hasCosponsor*2&&indexPath.row!=1)
         {
             NSString *cellId02=@"detailFirstCell";
             ZCDetailFirstCell *detailFirstCell=[tableView dequeueReusableCellWithIdentifier:cellId02];
@@ -151,7 +175,7 @@
     {
         ////查看介绍内容
         if (self.contentType==IntroType) {
-            if(indexPath.row==0)
+            if(indexPath.row==0 && _hasIntroGoal)
             {
                 NSString *introCellId01=@"introFirstCell";
                 ZCDetailIntroFirstCell *introFirstCell=[tableView dequeueReusableCellWithIdentifier:introCellId01];
@@ -160,10 +184,10 @@
                 }
                 introFirstCell.layer.cornerRadius=KCORNERRADIUS;
                 
-                introFirstCell.cellModel=_firstCellMdel;
+                introFirstCell.cellModel=_introFirstCellMdel;
                 return introFirstCell;
             }
-            else if (indexPath.row == 2)
+            else if (indexPath.row == 0+2*_hasIntroGoal && _hasIntroGeneral)
             {
                 NSString *introCellId02=@"introSecondCell";
                 ZCDetailIntroSecondCell *introSecondCell=[tableView dequeueReusableCellWithIdentifier:introCellId02];
@@ -173,7 +197,7 @@
                 introSecondCell.goals=@[@"普吉岛",@"清迈",@"烧麦"];
                 return introSecondCell;
             }
-            else if (indexPath.row == 4)
+            else if (indexPath.row == 0 +2*_hasIntroGoal +2*_hasIntroGeneral && _hasIntroMovie)
             {
                 NSString *introCellId03=@"introThirdCell";
                 ZCDetailIntroThirdCell *introThirdCell=[tableView dequeueReusableCellWithIdentifier:introCellId03];
@@ -194,9 +218,18 @@
         //查看行程内容
         else if (self.contentType == ArrangeType)
         {
+            if (indexPath.row%2==0) {
+                NSString *arrangeCellId=@"arrangeCell";
+                ZCDetailArrangeFirstCell *arrangeCell=[tableView dequeueReusableCellWithIdentifier:arrangeCellId];
+                if (!arrangeCell) {
+                    arrangeCell=[[ZCDetailArrangeFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:arrangeCellId];
+                }
+                arrangeCell.oneDaydetailModel=_detailDays[indexPath.row/2];
+                return arrangeCell;
+            }
             UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
             cell.selectionStyle=UITableViewCellSelectionStyleNone;
-            cell.contentView.backgroundColor=[UIColor orangeColor];
+            cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
             return cell;
         }
         //查看回报内容
@@ -218,7 +251,7 @@
         {
          return 210;
         }
-        else if (indexPath.row==1+_isAddCosponsor*2&&indexPath.row!=1)
+        else if (indexPath.row==1+_hasCosponsor*2&&indexPath.row!=1)
         {
            return ZCDETAIL_FIRSTCELL_HEIGHT;
         }
@@ -231,14 +264,14 @@
     {
         //介绍部分cells高度
         if (self.contentType == IntroType) {
-            if (indexPath.row==0) {
-                return _firstCellMdel.cellHeight;
+            if (indexPath.row==0 && _hasIntroGoal) {
+                return _introFirstCellMdel.cellHeight;
             }
-            else if (indexPath.row == 2)
+            else if (indexPath.row == 0+2*_hasIntroGoal && _hasIntroGeneral)
             {
                 return ZCDETAILINTRO_SECONDCELL_HEIGHT;
             }
-            else if (indexPath.row == 4)
+            else if (indexPath.row == 0+2*_hasIntroGoal +2*_hasIntroGeneral && _hasIntroMovie)
             {
                 return ZCDETAILINTRO_THIRDCELL_HEIGHT;
             }
@@ -250,12 +283,16 @@
         //行程部分cells高度
         else if (self.contentType == ArrangeType)
         {
-            return ZCDETAIL_CONTENTSHOW_HEIGHT;
+            if (indexPath.row%2==0) {
+                MoreFZCTravelOneDayDetailMdel *oneDetailModel=_detailDays[indexPath.row/2];
+                return oneDetailModel.cellHeight;
+            }
+            return KEDGE_DISTANCE;
         }
         //回报部分cells高度
         else
         {
-            return ZCDETAIL_CONTENTSHOW_HEIGHT;
+            return 200;
         }
     }
 }
@@ -271,7 +308,36 @@
         {
             if (weakSelf.contentType!=contentType) {
                 weakSelf.contentType=contentType;
+                BOOL changeContentOffSet=NO;
+                CGFloat offSetY=210+2*KEDGE_DISTANCE+_hasCosponsor*ZCDETAIL_FIRSTCELL_HEIGHT-64;
+                CGPoint tableContentOffSet=weakSelf.table.contentOffset;
+                NSLog(@"+++%f,%f",weakSelf.table.contentOffset.y,offSetY);
+                if (weakSelf.table.contentOffset.y>offSetY) {
+                    changeContentOffSet=YES;
+                }
+                
                 [weakSelf.table reloadData];
+                
+                if (changeContentOffSet) {
+                    weakSelf.table.contentOffset=CGPointMake(0, offSetY);
+                }
+                else
+                {
+                    NSLog(@"=====%f",tableContentOffSet.y);
+                    weakSelf.table.contentOffset=tableContentOffSet;
+                }
+                NSLog(@"++++%f",weakSelf.table.contentOffset.y);
+//                NSLog(@"+++%f",weakSelf.table.contentOffset.y);
+//                if (weakSelf.table.contentOffset.y>=286) {
+//                      weakSelf.table.contentOffset=CGPointMake(0, 286);
+//                }
+//                else
+//                {
+//                    weakSelf.table.contentOffset=tableContentOffSet;
+//                }
+//                weakSelf.table.contentOffset=tableContentOffSet;
+
+                
             }
         };
         
@@ -291,10 +357,10 @@
 #pragma mark --- tableView的滑动效果
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    
     //图片拉伸效果
     if (scrollView==self.table) {
         CGFloat offsetY = scrollView.contentOffset.y;
-        
         if (offsetY <= -BGIMAGEHEIGHT)
         {
             CGRect frame = _topImgView.frame;

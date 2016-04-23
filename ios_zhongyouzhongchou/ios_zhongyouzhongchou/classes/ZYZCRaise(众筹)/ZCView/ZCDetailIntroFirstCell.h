@@ -19,5 +19,6 @@
 @property (nonatomic, assign) BOOL hasMovie;
 @property (nonatomic, assign) BOOL hasVoice;
 @property (nonatomic, assign) BOOL hasWord;
-
+-(void)configUI;
+-(void)reloadDataByModel;
 @end
