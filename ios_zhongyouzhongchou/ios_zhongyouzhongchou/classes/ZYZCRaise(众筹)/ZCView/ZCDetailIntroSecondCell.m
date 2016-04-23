@@ -174,7 +174,9 @@
 #pragma mark --- 获取更多目的地概况内容
 -(void)getMoregeneralText
 {
-    
+    if (_getMoreGeneralInfo) {
+        _getMoreGeneralInfo();
+    }
 }
 
 @end

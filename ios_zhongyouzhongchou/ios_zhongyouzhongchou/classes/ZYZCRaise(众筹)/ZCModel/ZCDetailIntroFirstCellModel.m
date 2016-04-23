@@ -13,7 +13,7 @@
 {
     self = [super init];
     if (self) {
-        _cellHeight=1;
+        _cellHeight=1.0;
     }
     return self;
 }

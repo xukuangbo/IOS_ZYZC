@@ -20,9 +20,7 @@
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _hasMovie=YES;
-        _hasVoice=YES;
-        _hasWord =YES;
+        
     }
     return self;
 }
@@ -52,17 +50,26 @@
 -(void)setCellModel:(ZCDetailIntroFirstCellModel *)cellModel
 {
     _cellModel=cellModel;
-    NSString *text=@"        打发时间的开发建设代理反馈圣诞节发生地方尖端放电繁华的风景快点恢复健康是否会电视大会精神上的咖啡开始的风景是否卢卡申科发生大量开发建设的繁花似锦粉红色看见繁花似锦匡扶汉室开发";
+    self.hasMovie=YES;
+    self.hasVoice=YES;
+    self.hasWord =YES;
+    [self reloadDataByModel];
+    _cellModel.cellHeight= self.bgImg.height;
+}
+
+-(void)reloadDataByModel
+{
+    NSString *text=@"        打发时间的开得舒服的方式氮磷钾肥的时间发建设代理反馈圣诞节发生地方尖端放电繁华的风景快点恢复健康是否会电视大会精神上的咖啡开始的风景是否卢卡申科发生大量开发建设的繁花似锦粉红色看见繁花似锦匡扶汉室开发";
     
     CGFloat movieImgTop=self.topLineView.bottom +KEDGE_DISTANCE;
-    _movieImg.top=movieImgTop;
-    CGFloat voiceShowTop=movieImgTop+(CGFloat)_hasMovie*(_movieImg.height+KEDGE_DISTANCE);
-    _voiceShow.top=voiceShowTop;
-    CGFloat textLabTop=voiceShowTop+(CGFloat)_hasVoice*(_voiceShow.height+KEDGE_DISTANCE);
-    _textLab.top=textLabTop;
+    self.movieImg.top=movieImgTop;
+    CGFloat voiceShowTop=movieImgTop+(CGFloat)self.hasMovie*(self.movieImg.height+KEDGE_DISTANCE);
+    self.voiceShow.top=voiceShowTop;
+    CGFloat textLabTop=voiceShowTop+(CGFloat)self.hasVoice*(self.voiceShow.height+KEDGE_DISTANCE);
+    self.textLab.top=textLabTop;
     //是否有视屏
-    if (!_hasMovie) {
-        [_movieImg removeFromSuperview];
+    if (!self.hasMovie) {
+        [self.movieImg removeFromSuperview];
     }
     else
     {
@@ -70,34 +77,33 @@
         
     }
     //是否有语音
-    if (!_hasVoice) {
-        [_voiceShow removeFromSuperview];
+    if (!self.hasVoice) {
+        [self.voiceShow removeFromSuperview];
     }
     else
     {
         CGFloat voiceTime=60;
-        CGFloat totalLength=_voiceShow.width-_voiceShow.iconImg.right-2*KEDGE_DISTANCE-80;
-        _voiceShow.voiceView.width=50+voiceTime/60*totalLength;
-        _voiceShow.timeLab.left=_voiceShow.voiceView.right+KEDGE_DISTANCE;
-        _voiceShow.timeLab.text=[NSString stringWithFormat:@"%.f''",voiceTime];
+        CGFloat totalLength=self.voiceShow.width-self.voiceShow.iconImg.right-2*KEDGE_DISTANCE-80;
+        self.voiceShow.voiceView.width=50+voiceTime/60*totalLength;
+        self.voiceShow.timeLab.left=self.voiceShow.voiceView.right+KEDGE_DISTANCE;
+        self.voiceShow.timeLab.text=[NSString stringWithFormat:@"%.f''",voiceTime];
     }
     //是否有文字
-    if (!_hasWord) {
-        [_textLab removeFromSuperview];
+    if (!self.hasWord) {
+        [self.textLab removeFromSuperview];
     }
     else
     {
-        CGFloat textHeight=[ZYZCTool calculateStrByLineSpace:10.0 andString:text andFont:_textLab.font  andMaxWidth:_textLab.width].height;
-        _textLab.height=textHeight;
-        _textLab.attributedText=[ZYZCTool setLineDistenceInText:text];
+        CGFloat textHeight=[ZYZCTool calculateStrByLineSpace:10.0 andString:text andFont:self.textLab.font  andMaxWidth:self.textLab.width].height;
+        self.textLab.height=textHeight;
+        self.textLab.attributedText=[ZYZCTool setLineDistenceInText:text];
     }
     
-    
     //计算cell的高度
-    CGFloat cellHeight=textLabTop+(CGFloat)_hasWord*(_textLab.height+KEDGE_DISTANCE);
+    CGFloat cellHeight=textLabTop+(CGFloat)self.hasWord*(self.textLab.height+KEDGE_DISTANCE);
     self.bgImg.height=cellHeight;
-    _cellModel.cellHeight=cellHeight;
 }
+
 
 @end
 

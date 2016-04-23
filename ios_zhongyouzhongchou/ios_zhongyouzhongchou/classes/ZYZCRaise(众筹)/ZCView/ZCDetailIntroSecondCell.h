@@ -10,6 +10,8 @@
 
 #import "MoreFZCBaseTableViewCell.h"
 
+typedef void (^GetMoreGeneralInfo)();
+
 @interface ZCDetailIntroSecondCell : MoreFZCBaseTableViewCell
 
 @property (nonatomic, strong) NSArray *goals;
@@ -17,5 +19,7 @@
 @property (nonatomic, strong) UIImageView *oneGoalImg;
 
 @property (nonatomic, strong) UILabel *generalLab;
+
+@property (nonatomic, copy  ) GetMoreGeneralInfo getMoreGeneralInfo;
 
 @end
