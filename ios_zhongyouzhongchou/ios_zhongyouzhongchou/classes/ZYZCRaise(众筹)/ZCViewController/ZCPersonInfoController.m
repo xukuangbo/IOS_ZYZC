@@ -349,7 +349,6 @@
     //图片拉伸效果
     if (scrollView==self.table) {
         CGFloat offsetY = scrollView.contentOffset.y;
-        NSLog(@"%f",offsetY);
         if (offsetY <= -BGIMAGEHEIGHT)
         {
             CGRect frame = _topImgView.frame;
