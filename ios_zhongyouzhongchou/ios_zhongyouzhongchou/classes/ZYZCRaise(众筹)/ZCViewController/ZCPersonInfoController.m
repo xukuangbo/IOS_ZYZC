@@ -64,6 +64,7 @@
     
     for (int i=0; i<3; i++) {
         MoreFZCTravelOneDayDetailMdel *oneDetailModel=[[MoreFZCTravelOneDayDetailMdel alloc]init];
+        oneDetailModel.date=[NSString stringWithFormat:@"第%d天",i+1];
         [_detailDays addObject:oneDetailModel];
     }
     
@@ -219,7 +220,7 @@
         else if (self.contentType == ArrangeType)
         {
             if (indexPath.row%2==0) {
-                NSString *arrangeCellId=@"arrangeCell";
+                NSString *arrangeCellId=[NSString stringWithFormat:@"arrangeCell%zd",indexPath.row/2];
                 ZCDetailArrangeFirstCell *arrangeCell=[tableView dequeueReusableCellWithIdentifier:arrangeCellId];
                 if (!arrangeCell) {
                     arrangeCell=[[ZCDetailArrangeFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:arrangeCellId];

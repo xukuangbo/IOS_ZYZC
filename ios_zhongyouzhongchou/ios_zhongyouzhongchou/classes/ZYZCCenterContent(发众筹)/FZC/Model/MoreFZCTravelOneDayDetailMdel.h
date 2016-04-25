@@ -12,7 +12,7 @@
 /**
  *  日期
  */
-@property (nonatomic, strong) NSDate   *date;
+@property (nonatomic, copy  ) NSString *date;
 /**
  *  景点描述
  */
