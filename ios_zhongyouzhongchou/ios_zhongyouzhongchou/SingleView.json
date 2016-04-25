@@ -1,6 +1,7 @@
 {"code":0,
     "data":{"status":1,
         "videoUrl":"www.baidu.com",
+        "videoImage":"1460358660032.jpg",
         "destDate":1460368609000,
         "viewType":2,
         "mgViews":[],

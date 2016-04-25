@@ -15,7 +15,7 @@
 
 //我提供两种高度给他
 //这是视频播放，图文那种
-#define oneViewMapHeight ((KSCREEN_W - TacticTableViewCellMargin * 4) / 8.0 * 5 + descLabelBottom + TacticTableViewCellMargin * 2)
+#define oneViewMapHeight ((KSCREEN_W - TacticTableViewCellMargin * 4) / 8.0 * 5 + descLabelBottom + TacticTableViewCellMargin + TacticTableViewCellTextMargin)
 #define oneViewHeight ((KSCREEN_W - TacticTableViewCellMargin * 4) / 8.0 * 5)
 //这是3个view视频那种
 #define threeViewMapHeight ((KSCREEN_W - TacticTableViewCellMargin * 6) / 3.0 + descLabelBottom + TacticTableViewCellTextMargin + TacticTableViewCellMargin)
