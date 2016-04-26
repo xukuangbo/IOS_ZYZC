@@ -61,10 +61,10 @@
     //对应视图文字描述数组
     NSArray *textsArr=@[sightText,transText,liveText,foodText];
     
-    NSArray *sightImgs=@[@"",@"",@"",@""];
-    NSArray *transImgs=@[@"",@"",@""];
-    NSArray *liveImgs= @[@"",@""];
-    NSArray *foodImgs= @[@""];
+    NSMutableArray *sightImgs=[NSMutableArray arrayWithArray:@[@"",@"",@"",@""]];
+    NSMutableArray *transImgs=[NSMutableArray array];
+    NSMutableArray *liveImgs= [NSMutableArray array];
+    NSMutableArray *foodImgs= [NSMutableArray array];
     //对应视图图片数组
     NSArray *imgsArr =@[sightImgs,transImgs,liveImgs,foodImgs];
     
@@ -83,7 +83,7 @@
     self.hasSight*([_viewHeights[0] floatValue]+KEDGE_DISTANCE)+
     self.hasTrans*([_viewHeights[1] floatValue]+KEDGE_DISTANCE)+
     self.hasLive *([_viewHeights[2] floatValue]+KEDGE_DISTANCE)+
-    self.hasFood *([_viewHeights[3] floatValue]+KEDGE_DISTANCE);
+    self.hasFood *([_viewHeights[3] floatValue]+KEDGE_DISTANCE)+KEDGE_DISTANCE;
     
     self.oneDaydetailModel.cellHeight=self.bgImg.height;
 }
@@ -106,14 +106,13 @@
     if (hasTextLab) {
         CGFloat labHeight= [ZYZCTool calculateStrByLineSpace:10.0 andString:text andFont:[UIFont systemFontOfSize:15] andMaxWidth:view.width].height;
         CGFloat labWidth =view.width;
-        UILabel *textLab= [[UILabel alloc]initWithFrame:CGRectMake(0, titleLab.bottom+KEDGE_DISTANCE, labWidth, labHeight+10)];
+        UILabel *textLab= [[UILabel alloc]initWithFrame:CGRectMake(0, titleLab.bottom, labWidth, labHeight+10)];
         textLab.numberOfLines=0;
         textLab.attributedText=[ZYZCTool setLineDistenceInText:text];
         textLab.font=[UIFont systemFontOfSize:15];
         textLab.layer.cornerRadius=KCORNERRADIUS;
         textLab.layer.masksToBounds=YES;
         textLab.textColor=[UIColor ZYZC_TextBlackColor];
-        textLab.backgroundColor=[UIColor ZYZC_BgGrayColor01];
         [view addSubview:textLab];
         textHeight=textLab.height;
     }
@@ -127,7 +126,7 @@
         CGFloat imgY=KEDGE_DISTANCE;
         CGFloat imgEdg=5*KCOFFICIEMNT;
         
-        UIView *imgsView=[[UIView alloc]initWithFrame:CGRectMake(0, titleLab.bottom+hasTextLab*(textHeight+KEDGE_DISTANCE), view.width, imgHeight)];
+        UIView *imgsView=[[UIView alloc]initWithFrame:CGRectMake(0, titleLab.bottom+hasTextLab*textHeight, view.width, imgHeight)];
         [view addSubview:imgsView];
         imagesHeight=imgsView.height;
         
@@ -140,7 +139,7 @@
         }
     }
     //计算视图高度
-    view.height=titleLab.bottom+KEDGE_DISTANCE+hasTextLab*(textHeight+KEDGE_DISTANCE)+hasImages*(imagesHeight+KEDGE_DISTANCE);
+    view.height=titleLab.bottom+hasTextLab*textHeight+hasImages*(imagesHeight+KEDGE_DISTANCE);
     //对背景卡片高度重赋值
     self.bgImg.height=view.bottom;
 

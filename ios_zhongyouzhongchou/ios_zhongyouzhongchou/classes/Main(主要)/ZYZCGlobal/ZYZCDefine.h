@@ -44,6 +44,9 @@
 #define KZCDETAIL_ATTITUDETYPE      90//tag取值范围90～92
 #define KMineHeadViewChangeType     100//tag取值范围100～101
 #define KZCDETAIL_CONTENTTYPE       110//tag取值范围110～102
+#define KFZC_INPUTCONTENT_TYPE      120//tag取值范围120～122
+#define KFZC_INPUTCONTENTVIEW_TYPE  130//tag取值范围130～132
+#define KSUPPORTMONEY_TYPE          140//tag取值范围140～142
 
 #define KWebImage(urlImage) [[NSString stringWithFormat:@"http://zhongyou-hz.oss-cn-hangzhou.aliyuncs.com/%@",urlImage] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] //网络访问阿里云的图片
 

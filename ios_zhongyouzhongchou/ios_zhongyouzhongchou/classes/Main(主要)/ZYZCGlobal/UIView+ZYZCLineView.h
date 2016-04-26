@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface UIView (ZYZCLineView)
+/**
+ *  创建线条（color为nil为默认ZYZC_LineGrayColor）
+ *
+ */
 +(UIView *)lineViewWithFrame:(CGRect)frame andColor:(UIColor *)color;
 @end
