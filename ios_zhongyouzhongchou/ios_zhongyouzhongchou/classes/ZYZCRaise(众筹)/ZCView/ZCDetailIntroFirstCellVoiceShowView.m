@@ -21,6 +21,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.height=40;
         [self configUI];
     }
     return self;
@@ -45,6 +46,15 @@
     _timeLab.font=[UIFont systemFontOfSize:20];
     _timeLab.textColor=[UIColor ZYZC_TextGrayColor04];
     [self addSubview:_timeLab];
+}
+
+-(void)setVoiceTime:(NSInteger )voiceTime
+{
+    _voiceTime=voiceTime;
+    CGFloat totalLength=self.width-self.iconImg.right-2*KEDGE_DISTANCE-80;
+    self.voiceView.width=50+((CGFloat)voiceTime/60.0)*totalLength;
+    self.timeLab.left=self.voiceView.right+KEDGE_DISTANCE;
+    self.timeLab.text=[NSString stringWithFormat:@"%.zd''",voiceTime];
 }
 
 -(void)listenVoice:(UITapGestureRecognizer *)tap

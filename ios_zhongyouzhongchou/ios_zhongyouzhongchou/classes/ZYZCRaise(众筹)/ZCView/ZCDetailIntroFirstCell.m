@@ -82,11 +82,7 @@
     }
     else
     {
-        CGFloat voiceTime=60;
-        CGFloat totalLength=self.voiceShow.width-self.voiceShow.iconImg.right-2*KEDGE_DISTANCE-80;
-        self.voiceShow.voiceView.width=50+voiceTime/60*totalLength;
-        self.voiceShow.timeLab.left=self.voiceShow.voiceView.right+KEDGE_DISTANCE;
-        self.voiceShow.timeLab.text=[NSString stringWithFormat:@"%.f''",voiceTime];
+        self.voiceShow.voiceTime=50;
     }
     //是否有文字
     if (!self.hasWord) {

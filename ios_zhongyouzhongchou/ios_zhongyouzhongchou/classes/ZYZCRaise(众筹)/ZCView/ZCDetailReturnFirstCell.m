@@ -68,13 +68,19 @@
     _supportOneYuanView.supportNumber=10;
     _supportAnyYuanView.supportNumber=20;
     _returnSupportView.limitNumber=5;
-    _returnSupportView.supportNumber=10;
-    
+    _returnSupportView.supportNumber=4;
+    _togetherView.limitNumber=4;
+    _togetherView.supportNumber=13;
+
     _returnSupportView.titleLab.text=RETURNSUPPORT(200);
     _returnSupportView.titleLab.width=[ZYZCTool calculateStrLengthByText:RETURNSUPPORT(200) andFont:[UIFont systemFontOfSize:15] andMaxWidth:KSCREEN_W].width;
     
     _togetherView.titleLab.text=TOGETHERSUPPORT(200);
     _togetherView.titleLab.width=[ZYZCTool calculateStrLengthByText:TOGETHERSUPPORT(200) andFont:[UIFont systemFontOfSize:15] andMaxWidth:KSCREEN_W].width;
+    
+    _returnSupportView.hasMovie=YES;
+    _returnSupportView.hasVoice=YES;
+    _returnSupportView.hasWord=YES;
     
     _supportAnyYuanView.top=_supportOneYuanView.bottom+KEDGE_DISTANCE;
     _returnSupportView.top =_supportAnyYuanView.bottom+KEDGE_DISTANCE;

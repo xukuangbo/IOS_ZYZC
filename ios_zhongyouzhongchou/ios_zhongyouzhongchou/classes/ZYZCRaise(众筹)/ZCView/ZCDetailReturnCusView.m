@@ -7,10 +7,13 @@
 //
 
 #define HASSUPPORTPEOPLE(numberPeople) [NSString stringWithFormat:@"已支持:%d位",numberPeople]
+#define SIGNUPPEOPLE(numberPeople) [NSString stringWithFormat:@"已报名:%d位",numberPeople]
 #define LIMITSUPPORTPEOPLE(numberPeople) [NSString stringWithFormat:@"限额:%d位",numberPeople]
 
 #import "ZCDetailReturnCusView.h"
 #import "UIView+GetSuperTableView.h"
+#import "ZYZCCusomMovieImage.h"
+#import "ZCDetailIntroFirstCellVoiceShowView.h"
 @interface ZCDetailReturnCusView ()
 @property (nonatomic, copy  ) NSString *title;
 @property (nonatomic, copy  ) NSString *text;
@@ -69,7 +72,6 @@
         _moneyTextField.placeholder=@"¥";
         _moneyTextField.backgroundColor= [UIColor ZYZC_TabBarGrayColor];
         _moneyTextField.font=[UIFont systemFontOfSize:14];
-        _moneyTextField.keyboardType=UIKeyboardTypeNumberPad;
         [self addSubview:_moneyTextField];
         UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(_moneyTextField.right, _titleLab.top, 20, _titleLab.height)];
         lab.text=@"元";
@@ -102,6 +104,11 @@
     _textLab.textColor=[UIColor ZYZC_TextBlackColor];
     [self addSubview:_textLab];
     
+    //如果是回报支持添加对应的文字，语音，视屏描述
+    if (_supportType==SuppurtReturnMoney) {
+        _WSMView=[[UIView alloc]initWithFrame:CGRectMake(0, _textLab.bottom+KEDGE_DISTANCE, self.width, 0)];
+        [self addSubview:_WSMView];
+    }
     //添加已支持多少位标签
     _hasSupportPeopleLab=[[UILabel alloc]initWithFrame:CGRectMake(0, _textLab.bottom+KEDGE_DISTANCE, 100, 20)];
     _hasSupportPeopleLab.font=[UIFont systemFontOfSize:13];
@@ -109,8 +116,8 @@
     _hasSupportPeopleLab.attributedText=[self customStringByString:HASSUPPORTPEOPLE(0)];
     [self addSubview:_hasSupportPeopleLab];
     
-    //如果是回报支持添加限额人数
-    if (_supportType==SuppurtReturnMoney) {
+    //如果是回报支持、一起游 添加限额人数
+    if (_supportType==SuppurtReturnMoney||_supportType==SuppurtTogetherMoney) {
         _limitPeopleLab=[[UILabel alloc]initWithFrame:CGRectMake(0, _hasSupportPeopleLab.top, 80, 20)];
         _limitPeopleLab.font=[UIFont systemFontOfSize:13];
         _limitPeopleLab.textColor=[UIColor ZYZC_TextBlackColor];
@@ -185,17 +192,22 @@
 -(void)setLimitNumber:(NSInteger)limitNumber
 {
     _limitNumber=limitNumber;
-   _limitPeopleLab.attributedText=[self customStringByString:HASSUPPORTPEOPLE((int)limitNumber)];
+   _limitPeopleLab.attributedText=[self customStringByString:LIMITSUPPORTPEOPLE((int)limitNumber)];
 }
 
-#pragma mark --- 支持人数发生变化
+#pragma mark --- 支持人数
 -(void)setSupportNumber:(NSInteger)supportNumber
 {
     _supportNumber=supportNumber;
     if(supportNumber)
     {
         NSInteger number=5;
-        _hasSupportPeopleLab.attributedText=[self customStringByString:HASSUPPORTPEOPLE((int)supportNumber)];
+        if (_supportType==SuppurtTogetherMoney) {
+            _hasSupportPeopleLab.attributedText=[self customStringByString:SIGNUPPEOPLE((int)supportNumber)];
+        }
+        else{
+            _hasSupportPeopleLab.attributedText=[self customStringByString:HASSUPPORTPEOPLE((int)supportNumber)];
+        }
         _peopleIconsView.height=(self.width-50-number*5*KCOFFICIEMNT)/number;
         //移除图像
         NSArray *views=[_peopleIconsView subviews];
@@ -221,6 +233,68 @@
 
         self.height=_peopleIconsView.bottom;
     }
+}
+
+#pragma mark --- 是否有视屏
+-(void)setHasMovie:(BOOL)hasMovie
+{
+    _hasMovie=hasMovie;
+    static BOOL getMovie=NO;
+    if (hasMovie) {
+        if (!getMovie) {
+            ZYZCCusomMovieImage *movieView=[[ZYZCCusomMovieImage alloc]initWithFrame:CGRectMake(0, 0, self.width, self.width*5/8)];
+            [_WSMView addSubview:movieView];
+            _WSMView.height=movieView.bottom+KEDGE_DISTANCE;
+            [self changViewsFrame];
+        }
+    }
+    getMovie=YES;
+}
+
+#pragma mark --- 是否有语音
+-(void)setHasVoice:(BOOL)hasVoice
+{
+    _hasVoice=hasVoice;
+    static BOOL getVoice=NO;
+    if (!getVoice) {
+        if (hasVoice) {
+            ZCDetailIntroFirstCellVoiceShowView *voiceView=[[ZCDetailIntroFirstCellVoiceShowView alloc]initWithFrame:CGRectMake(0, _WSMView.height, self.width, 40)];
+            voiceView.voiceTime=50;
+            [_WSMView addSubview:voiceView];
+            _WSMView.height=voiceView.bottom+KEDGE_DISTANCE;
+            [self changViewsFrame];
+        }
+    }
+    getVoice=YES;
+}
+#pragma mark --- 是否有文字
+-(void)setHasWord:(BOOL)hasWord
+{
+    _hasWord=hasWord;
+    static BOOL getWord=NO;
+    if (!getWord) {
+        if (hasWord) {
+            NSString *str=@"煎饼果子来一套煎饼果子来一套煎饼果子来一套煎饼果子来一套煎饼果子来一套煎饼果子来一套";
+            CGFloat wordHeight=[ZYZCTool calculateStrByLineSpace:10.0 andString:str andFont:[UIFont systemFontOfSize:15] andMaxWidth:self.width].height;
+            UILabel *wordView=[[UILabel alloc]initWithFrame:CGRectMake(0, _WSMView.height, self.width, wordHeight)];
+            wordView.font=[UIFont systemFontOfSize:15];
+            wordView.numberOfLines=0;
+            wordView.attributedText=[ZYZCTool setLineDistenceInText:str];
+            wordView.textColor=[UIColor ZYZC_TextBlackColor];
+            [_WSMView addSubview:wordView];
+            _WSMView.height=wordView.bottom+KEDGE_DISTANCE;
+            [self changViewsFrame];
+        }
+    }
+    getWord=YES;
+}
+
+-(void)changViewsFrame
+{
+    _limitPeopleLab.top=_WSMView.bottom;
+    _hasSupportPeopleLab.top=_limitPeopleLab.top;
+    _peopleIconsView.top=_hasSupportPeopleLab.bottom+KEDGE_DISTANCE;
+    self.height=_peopleIconsView.bottom;
 }
 
 #pragma mark --- 进入更多人数内容展示页
@@ -249,7 +323,7 @@
     }];
     
 }
-#pragma mark --- 隐藏展示所有支持者视图
+#pragma mark --- 退出展示所有支持者视图
 -(void)backFromTotalPeopleView:(UITapGestureRecognizer *)tap
 {
     UIView *view=tap.view;
@@ -264,6 +338,8 @@
 
 }
 
+
+
 #pragma mark --- 查看某人众筹详情
 -(void)detailInfo:(ZCDetailCustomButton *)sender
 {
@@ -271,7 +347,30 @@
 }
 
 #pragma mark --- textField代理方法
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    return [self validateNumber:string];
+}
 
+- (BOOL)validateNumber:(NSString*)number {
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    return res;
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField endEditing:YES];
+    return YES;
+}
 
 #pragma mark --- 改变文字样式
 -(NSAttributedString *)customStringByString:(NSString *)str
