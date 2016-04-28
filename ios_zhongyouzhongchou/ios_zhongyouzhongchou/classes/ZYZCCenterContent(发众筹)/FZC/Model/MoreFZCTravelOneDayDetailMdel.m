@@ -20,9 +20,4 @@ MJCodingImplementation
     }
     return self;
 }
-
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@", _date,_siteDes,_trafficDes,_liveDes,_foodDes,_sites,_wordDes,_imgsDes,_voiceUrl,_movieUrl];
-}
 @end

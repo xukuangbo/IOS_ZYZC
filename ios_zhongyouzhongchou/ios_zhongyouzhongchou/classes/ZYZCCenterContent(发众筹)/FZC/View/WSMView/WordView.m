@@ -55,7 +55,7 @@
 -(void)tapHappen:(UITapGestureRecognizer *)tap
 {
     WordEditViewController *wordEditVC=[[WordEditViewController alloc]init];
-    wordEditVC.myTitle=@"图文描述";
+    wordEditVC.myTitle=@"文字描述";
     wordEditVC.preText=_textView.text;
     __weak typeof (&*self)weakSelf=self;
     wordEditVC.textBlock=^(NSString *textStr)

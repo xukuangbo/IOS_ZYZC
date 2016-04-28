@@ -22,7 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self setNavBar];
+//    [self setNavBar];
+    self.title=@"众筹列表";
     [self configUI];
 }
 #pragma mark --- 创建NavBar
