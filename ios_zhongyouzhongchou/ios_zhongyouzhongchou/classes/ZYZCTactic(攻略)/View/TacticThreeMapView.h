@@ -12,4 +12,8 @@
 
 
 @property (nonatomic, strong) NSArray *videos;
+
+@property (nonatomic, strong) NSArray *foodsArray;
+
+@property (nonatomic, strong) NSArray *singleMustPlayArray;
 @end

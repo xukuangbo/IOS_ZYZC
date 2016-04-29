@@ -7,16 +7,19 @@
 //
 
 #import "ZYZCCusomMovieImage.h"
-
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 @implementation ZYZCCusomMovieImage
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+//为了保证同一时间只有一个播放器，使用单例模式
++ (AVPlayerViewController *)sharedInstance{
+    static AVPlayerViewController *vc = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        vc = [[AVPlayerViewController alloc] init];
+    });
+    return vc;
 }
-*/
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -35,8 +38,8 @@
     self.backgroundColor=[UIColor orangeColor];
     
     UIImageView *startImg=[[UIImageView alloc]init];
-    startImg.center=CGPointMake(self.width/2, self.height/2);
     startImg.bounds=CGRectMake(0, 0, 60, 60);
+    startImg.center=CGPointMake(self.width/2, self.height/2);
     startImg.image=[UIImage imageNamed:@"btn_v_on"];
     [self addSubview:startImg];
     
@@ -49,6 +52,14 @@
 {
     if (_playUrl) {
         NSLog(@"播放视频");
+        AVPlayer *player=[AVPlayer playerWithURL:[NSURL URLWithString:self.playUrl]];
+        [player play];
+        [ZYZCCusomMovieImage sharedInstance].player = player;
+        [self addSubview:[ZYZCCusomMovieImage sharedInstance].view];
+        [[ZYZCCusomMovieImage sharedInstance].view mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(0);
+        }];
+        
     }
 }
 

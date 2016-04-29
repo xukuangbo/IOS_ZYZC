@@ -9,6 +9,7 @@
 #import "TacticSingleModel.h"
 #import "TacticSingleFoodModel.h"
 #import "TacticSingleTipsModel.h"
+#import "TacticVideoModel.h"
 @implementation TacticSingleModel
 + (NSDictionary *)mj_replacedKeyFromPropertyName
 {
@@ -20,7 +21,8 @@
 + (NSDictionary *)mj_objectClassInArray
 {
     return @{
-             @"foods" : [TacticSingleFoodModel class],
+             @"mgViews" : [TacticVideoModel class],
+             @"foods" : [TacticSingleFoodModel class]
              };
 }
 

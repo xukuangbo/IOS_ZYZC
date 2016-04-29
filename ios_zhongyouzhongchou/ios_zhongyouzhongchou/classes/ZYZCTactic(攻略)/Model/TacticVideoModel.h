@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface TacticVideoModel : NSObject
 //"destDate": 1459735343000,
 @property (nonatomic, copy) NSString *destDate;
