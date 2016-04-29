@@ -208,6 +208,114 @@
     
     NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:dataDict];
     [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
+    
+    NSDictionary *dataDic=@{
+                            @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
+                            @"status":@1,
+                            @"title":@"海岛游",
+                            @"productCountryId":@[@"1",@"2"],
+                            @"dest":@[@"普吉岛",@"清迈"],
+                            @"spell_buy_price":@5000,
+                            @"start_time":@"2016-4-28",
+                            @"end_time":@"2016-5-10",
+                            @"spell_end_time":@"2016-7-28",
+                            @"people":@8,
+                            @"cover":@"http://....",
+                            @"desc":@"筹旅费文字描述",
+                            @"voice":@"http://....",
+                            @"movie":@"http://....",
+                            @"schedule":@[
+                                        @{
+                                             @"day": @1,
+                                             @"spot": @"景点描述",
+                                             @"spots":@[@"url1",@"url2"],
+                                             @"trans":@"交通描述",
+                                             @"live":@"住宿描述",
+                                             @"food":@"饮食描述",
+                                             @"desc":@"第一天描述",
+                                             @"voice":@"http://...",
+                                             @"movie":@"http://..."
+                                           },
+                                        @{
+                                            @"day": @2,
+                                            @"spot": @"景点描述2",
+                                            @"spots":@[@"url1",@"url2"],
+                                            @"trans":@"交通描述2",
+                                            @"live":@"住宿描述2",
+                                            @"desc":@"第二天描述",
+                                            @"voice":@"http://...",
+                                            @"movie":@"http://..."
+                                        },
+                                        @{
+                                            @"day": @3,
+                                            @"spot": @"景点描述3",
+                                            @"spots":@[@"url1",@"url2"],
+                                            @"trans":@"交通描述3",
+                                            @"live":@"住宿描述3",
+                                            @"desc":@"第三天描述",
+                                            @"voice":@"http://...",
+                                            @"movie":@"http://..."
+                                        }],
+                            @"report": @[
+                                       @{
+                                           @"style": @1,
+                                           @"price": @1
+                                       },
+                                       @{
+                                           @"style": @2,
+                                           @"price": @0
+                                       },
+                                       @{
+                                           @"style": @3,
+                                           @"price": @200,
+                                           @"people": @5,
+                                           @"desc": @"回报目的",
+                                           @"voice":@"http://",
+                                           @"movie":@"http://"
+                                       },
+                                       @{
+                                           @"style": @4,
+                                           @"people":@8,
+                                           @"price": @100
+                                       },
+                                       @{
+                                           @"style": @5,
+                                           @"price": @1000
+                                        },
+                                       @{
+                                           @"style": @6,
+                                           @"price": @1000
+                                        },
+                                       @{
+                                           @"style": @7,
+                                           @"price": @1000
+                                        },
+                                       @{
+                                           @"style": @8,
+                                           @"price": @1000
+                                        }
+                                       ]
+                            
+                    };
+    NSLog(@"dataDic:%@",dataDic);
+    [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+        
+    }
+    andFailBlock:^(id failResult)
+    {
+        NSLog(@"%@",failResult);
+        
+    }];
+}
+
+-(NSString *)turnJson:(NSDictionary *)dic
+{
+//   转换成json
+    NSData *data = [NSJSONSerialization dataWithJSONObject :dic options : NSJSONWritingPrettyPrinted error:NULL];
+    
+    NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+    return jsonStr;
 }
 
 #pragma mark --- 将临时文件移到documents中

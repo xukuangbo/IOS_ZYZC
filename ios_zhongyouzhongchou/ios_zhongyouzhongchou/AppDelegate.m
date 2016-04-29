@@ -10,7 +10,6 @@
 #import "ZYZCTabBarController.h"
 #import "ZYZCOSSManager.h"
 
-
 #import "WXApi.h"
 #import "WXApiManager.h"
 @interface AppDelegate ()
@@ -40,7 +39,7 @@
      初始化微信
      */
     [self initWithWechat];
-
+    
 //    [self getFileToTmp];
     return YES;
 }

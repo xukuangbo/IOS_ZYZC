@@ -44,8 +44,8 @@ static id _instace;
     self = [super init];
     if (self) {
         //这里写要初始化的东西！！！
-        _goal_TotalTravelDay=@"1";
         _travelDetailDays=[NSMutableArray array];
+        _goal_TotalTravelDay=@"1";
         _return_supportOneYuanStatus=@"1";
         _return_supportAnyYuanStatus=@"1";
         //第四个界面
@@ -67,6 +67,31 @@ static id _instace;
         return [MoreFZCTravelOneDayDetailMdel class];
     }
     return nil;
+}
+
+-(void)nilAllProperties
+{
+    NSArray *properties=[self getAllProperties];
+    
+    for (int i=0; i<properties.count; i++) {
+       
+    }
+}
+
+
+#pragma mark --- 获取对象所有属性
+- (NSArray *)getAllProperties
+{
+    u_int count;
+    objc_property_t *properties  =class_copyPropertyList([self class], &count);
+    NSMutableArray *propertiesArray = [NSMutableArray arrayWithCapacity:count];
+    for (int i = 0; i<count; i++)
+    {
+        const char* propertyName =property_getName(properties[i]);
+        [propertiesArray addObject: [NSString stringWithUTF8String: propertyName]];
+    }
+    free(properties);
+    return propertiesArray;
 }
 
 @end
