@@ -23,7 +23,7 @@
 {
     self = [super initWithFrame:frame style:style];
     if (self) {
-        self.backgroundColor = [UIColor blackColor];
+//        self.backgroundColor = [UIColor blackColor];
         self.dataSource = self;
         self.delegate = self;
         

@@ -18,6 +18,6 @@
 
 @property (nonatomic, assign) BOOL hasLive; //住宿
 
-@property (nonatomic, assign) BOOL hasEat; //饮食
+@property (nonatomic, assign) BOOL hasFood; //饮食
 
 @end

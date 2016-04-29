@@ -79,7 +79,7 @@
             startDate=[NSDate dateFromString:manager.goal_startDate];
         }
         NSDate *cellDate=[NSDate dateWithTimeInterval:cellNumber*24*60*60 sinceDate:startDate];
-        travelSecondCell.oneDetailModel.date=cellDate;
+        travelSecondCell.oneDetailModel.date=[NSString stringWithFormat:@"%@",cellDate];
         travelSecondCell.contentBelong=TRAVEL_CONTENTBELONG(indexPath.row/2);
         return travelSecondCell;
     }

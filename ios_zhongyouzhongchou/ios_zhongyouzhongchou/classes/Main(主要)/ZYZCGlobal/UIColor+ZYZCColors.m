@@ -57,5 +57,9 @@
     return KCOLOR_RGB(0, 255, 246);
 }
 
++ (UIColor *)ZYZC_RedTextColor{
+    return KCOLOR_RGB(234, 87, 87);
+}
+
 
 @end

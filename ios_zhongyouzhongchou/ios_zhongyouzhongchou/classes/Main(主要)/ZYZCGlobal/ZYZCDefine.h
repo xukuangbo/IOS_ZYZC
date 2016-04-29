@@ -9,6 +9,8 @@
 #ifndef ZYZCDefine_h
 #define ZYZCDefine_h
 
+#define DOCUMENT_FILE @"WSMContent"
+
 //屏幕宽
 #define KSCREEN_W [UIScreen mainScreen].bounds.size.width
 //屏幕高
@@ -44,13 +46,15 @@
 #define KZCDETAIL_ATTITUDETYPE      90//tag取值范围90～92
 #define KMineHeadViewChangeType     100//tag取值范围100～101
 #define KZCDETAIL_CONTENTTYPE       110//tag取值范围110～102
+#define KFZC_INPUTCONTENT_TYPE      120//tag取值范围120～122
+#define KFZC_INPUTCONTENTVIEW_TYPE  130//tag取值范围130～132
+#define KSUPPORTMONEY_TYPE          140//tag取值范围140～142
 
 #define KWebImage(urlImage) [[NSString stringWithFormat:@"http://zhongyou-hz.oss-cn-hangzhou.aliyuncs.com/%@",urlImage] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] //网络访问阿里云的图片
 
 //NSUserDefaults-key使用
 #define KUSER_ID  @"userId"            //用于保存用户id
-#define KMOREFZC_RETURN_SUPPORTTYPE  @"return_supportType"  //用于保存用户id
-#define KMOREFZCDATAMANAGER_FILEPATH @"moreFZCDataManagerFilePath" //发众筹数据存储
+#define KMOREFZC_RETURN_SUPPORTTYPE  @"return_supportType"
 
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]

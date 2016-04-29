@@ -14,13 +14,13 @@
 #define CONTENTHEIGHT 200
 typedef NS_ENUM(NSInteger, InputContentType)
 {
-    WordType=100,
+    WordType=KFZC_INPUTCONTENT_TYPE,
     SoundType,
     MovieType
 };
 typedef NS_ENUM(NSInteger, ContentViewType)
 {
-    WordViewType=200,
+    WordViewType=KFZC_INPUTCONTENTVIEW_TYPE,
     SoundViewType,
     MovieViewType
 };

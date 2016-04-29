@@ -12,7 +12,7 @@
 #import "MoreFZCRaiseMoneyTableView.h"
 #import "MoreFZCTravelTableView.h"
 #import "MoreFZCReturnTableView.h"
-
+#import "ZYZCTool+getLocalTime.h"
 #import "MoreFZCDataManager.h"
 
 #define kMoreFZCToolBar 20
@@ -27,6 +27,9 @@
    
     [super viewDidLoad];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+//    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+//    NSLog(@"manager:%@",manager);
+    
     [self setBackItem];
     [self createToolBar];
     [self createClearMapView];
@@ -133,102 +136,6 @@
         [bottomView addSubview:sureBtn];
     }
 }
-#pragma mark --- 点击底部按钮触发事件
--(void)clickBtn:(UIButton *)sender
-{
-    switch (sender.tag) {
-        case SkimType:
-           
-            break;
-        case NextType:
-           
-            break;
-        default:
-        case SaveType:
-            //保存数据
-            [self saveData];
-            break;
-    }
-}
-
-#pragma mark --- 保存数据
--(void)saveData
-{
-    //保存旅游每日行程安排到单例中
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    
-    [manager.travelDetailDays removeAllObjects];
-    MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
-    for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
-        TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
-        [travelSecondCell saveTravelOneDayDetailData];
-        [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
-    }
-    
-    //归档
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex:0];
-    NSString *filePath=[docDir stringByAppendingPathComponent:@"WSMContentData.data"];
-    [NSKeyedArchiver archiveRootObject:manager toFile:filePath];
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    [user setObject:filePath forKey:KMOREFZCDATAMANAGER_FILEPATH];
-    [user synchronize];
-    //解档
-    MoreFZCDataManager *fileManager=[NSKeyedUnarchiver  unarchiveObjectWithFile:filePath];
-    
-    // 模型转字典
-    NSDictionary *statusDict = fileManager.mj_keyValues;
-    
-    NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:statusDict];
-    [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
-    
-    NSDictionary *dic=@{
-        @"openid":@"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
-//        @"title": @"众筹主题",
-//        @"productCountryId":@"12",
-//        @"dest": @"泰国",
-//        @"spell_buy_price": @200,
-//        @"spell_end_time": @"2016-07-15",
-//        @"start_time": @"2016-08-15",
-//        @"end_time": @"2016-08-20",
-//        @"people": @8,
-//        @"status": @1,
-//        @"cover": @"www.baidu.com",
-//        @"desc": @"这是测试",
-//        @"schedule": @[
-//                     @"第一天，去吃饭",
-//                     @"第二天，起玩"
-//                     ],
-//        @"report": @[
-//                   @{
-//                       @"style": @1,
-//                       @"price": @1
-//                   },
-//                   @{
-//                       @"style": @2,
-//                       @"price": @0
-//                   },
-//                   @{
-//                       @"style": @3,
-//                       @"price": @200,
-//                       @"people": @5,
-//                       @"desc": @"回报目的"
-//                   },
-//                   @{
-//                       @"style": @4,
-//                       @"people": @8,
-//                       @"price": @100
-//                   }
-//                   ]
-        };
-    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:dic andSuccessGetBlock:^(id result, BOOL isSuccess)
-    {
-        NSLog(@"%@",result);
-    } andFailBlock:^(id failResult) {
-        NSLog(@"%@",failResult);
-    }];
-    
-}
 
 #pragma mark - MoreFZCToolBarDelegate
 - (void)toolBarWithButton:(NSInteger)buttonTag
@@ -253,5 +160,196 @@
         }
     }
 }
+#pragma mark --- 点击底部按钮触发事件
+-(void)clickBtn:(UIButton *)sender
+{
+    switch (sender.tag) {
+        case SkimType:
+            
+            break;
+        case NextType:
+            
+            break;
+        default:
+        case SaveType:
+            //保存数据
+            [self saveData];
+            break;
+    }
+}
+
+#pragma mark --- 保存数据
+-(void)saveData
+{
+    //保存旅游每日行程安排到单例中
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    
+    [manager.travelDetailDays removeAllObjects];
+    MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
+    for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
+        TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
+        [travelSecondCell saveTravelOneDayDetailData];
+        [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
+    }
+    
+    
+    
+    //归档
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *localTime=[ZYZCTool getLocalTime];
+    NSString *filePath=[docDir stringByAppendingPathComponent:[NSString stringWithFormat:@"WSMContentData%@.data",localTime]];
+    NSLog(@"归档数据filePath:%@",filePath);
+    [NSKeyedArchiver archiveRootObject:manager toFile:filePath];
+    //解档
+    MoreFZCDataManager *fileManager=[NSKeyedUnarchiver  unarchiveObjectWithFile:filePath];
+    
+    // 模型转字典
+    NSDictionary *dataDict = fileManager.mj_keyValues;
+    NSLog(@"dataDict:%@",dataDict);
+    
+    
+    NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:dataDict];
+    [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
+    
+    NSDictionary *dataDic=@{
+                            @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
+                            @"status":@1,
+                            @"title":@"海岛游",
+                            @"productCountryId":@[@"1",@"2"],
+                            @"dest":@[@"普吉岛",@"清迈"],
+                            @"spell_buy_price":@5000,
+                            @"start_time":@"2016-4-28",
+                            @"end_time":@"2016-5-10",
+                            @"spell_end_time":@"2016-7-28",
+                            @"people":@8,
+                            @"cover":@"http://....",
+                            @"desc":@"筹旅费文字描述",
+                            @"voice":@"http://....",
+                            @"movie":@"http://....",
+                            @"schedule":@[
+                                        @{
+                                             @"day": @1,
+                                             @"spot": @"景点描述",
+                                             @"spots":@[@"url1",@"url2"],
+                                             @"trans":@"交通描述",
+                                             @"live":@"住宿描述",
+                                             @"food":@"饮食描述",
+                                             @"desc":@"第一天描述",
+                                             @"voice":@"http://...",
+                                             @"movie":@"http://..."
+                                           },
+                                        @{
+                                            @"day": @2,
+                                            @"spot": @"景点描述2",
+                                            @"spots":@[@"url1",@"url2"],
+                                            @"trans":@"交通描述2",
+                                            @"live":@"住宿描述2",
+                                            @"desc":@"第二天描述",
+                                            @"voice":@"http://...",
+                                            @"movie":@"http://..."
+                                        },
+                                        @{
+                                            @"day": @3,
+                                            @"spot": @"景点描述3",
+                                            @"spots":@[@"url1",@"url2"],
+                                            @"trans":@"交通描述3",
+                                            @"live":@"住宿描述3",
+                                            @"desc":@"第三天描述",
+                                            @"voice":@"http://...",
+                                            @"movie":@"http://..."
+                                        }],
+                            @"report": @[
+                                       @{
+                                           @"style": @1,
+                                           @"price": @1
+                                       },
+                                       @{
+                                           @"style": @2,
+                                           @"price": @0
+                                       },
+                                       @{
+                                           @"style": @3,
+                                           @"price": @200,
+                                           @"people": @5,
+                                           @"desc": @"回报目的",
+                                           @"voice":@"http://",
+                                           @"movie":@"http://"
+                                       },
+                                       @{
+                                           @"style": @4,
+                                           @"people":@8,
+                                           @"price": @100
+                                       },
+                                       @{
+                                           @"style": @5,
+                                           @"price": @1000
+                                        },
+                                       @{
+                                           @"style": @6,
+                                           @"price": @1000
+                                        },
+                                       @{
+                                           @"style": @7,
+                                           @"price": @1000
+                                        },
+                                       @{
+                                           @"style": @8,
+                                           @"price": @1000
+                                        }
+                                       ]
+                            
+                    };
+    NSLog(@"dataDic:%@",dataDic);
+    [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+        
+    }
+    andFailBlock:^(id failResult)
+    {
+        NSLog(@"%@",failResult);
+        
+    }];
+}
+
+-(NSString *)turnJson:(NSDictionary *)dic
+{
+//   转换成json
+    NSData *data = [NSJSONSerialization dataWithJSONObject :dic options : NSJSONWritingPrettyPrinted error:NULL];
+    
+    NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+    return jsonStr;
+}
+
+#pragma mark --- 将临时文件移到documents中
+-(NSString *)copyTmpFileToDocument:(NSString *)tmpFilePath
+{
+    
+    NSFileManager*fileManager =[NSFileManager defaultManager];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString*filePath =[documentsDirectory stringByAppendingPathComponent:[ZYZCTool getLocalTime]];
+    
+    if([fileManager fileExistsAtPath:filePath]== NO){
+        if ([fileManager fileExistsAtPath:tmpFilePath]) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSError*error;
+                [fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
+            });
+            
+        }
+    }
+    return filePath;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+//    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+//    [manager initAllProperties];
+//    NSLog(@"manager:%@",manager);
+}
+
 
 @end

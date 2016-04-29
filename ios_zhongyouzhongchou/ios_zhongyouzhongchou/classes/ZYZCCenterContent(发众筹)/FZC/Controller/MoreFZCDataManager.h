@@ -126,5 +126,9 @@
 
 
 + (instancetype)sharedMoreFZCDataManager;
+/**
+ *  重置数据
+ */
+-(void)initAllProperties;
 
 @end

@@ -32,6 +32,8 @@
 
 + (UIColor *)ZYZC_TextGrayColor04;
 
++ (UIColor *)ZYZC_RedTextColor;
+
 + (UIColor *)ZYZC_LineGrayColor;
 
 + (UIColor *)ZYZC_TextBlackColor;

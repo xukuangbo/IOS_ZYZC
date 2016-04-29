@@ -19,6 +19,11 @@
 #import "ZCDetailIntroThirdCell.h"
 //行程部分cells
 #import "ZCDetailArrangeFirstCell.h"
+//回报部分cells
+#import "ZCDetailReturnFirstCell.h"
+#import "ZCDetailReturnSecondCell.h"
+#import "ZCDetailReturnThridCell.h"
+#import "ZCDetailReturnFourthCell.h"
 
 #import "FXBlurView.h"
 
@@ -35,10 +40,16 @@
 @property (nonatomic, strong) ZCDetailIntroFirstCellModel * introFirstCellMdel;
 @property (nonatomic, strong) NSMutableArray *detailDays;//行程安排数组
 
+@property (nonatomic, strong) ZCDetailReturnFirstCellModel *returnFirstCellModel;
+
+@property (nonatomic, strong) NSMutableArray *favoriteTravel;//猜你喜欢的旅游
+
 @property (nonatomic, assign) BOOL hasCosponsor;//联合发起人
 @property (nonatomic, assign) BOOL hasIntroGoal;//众筹目的
 @property (nonatomic, assign) BOOL hasIntroGeneral;//目的地介绍
 @property (nonatomic, assign) BOOL hasIntroMovie;//动画攻略
+@property (nonatomic, assign) BOOL hasHotComment;//热门评论
+@property (nonatomic, assign) BOOL hasInterestTravel;//兴趣标签匹配的旅游
 
 @end
 @implementation ZCPersonInfoController
@@ -59,19 +70,24 @@
 #pragma mark --- 初始化数据
 -(void)initData
 {
-    _introFirstCellMdel = [[ZCDetailIntroFirstCellModel alloc]init];
+    _introFirstCellMdel  = [[ZCDetailIntroFirstCellModel alloc]init];
+    _returnFirstCellModel= [[ZCDetailReturnFirstCellModel alloc]init];
     _detailDays=[NSMutableArray array];
+    _favoriteTravel=[NSMutableArray array];
     
     for (int i=0; i<3; i++) {
         MoreFZCTravelOneDayDetailMdel *oneDetailModel=[[MoreFZCTravelOneDayDetailMdel alloc]init];
+        oneDetailModel.date=[NSString stringWithFormat:@"第%d天",i+1];
         [_detailDays addObject:oneDetailModel];
     }
     
     self.contentType= IntroType;//展示介绍部分
-    _hasCosponsor = YES;//添加联和发起人项
-    _hasIntroGoal = NO;//添加众筹目的
+    _hasCosponsor   = YES;//添加联和发起人项
+    _hasIntroGoal   = YES;//添加众筹目的
     _hasIntroGeneral=YES;//添加目的地介绍
     _hasIntroMovie  =YES;//添加动画攻略
+    _hasHotComment  =NO;//添加热门评论
+    _hasInterestTravel=YES;//添加兴趣标签匹配的旅游
 
 }
 
@@ -129,7 +145,7 @@
     NSInteger secondSectionCellNumber=
     (2*_hasIntroGoal+2*_hasIntroGeneral+2*_hasIntroMovie)*(self.contentType==IntroType?1:0)
     +2*days*(self.contentType==ArrangeType?1:0)
-    +3*(self.contentType==ReturnType?1:0);
+    +(2*_hasHotComment+2*_hasInterestTravel*(1+4))*(self.contentType==ReturnType?1:0);
     
     if (section==0) {
         return 2 + 2*_hasCosponsor;
@@ -156,17 +172,12 @@
         else if (indexPath.row == 1+_hasCosponsor*2&&indexPath.row!=1)
         {
             NSString *cellId02=@"detailFirstCell";
-            ZCDetailFirstCell *detailFirstCell=[tableView dequeueReusableCellWithIdentifier:cellId02];
-            if (!detailFirstCell) {
-                detailFirstCell=[[ZCDetailFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId02];
-            }
-             return detailFirstCell;
+            ZCDetailFirstCell *detailFirstCell=(ZCDetailFirstCell *)[self customTableView:tableView cellWithIdentifier:cellId02 andCellClass:[ZCDetailFirstCell class]];
+            return detailFirstCell;
         }
         else
         {
-            UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-            cell.selectionStyle=UITableViewCellSelectionStyleNone;
-            cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+            UITableViewCell *cell=[self createNormalCell];
             return cell;
         }
     }
@@ -177,41 +188,29 @@
         if (self.contentType==IntroType) {
             if(indexPath.row==0 && _hasIntroGoal)
             {
-                NSString *introCellId01=@"introFirstCell";
-                ZCDetailIntroFirstCell *introFirstCell=[tableView dequeueReusableCellWithIdentifier:introCellId01];
-                if (!introFirstCell) {
-                    introFirstCell= [[ZCDetailIntroFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:introCellId01];
-                }
+                NSString *introFirstCellId=@"introFirstCell";
+                ZCDetailIntroFirstCell *introFirstCell=(ZCDetailIntroFirstCell *)[self customTableView:tableView cellWithIdentifier:introFirstCellId andCellClass:[ZCDetailIntroFirstCell class]];
                 introFirstCell.layer.cornerRadius=KCORNERRADIUS;
-                
                 introFirstCell.cellModel=_introFirstCellMdel;
                 return introFirstCell;
             }
             else if (indexPath.row == 0+2*_hasIntroGoal && _hasIntroGeneral)
             {
-                NSString *introCellId02=@"introSecondCell";
-                ZCDetailIntroSecondCell *introSecondCell=[tableView dequeueReusableCellWithIdentifier:introCellId02];
-                if (!introSecondCell) {
-                    introSecondCell= [[ZCDetailIntroSecondCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:introCellId02];
-                }
+                NSString *introSecondCellId=@"introSecondCell";
+                ZCDetailIntroSecondCell *introSecondCell=(ZCDetailIntroSecondCell *)[self customTableView:tableView cellWithIdentifier:introSecondCellId andCellClass:[ZCDetailIntroSecondCell class]];
                 introSecondCell.goals=@[@"普吉岛",@"清迈",@"烧麦"];
                 return introSecondCell;
             }
             else if (indexPath.row == 0 +2*_hasIntroGoal +2*_hasIntroGeneral && _hasIntroMovie)
             {
-                NSString *introCellId03=@"introThirdCell";
-                ZCDetailIntroThirdCell *introThirdCell=[tableView dequeueReusableCellWithIdentifier:introCellId03];
-                if (!introThirdCell) {
-                    introThirdCell= [[ZCDetailIntroThirdCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:introCellId03];
-                }
+                NSString *introThirdCellId=@"introThirdCell";
+                ZCDetailIntroThirdCell *introThirdCell=(ZCDetailIntroThirdCell *)[self customTableView:tableView cellWithIdentifier:introThirdCellId andCellClass:[ZCDetailIntroThirdCell class]];
                 return introThirdCell;
                 
             }
             else
             {
-                UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-                cell.selectionStyle=UITableViewCellSelectionStyleNone;
-                cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+                UITableViewCell *cell=[self createNormalCell];
                 return cell;
             }
         }
@@ -219,30 +218,70 @@
         else if (self.contentType == ArrangeType)
         {
             if (indexPath.row%2==0) {
-                NSString *arrangeCellId=@"arrangeCell";
-                ZCDetailArrangeFirstCell *arrangeCell=[tableView dequeueReusableCellWithIdentifier:arrangeCellId];
-                if (!arrangeCell) {
-                    arrangeCell=[[ZCDetailArrangeFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:arrangeCellId];
-                }
+                NSString *arrangeCellId=[NSString stringWithFormat:@"arrangeCell%zd",indexPath.row/2];
+                ZCDetailArrangeFirstCell *arrangeCell=(ZCDetailArrangeFirstCell *)[self customTableView:tableView cellWithIdentifier:arrangeCellId andCellClass:[ZCDetailArrangeFirstCell class]];
                 arrangeCell.oneDaydetailModel=_detailDays[indexPath.row/2];
                 return arrangeCell;
             }
             else{
-                UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-                cell.selectionStyle=UITableViewCellSelectionStyleNone;
-                cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+                UITableViewCell *cell=[self createNormalCell];
                 return cell;
             }
         }
         //查看回报内容
         else
         {
-            UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-            cell.selectionStyle=UITableViewCellSelectionStyleNone;
-            cell.contentView.backgroundColor=[UIColor greenColor];
+            if (indexPath.row==0) {
+                NSString *returnFirstCellId=@"returnFirstCell";
+                ZCDetailReturnFirstCell *returnFirstCell=(ZCDetailReturnFirstCell *)[self customTableView:tableView cellWithIdentifier:returnFirstCellId andCellClass:[ZCDetailReturnFirstCell class]];
+                returnFirstCell.cellModel=_returnFirstCellModel;
+                return returnFirstCell;
+            }
+            else if (indexPath.row==2*_hasHotComment &&indexPath.row !=0)
+            {
+                NSString *returnSecondCellId=@"returnSecondCell";
+                ZCDetailReturnSecondCell *returnSecondCell=(ZCDetailReturnSecondCell *)[self customTableView:tableView cellWithIdentifier:returnSecondCellId andCellClass:[ZCDetailReturnSecondCell class]];
+                returnSecondCell.contentView.backgroundColor=[UIColor greenColor];
+                return returnSecondCell;
+            }
+            else if (indexPath.row ==2*_hasHotComment+2*_hasInterestTravel &&indexPath.row!=0)
+            {
+                NSString *returnThirdCellId=@"returnThirdCell";
+                ZCDetailReturnThridCell *returnThirdCell=(ZCDetailReturnThridCell *)[self customTableView:tableView cellWithIdentifier:returnThirdCellId andCellClass:[ZCDetailReturnThridCell class]];
+                 returnThirdCell.contentView.backgroundColor=[UIColor greenColor];
+                return returnThirdCell;
+            }
+            else if (indexPath.row ==2*_hasHotComment +2*(1+(indexPath.row-2)/2)*_hasInterestTravel &&indexPath.row!=0)
+            {
+                NSString *returnFourthCellId=@"returnFourthCell";
+                ZCDetailReturnFourthCell *returnFourthCell=(ZCDetailReturnFourthCell *)[self customTableView:tableView cellWithIdentifier:returnFourthCellId andCellClass:[ZCDetailReturnFourthCell class]];
+                 returnFourthCell.contentView.backgroundColor=[UIColor yellowColor];
+                return returnFourthCell;
+            }
+            
+            UITableViewCell *cell=[self createNormalCell];
             return cell;
         }
     }
+}
+
+#pragma mark --- 创建自定义cell
+-(UITableViewCell *)customTableView:(UITableView *)tableView cellWithIdentifier:(NSString *)cellId andCellClass:(id)cellClass
+{
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId];
+    if (!cell) {
+        cell=[[cellClass alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+    }
+    return cell;
+}
+
+#pragma mark --- 创建普通cell
+-(UITableViewCell *)createNormalCell
+{
+    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+    return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -296,7 +335,22 @@
         //回报部分cells高度
         else
         {
-            return 200;
+            if (indexPath.row ==0) {
+                return _returnFirstCellModel.cellHeight;
+            }
+            else if (indexPath.row==2*_hasHotComment &&indexPath.row !=0)
+            {
+                return 100;
+            }
+            else if (indexPath.row ==2*_hasHotComment+2*_hasInterestTravel &&indexPath.row!=0)
+            {
+                return 100;
+            }
+            else if (indexPath.row ==2*_hasHotComment +2*(1+(indexPath.row-2)/2)*_hasInterestTravel &&indexPath.row!=0)
+            {
+                return 100;
+            }
+            return KEDGE_DISTANCE;
         }
     }
 }

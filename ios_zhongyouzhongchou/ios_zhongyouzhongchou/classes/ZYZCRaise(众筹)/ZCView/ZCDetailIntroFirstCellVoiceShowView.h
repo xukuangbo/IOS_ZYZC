@@ -12,4 +12,6 @@
 @property (nonatomic, strong) UIImageView *iconImg;
 @property (nonatomic, strong) UIImageView *voiceView;
 @property (nonatomic, strong) UILabel *timeLab;
+@property (nonatomic, assign) NSInteger voiceTime;
+@property (nonatomic, copy  ) NSString *voiceUrl;
 @end

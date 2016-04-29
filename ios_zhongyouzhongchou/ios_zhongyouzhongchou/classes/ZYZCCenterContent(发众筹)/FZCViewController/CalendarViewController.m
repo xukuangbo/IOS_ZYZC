@@ -24,6 +24,8 @@ typedef NS_ENUM(NSInteger, ChooseState) {
 @property(nonatomic,strong)NSArray *occupyDays;
 @property(nonatomic,strong)RMCalendarModel *keepStartDateMdel;
 @property(nonatomic,assign)ChooseState chooseState;
+@property(nonatomic,strong)NSDate *startDate;
+@property(nonatomic,strong)NSDate * endDate;
 @end
 
 
@@ -264,6 +266,7 @@ static NSString *DayCell = @"DayCell";
         }
         //将开始日期显示到界面上
         _scheduleView.startLab.text=[ZYZCTool turnDateToCustomDate:model.date];
+        _startDate=model.date;
         _scheduleView.startLab.textColor=[UIColor ZYZC_TextBlackColor];
         //记录已选出发时间状态
         _chooseState=ChooseStart;
@@ -288,6 +291,7 @@ static NSString *DayCell = @"DayCell";
             [self.calendarLogic changeStateToCellDayTypeClick:model];
             //将返回日期显示到界面上
             _scheduleView.backLab.text=[ZYZCTool turnDateToCustomDate:model.date];
+            _endDate=model.date;
             _scheduleView.backLab.textColor=[UIColor ZYZC_TextBlackColor];
             
             _travelTotalDays=[NSDate getDayNumbertoDay:_keepStartDateMdel.date beforDay:model.date];
@@ -308,9 +312,9 @@ static NSString *DayCell = @"DayCell";
 {
     //单例纪录开始时间
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    manager.goal_startDate=_scheduleView.startLab.text;
+    manager.goal_startDate=[NSDate stringFromDate:_startDate];
     //单例纪录返回时间
-    manager.goal_backDate=_scheduleView.backLab.text;
+    manager.goal_backDate=[NSDate stringFromDate:_endDate];
     //单例纪录旅行总天数
     manager.goal_TotalTravelDay=[NSString stringWithFormat:@"%zd", _travelTotalDays];
     if (self.confirmBlock) {
