@@ -27,6 +27,9 @@
    
     [super viewDidLoad];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+//    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+//    NSLog(@"manager:%@",manager);
+    
     [self setBackItem];
     [self createToolBar];
     [self createClearMapView];
@@ -340,5 +343,13 @@
     }
     return filePath;
 }
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+//    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+//    [manager initAllProperties];
+//    NSLog(@"manager:%@",manager);
+}
+
 
 @end
