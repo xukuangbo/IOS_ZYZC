@@ -7,7 +7,9 @@
 //
 
 #import "ReturnThirdCell.h"
-
+#import "MoreFZCViewController.h"
+#import "MoreFZCReturnTableView.h"
+#import "UIView+GetSuperTableView.h"
 @interface ReturnThirdCell ()
 
 @end
@@ -20,8 +22,6 @@
         self.contentView.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardDidHideNotification object:nil];
         
         ReturnCellBaseBGView *bgImageView = [ReturnCellBaseBGView viewWithRect:CGRectMake(ReturnThirdCellMargin, 0, KSCREEN_W - 20, ReturnThirdCellHeight) title:@"回报众筹" image:[UIImage imageNamed:@"btn_xs_one_n_pre"] selectedImage:[UIImage imageNamed:@"btn_xs_one_pre"] desc:@"可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。"];
         self.bgImageView = bgImageView;
@@ -185,6 +185,52 @@
 {
     [textField endEditing:YES];
     return YES;
+}
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //注册键盘出现的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardDidHideNotification object:nil];
+        return YES;
+}
+
+#pragma mark - 系统键盘的弹出
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    MoreFZCViewController *superVC=(MoreFZCViewController *)self.viewController;
+    __weak typeof (&*self)weakSelf=self;
+    superVC.returnKeyBordHidden=^(){
+        [weakSelf.moneyTextFiled resignFirstResponder];
+        [weakSelf.peopleTextfiled resignFirstResponder];
+    };
+    
+     MoreFZCReturnTableView *table=(MoreFZCReturnTableView *)self.getSuperTableView;
+    if (table.keyboardOpen == YES){
+        return;
+    }
+    //键盘高度
+    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    //如果已经弹出键盘的话，就不应该进行这个步骤
+    CGPoint contentOffset = table.contentOffset;
+    contentOffset.y += keyBoardFrame.size.height;
+    table.contentOffset = contentOffset;
+    table.keyboardOpen = YES;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+     MoreFZCReturnTableView *table=(MoreFZCReturnTableView *)self.getSuperTableView;
+    //键盘高度
+    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGPoint contentOffset = table.contentOffset;
+    contentOffset.y -= keyBoardFrame.size.height;
+    table.contentOffset = contentOffset;
+    table.keyboardOpen = NO;
+     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    
 }
 
 @end

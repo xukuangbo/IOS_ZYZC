@@ -18,4 +18,6 @@
  */
 @property (nonatomic, assign) BOOL returnThirdDownbuttonOpen;
 
+@property (nonatomic, assign) BOOL keyboardOpen;
+
 @end

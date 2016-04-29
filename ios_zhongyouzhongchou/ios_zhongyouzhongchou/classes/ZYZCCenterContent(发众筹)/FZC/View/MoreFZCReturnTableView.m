@@ -11,13 +11,8 @@
 #import "ReturnSecondCell.h"
 #import "ReturnThirdCell.h"
 #import "ReturnFourthCell.h"
+#import "MoreFZCViewController.h"
 @interface MoreFZCReturnTableView ()
-@property (nonatomic, assign) BOOL keyboardOpen;
-
-
-
-
-
 
 @end
 
@@ -26,25 +21,12 @@
 {
     self = [super initWithFrame:frame style:style];
     if (self) {
-        //注册键盘出现的通知
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
-        
-        //注册键盘消失的通知
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillBeHidden:)
-                                                     name:UIKeyboardWillHideNotification object:nil];
         self.dataSource =self;
         self.delegate  = self;
         self.backgroundColor = [UIColor ZYZC_BgGrayColor];
         
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSMutableArray *)openArray
@@ -165,47 +147,6 @@
         ReturnThirdCell *cell = [self cellForRowAtIndexPath:indexPath];
         [cell.moneyTextFiled endEditing:YES];
         [cell.peopleTextfiled endEditing:YES];
-        
     }
-    
-    
 }
-
-
-
-
-
-#pragma mark - 系统键盘的弹出
-- (void)keyboardWasShown:(NSNotification*)aNotification
-
-{
-    if (self.keyboardOpen == YES){
-        return;
-    }
-    //键盘高度
-    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        //如果已经弹出键盘的话，就不应该进行这个步骤
-        CGPoint contentOffset = self.contentOffset;
-        contentOffset.y += keyBoardFrame.size.height;
-        self.contentOffset = contentOffset;
-    self.keyboardOpen = YES;
-    
-}
-
-
-
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
-    
-    //键盘高度
-    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        CGPoint contentOffset = self.contentOffset;
-        contentOffset.y -= keyBoardFrame.size.height;
-        self.contentOffset = contentOffset;
-    
-    self.keyboardOpen = NO;
-
-}
-
-
 @end

@@ -159,6 +159,18 @@
             _goalKeyBordHidden();
         }
     }
+    if (tableView.tag!=MoreFZCToolBarTypeRaiseMoney) {
+        if (_raiseKeyBordHidden) {
+            _raiseKeyBordHidden();
+        }
+    }
+    if (tableView.tag!=MoreFZCToolBarTypeReturn) {
+        if (_returnKeyBordHidden) {
+            _returnKeyBordHidden();
+        }
+    }
+    
+    
 }
 #pragma mark --- 点击底部按钮触发事件
 -(void)clickBtn:(UIButton *)sender

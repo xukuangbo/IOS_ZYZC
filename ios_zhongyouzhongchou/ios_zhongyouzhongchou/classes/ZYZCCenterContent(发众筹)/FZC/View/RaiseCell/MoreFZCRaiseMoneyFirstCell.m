@@ -7,6 +7,7 @@
 //
 #define kRaiseMoneyMargin 10
 #import "MoreFZCRaiseMoneyFirstCell.h"
+#import "MoreFZCViewController.h"
 //#import "<#header#>"
 @implementation MoreFZCRaiseMoneyFirstCell
 
@@ -116,6 +117,7 @@
     moneyTextFiled.placeholder = @"0.00 元";
     [detailView addSubview:moneyTextFiled];
     self.moneyTextfiled = moneyTextFiled;
+    self.moneyTextfiled.delegate=self;
     
     //在明细的view里面添加4个内容
     
@@ -250,6 +252,31 @@
     //这里可以拿到数据，存到单例里面去
     [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
     return YES;
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //监听键盘的出现和收起
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    return YES;
+}
+
+#pragma mark --- 键盘出现方法
+-(void)keyboardWillShow:(NSNotification *)notify
+{
+    MoreFZCViewController *superVC=(MoreFZCViewController *)self.viewController;
+    __weak typeof (&*self)weakSelf=self;
+    superVC.raiseKeyBordHidden=^()
+    {
+         [weakSelf.moneyTextfiled resignFirstResponder];
+         [weakSelf.sightTextfiled resignFirstResponder];
+         [weakSelf.transportTextfiled resignFirstResponder];
+         [weakSelf.liveTextfiled resignFirstResponder];
+         [weakSelf.eatTextfiled resignFirstResponder];
+    };
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    
 }
 
 

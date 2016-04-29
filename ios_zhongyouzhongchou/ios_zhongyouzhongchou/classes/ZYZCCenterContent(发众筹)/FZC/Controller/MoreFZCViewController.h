@@ -17,6 +17,8 @@ typedef NS_ENUM(NSInteger, SaveBtnType)
 };
 
 typedef void(^GoalKeyBordHidden)();
+typedef void(^RaiseKeyBordHidden)();
+typedef void(^ReturnKeyBordHidden)();
 
 @interface MoreFZCViewController : ZYZCBaseViewController
 
@@ -33,5 +35,7 @@ typedef void(^GoalKeyBordHidden)();
 @property (nonatomic, weak) UIView *clearMapView;
 
 @property (nonatomic, copy) GoalKeyBordHidden goalKeyBordHidden;
+@property (nonatomic, copy) RaiseKeyBordHidden raiseKeyBordHidden;
+@property (nonatomic, copy) ReturnKeyBordHidden returnKeyBordHidden;
 
 @end
