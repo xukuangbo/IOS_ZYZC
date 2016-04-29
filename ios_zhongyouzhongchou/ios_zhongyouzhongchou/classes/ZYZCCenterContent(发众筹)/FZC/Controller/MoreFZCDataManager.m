@@ -71,38 +71,7 @@ static id _instace;
 
 -(void)initAllProperties
 {
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    
-    manager.goal_goals=nil;
-    manager.goal_startDate=nil;
-    manager.goal_backDate=nil;
-    manager.goal_TotalTravelDay=nil;
-    manager.goal_numberPeople=nil;
-    manager.goal_travelTheme=nil;
-    manager.goal_travelThemeImgUrl=nil;
-    manager.raiseMoney_sightMoney=nil;
-    manager.raiseMoney_transMoney=nil;
-    manager.raiseMoney_liveMoney=nil;
-    manager.raiseMoney_eatMoney=nil;
-    manager.goal_TotalTravelDay=nil;
-    manager.raiseMoney_wordDes=nil;
-    manager.raiseMoney_imgsDes=nil;
-    manager.raiseMoney_voiceUrl=nil;
-    manager.raiseMoney_movieUrl=nil;
-    manager.travelDetailDays=[NSMutableArray array];
-    manager.return_supportOneYuanStatus=@"1";
-    manager.return_supportAnyYuanStatus=@"1";
-    self.return_returnPeopleStatus=nil;
-    self.return_returnPeopleMoney=nil;
-    self.return_returnPeopleNumber=nil;
-    self.return_wordDes=nil;
-    self.return_imgsDes=nil;
-    self.return_voiceUrl=nil;
-    self.return_movieUrl=nil;
-    self.return_togetherPeopleStatus=nil;
-    self.return_togetherPeopleNumber=nil;
-    self.return_togetherMoneyPercent=nil;
-    self.return_togetherRateMoney=nil;
+        
 }
 
 

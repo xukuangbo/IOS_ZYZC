@@ -8,6 +8,7 @@
 
 #import "GoalPeoplePickerView.h"
 #import "MoreFZCDataManager.h"
+#define MIN_PEOPLE 2
 @interface GoalPeoplePickerView ()
 @property(nonatomic, strong) UILabel *numberLab;
 @end
@@ -45,14 +46,14 @@
         [btn setImage:[UIImage imageNamed:@"icn_hum_pre"] forState:UIControlStateSelected];
         [btn setImage:[UIImage imageNamed:@"icn_hum"] forState:UIControlStateNormal];
 
-        if (i<4) {
+        if (i<MIN_PEOPLE) {
             btn.selected=YES;
             btn.tag=KFZC_PERSON_BTN_TAG;
         }
         else
         {
             btn.selected=NO;
-            btn.tag=KFZC_PERSON_BTN_TAG+(i-3);
+            btn.tag=KFZC_PERSON_BTN_TAG+(i-MIN_PEOPLE+1);
         }
         [btn addTarget:self action:@selector(chooseNumber:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
@@ -61,7 +62,7 @@
 #pragma mark --- btn点击事件
 -(void)chooseNumber:(UIButton *)sender
 {
-    for (int i=KFZC_PERSON_BTN_TAG; i<KFZC_PERSON_BTN_TAG+5; i++) {
+    for (int i=KFZC_PERSON_BTN_TAG; i<KFZC_PERSON_BTN_TAG+8-(MIN_PEOPLE-1); i++) {
         UIButton *btn=(UIButton *)[self viewWithTag:i];
         if (i<=sender.tag) {
             btn.selected=YES;
@@ -72,7 +73,7 @@
         }
     }
     
-    NSInteger myNumberPeople=4+sender.tag-KFZC_PERSON_BTN_TAG;
+    NSInteger myNumberPeople=MIN_PEOPLE+sender.tag-KFZC_PERSON_BTN_TAG;
     _numberLab.attributedText=[self changeTextFontAndColorByString:[NSString stringWithFormat:@"%zd人",myNumberPeople]];
     
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
@@ -83,8 +84,8 @@
 -(void)setNumberPeople:(NSInteger)numberPeople
 {
     _numberPeople=numberPeople;
-    if (numberPeople>=4) {
-        UIButton *btn=(UIButton *)[self viewWithTag:KFZC_PERSON_BTN_TAG+(_numberPeople-4)];
+    if (numberPeople>=MIN_PEOPLE) {
+        UIButton *btn=(UIButton *)[self viewWithTag:KFZC_PERSON_BTN_TAG+(_numberPeople-MIN_PEOPLE)];
         [self chooseNumber:btn];
     }
 }

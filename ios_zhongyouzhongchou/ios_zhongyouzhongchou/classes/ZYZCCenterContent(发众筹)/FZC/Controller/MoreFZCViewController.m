@@ -27,8 +27,8 @@
    
     [super viewDidLoad];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-//    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-//    NSLog(@"manager:%@",manager);
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    NSLog(@"manager:%@",manager);
     
     [self setBackItem];
     [self createToolBar];
@@ -300,7 +300,6 @@
                                        ]
                             
                     };
-    NSLog(@"dataDic:%@",dataDic);
     [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"%@",result);
         
@@ -346,7 +345,9 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-//    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    manager.goal_numberPeople=nil;
+    manager.travelDetailDays=[NSMutableArray array];
 //    [manager initAllProperties];
 //    NSLog(@"manager:%@",manager);
 }
