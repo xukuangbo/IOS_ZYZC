@@ -28,5 +28,12 @@
 
 //必玩景点
 @property (nonatomic, assign) CGRect mustPlayViewF;
-//@property (nonatomic, assign) CGRect mustPlayViewButtonF;
+@property (nonatomic, assign) CGRect mustPlayViewButtonF;
+
+//特色美食
+@property (nonatomic, assign) CGRect foodsViewF;
+@property (nonatomic, assign) CGRect foodsPlayViewButtonF;
+
+//真实cell高度
+@property (nonatomic, assign) CGFloat realHeight;
 @end

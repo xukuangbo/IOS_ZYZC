@@ -8,16 +8,18 @@
 
 #import "TacticSingleTableViewCell.h"
 #import "TacticSingleModel.h"
+#import "ZYZCCusomMovieImage.h"
 #import "TacticSingleModelFrame.h"
 #import "TacticCustomMapView.h"
 #import "TacticThreeMapView.h"
+#import "TacticSingleTipsModel.h"
 @interface TacticSingleTableViewCell()
 //描述
 @property (nonatomic, weak) TacticCustomMapView *descView;
 @property (nonatomic, weak) UILabel *descLabel;
 //动画
 @property (nonatomic, weak) TacticCustomMapView *flashView;
-@property (nonatomic, weak) UIButton *flashPlayButton;
+@property (nonatomic, weak) ZYZCCusomMovieImage *flashPlayButton;
 //图文
 @property (nonatomic, weak) TacticCustomMapView *pictureView;
 @property (nonatomic, weak) UIButton *pictureShowButton;
@@ -28,6 +30,10 @@
 //必玩景点
 @property (nonatomic, weak) TacticCustomMapView *mustPlayView;
 @property (nonatomic, weak) TacticThreeMapView *mustPlayViewButton;
+
+//特色美食
+@property (nonatomic, weak) TacticCustomMapView *foodsView;
+@property (nonatomic, weak) TacticThreeMapView *foodsPlayViewButton;
 @end
 @implementation TacticSingleTableViewCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -52,7 +58,6 @@
 {
 //    CGFloat textMargin = 4;
     //目的地概况
-//    UIImageView * descView = [UIView viewWithIndex:1 frame:CGRectMake(TacticTableViewCellMargin, TacticTableViewCellMargin,) Title:@"目的地概况" desc:@"小悠带你看世界"];
     TacticCustomMapView *descView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,  KSCREEN_W - TacticTableViewCellMargin * 2, 120)];
     descView.titleLabel.text = @"目的地概况";
     CGFloat descLabelH = descView.height - descLabelBottom - TacticTableViewCellTextMargin * 2;
@@ -75,31 +80,28 @@
     [self.contentView addSubview:flashView];
     self.flashView = flashView;
     
-    CGFloat flashPlayButtonX = TacticTableViewCellMargin;
-    CGFloat flashPlayButtonY = descLabelBottom + TacticTableViewCellTextMargin;
-    CGFloat flashPlayButtonW = flashView.width - TacticTableViewCellMargin * 2;
+    CGFloat flashPlayButtonW = flashViewW - TacticTableViewCellMargin * 2;
     CGFloat flashPlayButtonH = oneViewHeight;
-    UIButton *flashPlayButton = [[UIButton alloc] initWithFrame:CGRectMake(flashPlayButtonX, flashPlayButtonY, flashPlayButtonW, flashPlayButtonH)];
-    flashPlayButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    ZYZCCusomMovieImage *flashPlayButton = [[ZYZCCusomMovieImage alloc] initWithFrame:CGRectMake(0, 0, flashPlayButtonW, flashPlayButtonH)];;
+//    flashPlayButton.contentMode = UIViewContentModeScaleAspectFill;
+    flashPlayButton.layer.cornerRadius = 5;
+    flashPlayButton.layer.masksToBounds = YES;
     flashPlayButton.backgroundColor = [UIColor redColor];
     [flashView addSubview:flashPlayButton];
-    [flashPlayButton addTarget:self action:@selector(playMoviewAction:) forControlEvents:UIControlEventTouchUpInside];
     self.flashPlayButton = flashPlayButton;
     
     //图文攻略
     CGFloat pictureViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
     CGFloat pictureViewH = oneViewMapHeight;
     TacticCustomMapView *pictureView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,pictureViewW, pictureViewH)];
-    pictureView.titleLabel.text = @"一张图看懂";
+    pictureView.titleLabel.text = @"图文攻略";
     [self.contentView addSubview:pictureView];
     self.pictureView = pictureView;
     
-    CGFloat pictureShowButtonX = TacticTableViewCellMargin;
-    CGFloat pictureShowButtonY = descLabelBottom + TacticTableViewCellTextMargin;
-    CGFloat pictureShowButtonW = pictureView.width - TacticTableViewCellMargin * 2;
-    CGFloat pictureShowButtonH = oneViewHeight;
-    UIButton *pictureShowButton = [[UIButton alloc] initWithFrame:CGRectMake(pictureShowButtonX, pictureShowButtonY, pictureShowButtonW, pictureShowButtonH)];
+    UIButton *pictureShowButton = [UIButton buttonWithType:UIButtonTypeCustom];
     pictureShowButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    pictureShowButton.layer.cornerRadius = 5;
+    pictureShowButton.layer.masksToBounds = YES;
     pictureShowButton.backgroundColor = [UIColor redColor];
     [pictureView addSubview:pictureShowButton];
     [pictureShowButton addTarget:self action:@selector(playPictureAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -110,35 +112,57 @@
     CGFloat tipsViewH = oneViewMapHeight;
     TacticCustomMapView *tipsView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,tipsViewW, tipsViewH)];
     tipsView.titleLabel.text = @"众游小贴士";
+    tipsView.descLabel.text = @"最实用的旅行tips";
     [self.contentView addSubview:tipsView];
     self.tipsView = tipsView;
     
-    CGFloat tipsShowButtonX = TacticTableViewCellMargin;
-    CGFloat tipsShowButtonY = descLabelBottom + TacticTableViewCellTextMargin;
-    CGFloat tipsShowButtonW = tipsView.width - TacticTableViewCellMargin * 2;
-    CGFloat tipsShowButtonH = oneViewHeight;
-    UIButton *tipsShowButton = [[UIButton alloc] initWithFrame:CGRectMake(tipsShowButtonX, tipsShowButtonY, tipsShowButtonW, tipsShowButtonH)];
+    UIButton *tipsShowButton = [UIButton buttonWithType:UIButtonTypeCustom];
     tipsShowButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    tipsShowButton.layer.cornerRadius = 5;
+    tipsShowButton.layer.masksToBounds = YES;
     tipsShowButton.backgroundColor = [UIColor redColor];
     [tipsView addSubview:tipsShowButton];
     [tipsShowButton addTarget:self action:@selector(tipsShowButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.tipsShowButton = pictureShowButton;
+    self.tipsShowButton = tipsShowButton;
     
     //必玩景点
-//    CGFloat mustPlayViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-//    CGFloat mustPlayViewH = threeViewMapHeight;
-//    TacticCustomMapView *mustPlayView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,mustPlayViewW, mustPlayViewH)];
-//    mustPlayView.titleLabel.text = @"必玩景点";
-//    [self.contentView addSubview:mustPlayView];
-//    self.mustPlayView = mustPlayView;
-//    
-//    CGFloat mustPlayViewButtonX = TacticTableViewCellMargin;
-//    CGFloat mustPlayViewButtonY = descLabelBottom + TacticTableViewCellTextMargin;
-//    CGFloat mustPlayViewButtonW = tipsView.width - TacticTableViewCellMargin * 2;
-//    CGFloat mustPlayViewButtonH = (KSCREEN_W - 10 * 6) / 3.0;
-//    TacticThreeMapView *mustPlayViewButton = [[TacticThreeMapView alloc] initWithFrame:CGRectMake(mustPlayViewButtonX, mustPlayViewButtonY, mustPlayViewButtonW, mustPlayViewButtonH)];
-//    [mustPlayView addSubview:mustPlayViewButton];
-//    self.mustPlayViewButton = mustPlayViewButton;
+    CGFloat mustPlayViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+    CGFloat mustPlayViewH = threeViewMapHeight;
+    TacticCustomMapView *mustPlayView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,mustPlayViewW, mustPlayViewH)];
+    mustPlayView.backgroundColor = [UIColor redColor];
+    mustPlayView.titleLabel.text = @"必玩景点";
+    [self.contentView addSubview:mustPlayView];
+    self.mustPlayView = mustPlayView;
+    
+    CGFloat mustPlayViewButtonX = TacticTableViewCellMargin;
+    CGFloat mustPlayViewButtonY = descLabelBottom + TacticTableViewCellTextMargin;
+    CGFloat mustPlayViewButtonW = mustPlayView.width - TacticTableViewCellMargin * 2;
+    CGFloat mustPlayViewButtonH = (KSCREEN_W - 10 * 6) / 3.0;
+    TacticThreeMapView *mustPlayViewButton = [[TacticThreeMapView alloc] initWithFrame:CGRectMake(mustPlayViewButtonX, mustPlayViewButtonY, mustPlayViewButtonW, mustPlayViewButtonH)];
+    mustPlayViewButton.layer.cornerRadius = 5;
+    mustPlayViewButton.layer.masksToBounds = YES;
+    [mustPlayView addSubview:mustPlayViewButton];
+    self.mustPlayViewButton = mustPlayViewButton;
+    
+    //特色美食
+    CGFloat foodsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+    CGFloat foodsViewH = threeViewMapHeight;
+    TacticCustomMapView *foodsView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,foodsViewW, foodsViewH)];
+    foodsView.backgroundColor = [UIColor redColor];
+    foodsView.titleLabel.text = @"特色美食";
+    foodsView.descLabel.text = @"用味蕾探索世界";
+    [self.contentView addSubview:foodsView];
+    self.foodsView = foodsView;
+    
+    CGFloat foodsPlayViewButtonX = TacticTableViewCellMargin;
+    CGFloat foodsPlayViewButtonY = descLabelBottom + TacticTableViewCellTextMargin;
+    CGFloat foodsPlayViewButtonW = mustPlayView.width - TacticTableViewCellMargin * 2;
+    CGFloat foodsPlayViewButtonH = (KSCREEN_W - 10 * 6) / 3.0;
+    TacticThreeMapView *foodsPlayViewButton = [[TacticThreeMapView alloc] initWithFrame:CGRectMake(foodsPlayViewButtonX, foodsPlayViewButtonY, foodsPlayViewButtonW, foodsPlayViewButtonH)];
+    foodsPlayViewButton.layer.cornerRadius = 5;
+    foodsPlayViewButton.layer.masksToBounds = YES;
+    [foodsView addSubview:foodsPlayViewButton];
+    self.foodsPlayViewButton = foodsPlayViewButton;
 }
 #pragma mark - 点击跳转事件
 /**
@@ -169,19 +193,35 @@
     
     _tacticSingleModelFrame = tacticSingleModelFrame;
     TacticSingleModel *tacticSingleModel = tacticSingleModelFrame.tacticSingleModel;
-    
+    TacticSingleTipsModel *tipsModel = tacticSingleModelFrame.tacticSingleModel.tips;
     self.descView.frame = tacticSingleModelFrame.descViewF;
+    self.descView.descLabel.text = [NSString stringWithFormat:@"%@的小介绍哦",tacticSingleModel.name];
     self.descLabel.text = tacticSingleModel.viewText;
     
     
     self.flashView.frame = tacticSingleModelFrame.flashViewF;
     self.flashView.descLabel.text = [NSString stringWithFormat:@"%@最棒的旅行目的地",tacticSingleModel.name];
     self.flashPlayButton.frame = tacticSingleModelFrame.flashPlayButtonF;
-    [self.flashPlayButton sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.videoImage)] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
-    NSLog(@"%@",KWebImage(self.tacticSingleModelFrame.tacticSingleModel.videoImage));
-    self.pictureView.frame = tacticSingleModelFrame.pictureViewF;
+    self.flashPlayButton.playUrl = tacticSingleModel.videoUrl;
+    [self.flashPlayButton sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.videoImage)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     
+    self.pictureView.frame = tacticSingleModelFrame.pictureViewF;
+    self.pictureView.descLabel.text = [NSString stringWithFormat:@"一张图玩转%@",tacticSingleModel.name];
+    self.pictureShowButton.frame = tacticSingleModelFrame.pictureShowButtonF;
+    [self.pictureShowButton sd_setBackgroundImageWithURL:[NSURL URLWithString:self.tacticSingleModelFrame.tacticSingleModel.glid] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     
     self.tipsView.frame = tacticSingleModelFrame.tipsViewF;
+    //设置图片，跳转
+    [self.tipsShowButton sd_setBackgroundImageWithURL:[NSURL URLWithString:KWebImage(tipsModel.tipsImg)] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    self.tipsShowButton.frame = tacticSingleModelFrame.tipsShowButtonF;
+    
+    self.mustPlayView.frame = tacticSingleModelFrame.mustPlayViewF;
+    self.mustPlayView.descLabel.text = [NSString stringWithFormat:@"%@最棒的旅行目的地",tacticSingleModel.name];
+    self.mustPlayViewButton.videos = tacticSingleModel.mgViews;
+    self.mustPlayViewButton.frame = tacticSingleModelFrame.mustPlayViewButtonF;
+    
+    self.foodsView.frame = tacticSingleModelFrame.foodsViewF;
+    self.foodsPlayViewButton.foodsArray = tacticSingleModel.foods;
+    self.foodsPlayViewButton.frame = tacticSingleModelFrame.foodsPlayViewButtonF;
 }
 @end

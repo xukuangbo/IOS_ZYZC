@@ -27,6 +27,7 @@
 		040651501CC8BF44003FD539 /* TacticSingleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0406514F1CC8BF44003FD539 /* TacticSingleModel.m */; };
 		040651561CC8DBB6003FD539 /* TacticSingleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 040651551CC8DBB6003FD539 /* TacticSingleTableViewCell.m */; };
 		040DE0E21CA26C5E00BF3AF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040DE0E11CA26C5E00BF3AF6 /* Assets.xcassets */; };
+		041D06ED1CD322AB002B8329 /* ZYZCAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 041D06EC1CD322AB002B8329 /* ZYZCAVPlayer.m */; };
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
 		0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */; };
 		0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */; };
@@ -209,6 +210,8 @@
 		040651541CC8DBB6003FD539 /* TacticSingleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleTableViewCell.h; sourceTree = "<group>"; };
 		040651551CC8DBB6003FD539 /* TacticSingleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleTableViewCell.m; sourceTree = "<group>"; };
 		040DE0E11CA26C5E00BF3AF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		041D06EB1CD322AB002B8329 /* ZYZCAVPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCAVPlayer.h; sourceTree = "<group>"; };
+		041D06EC1CD322AB002B8329 /* ZYZCAVPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCAVPlayer.m; sourceTree = "<group>"; };
 		048DDE9A1CC229F600136C7A /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
 		048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
 		0490D14E1CC92B350064844C /* TacticSingleFoodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleFoodModel.h; sourceTree = "<group>"; };
@@ -680,6 +683,8 @@
 				04A99BE91CBF848C00C6F5F0 /* ZYZCTool.m */,
 				2CAAB26C1CC23FD6006D4827 /* ZYZCTool+getLocalTime.h */,
 				2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */,
+				041D06EB1CD322AB002B8329 /* ZYZCAVPlayer.h */,
+				041D06EC1CD322AB002B8329 /* ZYZCAVPlayer.m */,
 			);
 			path = ZYZCGlobal;
 			sourceTree = "<group>";
@@ -1561,6 +1566,7 @@
 				04A99CF01CBF851500C6F5F0 /* RMCalendarModel.m in Sources */,
 				04A99CD41CBF848D00C6F5F0 /* ZCMainTableViewCell.m in Sources */,
 				2C4615AA1CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m in Sources */,
+				041D06ED1CD322AB002B8329 /* ZYZCAVPlayer.m in Sources */,
 				04A99C9D1CBF848D00C6F5F0 /* MoreFZCViewController.m in Sources */,
 				04A99CCE1CBF848D00C6F5F0 /* MineFootTableView.m in Sources */,
 				04A99CC01CBF848D00C6F5F0 /* WSMBaseView.m in Sources */,

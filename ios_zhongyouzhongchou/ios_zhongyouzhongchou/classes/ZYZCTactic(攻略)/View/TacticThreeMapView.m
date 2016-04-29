@@ -10,6 +10,7 @@
 #import "TacticThreeMapView.h"
 #import "TacticVideoModel.h"
 #import "TacticImageView.h"
+#import "TacticSingleFoodModel.h"
 @interface TacticThreeMapView()
 @property (nonatomic, weak) TacticImageView *firstView;
 @property (nonatomic, weak) TacticImageView *secondView;
@@ -47,32 +48,56 @@
 {
     if (_videos != videos) {
         _videos = videos;
-        if (videos.count >= 3) {
-            for (int i = 0; i < videos.count; i++) {
+        int maxCount = videos.count >= 3? 3:(int)videos.count;
+            for (int i = 0; i < maxCount; i++) {
             
                 TacticVideoModel *videoModel = (TacticVideoModel *)videos[i];
                 if (i == 0) {
-//                    [self.firstView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg]];
-                    [self.firstView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg] forState:UIControlStateNormal];
+                    [self.firstView sd_setImageWithURL:[NSURL URLWithString:KWebImage(videoModel.viewImg)] forState:UIControlStateNormal];
                     self.firstView.nameLabel.text = videoModel.name;
                     self.firstView.viewId = videoModel.viewid;
                     self.firstView.viewType = videoModel.viewType;
                 }
                 if (i == 1) {
-                    [self.secondView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg] forState:UIControlStateNormal];
+                    [self.secondView sd_setImageWithURL:[NSURL URLWithString:KWebImage(videoModel.viewImg)] forState:UIControlStateNormal];
                     self.secondView.nameLabel.text = videoModel.name;
                     self.secondView.viewId = videoModel.viewid;
                     self.secondView.viewType = videoModel.viewType;
                 }
                 if (i == 2) {
-                    [self.thirdView sd_setImageWithURL:[NSURL URLWithString:videoModel.viewImg] forState:UIControlStateNormal];
+                    [self.thirdView sd_setImageWithURL:[NSURL URLWithString:KWebImage(videoModel.viewImg)] forState:UIControlStateNormal];
                     self.thirdView.nameLabel.text = videoModel.name;
                     self.thirdView.viewId = videoModel.viewid;
                     self.thirdView.viewType = videoModel.viewType;
                 }
                 
-            }//如果大于三，以后再说
+            }
+    }
+}
+
+- (void)setFoodsArray:(NSArray *)foodsArray
+{
+    if (_foodsArray != foodsArray) {
+        _foodsArray = foodsArray;
+        int maxCount = foodsArray.count >= 3? 3:(int)foodsArray.count;
+        for (int i = 0; i < maxCount; i++) {
+            
+            TacticSingleFoodModel *foodModel = (TacticSingleFoodModel *)foodsArray[i];
+            if (i == 0) {
+                [self.firstView sd_setImageWithURL:[NSURL URLWithString:KWebImage(foodModel.foodImg)] forState:UIControlStateNormal];
+                self.firstView.nameLabel.text = foodModel.name;
+            }
+            if (i == 1) {
+                [self.secondView sd_setImageWithURL:[NSURL URLWithString:KWebImage(foodModel.foodImg)] forState:UIControlStateNormal];
+                self.secondView.nameLabel.text = foodModel.name;
+            }
+            if (i == 2) {
+                [self.thirdView sd_setImageWithURL:[NSURL URLWithString:KWebImage(foodModel.foodImg)] forState:UIControlStateNormal];
+                self.thirdView.nameLabel.text = foodModel.name;
+            }
+            
         }
     }
 }
+
 @end

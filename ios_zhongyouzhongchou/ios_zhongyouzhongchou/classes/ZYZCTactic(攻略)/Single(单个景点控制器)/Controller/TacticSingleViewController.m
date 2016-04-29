@@ -173,7 +173,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (oneViewMapHeight * 3) + (TacticTableViewCellMargin * 5) + 120;
+//    return (oneViewMapHeight * 3) + (TacticTableViewCellMargin * 5) + 120;
+    return self.tacticSingleModelFrame.realHeight;
 }
 
 
