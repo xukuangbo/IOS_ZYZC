@@ -10,6 +10,7 @@
 #import "ReturnCellBaseBGView.h"
 #import "MoreFZCReturnTableView.h"
 #import "UIView+GetSuperTableView.h"
+#import "ReturnThirdCellTwo.h"
 #import "ReturnThirdCell.h"
 #import "ReturnFourthCell.h"
 @interface ReturnCellBaseBGView ()
@@ -150,15 +151,30 @@
         ReturnThirdCell *cell = (ReturnThirdCell *)self.superview.superview;
         NSIndexPath *path = [tableView indexPathForCell:cell];
         [tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
-    }else if (self.index == 3){
+    }else if (self.index == 3) {//第三个cell
+        tableView.returnThirdDownbuttonOpen = !tableView.returnThirdDownbuttonOpen;
+        if (tableView.returnThirdDownbuttonOpen == YES) {//展开
+            tableView.openArray[6] = @1;
+            
+            tableView.heightArray[6] = @(ReturnThirdCellTwoHeight + 200);
+        }else{//收缩
+            tableView.openArray[6] = @0;
+            tableView.heightArray[6] = @(ReturnThirdCellTwoHeight);
+        }
+        //先拿到cell
+        ReturnThirdCellTwo *cell = (ReturnThirdCellTwo *)self.superview.superview;
+        NSIndexPath *path = [tableView indexPathForCell:cell];
+        [tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    else if (self.index == 4){
         tableView.returnThirdDownbuttonOpen = !tableView.returnThirdDownbuttonOpen;
         
         if (tableView.returnThirdDownbuttonOpen == YES) {//展开
-            tableView.openArray[6] = @1;
-            tableView.heightArray[6] = @(ReturnFourthCellHeight + 200);
+            tableView.openArray[8] = @1;
+            tableView.heightArray[8] = @(ReturnFourthCellHeight + 200);
         }else{//收缩
-            tableView.openArray[6] = @0;
-            tableView.heightArray[6] = @(ReturnFourthCellHeight);
+            tableView.openArray[8] = @0;
+            tableView.heightArray[8] = @(ReturnFourthCellHeight);
         }
         //先拿到cell
         ReturnFourthCell *cell = (ReturnFourthCell *)self.superview.superview;

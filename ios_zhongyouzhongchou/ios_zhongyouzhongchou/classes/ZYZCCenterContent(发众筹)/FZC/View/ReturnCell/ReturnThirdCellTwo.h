@@ -1,17 +1,20 @@
 //
-//  ReturnThirdCell.h
+//  ReturnThirdCellTwo.h
 //  ios_zhongyouzhongchou
 //
-//  Created by mac on 16/3/24.
+//  Created by mac on 16/5/2.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-#define ReturnThirdCellMargin 10
-#define ReturnThirdCellHeight 555
+
+#define ReturnThirdCellTwoMargin 10
+#define ReturnThirdCellTwoHeight 555
 #import <UIKit/UIKit.h>
-@class ReturnCellBaseBGView;
 
 #import "FZCContentEntryView.h"
-@interface ReturnThirdCell : UITableViewCell<UITextFieldDelegate>
+
+@class ReturnCellBaseBGView;
+
+@interface ReturnThirdCellTwo : UITableViewCell<UITextFieldDelegate>
 @property (nonatomic, weak) ReturnCellBaseBGView *bgImageView;
 /**
  *  人数输入框
@@ -25,6 +28,7 @@
  *  展开
  */
 @property (nonatomic, assign) BOOL open;
+
 /**
  *  人数设置view
  */
@@ -35,4 +39,5 @@
 @property (nonatomic, weak) FZCContentEntryView *entryView;
 
 - (void)reloadManagerData;
+
 @end
