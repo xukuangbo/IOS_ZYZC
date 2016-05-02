@@ -76,10 +76,15 @@
         {
             manager.raiseMoney_wordDes=textStr;
         }
-        //回报文字描述
-        else if ([weakSelf.contentBelong isEqualToString:RETURN_CONTENTBELONG])
+        //回报1文字描述
+        else if ([weakSelf.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
         {
             manager.return_wordDes=textStr;
+        }
+        //回报2文字描述
+        else if ([weakSelf.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
+        {
+            
         }
         
     };

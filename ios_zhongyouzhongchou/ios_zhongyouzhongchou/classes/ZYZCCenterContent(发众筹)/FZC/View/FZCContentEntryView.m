@@ -88,15 +88,12 @@
     
     switch (button.tag) {
         case WordType:
-            NSLog(@"WordType");
             [self bringSubviewToFront:[self viewWithTag:WordViewType]];
             break;
         case SoundType:
-            NSLog(@"SounceType");
             [self bringSubviewToFront:[self viewWithTag:SoundViewType]];
             break;
         case MovieType:
-            NSLog(@"MovieType");
             [self bringSubviewToFront:[self viewWithTag:MovieViewType]];
             break;
         default:

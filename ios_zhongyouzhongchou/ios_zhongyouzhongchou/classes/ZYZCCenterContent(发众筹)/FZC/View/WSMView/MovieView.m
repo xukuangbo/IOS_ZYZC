@@ -231,14 +231,18 @@
                                        //记录文件路径
                                        weakSelf.movieFilePath=outputURL;
                                        
-                                       //将门MP4文件路径保存到单例中
+                                       //将MP4文件路径保存到单例中
                                        MoreFZCDataManager *dataManager=[MoreFZCDataManager sharedMoreFZCDataManager];
                                        if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
                                            dataManager.raiseMoney_movieUrl=outPutURLStr;
                                        }
-                                       else if ([self.contentBelong isEqualToString:RETURN_CONTENTBELONG])
+                                       else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
                                        {
                                             dataManager.return_movieUrl=outPutURLStr;
+                                       }
+                                       else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
+                                       {
+                                           //
                                        }
                                    }];
                 });

@@ -107,6 +107,11 @@ MJCodingImplementation
     //回报支持2
     ReportData *report05=[[ReportData alloc]init];
     report04.style=@5;
+    report04.price=(NSNumber *)manager.return_returnPeopleMoney;
+    report04.people=(NSNumber *)manager.return_returnPeopleNumber;
+    report04.desc=manager.return_wordDes;
+    report04.voice=manager.return_voiceUrl;
+    report04.movie=manager.return_movieUrl;
     
     //筹旅费景点花费
     ReportData *report06=[[ReportData alloc]init];
@@ -126,9 +131,6 @@ MJCodingImplementation
     report09.price=(NSNumber *)manager.raiseMoney_eatMoney;
     
     self.report=@[report01,report02,report03,report04,report05,report06,report07,report08];
-    
-
-    
     
 }
 
