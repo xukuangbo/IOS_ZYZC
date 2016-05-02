@@ -21,6 +21,9 @@
  *  金钱输入框
  */
 @property (nonatomic, weak) UITextField *moneyTextFiled;
+/**
+ *  展开
+ */
 @property (nonatomic, assign) BOOL open;
 
 /**

@@ -7,19 +7,8 @@
 //
 
 #import "ZYZCCusomMovieImage.h"
-#import <AVFoundation/AVFoundation.h>
-#import <AVKit/AVKit.h>
+#import "ZYZCAVPlayer.h"
 @implementation ZYZCCusomMovieImage
-
-//为了保证同一时间只有一个播放器，使用单例模式
-+ (AVPlayerViewController *)sharedInstance{
-    static AVPlayerViewController *vc = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        vc = [[AVPlayerViewController alloc] init];
-    });
-    return vc;
-}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -54,9 +43,9 @@
         NSLog(@"播放视频");
         AVPlayer *player=[AVPlayer playerWithURL:[NSURL URLWithString:self.playUrl]];
         [player play];
-        [ZYZCCusomMovieImage sharedInstance].player = player;
-        [self addSubview:[ZYZCCusomMovieImage sharedInstance].view];
-        [[ZYZCCusomMovieImage sharedInstance].view mas_makeConstraints:^(MASConstraintMaker *make) {
+        [ZYZCAVPlayer sharedZYZCAVPlayer].player = player;
+        [self addSubview:[ZYZCAVPlayer sharedZYZCAVPlayer].view];
+        [[ZYZCAVPlayer sharedZYZCAVPlayer].view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(0);
         }];
         

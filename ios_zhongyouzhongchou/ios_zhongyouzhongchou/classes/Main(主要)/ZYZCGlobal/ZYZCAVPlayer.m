@@ -7,26 +7,32 @@
 //
 
 #import "ZYZCAVPlayer.h"
-#import <AVFoundation/AVFoundation.h>
-#import <AVKit/AVKit.h>
-static ZYZCAVPlayer *sharedInstance = nil;
 
-@interface ZYZCAVPlayer(){
-    AVAudioPlayer *audioPlayer;
-    AVPlayerViewController *vc;
-}
+@interface ZYZCAVPlayer()
 @end
 @implementation ZYZCAVPlayer
 
-+ (instancetype)sharedZYZCAVPlayer
-{
+//为了保证同一时间只有一个播放器，使用单例模式
++ (AVPlayerViewController *)sharedZYZCAVPlayer{
+    static AVPlayerViewController *vc = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[[self class] alloc] init];
-        
+        vc = [[AVPlayerViewController alloc] init];
     });
-    
-    return sharedInstance;
+    return vc;
 }
 
++ (void)playInView:(UIView *)view url:(NSURL *)url
+{
+    [ZYZCAVPlayer sharedZYZCAVPlayer].view.frame = view.frame;
+    AVPlayer *player=[AVPlayer playerWithURL:url];
+    [player play];
+    [view addSubview:[ZYZCAVPlayer sharedZYZCAVPlayer].view];
+    
+}
+
++ (void)playInNewController
+{
+    
+}
 @end
