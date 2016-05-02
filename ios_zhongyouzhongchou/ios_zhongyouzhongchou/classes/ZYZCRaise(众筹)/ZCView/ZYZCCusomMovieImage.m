@@ -5,8 +5,11 @@
 //  Created by liuliang on 16/4/22.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-
+#define IOS8 [[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0
 #import "ZYZCCusomMovieImage.h"
+#import "ZYZCPlayViewController.h"
+#import <AVFoundation/AVFoundation.h>
+
 #import "ZYZCAVPlayer.h"
 @implementation ZYZCCusomMovieImage
 
@@ -41,16 +44,24 @@
 {
     if (_playUrl) {
         NSLog(@"播放视频");
-        AVPlayer *player=[AVPlayer playerWithURL:[NSURL URLWithString:self.playUrl]];
-        [player play];
-        [ZYZCAVPlayer sharedZYZCAVPlayer].player = player;
-        [self addSubview:[ZYZCAVPlayer sharedZYZCAVPlayer].view];
-        [[ZYZCAVPlayer sharedZYZCAVPlayer].view mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(0);
-        }];
+//        AVPlayer *player=[AVPlayer playerWithURL:[NSURL URLWithString:self.playUrl]];
+//        [player play];
+//        [ZYZCAVPlayer sharedZYZCAVPlayer].player = player;
+//        [self addSubview:[ZYZCAVPlayer sharedZYZCAVPlayer].view];
+//        [[ZYZCAVPlayer sharedZYZCAVPlayer].view mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.mas_equalTo(0);
+//        }];
+        //这里尝试推送到一个新的控制器
+        if (IOS8) {
+            ZYZCPlayViewController *playVC = [[ZYZCPlayViewController alloc] init];
+            playVC.urlString = self.playUrl;
+            [self.viewController presentViewController:playVC animated:YES completion:nil];
+        }
         
     }
 }
+
+
 
 
 @end

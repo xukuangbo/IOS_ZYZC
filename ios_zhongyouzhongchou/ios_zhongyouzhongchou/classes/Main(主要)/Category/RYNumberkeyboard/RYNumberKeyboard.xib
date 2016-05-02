@@ -204,7 +204,7 @@
                         <button opaque="NO" tag="1013" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0aq-YY-A3r">
                             <rect key="frame" x="240" y="108" width="80" height="108"/>
                             <animations/>
-                            <color key="backgroundColor" red="0.060247965157032013" green="0.60295647382736206" blue="0.86904758214950562" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.13725490196078433" green="0.71372549019607845" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="108" id="FFJ-dW-zJb"/>
                             </constraints>

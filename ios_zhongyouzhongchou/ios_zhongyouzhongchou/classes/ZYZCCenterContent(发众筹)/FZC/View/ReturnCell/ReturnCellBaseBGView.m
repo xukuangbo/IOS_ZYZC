@@ -112,6 +112,9 @@
  */
 - (void)bgEnabledAction:(UIButton *)button
 {
+    if (self.index != 3) {
+        return;
+    }
 
     button.selected = !button.selected;
     if (button.selected == YES) {

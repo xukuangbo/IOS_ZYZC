@@ -7,14 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AVFoundation/AVFoundation.h>
-#import <AVKit/AVKit.h>
 
-@interface ZYZCAVPlayer : AVPlayerViewController
-+ (AVPlayerViewController *)sharedZYZCAVPlayer;
+@interface ZYZCAVPlayer : NSObject
 
 + (void)playInView:(UIView *)view url:(NSURL *)url;
 
-+ (void)playInNewController;
++ (void)playInNewController:(UINavigationController *)navi url:(NSURL *)url;
 
 @end
