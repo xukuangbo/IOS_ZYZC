@@ -112,6 +112,17 @@
  */
 @property (nonatomic, copy  ) NSString *return_returnPeopleNumber;
 
+//再次添加一个回报众筹的一些参数
+@property (nonatomic, copy  ) NSString *return_returnPeopleStatus01;
+/**
+ *  return第三个cell01的金钱
+ */
+@property (nonatomic, copy  ) NSString *return_returnPeopleMoney01;
+/**
+ *  return第三个cell01的人数
+ */
+@property (nonatomic, copy  ) NSString *return_returnPeopleNumber01;
+
 @property (nonatomic, copy  ) NSString *return_wordDes;
 
 @property (nonatomic, copy  ) NSString *return_imgsDes;

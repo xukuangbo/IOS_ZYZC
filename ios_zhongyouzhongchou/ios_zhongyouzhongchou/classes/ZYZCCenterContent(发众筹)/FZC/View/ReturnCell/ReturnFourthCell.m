@@ -31,7 +31,7 @@
         [self.contentView addSubview:bgImageView];
         self.bgImageView = bgImageView;
         self.bgImageView.userInteractionEnabled = YES;
-        self.bgImageView.index = 3;
+        self.bgImageView.index = 4;
         
         /**
          *  创建大内容视图
