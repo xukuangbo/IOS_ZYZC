@@ -133,6 +133,16 @@
 
 @property (nonatomic, copy  ) NSString *return_movieImg;
 
+@property (nonatomic, copy  ) NSString *return_wordDes01;
+
+@property (nonatomic, copy  ) NSString *return_imgsDes01;
+
+@property (nonatomic, copy  ) NSString *return_voiceUrl01;
+
+@property (nonatomic, copy  ) NSString *return_movieUrl01;
+
+@property (nonatomic, copy  ) NSString *return_movieImg01;
+
 @property (nonatomic, copy  ) NSString *return_togetherPeopleStatus;
 
 @property (nonatomic, copy  ) NSString *return_togetherPeopleNumber;

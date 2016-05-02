@@ -126,6 +126,9 @@
     //保存当日旅游视屏描述
     MovieView *movieView=(MovieView *)[_contentEntryView viewWithTag:MovieViewType];
     _oneDetailModel.movieUrl=[movieView.movieFilePath path];
+    //保存当日旅行视屏第一帧
+    _oneDetailModel.movieImg=movieView.movieImgPath;
+    
 }
 
 @end

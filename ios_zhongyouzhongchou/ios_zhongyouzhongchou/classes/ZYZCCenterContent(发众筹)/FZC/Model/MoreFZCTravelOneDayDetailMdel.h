@@ -13,6 +13,8 @@
  *  日期
  */
 @property (nonatomic, copy  ) NSString *date;
+
+@property (nonatomic, strong) NSNumber *day;
 /**
  *  景点描述
  */
@@ -50,6 +52,9 @@
  */
 @property (nonatomic, copy  ) NSString *movieUrl;
 
+/**
+ *  当天旅游视屏第一帧
+ */
 @property (nonatomic, copy  ) NSString *movieImg;
 
 

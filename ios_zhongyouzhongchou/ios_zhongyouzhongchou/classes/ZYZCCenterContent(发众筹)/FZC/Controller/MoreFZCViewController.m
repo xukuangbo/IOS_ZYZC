@@ -14,6 +14,8 @@
 #import "MoreFZCReturnTableView.h"
 #import "ZYZCTool+getLocalTime.h"
 #import "MoreFZCDataManager.h"
+#import "FZCReplaceDataKeys.h"
+#import "MBProgressHUD+MJ.h"
 
 #define kMoreFZCToolBar 20
 #define kNaviBar 64
@@ -27,9 +29,6 @@
    
     [super viewDidLoad];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    NSLog(@"manager:%@",manager);
-    
     [self setBackItem];
     [self createToolBar];
     [self createClearMapView];
@@ -191,7 +190,9 @@
 #pragma mark --- 保存数据
 -(void)saveData
 {
-    //保存旅游每日行程安排到单例中
+    
+//    [MBProgressHUD showMessage:@"数据正在保存中..."];
+    //保存每日行程安排到单例中
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     
     [manager.travelDetailDays removeAllObjects];
@@ -203,24 +204,48 @@
     }
     
     
+    //将图片，语音，视屏文件从tmp中移动到documents中
+    manager.goal_travelThemeImgUrl=[self copyTmpFileToDocument:manager.goal_travelThemeImgUrl withType:@"png"];
+    manager.raiseMoney_voiceUrl=[self copyTmpFileToDocument:manager.raiseMoney_voiceUrl withType:@"caf"];
+    manager.raiseMoney_movieUrl=[self copyTmpFileToDocument:manager.raiseMoney_movieUrl withType:@"mp4"];
+    manager.raiseMoney_movieImg=[self copyTmpFileToDocument:manager.raiseMoney_movieImg withType:@"png"];
+    for (int i=0; i<manager.travelDetailDays.count; i++) {
+        MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
+        model.voiceUrl=[self copyTmpFileToDocument:model.voiceUrl withType:@"caf"];
+        model.movieUrl=[self copyTmpFileToDocument:model.movieUrl withType:@"mp4"];
+        model.movieImg=[self copyTmpFileToDocument:model.movieImg withType:@"png"];
+        [manager.travelDetailDays replaceObjectAtIndex:i withObject:model];
+    }
     
-    //归档
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex:0];
-    NSString *localTime=[ZYZCTool getLocalTime];
-    NSString *filePath=[docDir stringByAppendingPathComponent:[NSString stringWithFormat:@"WSMContentData%@.data",localTime]];
-    NSLog(@"归档数据filePath:%@",filePath);
-    [NSKeyedArchiver archiveRootObject:manager toFile:filePath];
-    //解档
-    MoreFZCDataManager *fileManager=[NSKeyedUnarchiver  unarchiveObjectWithFile:filePath];
+    manager.return_voiceUrl=[self copyTmpFileToDocument:manager.return_voiceUrl withType:@"caf"];
+    manager.return_movieUrl=[self copyTmpFileToDocument:manager.return_movieUrl withType:@"mp4"];
+    manager.return_movieImg=[self copyTmpFileToDocument:manager.return_movieImg withType:@"png"];
+    manager.return_voiceUrl01=[self copyTmpFileToDocument:manager.return_voiceUrl01 withType:@"caf"];
+    manager.return_movieUrl01=[self copyTmpFileToDocument:manager.return_movieUrl01 withType:@"mp4"];
+    manager.return_movieImg01=[self copyTmpFileToDocument:manager.return_movieImg01 withType:@"png"];
+    
+    
+    FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
+    [replaceKeys replaceDataKeys];
     
     // 模型转字典
-    NSDictionary *dataDict = fileManager.mj_keyValues;
+    NSDictionary *dataDict = replaceKeys.mj_keyValues;
     NSLog(@"dataDict:%@",dataDict);
     
+//    //归档
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *docDir = [paths objectAtIndex:0];
+//    NSString *localTime=[ZYZCTool getLocalTime];
+//    NSString *filePath=[docDir stringByAppendingPathComponent:[NSString stringWithFormat:@"WSMContentData%@.data",localTime]];
+//    NSLog(@"归档数据filePath:%@",filePath);
+//    [NSKeyedArchiver archiveRootObject:manager toFile:filePath];
+//    //解档
+//    MoreFZCDataManager *fileManager=[NSKeyedUnarchiver  unarchiveObjectWithFile:filePath];
+//    
+//    NSLog(@"fileManager:%@",fileManager);
     
-    NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:dataDict];
-    [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
+//    NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:dataDict];
+//    [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
     
     NSDictionary *dataDic=@{
                             @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
@@ -345,7 +370,7 @@
 }
 
 #pragma mark --- 将临时文件移到documents中
--(NSString *)copyTmpFileToDocument:(NSString *)tmpFilePath
+-(NSString *)copyTmpFileToDocument:(NSString *)tmpFilePath withType:(NSString *)type
 {
     
     NSFileManager*fileManager =[NSFileManager defaultManager];
@@ -353,15 +378,21 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
-    NSString*filePath =[documentsDirectory stringByAppendingPathComponent:[ZYZCTool getLocalTime]];
+    NSString*filePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",[ZYZCTool getLocalTime],type]];
     
     if([fileManager fileExistsAtPath:filePath]== NO){
         if ([fileManager fileExistsAtPath:tmpFilePath]) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 NSError*error;
-                [fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
+                BOOL hasCopy=[fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
+                if (hasCopy) {
+                    [fileManager removeItemAtPath:tmpFilePath error:&error];
+                }
             });
-            
+        }
+        else
+        {
+            filePath=nil;
         }
     }
     return filePath;

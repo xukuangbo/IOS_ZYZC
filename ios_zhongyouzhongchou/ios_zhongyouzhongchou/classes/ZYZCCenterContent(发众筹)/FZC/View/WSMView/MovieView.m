@@ -167,14 +167,12 @@
             
             //获取视频文件的url
             NSURL *mediaURL = [info objectForKey:UIImagePickerControllerMediaURL];
-            NSLog(@"mediaURL:%@",mediaURL);
             
 //            //获取视屏第一帧
             _preMovImg=[self thumbnailImageForVideo:mediaURL atTime:1.0];
             
             //计算文件时长
             int mediaTime=[self getMovieTimeByMovieStr:mediaURL.absoluteString];
-            NSLog(@"mediaTime:%d",mediaTime);
             if (mediaTime>3*60) {
                  _preMovImg=nil;
                 //选择器消失
@@ -190,6 +188,8 @@
             }
             else
             {
+                //保存视屏图片
+                self.movieImgPath=[self getImagePath];
                 //如果此处已存在文件删除已保存的文件
                 if (self.movieFilePath) {
                     //开启线程删除
@@ -231,25 +231,27 @@
                                        //记录文件路径
                                        weakSelf.movieFilePath=outputURL;
                                        
-                                       //将MP4文件路径保存到单例中
+                                       //将MP4文件和第一帧图片路径保存到单例中
                                        MoreFZCDataManager *dataManager=[MoreFZCDataManager sharedMoreFZCDataManager];
                                        if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
                                            dataManager.raiseMoney_movieUrl=outPutURLStr;
+                                           dataManager.raiseMoney_movieImg=weakSelf.movieImgPath;
                                        }
                                        else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
                                        {
                                             dataManager.return_movieUrl=outPutURLStr;
+                                           dataManager.return_movieImg=weakSelf.movieImgPath;
                                        }
                                        else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
                                        {
-                                           //
+                                           dataManager.return_movieUrl01=outPutURLStr;
+                                           dataManager.return_movieImg01=weakSelf.movieImgPath;
                                        }
                                    }];
                 });
                 
                 //选择器消失
                 [picker dismissViewControllerAnimated:YES completion:^{
-//                    [MBProgressHUD hideHUDForView:picker.view animated:YES];
                     if (weakSelf.preMovImg) {
                         weakSelf.movieImg.image=weakSelf.preMovImg;
                     }
@@ -511,15 +513,29 @@
     }
 }
 
-/**
- *  视屏文件转换为MP4格式后的存储路径,放到临时文件夹中
- */
+#pragma mark --- 视屏文件转换为MP4格式后的存储路径,放到临时文件夹中
+ 
 -(NSString *)pathForMP4File
 {
     //用时间给文件全名，以免重复，在测试的时候其实可以判断文件是否存在若存在，则删除，重新生成文件即可
     NSString *tmpDir = NSTemporaryDirectory();
     NSString * filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4",[ZYZCTool getLocalTime]]];
     return filePath;
+}
+
+#pragma mark --- 获取图片存储在tmp的路径下
+-(NSString *)getImagePath
+{
+    NSString *tmpDir = NSTemporaryDirectory();
+    NSString *localTime=[ZYZCTool getLocalTime];
+    NSString *pngPath =[tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",localTime]];
+    
+    //将图片数据转换成png格式文件到tmp中
+    if (self.movieImg.image){
+        [UIImagePNGRepresentation(self.movieImg.image) writeToFile:pngPath atomically:YES];
+    }
+    
+    return pngPath;
 }
 
 @end

@@ -120,6 +120,10 @@
     {
         manager.return_voiceUrl=self.soundFilePath;
     }
+    else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
+    {
+        manager.return_voiceUrl01=self.soundFilePath;
+    }
 }
 
 #pragma mark --- 停止语音录制
@@ -158,7 +162,7 @@
     [_soundObj deleteMySound];
     
     self.soundFilePath=nil;
-    //删除单例中语音路径，赋值为@“”
+    //删除单例中语音路径，赋值为空
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
         manager.raiseMoney_voiceUrl= self.soundFilePath;
@@ -166,6 +170,10 @@
     else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
     {
         manager.return_voiceUrl= self.soundFilePath;
+    }
+    else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
+    {
+        manager.return_voiceUrl01= self.soundFilePath;
     }
 
 }
