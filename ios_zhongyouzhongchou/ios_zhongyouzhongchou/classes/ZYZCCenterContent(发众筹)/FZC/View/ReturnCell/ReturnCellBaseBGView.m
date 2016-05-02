@@ -112,6 +112,7 @@
  */
 - (void)bgEnabledAction:(UIButton *)button
 {
+    NSLog(@"%d",self.index);
     if (self.index != 3) {
         return;
     }
