@@ -133,6 +133,9 @@
 
 + (instancetype)sharedMoreFZCDataManager;
 
+/**
+ *  初始化参数
+ */
 -(void)initAllProperties;
 
 @end

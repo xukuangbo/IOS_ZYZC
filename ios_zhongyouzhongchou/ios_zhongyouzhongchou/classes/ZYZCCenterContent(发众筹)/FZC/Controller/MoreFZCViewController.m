@@ -152,11 +152,6 @@
         [tableView reloadData];
     }
     
-//    if (_travelTableIsCover==1) {
-//        UITableView *tableView=(UITableView *)[self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
-//        [tableView reloadData];
-//    }
-    
     if (tableView.tag!=MoreFZCToolBarTypeGoal) {
         if (_goalKeyBordHidden) {
             _goalKeyBordHidden();
