@@ -80,6 +80,7 @@
         }
         NSDate *cellDate=[NSDate dateWithTimeInterval:cellNumber*24*60*60 sinceDate:startDate];
         travelSecondCell.oneDetailModel.date=[NSString stringWithFormat:@"%@",cellDate];
+        travelSecondCell.oneDetailModel.day=[NSNumber numberWithInteger:indexPath.row/2];
         travelSecondCell.contentBelong=TRAVEL_CONTENTBELONG(indexPath.row/2);
         return travelSecondCell;
     }

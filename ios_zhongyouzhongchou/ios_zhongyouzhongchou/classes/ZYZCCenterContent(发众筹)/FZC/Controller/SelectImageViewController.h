@@ -11,6 +11,6 @@
 
 typedef void(^ImageBlock)(UIImage *);
 @interface SelectImageViewController : ZYZCBaseViewController
-@property (nonatomic, copy)  ImageBlock imageBlock;
+@property (nonatomic, copy)  ImageBlock imageBlock; 
 @property (nonatomic, strong)  UIImage *selectImage;
 @end

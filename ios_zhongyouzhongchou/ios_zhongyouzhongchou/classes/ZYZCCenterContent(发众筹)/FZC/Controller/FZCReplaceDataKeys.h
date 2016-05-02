@@ -24,8 +24,8 @@
 @property (nonatomic, copy  ) NSString *cover;
 @property (nonatomic, copy  ) NSString *desc;
 @property (nonatomic, copy  ) NSString *voice;
-@property (nonatomic, copy  ) NSString *movie;
-@property (nonatomic, copy  ) NSString *movieImg;
+@property (nonatomic, copy  ) NSString *video;
+@property (nonatomic, copy  ) NSString *videoImg;
 @property (nonatomic, strong) NSArray  *schedule;
 @property (nonatomic, strong) NSArray  *report;
 
@@ -46,8 +46,8 @@
 @property (nonatomic, copy  ) NSString *food;
 @property (nonatomic, copy  ) NSString *desc;
 @property (nonatomic, copy  ) NSString *voice;
-@property (nonatomic, copy  ) NSString *movie;
-@property (nonatomic, copy  ) NSString *movieImg;
+@property (nonatomic, copy  ) NSString *video;
+@property (nonatomic, copy  ) NSString *videoImg;
 
 @end
 
@@ -57,7 +57,8 @@
 @property (nonatomic, strong) NSNumber *price;
 @property (nonatomic, copy  ) NSString *desc;
 @property (nonatomic, copy  ) NSString *voice;
-@property (nonatomic, copy  ) NSString *movie;
+@property (nonatomic, copy  ) NSString *video;
+@property (nonatomic, copy  ) NSString *videoImg;
 
 @end
 

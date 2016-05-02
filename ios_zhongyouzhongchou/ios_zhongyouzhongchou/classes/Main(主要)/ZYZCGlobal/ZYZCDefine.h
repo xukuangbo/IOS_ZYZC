@@ -9,7 +9,7 @@
 #ifndef ZYZCDefine_h
 #define ZYZCDefine_h
 
-#define DOCUMENT_FILE @"WSMContent"
+//#define DOCUMENT_FILE @"WSMContent"
 
 //屏幕宽
 #define KSCREEN_W [UIScreen mainScreen].bounds.size.width

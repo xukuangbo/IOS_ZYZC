@@ -108,7 +108,6 @@
 
 #pragma mark --- 获取本地照片
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    NSLog(@"info:%@",info);
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*)kUTTypeImage])
     {
         __weak typeof (&*self)weakSelf=self;
@@ -120,27 +119,25 @@
                 weakSelf.frameImg.image=img;
                 weakSelf.alertLab.hidden=YES;
                 weakSelf.iconImg.hidden=YES;
-                // Write image to PNG
+                // 将图片保存为png格式到documents中
                 NSString *filePath=[weakSelf getImagePath];
                 [UIImagePNGRepresentation(img)
                  writeToFile:filePath atomically:YES];
-                NSLog(@"png_filePath:%@",filePath);
                 //将图片路径保存到单例中
                 MoreFZCDataManager  *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
                 manager.goal_travelThemeImgUrl=filePath;
             };
             [weakSelf.viewController.navigationController pushViewController:selectImgVC animated:YES];
         }];
-
     }
 }
 
-#pragma mark --- 获取图片在存储在本地的路径
+#pragma mark --- 获取图片存储在tmp的路径下
 -(NSString *)getImagePath
 {
-    NSString *documentDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *tmpDir = NSTemporaryDirectory();
     NSString *localTime=[ZYZCTool getLocalTime];
-    NSString *pngPath =[documentDir stringByAppendingPathComponent:[NSString stringWithFormat:@"img/%@.png",localTime]];
+    NSString *pngPath =[tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",localTime]];
     return pngPath;
    
 }

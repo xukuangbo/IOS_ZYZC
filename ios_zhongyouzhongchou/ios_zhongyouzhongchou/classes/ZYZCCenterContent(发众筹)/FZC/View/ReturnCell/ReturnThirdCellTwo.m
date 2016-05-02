@@ -68,7 +68,7 @@
     
     //创建完后可以创建那个语音录入的内容
     FZCContentEntryView *entryView = [[FZCContentEntryView alloc] initWithFrame:CGRectMake(0, entryTitleLabel.bottom, self.peopleView.width, 200)];
-    entryView.contentBelong=RETURN_CONTENTBELONG;
+    entryView.contentBelong=RETURN_02_CONTENTBELONG;
     [self.peopleView addSubview:entryView];
     self.entryView = entryView;
     

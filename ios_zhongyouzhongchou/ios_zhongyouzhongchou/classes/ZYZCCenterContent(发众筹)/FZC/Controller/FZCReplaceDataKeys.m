@@ -60,15 +60,15 @@ MJCodingImplementation
     self.cover=manager.goal_travelThemeImgUrl;
     self.desc=manager.raiseMoney_wordDes;
     self.voice=manager.raiseMoney_voiceUrl;
-    self.movie=manager.raiseMoney_movieUrl;
-    self.movieImg=manager.raiseMoney_movieImg;
+    self.video=manager.raiseMoney_movieUrl;
+    self.videoImg=manager.raiseMoney_movieImg;
     
     //行程安排
     NSMutableArray *mutArr=[NSMutableArray array];
     for (int i=0; i<manager.travelDetailDays.count-1; i++) {
         MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
         ScheduleData *oneSchedule=[[ScheduleData alloc]init];
-        oneSchedule.day=[NSNumber numberWithInt:i+1];
+        oneSchedule.day=model.day;
         oneSchedule.spot=model.siteDes;
         oneSchedule.spots=model.sites;
         oneSchedule.trans=model.trafficDes;
@@ -76,8 +76,8 @@ MJCodingImplementation
         oneSchedule.food=model.foodDes;
         oneSchedule.desc=model.wordDes;
         oneSchedule.voice=model.voiceUrl;
-        oneSchedule.movie=model.movieUrl;
-        oneSchedule.movieImg=model.movieImg;
+        oneSchedule.video=model.movieUrl;
+        oneSchedule.videoImg=model.movieImg;
         [mutArr addObject:oneSchedule];
     }
     self.schedule=mutArr;
@@ -97,7 +97,8 @@ MJCodingImplementation
     report03.people=(NSNumber *)manager.return_returnPeopleNumber;
     report03.desc=manager.return_wordDes;
     report03.voice=manager.return_voiceUrl;
-    report03.movie=manager.return_movieUrl;
+    report03.video=manager.return_movieUrl;
+    report03.videoImg=manager.return_movieImg;
     //一起游
     ReportData *report04=[[ReportData alloc]init];
     report04.style=@4;
@@ -106,12 +107,13 @@ MJCodingImplementation
     
     //回报支持2
     ReportData *report05=[[ReportData alloc]init];
-    report04.style=@5;
-    report04.price=(NSNumber *)manager.return_returnPeopleMoney;
-    report04.people=(NSNumber *)manager.return_returnPeopleNumber;
-    report04.desc=manager.return_wordDes;
-    report04.voice=manager.return_voiceUrl;
-    report04.movie=manager.return_movieUrl;
+    report05.style=@5;
+    report05.price=(NSNumber *)manager.return_returnPeopleMoney01;
+    report05.people=(NSNumber *)manager.return_returnPeopleNumber01;
+    report05.desc=manager.return_wordDes01;
+    report05.voice=manager.return_voiceUrl01;
+    report05.video=manager.return_movieUrl01;
+    report05.videoImg=manager.return_movieImg01;
     
     //筹旅费景点花费
     ReportData *report06=[[ReportData alloc]init];

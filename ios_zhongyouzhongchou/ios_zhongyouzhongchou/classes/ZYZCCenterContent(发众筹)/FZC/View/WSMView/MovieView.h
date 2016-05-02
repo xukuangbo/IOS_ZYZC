@@ -11,4 +11,5 @@
 @interface MovieView : WSMBaseView<UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIAlertViewDelegate>
 @property (nonatomic, strong) UIImageView *movieImg;
 @property (nonatomic, strong) NSURL *movieFilePath;
+@property (nonatomic, copy  ) NSString *movieImgPath;
 @end
