@@ -86,7 +86,6 @@
     TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:JsonObject[@"data"]];
     self.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
     
-    NSLog(@"%@",self.tacticSingleModelFrame.tacticSingleModel.videoUrl);
     [self.tableView reloadData];
     
     return ;
@@ -173,7 +172,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    return (oneViewMapHeight * 3) + (TacticTableViewCellMargin * 5) + 120;
     return self.tacticSingleModelFrame.realHeight;
 }
 

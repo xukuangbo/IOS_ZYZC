@@ -13,6 +13,7 @@
 #import "TacticCustomMapView.h"
 #import "TacticThreeMapView.h"
 #import "TacticSingleTipsModel.h"
+#import "TacticSingleLongPicture.h"
 @interface TacticSingleTableViewCell()
 //描述
 @property (nonatomic, weak) TacticCustomMapView *descView;
@@ -22,7 +23,7 @@
 @property (nonatomic, weak) ZYZCCusomMovieImage *flashPlayButton;
 //图文
 @property (nonatomic, weak) TacticCustomMapView *pictureView;
-@property (nonatomic, weak) UIButton *pictureShowButton;
+@property (nonatomic, weak) TacticSingleLongPicture *pictureShowButton;
 //小贴士
 @property (nonatomic, weak) TacticCustomMapView *tipsView;
 @property (nonatomic, weak) UIButton *tipsShowButton;
@@ -98,13 +99,12 @@
     [self.contentView addSubview:pictureView];
     self.pictureView = pictureView;
     
-    UIButton *pictureShowButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    pictureShowButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    TacticSingleLongPicture *pictureShowButton = [[TacticSingleLongPicture alloc] init];
     pictureShowButton.layer.cornerRadius = 5;
     pictureShowButton.layer.masksToBounds = YES;
     pictureShowButton.backgroundColor = [UIColor redColor];
     [pictureView addSubview:pictureShowButton];
-    [pictureShowButton addTarget:self action:@selector(playPictureAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [pictureShowButton addTarget:self action:@selector(playPictureAction:) forControlEvents:UIControlEventTouchUpInside];
     self.pictureShowButton = pictureShowButton;
     
     //众游小贴士
@@ -201,7 +201,8 @@
     self.pictureView.frame = tacticSingleModelFrame.pictureViewF;
     self.pictureView.descLabel.text = [NSString stringWithFormat:@"一张图玩转%@",tacticSingleModel.name];
     self.pictureShowButton.frame = tacticSingleModelFrame.pictureShowButtonF;
-    [self.pictureShowButton sd_setBackgroundImageWithURL:[NSURL URLWithString:self.tacticSingleModelFrame.tacticSingleModel.glid] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    self.pictureShowButton.urlString = @"http://ww4.sinaimg.cn/mw690/66b6e1c4jw1f3fni2x7prj214f6jlqgl.jpg";
+    [self.pictureShowButton sd_setImageWithURL:[NSURL URLWithString:@"http://ww4.sinaimg.cn/mw690/66b6e1c4jw1f3fni2x7prj214f6jlqgl.jpg"] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     
     self.tipsView.frame = tacticSingleModelFrame.tipsViewF;
     //设置图片，跳转

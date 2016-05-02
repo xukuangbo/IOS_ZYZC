@@ -7,32 +7,42 @@
 //
 
 #import "ZYZCAVPlayer.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 
 @interface ZYZCAVPlayer()
 @end
 @implementation ZYZCAVPlayer
 
-//为了保证同一时间只有一个播放器，使用单例模式
-+ (AVPlayerViewController *)sharedZYZCAVPlayer{
-    static AVPlayerViewController *vc = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        vc = [[AVPlayerViewController alloc] init];
-    });
-    return vc;
+static AVPlayerViewController *_avPlayerViewController;
++ (void)initialize
+{
+    if (self == [ZYZCAVPlayer class]) {
+        if (_avPlayerViewController == nil) {
+            _avPlayerViewController = [[AVPlayerViewController alloc] init];
+        }
+    }
 }
+
 
 + (void)playInView:(UIView *)view url:(NSURL *)url
 {
-    [ZYZCAVPlayer sharedZYZCAVPlayer].view.frame = view.frame;
+    _avPlayerViewController = nil;
+    _avPlayerViewController = [[AVPlayerViewController alloc] init];
+    _avPlayerViewController.view.frame = view.frame;
     AVPlayer *player=[AVPlayer playerWithURL:url];
+    _avPlayerViewController.player = player;
+    [view addSubview:_avPlayerViewController.view];
     [player play];
-    [view addSubview:[ZYZCAVPlayer sharedZYZCAVPlayer].view];
-    
 }
 
-+ (void)playInNewController
++ (void)playInNewController:(UINavigationController *)navi url:(NSURL *)url
 {
-    
+    _avPlayerViewController = nil;
+    _avPlayerViewController = [[AVPlayerViewController alloc] init];
+    AVPlayer *player = [AVPlayer playerWithURL:url];
+    _avPlayerViewController.player = player;
+    [player play];
+    [navi pushViewController:_avPlayerViewController animated:YES];
 }
 @end

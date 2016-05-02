@@ -134,6 +134,15 @@
 		04A99D2A1CC0926400C6F5F0 /* ZYZCAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D291CC0926400C6F5F0 /* ZYZCAccountTool.m */; };
 		04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */; };
 		04F68C9F1CD6E3E3000CA70D /* ReturnThirdCellTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F68C9E1CD6E3E3000CA70D /* ReturnThirdCellTwo.m */; };
+		04F8362A1CD7102200140980 /* ZYZCPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836291CD7102200140980 /* ZYZCPlayViewController.m */; };
+		04F8362D1CD7225200140980 /* TacticSingleLongPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8362C1CD7225200140980 /* TacticSingleLongPicture.m */; };
+		04F836411CD72C3300140980 /* SDBallProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836331CD72C3300140980 /* SDBallProgressView.m */; };
+		04F836421CD72C3300140980 /* SDBaseProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836351CD72C3300140980 /* SDBaseProgressView.m */; };
+		04F836431CD72C3300140980 /* SDLoopProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836371CD72C3300140980 /* SDLoopProgressView.m */; };
+		04F836441CD72C3300140980 /* SDPieLoopProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836391CD72C3300140980 /* SDPieLoopProgressView.m */; };
+		04F836451CD72C3300140980 /* SDPieProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8363B1CD72C3300140980 /* SDPieProgressView.m */; };
+		04F836461CD72C3300140980 /* SDRotationLoopProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8363E1CD72C3300140980 /* SDRotationLoopProgressView.m */; };
+		04F836471CD72C3300140980 /* SDTransparentPieProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836401CD72C3300140980 /* SDTransparentPieProgressView.m */; };
 		2C2C2A281CCE395E0068A883 /* ZCDetailReturnCusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */; };
 		2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */; };
 		2C4615AA1CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */; };
@@ -433,6 +442,25 @@
 		04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineMessageTool.m; sourceTree = "<group>"; };
 		04F68C9D1CD6E3E3000CA70D /* ReturnThirdCellTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnThirdCellTwo.h; sourceTree = "<group>"; };
 		04F68C9E1CD6E3E3000CA70D /* ReturnThirdCellTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnThirdCellTwo.m; sourceTree = "<group>"; };
+		04F836281CD7102200140980 /* ZYZCPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCPlayViewController.h; sourceTree = "<group>"; };
+		04F836291CD7102200140980 /* ZYZCPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCPlayViewController.m; sourceTree = "<group>"; };
+		04F8362B1CD7225200140980 /* TacticSingleLongPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleLongPicture.h; sourceTree = "<group>"; };
+		04F8362C1CD7225200140980 /* TacticSingleLongPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleLongPicture.m; sourceTree = "<group>"; };
+		04F836321CD72C3300140980 /* SDBallProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBallProgressView.h; sourceTree = "<group>"; };
+		04F836331CD72C3300140980 /* SDBallProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBallProgressView.m; sourceTree = "<group>"; };
+		04F836341CD72C3300140980 /* SDBaseProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBaseProgressView.h; sourceTree = "<group>"; };
+		04F836351CD72C3300140980 /* SDBaseProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBaseProgressView.m; sourceTree = "<group>"; };
+		04F836361CD72C3300140980 /* SDLoopProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLoopProgressView.h; sourceTree = "<group>"; };
+		04F836371CD72C3300140980 /* SDLoopProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLoopProgressView.m; sourceTree = "<group>"; };
+		04F836381CD72C3300140980 /* SDPieLoopProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPieLoopProgressView.h; sourceTree = "<group>"; };
+		04F836391CD72C3300140980 /* SDPieLoopProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPieLoopProgressView.m; sourceTree = "<group>"; };
+		04F8363A1CD72C3300140980 /* SDPieProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPieProgressView.h; sourceTree = "<group>"; };
+		04F8363B1CD72C3300140980 /* SDPieProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPieProgressView.m; sourceTree = "<group>"; };
+		04F8363C1CD72C3300140980 /* SDProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDProgressView.h; sourceTree = "<group>"; };
+		04F8363D1CD72C3300140980 /* SDRotationLoopProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDRotationLoopProgressView.h; sourceTree = "<group>"; };
+		04F8363E1CD72C3300140980 /* SDRotationLoopProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDRotationLoopProgressView.m; sourceTree = "<group>"; };
+		04F8363F1CD72C3300140980 /* SDTransparentPieProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTransparentPieProgressView.h; sourceTree = "<group>"; };
+		04F836401CD72C3300140980 /* SDTransparentPieProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTransparentPieProgressView.m; sourceTree = "<group>"; };
 		2C2C2A261CCE395E0068A883 /* ZCDetailReturnCusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailReturnCusView.h; sourceTree = "<group>"; };
 		2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnCusView.m; sourceTree = "<group>"; };
 		2C2DEF131CCB4D3100111459 /* ZCDetailArrangeFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailArrangeFirstCell.h; sourceTree = "<group>"; };
@@ -615,6 +643,8 @@
 			children = (
 				0406514B1CC87A89003FD539 /* TacticSingleViewController.h */,
 				0406514C1CC87A89003FD539 /* TacticSingleViewController.m */,
+				04F836281CD7102200140980 /* ZYZCPlayViewController.h */,
+				04F836291CD7102200140980 /* ZYZCPlayViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -643,6 +673,8 @@
 				0490D15E1CCB6A3E0064844C /* TacticCustomMapView.m */,
 				0490D15A1CC9FAA80064844C /* TacticSingleHeadView.h */,
 				0490D15B1CC9FAA80064844C /* TacticSingleHeadView.m */,
+				04F8362B1CD7225200140980 /* TacticSingleLongPicture.h */,
+				04F8362C1CD7225200140980 /* TacticSingleLongPicture.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -704,6 +736,7 @@
 		04A99BCE1CBF848C00C6F5F0 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				04F8362E1CD72A6B00140980 /* SDPieProgressView */,
 				040651111CC62FC7003FD539 /* SDCycleScrollView */,
 				048DDE991CC229F600136C7A /* MBProgressHUD+MJ */,
 				04A99CF41CBF897A00C6F5F0 /* WeChatSDK1.6.2 */,
@@ -1238,6 +1271,28 @@
 			path = Tool;
 			sourceTree = "<group>";
 		};
+		04F8362E1CD72A6B00140980 /* SDPieProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				04F836321CD72C3300140980 /* SDBallProgressView.h */,
+				04F836331CD72C3300140980 /* SDBallProgressView.m */,
+				04F836341CD72C3300140980 /* SDBaseProgressView.h */,
+				04F836351CD72C3300140980 /* SDBaseProgressView.m */,
+				04F836361CD72C3300140980 /* SDLoopProgressView.h */,
+				04F836371CD72C3300140980 /* SDLoopProgressView.m */,
+				04F836381CD72C3300140980 /* SDPieLoopProgressView.h */,
+				04F836391CD72C3300140980 /* SDPieLoopProgressView.m */,
+				04F8363A1CD72C3300140980 /* SDPieProgressView.h */,
+				04F8363B1CD72C3300140980 /* SDPieProgressView.m */,
+				04F8363C1CD72C3300140980 /* SDProgressView.h */,
+				04F8363D1CD72C3300140980 /* SDRotationLoopProgressView.h */,
+				04F8363E1CD72C3300140980 /* SDRotationLoopProgressView.m */,
+				04F8363F1CD72C3300140980 /* SDTransparentPieProgressView.h */,
+				04F836401CD72C3300140980 /* SDTransparentPieProgressView.m */,
+			);
+			path = SDPieProgressView;
+			sourceTree = "<group>";
+		};
 		2C901DAF1C89788C004B844B = {
 			isa = PBXGroup;
 			children = (
@@ -1609,13 +1664,16 @@
 				04A99CAF1CBF848D00C6F5F0 /* RaiseMoneyFirstModel.m in Sources */,
 				0406513B1CC7597A003FD539 /* TacticVideoModel.m in Sources */,
 				2CD4B4461CCDA8A0006A7CE8 /* ZCDetailReturnFirstCellModel.m in Sources */,
+				04F8362A1CD7102200140980 /* ZYZCPlayViewController.m in Sources */,
 				2C901DC31C89788C004B844B /* ViewController.m in Sources */,
 				2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */,
 				04A99C9B1CBF848D00C6F5F0 /* MoreFZCChooseSceneController.m in Sources */,
 				04A99CEF1CBF851500C6F5F0 /* RMCalendarLogic.m in Sources */,
 				04A99CC51CBF848D00C6F5F0 /* CalendarViewController.m in Sources */,
+				04F836421CD72C3300140980 /* SDBaseProgressView.m in Sources */,
 				040651211CC62FC7003FD539 /* TAAbstractDotView.m in Sources */,
 				0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */,
+				04F836451CD72C3300140980 /* SDPieProgressView.m in Sources */,
 				2CE074C31CCF7ECC006D312D /* ZYZCTabBarController.m in Sources */,
 				0490D1591CC9BFB60064844C /* TacticSingleModelFrame.m in Sources */,
 				2CD4B4551CCDE807006A7CE8 /* ZCDetailReturnThridCell.m in Sources */,
@@ -1626,6 +1684,7 @@
 				040651501CC8BF44003FD539 /* TacticSingleModel.m in Sources */,
 				04A99CB61CBF848D00C6F5F0 /* ReturnThirdCell.m in Sources */,
 				2CF7EB011CC7856D007074FE /* ZCDetailIntroFirstCell.m in Sources */,
+				04F836461CD72C3300140980 /* SDRotationLoopProgressView.m in Sources */,
 				04A99D271CC0924E00C6F5F0 /* ZYZCAccountModel.m in Sources */,
 				041D06F91CD3321D002B8329 /* UITextField+RYNumberKeyboard.m in Sources */,
 				04A99CA91CBF848D00C6F5F0 /* MoreFZCReturnTableView.m in Sources */,
@@ -1635,12 +1694,14 @@
 				04A99C8D1CBF848D00C6F5F0 /* UIColor+ZYZCColors.m in Sources */,
 				04A99C991CBF848D00C6F5F0 /* ChooseSceneImgController.m in Sources */,
 				04A99CD71CBF848D00C6F5F0 /* ZCPersonInfoController.m in Sources */,
+				04F836431CD72C3300140980 /* SDLoopProgressView.m in Sources */,
 				04A99CBD1CBF848D00C6F5F0 /* SoundView.m in Sources */,
 				04A99CC81CBF848D00C6F5F0 /* MineMessageController.m in Sources */,
 				2CC2D1211CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.m in Sources */,
 				04A99CA51CBF848D00C6F5F0 /* MoreFZCBaseTableView.m in Sources */,
 				048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */,
 				04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */,
+				04F836411CD72C3300140980 /* SDBallProgressView.m in Sources */,
 				040651251CC62FC7003FD539 /* SDCollectionViewCell.m in Sources */,
 				04A99CCC1CBF848D00C6F5F0 /* MineCenterTableView.m in Sources */,
 				04A99CA81CBF848D00C6F5F0 /* MoreFZCRaiseMoneyTableView.m in Sources */,
@@ -1652,6 +1713,7 @@
 				04A99C901CBF848D00C6F5F0 /* UIView+ZYZCLineView.m in Sources */,
 				2C4EEFC01CC60D8600AA99F6 /* WeekDayView.m in Sources */,
 				04A99C8F1CBF848D00C6F5F0 /* UIView+ViewController.m in Sources */,
+				04F8362D1CD7225200140980 /* TacticSingleLongPicture.m in Sources */,
 				04A99CD21CBF848D00C6F5F0 /* ZCMainModel.m in Sources */,
 				04A99CAD1CBF848D00C6F5F0 /* MoreFZCRaiseMoneyFirstCell.m in Sources */,
 				04A99CB21CBF848D00C6F5F0 /* ReturnCellBaseBGView.m in Sources */,
@@ -1699,12 +1761,14 @@
 				04A99CF11CBF851500C6F5F0 /* RMCalendarCollectionViewLayout.m in Sources */,
 				04A99CB11CBF848D00C6F5F0 /* ReturnAttributesLabel.m in Sources */,
 				04A99CED1CBF851500C6F5F0 /* NSDate+RMCalendarLogic.m in Sources */,
+				04F836441CD72C3300140980 /* SDPieLoopProgressView.m in Sources */,
 				04A99CAA1CBF848D00C6F5F0 /* MoreFZCToolBar.m in Sources */,
 				04A99C931CBF848D00C6F5F0 /* ZYZCOSSManager.m in Sources */,
 				2CE074C11CCF4EB8006D312D /* ZCTotalPeopleView.m in Sources */,
 				2CCB4DDD1CD1D86300ABA1DB /* FZCReplaceDataKeys.m in Sources */,
 				04A99CCA1CBF848D00C6F5F0 /* MineMessageCell.m in Sources */,
 				0490D15F1CCB6A3E0064844C /* TacticCustomMapView.m in Sources */,
+				04F836471CD72C3300140980 /* SDTransparentPieProgressView.m in Sources */,
 				2CF7EB071CC78599007074FE /* ZCDetailIntroThirdCell.m in Sources */,
 				04A99CC61CBF848D00C6F5F0 /* FZCBaseViewController.m in Sources */,
 				04A99CB01CBF848D00C6F5F0 /* RaiseMoneySecondCellView.m in Sources */,
