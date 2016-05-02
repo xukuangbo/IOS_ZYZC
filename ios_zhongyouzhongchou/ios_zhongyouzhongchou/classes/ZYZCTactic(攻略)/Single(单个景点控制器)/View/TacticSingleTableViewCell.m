@@ -166,13 +166,6 @@
 }
 #pragma mark - 点击跳转事件
 /**
- *  小动画播放
- */
-- (void)playMoviewAction:(UIButton *)button
-{
-    NSLog(@"播放小视频啦！~~~~~~");
-}
-/**
  *  图文播放
  */
 - (void)playPictureAction:(UIButton *)button

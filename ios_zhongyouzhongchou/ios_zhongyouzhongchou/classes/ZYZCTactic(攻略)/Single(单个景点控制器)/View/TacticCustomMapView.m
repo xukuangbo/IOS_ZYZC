@@ -65,7 +65,6 @@
         descLabel.textColor = [UIColor ZYZC_TextGrayColor];
         [self addSubview:descLabel];
         self.descLabel = descLabel;
-//            NSLog(@"$$$$$$$%f",descLabel.bottom);
     }
     return self;
 }
