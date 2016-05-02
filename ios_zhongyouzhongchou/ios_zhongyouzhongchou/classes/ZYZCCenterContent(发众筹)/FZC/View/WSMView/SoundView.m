@@ -116,7 +116,7 @@
     if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
         manager.raiseMoney_voiceUrl=self.soundFilePath;
     }
-    else if ([self.contentBelong isEqualToString:RETURN_CONTENTBELONG])
+    else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
     {
         manager.return_voiceUrl=self.soundFilePath;
     }
@@ -163,7 +163,7 @@
     if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
         manager.raiseMoney_voiceUrl= self.soundFilePath;
     }
-    else if ([self.contentBelong isEqualToString:RETURN_CONTENTBELONG])
+    else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
     {
         manager.return_voiceUrl= self.soundFilePath;
     }

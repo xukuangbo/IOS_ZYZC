@@ -67,9 +67,9 @@
     entryTitleLabel.text = @"回报描述";
     [self.peopleView addSubview:entryTitleLabel];
     
-    //创建完后可以创建那个语音录入的内容
+    //创建完后可以创建哪个语音录入的内容
     FZCContentEntryView *entryView = [[FZCContentEntryView alloc] initWithFrame:CGRectMake(0, entryTitleLabel.bottom, self.peopleView.width, 200)];
-    entryView.contentBelong=RETURN_CONTENTBELONG;
+    entryView.contentBelong=RETURN_01_CONTENTBELONG;
     [self.peopleView addSubview:entryView];
     self.entryView = entryView;
     
