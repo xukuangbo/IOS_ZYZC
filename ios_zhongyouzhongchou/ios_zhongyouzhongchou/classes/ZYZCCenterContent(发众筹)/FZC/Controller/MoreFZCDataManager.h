@@ -80,6 +80,10 @@
  *  筹路费视屏描述
  */
 @property (nonatomic, copy  ) NSString *raiseMoney_movieUrl;
+/**
+ *  筹路费视屏第一帧
+ */
+@property (nonatomic, copy  ) NSString *raiseMoney_movieImg;
 
 //第三界面属性
 /**
@@ -116,6 +120,8 @@
 
 @property (nonatomic, copy  ) NSString *return_movieUrl;
 
+@property (nonatomic, copy  ) NSString *return_movieImg;
+
 @property (nonatomic, copy  ) NSString *return_togetherPeopleStatus;
 
 @property (nonatomic, copy  ) NSString *return_togetherPeopleNumber;
@@ -126,9 +132,7 @@
 
 
 + (instancetype)sharedMoreFZCDataManager;
-/**
- *  重置数据
- */
+
 -(void)initAllProperties;
 
 @end

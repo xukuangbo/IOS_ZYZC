@@ -61,6 +61,7 @@ MJCodingImplementation
     self.desc=manager.raiseMoney_wordDes;
     self.voice=manager.raiseMoney_voiceUrl;
     self.movie=manager.raiseMoney_movieUrl;
+    self.movieImg=manager.raiseMoney_movieImg;
     
     //行程安排
     NSMutableArray *mutArr=[NSMutableArray array];
@@ -76,6 +77,7 @@ MJCodingImplementation
         oneSchedule.desc=model.wordDes;
         oneSchedule.voice=model.voiceUrl;
         oneSchedule.movie=model.movieUrl;
+        oneSchedule.movieImg=model.movieImg;
         [mutArr addObject:oneSchedule];
     }
     self.schedule=mutArr;
@@ -88,7 +90,7 @@ MJCodingImplementation
     ReportData *report02=[[ReportData alloc]init];
     report02.style=@2;
     report02.price=@0;
-    //回报支持
+    //回报支持1
     ReportData *report03=[[ReportData alloc]init];
     report03.style=@3;
     report03.price=(NSNumber *)manager.return_returnPeopleMoney;
@@ -101,22 +103,27 @@ MJCodingImplementation
     report04.style=@4;
     report04.people=(NSNumber *)manager.goal_numberPeople;
     report04.price=(NSNumber *)manager.return_togetherRateMoney;
-    //筹旅费景点花费
+    
+    //回报支持2
     ReportData *report05=[[ReportData alloc]init];
-    report05.style=@5;
-    report05.price=(NSNumber *)manager.raiseMoney_sightMoney;
-    //筹旅费交通花费
+    report04.style=@5;
+    
+    //筹旅费景点花费
     ReportData *report06=[[ReportData alloc]init];
     report06.style=@6;
-    report06.price=(NSNumber *)manager.raiseMoney_transMoney;
-    //筹旅费住宿花费
+    report06.price=(NSNumber *)manager.raiseMoney_sightMoney;
+    //筹旅费交通花费
     ReportData *report07=[[ReportData alloc]init];
     report07.style=@7;
-    report07.price=(NSNumber *)manager.raiseMoney_liveMoney;
-    //筹旅费餐饮花费
+    report07.price=(NSNumber *)manager.raiseMoney_transMoney;
+    //筹旅费住宿花费
     ReportData *report08=[[ReportData alloc]init];
     report08.style=@8;
-    report08.price=(NSNumber *)manager.raiseMoney_eatMoney;
+    report08.price=(NSNumber *)manager.raiseMoney_liveMoney;
+    //筹旅费餐饮花费
+    ReportData *report09=[[ReportData alloc]init];
+    report09.style=@9;
+    report09.price=(NSNumber *)manager.raiseMoney_eatMoney;
     
     self.report=@[report01,report02,report03,report04,report05,report06,report07,report08];
     

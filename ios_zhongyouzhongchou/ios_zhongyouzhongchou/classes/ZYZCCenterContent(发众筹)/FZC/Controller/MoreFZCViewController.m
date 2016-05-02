@@ -45,6 +45,9 @@
     /**
      *  释放单例中存储的内容
      */
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    
+    [manager initAllProperties];
     
 }
 
@@ -239,6 +242,7 @@
                             @"desc":@"筹旅费文字描述",
                             @"voice":@"http://....",
                             @"movie":@"http://....",
+                            @"movieImg":@"http://...",
                             @"schedule":@[
                                         @{
                                              @"day": @1,
@@ -249,7 +253,8 @@
                                              @"food":@"饮食描述",
                                              @"desc":@"第一天描述",
                                              @"voice":@"http://...",
-                                             @"movie":@"http://..."
+                                             @"movie":@"http://...",
+                                             @"movieImg":@"http://..."
                                            },
                                         @{
                                             @"day": @2,
@@ -259,7 +264,8 @@
                                             @"live":@"住宿描述2",
                                             @"desc":@"第二天描述",
                                             @"voice":@"http://...",
-                                            @"movie":@"http://..."
+                                            @"movie":@"http://...",
+                                            @"movieImg":@"http://..."
                                         },
                                         @{
                                             @"day": @3,
@@ -269,7 +275,8 @@
                                             @"live":@"住宿描述3",
                                             @"desc":@"第三天描述",
                                             @"voice":@"http://...",
-                                            @"movie":@"http://..."
+                                            @"movie":@"http://...",
+                                            @"movieImg":@"http://..."
                                         }],
                             @"report": @[
                                        @{
@@ -284,19 +291,25 @@
                                            @"style": @3,
                                            @"price": @200,
                                            @"people": @5,
-                                           @"desc": @"回报目的",
+                                           @"desc": @"回报目的1",
                                            @"voice":@"http://",
-                                           @"movie":@"http://"
+                                           @"movie":@"http://",
+                                           @"movieImg":@"http://..."
                                        },
                                        @{
                                            @"style": @4,
+                                           @"price": @300,
+                                           @"people": @6,
+                                           @"desc": @"回报目的2",
+                                           @"voice":@"http://",
+                                           @"movie":@"http://",
+                                           @"movieImg":@"http://..."
+                                        },
+                                       @{
+                                           @"style": @5,
                                            @"people":@8,
                                            @"price": @100
                                        },
-                                       @{
-                                           @"style": @5,
-                                           @"price": @1000
-                                        },
                                        @{
                                            @"style": @6,
                                            @"price": @1000
@@ -307,6 +320,10 @@
                                         },
                                        @{
                                            @"style": @8,
+                                           @"price": @1000
+                                        },
+                                       @{
+                                           @"style": @9,
                                            @"price": @1000
                                         }
                                        ]
@@ -355,14 +372,6 @@
     return filePath;
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    manager.goal_numberPeople=nil;
-    manager.travelDetailDays=[NSMutableArray array];
-//    [manager initAllProperties];
-//    NSLog(@"manager:%@",manager);
-}
 
 
 @end

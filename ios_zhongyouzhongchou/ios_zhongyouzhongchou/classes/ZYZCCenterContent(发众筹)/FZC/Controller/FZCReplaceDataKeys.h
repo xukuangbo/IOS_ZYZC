@@ -25,6 +25,7 @@
 @property (nonatomic, copy  ) NSString *desc;
 @property (nonatomic, copy  ) NSString *voice;
 @property (nonatomic, copy  ) NSString *movie;
+@property (nonatomic, copy  ) NSString *movieImg;
 @property (nonatomic, strong) NSArray  *schedule;
 @property (nonatomic, strong) NSArray  *report;
 
@@ -46,6 +47,7 @@
 @property (nonatomic, copy  ) NSString *desc;
 @property (nonatomic, copy  ) NSString *voice;
 @property (nonatomic, copy  ) NSString *movie;
+@property (nonatomic, copy  ) NSString *movieImg;
 
 @end
 
