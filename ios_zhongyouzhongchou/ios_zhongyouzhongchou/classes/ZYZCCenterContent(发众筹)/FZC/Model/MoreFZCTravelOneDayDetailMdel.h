@@ -50,6 +50,8 @@
  */
 @property (nonatomic, copy  ) NSString *movieUrl;
 
+@property (nonatomic, copy  ) NSString *movieImg;
+
 
 @property (nonatomic, assign) float cellHeight;
 

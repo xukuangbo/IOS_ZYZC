@@ -71,23 +71,42 @@ static id _instace;
 
 -(void)initAllProperties
 {
-        
-}
-
-
-#pragma mark --- 获取对象所有属性
-- (NSArray *)getAllProperties
-{
-    u_int count;
-    objc_property_t *properties  =class_copyPropertyList([self class], &count);
-    NSMutableArray *propertiesArray = [NSMutableArray arrayWithCapacity:count];
-    for (int i = 0; i<count; i++)
-    {
-        const char* propertyName =property_getName(properties[i]);
-        [propertiesArray addObject: [NSString stringWithUTF8String: propertyName]];
-    }
-    free(properties);
-    return propertiesArray;
+    self.goal_goals=nil;
+    self.goal_numberPeople=nil;
+    self.raiseMoney_liveMoney=nil;
+    self.goal_startDate=nil;
+    self.goal_backDate=nil;
+    self.goal_TotalTravelDay=@"1";
+    self.goal_numberPeople=nil;
+    self.goal_travelTheme=nil;
+    self.goal_travelThemeImgUrl=nil;
+    self.raiseMoney_sightMoney=nil;
+    self.raiseMoney_transMoney=nil;
+    self.raiseMoney_liveMoney=nil;
+    self.raiseMoney_eatMoney=nil;
+    self.raiseMoney_totalMoney=nil;
+    self.raiseMoney_wordDes=nil;
+    self.raiseMoney_imgsDes=nil;
+    self.raiseMoney_voiceUrl=nil;
+    self.raiseMoney_movieUrl=nil;
+    self.raiseMoney_movieImg=nil;
+    self.travelDetailDays=[NSMutableArray array];
+    self.return_supportOneYuanStatus=nil;
+    self.return_supportAnyYuanStatus=nil;
+    self.return_returnPeopleStatus=nil;
+    self.return_supportOneYuanStatus=@"1";
+    self.return_returnPeopleStatus=@"1";
+    self.return_returnPeopleMoney=nil;
+    self.return_returnPeopleNumber=nil;
+    self.return_wordDes=nil;
+    self.return_imgsDes=nil;
+    self.return_voiceUrl=nil;
+    self.return_movieUrl=nil;
+    self.return_movieImg=nil;
+    self.return_togetherPeopleStatus=nil;
+    self.return_togetherPeopleNumber=nil;
+    self.return_togetherMoneyPercent=nil;
+    self.return_togetherRateMoney=nil;
 }
 
 @end
