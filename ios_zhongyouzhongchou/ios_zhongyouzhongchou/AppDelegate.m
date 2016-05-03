@@ -30,6 +30,8 @@
     [self setStatusBarStyle];
     //设置根控制器
     [self getRootViewController];
+    //在documents中创建资源文件夹
+    [self createResoureFilefolderInDocuments];
     //清除临时文件夹内容
     [self cleanTmpFile];
     //更改appBadge
@@ -87,17 +89,18 @@
     self.window.rootViewController=mainTab;
 }
 
-//#pragma mark --- 在Documents中创建WSM（文字，语音，视屏录入）的文件夹
-//-(void)createWSMFilefolderInDocuments
-//{
-//    NSFileManager *fileManager = [[NSFileManager alloc] init];
-//    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//    NSString *createPath = [NSString stringWithFormat:@"%@/%@", pathDocuments,DOCUMENT_FILE];
-//    // 判断文件夹是否存在，如果不存在，则创建
-//    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
-//        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
-//    }
-//}
+#pragma mark --- 在Documents中创建资源文件存放视屏、语音、图片
+-(void)createResoureFilefolderInDocuments
+{
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *createPath = [NSString stringWithFormat:@"%@/%@", pathDocuments,KDOCUMENT_FILE];
+    // 判断文件夹是否存在，如果不存在，则创建
+    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
+        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
+        NSLog(@"createPath:%@",createPath);
+    }
+}
 
 #pragma mark --- 删除临时文件
 -(void)cleanTmpFile

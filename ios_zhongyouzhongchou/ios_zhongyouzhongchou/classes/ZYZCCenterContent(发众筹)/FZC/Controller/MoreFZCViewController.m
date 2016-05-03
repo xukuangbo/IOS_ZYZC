@@ -19,7 +19,11 @@
 
 #define kMoreFZCToolBar 20
 #define kNaviBar 64
-@interface MoreFZCViewController ()<MoreFZCToolBarDelegate>
+@interface MoreFZCViewController ()<MoreFZCToolBarDelegate,UIAlertViewDelegate>
+@property (nonatomic, strong) NSString *oneResouceFile;
+@property (nonatomic, strong) NSString *archiveDataPath;
+@property (nonatomic, strong) NSMutableArray *picesSaveState;
+@property (nonatomic, assign) BOOL isFirstTimeToSave;
 @end
 
 @implementation MoreFZCViewController
@@ -29,6 +33,7 @@
    
     [super viewDidLoad];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    _picesSaveState=[NSMutableArray array];
     [self setBackItem];
     [self createToolBar];
     [self createClearMapView];
@@ -40,14 +45,58 @@
  */
 -(void)pressBack
 {
-    [super pressBack];
-    /**
-     *  释放单例中存储的内容
-     */
+    //退出时，如果有填写发众筹内容，提示保存
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    NSDictionary *managerDict = manager.mj_keyValues;
+    NSLog(@"%ld",managerDict.count);
+    if (managerDict.count>6||manager.goal_goals.count>1) {
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存已编辑的数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
+        [alertView show];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+#pragma mark --- alertView代理方法
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //保存数据
+    if (buttonIndex ==1)
+    {
+        [self saveData];
+    }
+    //不保存
+    else
+    {
+        /**
+         *  释放单例中存储的内容
+         */
+        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+        //删除临时文件夹内容
+        [manager initAllProperties];
+        [self cleanTmpFile];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+#pragma mark --- 删除临时文件
+-(void)cleanTmpFile
+{
+    NSString *tmpDir = NSTemporaryDirectory();
     
-    [manager initAllProperties];
+    NSFileManager *manager=[NSFileManager defaultManager];
     
+    NSArray *fileArr=[manager subpathsAtPath:tmpDir];
+    
+    for (NSString *fileName in fileArr) {
+        
+        NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
+         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+             [manager removeItemAtPath:filePath error:nil];
+         });
+    }
 }
 
 /**
@@ -190,8 +239,17 @@
 #pragma mark --- 保存数据
 -(void)saveData
 {
+    if (_oneResouceFile) {
+        //数据已保存过，再次保存时需删除这个众筹的资源文件
+        NSFileManager *manager=[NSFileManager defaultManager];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [manager removeItemAtPath:_oneResouceFile error:nil];
+        });
+    }
+   //创建保存某个众筹的资源文件
+    _oneResouceFile=[self resoureSubFilePath];
+    [MBProgressHUD showMessage:nil];
     
-//    [MBProgressHUD showMessage:@"数据正在保存中..."];
     //保存每日行程安排到单例中
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     
@@ -203,161 +261,182 @@
         [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
     }
     
-    
-    //将图片，语音，视屏文件从tmp中移动到documents中
-    manager.goal_travelThemeImgUrl=[self copyTmpFileToDocument:manager.goal_travelThemeImgUrl withType:@"png"];
-    manager.raiseMoney_voiceUrl=[self copyTmpFileToDocument:manager.raiseMoney_voiceUrl withType:@"caf"];
-    manager.raiseMoney_movieUrl=[self copyTmpFileToDocument:manager.raiseMoney_movieUrl withType:@"mp4"];
-    manager.raiseMoney_movieImg=[self copyTmpFileToDocument:manager.raiseMoney_movieImg withType:@"png"];
-    for (int i=0; i<manager.travelDetailDays.count; i++) {
-        MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
-        model.voiceUrl=[self copyTmpFileToDocument:model.voiceUrl withType:@"caf"];
-        model.movieUrl=[self copyTmpFileToDocument:model.movieUrl withType:@"mp4"];
-        model.movieImg=[self copyTmpFileToDocument:model.movieImg withType:@"png"];
-        [manager.travelDetailDays replaceObjectAtIndex:i withObject:model];
-    }
-    
-    manager.return_voiceUrl=[self copyTmpFileToDocument:manager.return_voiceUrl withType:@"caf"];
-    manager.return_movieUrl=[self copyTmpFileToDocument:manager.return_movieUrl withType:@"mp4"];
-    manager.return_movieImg=[self copyTmpFileToDocument:manager.return_movieImg withType:@"png"];
-    manager.return_voiceUrl01=[self copyTmpFileToDocument:manager.return_voiceUrl01 withType:@"caf"];
-    manager.return_movieUrl01=[self copyTmpFileToDocument:manager.return_movieUrl01 withType:@"mp4"];
-    manager.return_movieImg01=[self copyTmpFileToDocument:manager.return_movieImg01 withType:@"png"];
-    
-    
-    FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
-    [replaceKeys replaceDataKeys];
-    
-    // 模型转字典
-    NSDictionary *dataDict = replaceKeys.mj_keyValues;
-    NSLog(@"dataDict:%@",dataDict);
-    
-//    //归档
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *docDir = [paths objectAtIndex:0];
-//    NSString *localTime=[ZYZCTool getLocalTime];
-//    NSString *filePath=[docDir stringByAppendingPathComponent:[NSString stringWithFormat:@"WSMContentData%@.data",localTime]];
-//    NSLog(@"归档数据filePath:%@",filePath);
-//    [NSKeyedArchiver archiveRootObject:manager toFile:filePath];
-//    //解档
-//    MoreFZCDataManager *fileManager=[NSKeyedUnarchiver  unarchiveObjectWithFile:filePath];
-//    
-//    NSLog(@"fileManager:%@",fileManager);
+    __weak typeof (&*self)weakSelf=self;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        //将图片，语音，视屏文件从tmp中移动到documents中
+        manager.goal_travelThemeImgUrl=[weakSelf copyTmpFileToDocument:manager.goal_travelThemeImgUrl ];
+        manager.raiseMoney_voiceUrl=[weakSelf copyTmpFileToDocument:manager.raiseMoney_voiceUrl ];
+        manager.raiseMoney_movieUrl=[weakSelf copyTmpFileToDocument:manager.raiseMoney_movieUrl ];
+        manager.raiseMoney_movieImg=[weakSelf copyTmpFileToDocument:manager.raiseMoney_movieImg ];
+        for (int i=0; i<manager.travelDetailDays.count; i++) {
+            MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
+            model.voiceUrl=[weakSelf copyTmpFileToDocument:model.voiceUrl ];
+            model.movieUrl=[weakSelf copyTmpFileToDocument:model.movieUrl ];
+            model.movieImg=[weakSelf copyTmpFileToDocument:model.movieImg ];
+            [manager.travelDetailDays replaceObjectAtIndex:i withObject:model];
+        }
+        manager.return_voiceUrl=[weakSelf copyTmpFileToDocument:manager.return_voiceUrl ];
+        manager.return_movieUrl=[weakSelf copyTmpFileToDocument:manager.return_movieUrl ];
+        manager.return_movieImg=[weakSelf copyTmpFileToDocument:manager.return_movieImg ];
+        manager.return_voiceUrl01=[weakSelf copyTmpFileToDocument:manager.return_voiceUrl01 ];
+        manager.return_movieUrl01=[weakSelf copyTmpFileToDocument:manager.return_movieUrl01 ];
+        manager.return_movieImg01=[weakSelf copyTmpFileToDocument:manager.return_movieImg01 ];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //将数据转化成上传数据对应的类型
+            FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
+            [replaceKeys replaceDataKeys];
+            // 模型转字典
+            NSDictionary *dataDict = replaceKeys.mj_keyValues;
+            NSLog(@"dataDict:%@",dataDict);
+            
+            //归档
+            weakSelf.archiveDataPath=[NSString stringWithFormat:@"%@/%@.data",_oneResouceFile,[ZYZCTool getLocalTime]];
+            [NSKeyedArchiver archiveRootObject:manager toFile:weakSelf.archiveDataPath];
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showSuccess:@"保存成功!"];
+            [self saveDataInMyZhongChouPlist];
+        });
+    });
     
 //    NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:dataDict];
 //    [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
     
-    NSDictionary *dataDic=@{
-                            @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
-                            @"status":@1,
-                            @"title":@"海岛游",
-                            @"productCountryId":@[@"1",@"2"],
-                            @"dest":@[@"普吉岛",@"清迈"],
-                            @"spell_buy_price":@5000,
-                            @"start_time":@"2016-4-28",
-                            @"end_time":@"2016-5-10",
-                            @"spell_end_time":@"2016-7-28",
-                            @"people":@8,
-                            @"cover":@"http://....",
-                            @"desc":@"筹旅费文字描述",
-                            @"voice":@"http://....",
-                            @"movie":@"http://....",
-                            @"movieImg":@"http://...",
-                            @"schedule":@[
-                                        @{
-                                             @"day": @1,
-                                             @"spot": @"景点描述",
-                                             @"spots":@[@"url1",@"url2"],
-                                             @"trans":@"交通描述",
-                                             @"live":@"住宿描述",
-                                             @"food":@"饮食描述",
-                                             @"desc":@"第一天描述",
-                                             @"voice":@"http://...",
-                                             @"movie":@"http://...",
-                                             @"movieImg":@"http://..."
-                                           },
-                                        @{
-                                            @"day": @2,
-                                            @"spot": @"景点描述2",
-                                            @"spots":@[@"url1",@"url2"],
-                                            @"trans":@"交通描述2",
-                                            @"live":@"住宿描述2",
-                                            @"desc":@"第二天描述",
-                                            @"voice":@"http://...",
-                                            @"movie":@"http://...",
-                                            @"movieImg":@"http://..."
-                                        },
-                                        @{
-                                            @"day": @3,
-                                            @"spot": @"景点描述3",
-                                            @"spots":@[@"url1",@"url2"],
-                                            @"trans":@"交通描述3",
-                                            @"live":@"住宿描述3",
-                                            @"desc":@"第三天描述",
-                                            @"voice":@"http://...",
-                                            @"movie":@"http://...",
-                                            @"movieImg":@"http://..."
-                                        }],
-                            @"report": @[
-                                       @{
-                                           @"style": @1,
-                                           @"price": @1
-                                       },
-                                       @{
-                                           @"style": @2,
-                                           @"price": @0
-                                       },
-                                       @{
-                                           @"style": @3,
-                                           @"price": @200,
-                                           @"people": @5,
-                                           @"desc": @"回报目的1",
-                                           @"voice":@"http://",
-                                           @"movie":@"http://",
-                                           @"movieImg":@"http://..."
-                                       },
-                                       @{
-                                           @"style": @4,
-                                           @"price": @300,
-                                           @"people": @6,
-                                           @"desc": @"回报目的2",
-                                           @"voice":@"http://",
-                                           @"movie":@"http://",
-                                           @"movieImg":@"http://..."
-                                        },
-                                       @{
-                                           @"style": @5,
-                                           @"people":@8,
-                                           @"price": @100
-                                       },
-                                       @{
-                                           @"style": @6,
-                                           @"price": @1000
-                                        },
-                                       @{
-                                           @"style": @7,
-                                           @"price": @1000
-                                        },
-                                       @{
-                                           @"style": @8,
-                                           @"price": @1000
-                                        },
-                                       @{
-                                           @"style": @9,
-                                           @"price": @1000
-                                        }
-                                       ]
-                            
-                    };
-    [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
-        NSLog(@"%@",result);
-        
+//    NSDictionary *dataDic=@{
+//                            @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
+//                            @"status":@1,
+//                            @"title":@"海岛游",
+//                            @"productCountryId":@[@"1",@"2"],
+//                            @"dest":@[@"普吉岛",@"清迈"],
+//                            @"spell_buy_price":@5000,
+//                            @"start_time":@"2016-4-28",
+//                            @"end_time":@"2016-5-10",
+//                            @"spell_end_time":@"2016-7-28",
+//                            @"people":@8,
+//                            @"cover":@"http://....",
+//                            @"desc":@"筹旅费文字描述",
+//                            @"voice":@"http://....",
+//                            @"video":@"http://....",
+//                            @"videoImg":@"http://...",
+//                            @"schedule":@[
+//                                        @{
+//                                             @"day": @1,
+//                                             @"spot": @"景点描述",
+//                                             @"spots":@[@"url1",@"url2"],
+//                                             @"trans":@"交通描述",
+//                                             @"live":@"住宿描述",
+//                                             @"food":@"饮食描述",
+//                                             @"desc":@"第一天描述",
+//                                             @"voice":@"http://...",
+//                                             @"video":@"http://...",
+//                                             @"videoImg":@"http://..."
+//                                           },
+//                                        @{
+//                                            @"day": @2,
+//                                            @"spot": @"景点描述2",
+//                                            @"spots":@[@"url1",@"url2"],
+//                                            @"trans":@"交通描述2",
+//                                            @"live":@"住宿描述2",
+//                                            @"desc":@"第二天描述",
+//                                            @"voice":@"http://...",
+//                                            @"video":@"http://...",
+//                                            @"videoImg":@"http://..."
+//                                        },
+//                                        @{
+//                                            @"day": @3,
+//                                            @"spot": @"景点描述3",
+//                                            @"spots":@[@"url1",@"url2"],
+//                                            @"trans":@"交通描述3",
+//                                            @"live":@"住宿描述3",
+//                                            @"desc":@"第三天描述",
+//                                            @"voice":@"http://...",
+//                                            @"video":@"http://...",
+//                                            @"videoImg":@"http://..."
+//                                        }],
+//                            @"report": @[
+//                                       @{
+//                                           @"style": @1,
+//                                           @"price": @1
+//                                       },
+//                                       @{
+//                                           @"style": @2,
+//                                           @"price": @0
+//                                       },
+//                                       @{
+//                                           @"style": @3,
+//                                           @"price": @200,
+//                                           @"people": @5,
+//                                           @"desc": @"回报目的1",
+//                                           @"voice":@"http://",
+//                                           @"video":@"http://",
+//                                           @"videoImg":@"http://..."
+//                                       },
+//                                       @{
+//                                           @"style": @4,
+//                                           @"price": @300,
+//                                           @"people": @6,
+//                                           @"desc": @"回报目的2",
+//                                           @"voice":@"http://",
+//                                           @"video":@"http://",
+//                                           @"videoImg":@"http://..."
+//                                        },
+//                                       @{
+//                                           @"style": @5,
+//                                           @"people":@8,
+//                                           @"price": @100
+//                                       },
+//                                       @{
+//                                           @"style": @6,
+//                                           @"price": @1000
+//                                        },
+//                                       @{
+//                                           @"style": @7,
+//                                           @"price": @1000
+//                                        },
+//                                       @{
+//                                           @"style": @8,
+//                                           @"price": @1000
+//                                        },
+//                                       @{
+//                                           @"style": @9,
+//                                           @"price": @1000
+//                                        }
+//                                       ]
+//                            
+//                    };
+//    [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
+//        NSLog(@"%@",result);
+//        
+//    }
+//    andFailBlock:^(id failResult)
+//    {
+//        NSLog(@"%@",failResult);
+//        
+//    }];
+}
+
+-(void)saveDataInMyZhongChouPlist
+{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *path=[paths  objectAtIndex:0];
+    NSString *plistPath=[path stringByAppendingPathComponent:@"MyZhongChou.plist"];
+    NSArray *arr=[NSArray arrayWithContentsOfFile:plistPath];
+    NSLog(@"arr:%@",arr);
+    NSMutableArray *mutArr=[NSMutableArray arrayWithArray:arr];
+     NSDictionary *dict=@{@"oneResouceFile":_oneResouceFile,@"archiveDataPath":_archiveDataPath};
+    if (!_isFirstTimeToSave) {
+        [mutArr addObject:dict];
+        _isFirstTimeToSave=YES;
     }
-    andFailBlock:^(id failResult)
+    else
     {
-        NSLog(@"%@",failResult);
-        
-    }];
+        [mutArr replaceObjectAtIndex:mutArr.count-1 withObject:dict];
+    }
+    
+    [mutArr writeToFile:plistPath atomically:YES];
+    NSArray *arr01=[NSArray arrayWithContentsOfFile:plistPath];
+    NSLog(@"arr01:%@",arr01);
+
+    
 }
 
 -(NSString *)turnJson:(NSDictionary *)dic
@@ -369,35 +448,36 @@
     return jsonStr;
 }
 
-#pragma mark --- 将临时文件移到documents中
--(NSString *)copyTmpFileToDocument:(NSString *)tmpFilePath withType:(NSString *)type
+#pragma mark --- 在resoure文件下创建子文件来保存一个众筹的相关图片、语音、视屏资源
+-(NSString *)resoureSubFilePath
 {
-    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *createPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,[ZYZCTool getLocalTime]];
+    // 判断文件夹是否存在，如果不存在，则创建
+    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
+        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return createPath;
+}
+
+
+#pragma mark --- 将临时文件移到documents中
+-(NSString *)copyTmpFileToDocument:(NSString *)tmpFilePath
+{
     NSFileManager*fileManager =[NSFileManager defaultManager];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    
-    NSString*filePath =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",[ZYZCTool getLocalTime],type]];
-    
-    if([fileManager fileExistsAtPath:filePath]== NO){
-        if ([fileManager fileExistsAtPath:tmpFilePath]) {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSError*error;
-                BOOL hasCopy=[fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
-                if (hasCopy) {
-                    [fileManager removeItemAtPath:tmpFilePath error:&error];
-                }
-            });
-        }
-        else
-        {
-            filePath=nil;
+    NSString *filePath=nil;
+    if ([fileManager fileExistsAtPath:tmpFilePath]) {
+        NSRange fileNameRange=[tmpFilePath rangeOfString:@"tmp/"];
+        NSString *fileName= [tmpFilePath substringFromIndex:fileNameRange.location+fileNameRange.length];
+        filePath=[NSString stringWithFormat:@"%@/%@",_oneResouceFile,fileName];
+    if([fileManager fileExistsAtPath:filePath]==NO){
+            NSError*error;
+            BOOL hasCopy=[fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
+           [_picesSaveState addObject:[NSNumber numberWithBool:hasCopy]];
         }
     }
     return filePath;
 }
-
-
 
 @end

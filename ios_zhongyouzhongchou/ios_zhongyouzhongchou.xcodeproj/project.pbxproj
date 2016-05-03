@@ -143,6 +143,7 @@
 		04F836451CD72C3300140980 /* SDPieProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8363B1CD72C3300140980 /* SDPieProgressView.m */; };
 		04F836461CD72C3300140980 /* SDRotationLoopProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8363E1CD72C3300140980 /* SDRotationLoopProgressView.m */; };
 		04F836471CD72C3300140980 /* SDTransparentPieProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836401CD72C3300140980 /* SDTransparentPieProgressView.m */; };
+		2C1071E21CD78A2F00324E4E /* MyZhongChou.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C1071E11CD78A2F00324E4E /* MyZhongChou.plist */; };
 		2C2C2A281CCE395E0068A883 /* ZCDetailReturnCusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */; };
 		2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */; };
 		2C4615AA1CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */; };
@@ -461,6 +462,7 @@
 		04F8363E1CD72C3300140980 /* SDRotationLoopProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDRotationLoopProgressView.m; sourceTree = "<group>"; };
 		04F8363F1CD72C3300140980 /* SDTransparentPieProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTransparentPieProgressView.h; sourceTree = "<group>"; };
 		04F836401CD72C3300140980 /* SDTransparentPieProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTransparentPieProgressView.m; sourceTree = "<group>"; };
+		2C1071E11CD78A2F00324E4E /* MyZhongChou.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MyZhongChou.plist; sourceTree = "<group>"; };
 		2C2C2A261CCE395E0068A883 /* ZCDetailReturnCusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailReturnCusView.h; sourceTree = "<group>"; };
 		2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnCusView.m; sourceTree = "<group>"; };
 		2C2DEF131CCB4D3100111459 /* ZCDetailArrangeFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailArrangeFirstCell.h; sourceTree = "<group>"; };
@@ -1337,6 +1339,7 @@
 			isa = PBXGroup;
 			children = (
 				2C4EEFB81CC6087D00AA99F6 /* outboundCity.plist */,
+				2C1071E11CD78A2F00324E4E /* MyZhongChou.plist */,
 				2C901DBC1C89788C004B844B /* main.m */,
 				040651311CC715E7003FD539 /* HomeMessage.json */,
 				040651421CC8770E003FD539 /* SingleView.json */,
@@ -1551,6 +1554,7 @@
 				2C901DC61C89788C004B844B /* Main.storyboard in Resources */,
 				2C4EEFB91CC6087D00AA99F6 /* outboundCity.plist in Resources */,
 				2C4EEFC11CC60D8600AA99F6 /* WeekDayView.xib in Resources */,
+				2C1071E21CD78A2F00324E4E /* MyZhongChou.plist in Resources */,
 				04A99CFB1CBF897A00C6F5F0 /* read_me.txt in Resources */,
 				040651321CC715E7003FD539 /* HomeMessage.json in Resources */,
 				040651431CC8770E003FD539 /* SingleView.json in Resources */,

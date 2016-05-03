@@ -65,7 +65,7 @@ MJCodingImplementation
     
     //行程安排
     NSMutableArray *mutArr=[NSMutableArray array];
-    for (int i=0; i<manager.travelDetailDays.count-1; i++) {
+    for (int i=0; i<manager.travelDetailDays.count; i++) {
         MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
         ScheduleData *oneSchedule=[[ScheduleData alloc]init];
         oneSchedule.day=model.day;
