@@ -48,6 +48,8 @@ static id _instace;
         _goal_TotalTravelDay=@"1";
         _return_supportOneYuanStatus=@"1";
         _return_supportAnyYuanStatus=@"1";
+        _return_returnPeopleStatus = @"1";
+        _return_returnPeopleStatus01 = @"1";
         //第四个界面
     }
     return self;
