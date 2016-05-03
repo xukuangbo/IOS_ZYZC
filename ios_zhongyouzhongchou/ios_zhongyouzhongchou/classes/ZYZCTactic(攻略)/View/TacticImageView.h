@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class TacticSingleFoodModel;
 @interface TacticImageView : UIButton
 /**
  *  view类型
@@ -23,5 +23,5 @@
 @property (nonatomic, weak) UILabel *nameLabel;
 
 
-
+@property (nonatomic, strong) TacticSingleFoodModel *tacticSingleFoodModel;
 @end

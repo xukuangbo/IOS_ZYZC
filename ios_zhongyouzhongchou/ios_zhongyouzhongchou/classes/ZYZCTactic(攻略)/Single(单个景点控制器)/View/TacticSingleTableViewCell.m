@@ -14,6 +14,7 @@
 #import "TacticThreeMapView.h"
 #import "TacticSingleTipsModel.h"
 #import "TacticSingleLongPicture.h"
+#import "TacticSingleTipsController.h"
 @interface TacticSingleTableViewCell()
 //描述
 @property (nonatomic, weak) TacticCustomMapView *descView;
@@ -104,7 +105,6 @@
     pictureShowButton.layer.masksToBounds = YES;
     pictureShowButton.backgroundColor = [UIColor redColor];
     [pictureView addSubview:pictureShowButton];
-//    [pictureShowButton addTarget:self action:@selector(playPictureAction:) forControlEvents:UIControlEventTouchUpInside];
     self.pictureShowButton = pictureShowButton;
     
     //众游小贴士
@@ -166,18 +166,14 @@
 }
 #pragma mark - 点击跳转事件
 /**
- *  图文播放
- */
-- (void)playPictureAction:(UIButton *)button
-{
-    NSLog(@"打开图文啦！~~~~~~");
-}
-/**
  *  小贴士播放
  */
 - (void)tipsShowButtonAction:(UIButton *)button
 {
-    NSLog(@"打开小贴士啦！~~~~~~");
+    
+    TacticSingleTipsController *tipsVC = [[TacticSingleTipsController alloc] init];
+    tipsVC.tacticSingleTipsModel = self.tacticSingleModelFrame.tacticSingleModel.tips;
+    [self.viewController.navigationController pushViewController:tipsVC animated:YES];
 }
 #pragma mark - 模型赋值
 - (void)setTacticSingleModelFrame:(TacticSingleModelFrame *)tacticSingleModelFrame
