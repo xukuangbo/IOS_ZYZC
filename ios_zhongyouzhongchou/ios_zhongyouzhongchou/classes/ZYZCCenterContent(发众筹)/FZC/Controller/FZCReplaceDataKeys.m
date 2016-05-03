@@ -17,7 +17,7 @@ MJCodingImplementation
 {
     self = [super init];
     if (self) {
-        
+        _report=[NSMutableArray array];
     }
     return self;
 }
@@ -86,54 +86,73 @@ MJCodingImplementation
     ReportData *report01=[[ReportData alloc]init];
     report01.style=@1;
     report01.price=@1;
+    [_report addObject:report01];
     //支持任意金额
     ReportData *report02=[[ReportData alloc]init];
     report02.style=@2;
     report02.price=@0;
+    [_report addObject:report02];
     //回报支持1
-    ReportData *report03=[[ReportData alloc]init];
-    report03.style=@3;
-    report03.price=(NSNumber *)manager.return_returnPeopleMoney;
-    report03.people=(NSNumber *)manager.return_returnPeopleNumber;
-    report03.desc=manager.return_wordDes;
-    report03.voice=manager.return_voiceUrl;
-    report03.video=manager.return_movieUrl;
-    report03.videoImg=manager.return_movieImg;
+    if(manager.return_returnPeopleStatus){
+        ReportData *report03=[[ReportData alloc]init];
+        report03.style=@3;
+        report03.price=(NSNumber *)manager.return_returnPeopleMoney;
+        report03.people=(NSNumber *)manager.return_returnPeopleNumber;
+        report03.desc=manager.return_wordDes;
+        report03.voice=manager.return_voiceUrl;
+        report03.video=manager.return_movieUrl;
+        report03.videoImg=manager.return_movieImg;
+        [_report addObject:report03];
+    }
     //一起游
     ReportData *report04=[[ReportData alloc]init];
     report04.style=@4;
     report04.people=(NSNumber *)manager.goal_numberPeople;
     report04.price=(NSNumber *)manager.return_togetherRateMoney;
+    [_report addObject:report04];
     
     //回报支持2
-    ReportData *report05=[[ReportData alloc]init];
-    report05.style=@5;
-    report05.price=(NSNumber *)manager.return_returnPeopleMoney01;
-    report05.people=(NSNumber *)manager.return_returnPeopleNumber01;
-    report05.desc=manager.return_wordDes01;
-    report05.voice=manager.return_voiceUrl01;
-    report05.video=manager.return_movieUrl01;
-    report05.videoImg=manager.return_movieImg01;
+    if (manager.return_returnPeopleStatus01) {
+        ReportData *report05=[[ReportData alloc]init];
+        report05.style=@5;
+        report05.price=(NSNumber *)manager.return_returnPeopleMoney01;
+        report05.people=(NSNumber *)manager.return_returnPeopleNumber01;
+        report05.desc=manager.return_wordDes01;
+        report05.voice=manager.return_voiceUrl01;
+        report05.video=manager.return_movieUrl01;
+        report05.videoImg=manager.return_movieImg01;
+        [_report addObject:report05];
+    }
+    if ((NSNumber *)manager.raiseMoney_sightMoney) {
+        //筹旅费景点花费
+        ReportData *report06=[[ReportData alloc]init];
+        report06.style=@6;
+        report06.price=(NSNumber *)manager.raiseMoney_sightMoney;
+        [_report addObject:report06];
+    }
     
-    //筹旅费景点花费
-    ReportData *report06=[[ReportData alloc]init];
-    report06.style=@6;
-    report06.price=(NSNumber *)manager.raiseMoney_sightMoney;
-    //筹旅费交通花费
-    ReportData *report07=[[ReportData alloc]init];
-    report07.style=@7;
-    report07.price=(NSNumber *)manager.raiseMoney_transMoney;
-    //筹旅费住宿花费
-    ReportData *report08=[[ReportData alloc]init];
-    report08.style=@8;
-    report08.price=(NSNumber *)manager.raiseMoney_liveMoney;
-    //筹旅费餐饮花费
-    ReportData *report09=[[ReportData alloc]init];
-    report09.style=@9;
-    report09.price=(NSNumber *)manager.raiseMoney_eatMoney;
+    if ((NSNumber *)manager.raiseMoney_transMoney) {
+        //筹旅费交通花费
+        ReportData *report07=[[ReportData alloc]init];
+        report07.style=@7;
+        report07.price=(NSNumber *)manager.raiseMoney_transMoney;
+        [_report addObject:report07];
+    }
     
-    self.report=@[report01,report02,report03,report04,report05,report06,report07,report08];
-    
+    if ((NSNumber *)manager.raiseMoney_liveMoney) {
+        //筹旅费住宿花费
+        ReportData *report08=[[ReportData alloc]init];
+        report08.style=@8;
+        report08.price=(NSNumber *)manager.raiseMoney_liveMoney;
+        [_report addObject:report08];
+    }
+    if ((NSNumber *)manager.raiseMoney_eatMoney) {
+        //筹旅费餐饮花费
+        ReportData *report09=[[ReportData alloc]init];
+        report09.style=@9;
+        report09.price=(NSNumber *)manager.raiseMoney_eatMoney;
+        [_report addObject:report09];
+    }
 }
 
 @end

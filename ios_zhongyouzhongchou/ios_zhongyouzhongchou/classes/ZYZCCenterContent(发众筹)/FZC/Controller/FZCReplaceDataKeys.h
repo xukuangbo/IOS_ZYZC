@@ -27,7 +27,7 @@
 @property (nonatomic, copy  ) NSString *video;
 @property (nonatomic, copy  ) NSString *videoImg;
 @property (nonatomic, strong) NSArray  *schedule;
-@property (nonatomic, strong) NSArray  *report;
+@property (nonatomic, strong) NSMutableArray  *report;
 
 /**
  *  重新定义参数名

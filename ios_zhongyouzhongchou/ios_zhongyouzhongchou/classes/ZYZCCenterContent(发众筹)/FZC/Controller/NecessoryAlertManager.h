@@ -9,5 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface NecessoryAlertManager : NSObject
+/**
+ *  如果必要数据未填写，展示提示界面
+ *
+ */
 + (BOOL)showNecessoryAlertView;
+
 @end

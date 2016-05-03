@@ -340,7 +340,6 @@
         TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
         [travelSecondCell saveTravelOneDayDetailData];
         NSDictionary *modelDict = travelSecondCell.oneDetailModel.mj_keyValues;
-        NSLog(@"modelDict:%@",modelDict);
         if (modelDict.count>3) {
             [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
         }
