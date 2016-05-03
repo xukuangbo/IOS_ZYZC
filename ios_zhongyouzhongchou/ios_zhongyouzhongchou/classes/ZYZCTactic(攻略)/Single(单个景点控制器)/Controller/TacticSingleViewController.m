@@ -77,37 +77,38 @@
  */
 - (void)refreshDataWithViewId:(NSInteger)viewId
 {
-    NSString *Json_path = [[NSBundle mainBundle] pathForResource:@"SingleView.json" ofType:nil];
-    //==Json数据
-    NSData *data=[NSData dataWithContentsOfFile:Json_path];
-    //==JsonObject
-    
-    NSDictionary *JsonObject=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:JsonObject[@"data"]];
-    self.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
-    
-    [self.tableView reloadData];
-    
-    return ;
-    
-////    http://localhost:8080/viewSpot/getViewSpot.action?viewId=13
-//    NSString *url = [NSString stringWithFormat:@"http://121.40.225.119:8080/viewSpot/getViewSpot.action?viewId=%ld",(long)viewId];
-//    //访问网络
+//    NSString *Json_path = [[NSBundle mainBundle] pathForResource:@"SingleView.json" ofType:nil];
+//    //==Json数据
+//    NSData *data=[NSData dataWithContentsOfFile:Json_path];
+//    //==JsonObject
 //    
-//    __weak typeof(&*self) weakSelf = self;
-//    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
-//        if (isSuccess) {
-//            //请求成功，转化为数组
-////            NSLog(@"%@",result);
-//            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
-//            weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
-//            
-//            [weakSelf.tableView reloadData];
-//        }
-//        
-//    } andFailBlock:^(id failResult) {
-//        NSLog(@"%@",failResult);
-//    }];
+//    NSDictionary *JsonObject=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//    TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:JsonObject[@"data"]];
+//    self.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
+//    
+//    [self.tableView reloadData];
+//    
+//    return ;
+//    http://www.sosona.com:8080/viewSpot/getVideoViewList.action
+//    http://localhost:8080/viewSpot/getViewSpot.action?viewId=13
+    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=212",(long)viewId];
+//    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getVideoViewList.action"];
+    //访问网络
+    
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            //请求成功，转化为数组
+//            NSLog(@"%@",result);
+            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
+            weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
+            
+            [weakSelf.tableView reloadData];
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
 }
 
 
@@ -164,7 +165,7 @@
     headView.nameLabel.text = self.tacticSingleModelFrame.tacticSingleModel.name;
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     
-//    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+//  [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     return headView;
     
@@ -174,7 +175,6 @@
 {
     return self.tacticSingleModelFrame.realHeight;
 }
-
 
 /**
  *  navi背景色渐变的效果

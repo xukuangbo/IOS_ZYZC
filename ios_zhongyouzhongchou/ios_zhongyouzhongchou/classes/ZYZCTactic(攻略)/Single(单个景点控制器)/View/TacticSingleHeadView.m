@@ -15,7 +15,9 @@
     if (self) {
         UILabel *namelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
         namelabel.font = [UIFont systemFontOfSize:33];
-        namelabel.centerX = self.centerX;
+        namelabel.textAlignment = NSTextAlignmentCenter;
+        namelabel.textColor = [UIColor whiteColor];
+        namelabel.centerX = KSCREEN_W * 0.5;
         namelabel.centerY = TacticSingleHeadViewHeight * 0.5;
         [self addSubview:namelabel];
         self.nameLabel = namelabel;

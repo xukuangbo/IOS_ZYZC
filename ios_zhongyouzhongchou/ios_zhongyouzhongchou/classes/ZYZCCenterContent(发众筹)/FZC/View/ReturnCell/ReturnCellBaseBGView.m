@@ -112,8 +112,8 @@
  */
 - (void)bgEnabledAction:(UIButton *)button
 {
-    NSLog(@"%d",self.index);
-    if (self.index != 3) {
+    NSLog(@"%zd",self.index);
+    if (self.index != 3 && self.index != 2) {
         return;
     }
 
@@ -130,6 +130,11 @@
     if (self.index == 2) {//说明是第三个cell
         [MoreFZCDataManager sharedMoreFZCDataManager].return_returnPeopleStatus = [NSString stringWithFormat:@"%zd",button.selected];
     }
+    //这里要存到单例里面去
+    if (self.index == 3) {//说明是第三个celltwo
+        [MoreFZCDataManager sharedMoreFZCDataManager].return_returnPeopleStatus01 = [NSString stringWithFormat:@"%zd",button.selected];
+    }
+    
 }
 
 /**

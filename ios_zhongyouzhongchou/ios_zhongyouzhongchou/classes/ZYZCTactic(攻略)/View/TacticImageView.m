@@ -8,6 +8,7 @@
 
 #import "TacticImageView.h"
 #import "TacticSingleViewController.h"
+#import "TacticSingleFoodController.h"
 @implementation TacticImageView
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -40,10 +41,21 @@
 {
     if (self.viewType == 3) {
         NSLog(@"这是一个景点的描述！！！！！");
+        
+        
     }else if (self.viewType == 1 || self.viewType == 2){
         TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:self.viewId];
         [self.viewController.navigationController pushViewController:singleVC animated:YES];
+    }else if (self.viewType == 0){
+        //说明他不是一个国家那种东西，而是一个景点
+        
+        TacticSingleFoodController *foodVC = [[TacticSingleFoodController alloc] init];
+        foodVC.tacticSingleFoodModel = self.tacticSingleFoodModel;
+        
+        [self.viewController.navigationController pushViewController:foodVC animated:YES];
     }
+    
+    
     
 }
 @end

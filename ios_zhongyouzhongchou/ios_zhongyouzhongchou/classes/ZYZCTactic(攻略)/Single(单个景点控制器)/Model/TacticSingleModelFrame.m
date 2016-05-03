@@ -99,10 +99,10 @@
         foodsY = CGRectGetMaxY(self.mustPlayViewF) + TacticTableViewCellMargin;
     }else{
         self.mustPlayViewF = CGRectMake(0, mustPlayViewY, 0, 0);
-        foodsY = CGRectGetMaxY(self.tipsViewF);
+        foodsY = CGRectGetMaxY(self.tipsViewF) + TacticTableViewCellMargin;
     }
     
-    //必玩景点
+    //特色美食
     CGFloat XXX = 0;
     if(tacticSingleModel.foods.count > 0){//有必玩景点
         CGFloat foodsViewX = TacticTableViewCellMargin;
