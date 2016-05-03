@@ -68,7 +68,7 @@ MJCodingImplementation
     for (int i=0; i<manager.travelDetailDays.count; i++) {
         MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
         ScheduleData *oneSchedule=[[ScheduleData alloc]init];
-        oneSchedule.day=model.day;
+        oneSchedule.day=[NSString stringWithFormat:@"%@",model.day];
         oneSchedule.spot=model.siteDes;
         oneSchedule.spots=model.sites;
         oneSchedule.trans=model.trafficDes;

@@ -98,7 +98,6 @@
     [self.contentView addSubview:detailView];
     self.detailView = detailView;
     
-    
     //这里应该创建一个6000元的textfiled
     UITextField *moneyTextFiled = [[UITextField alloc] init];
 //    moneyTextFiled.backgroundColor = [UIColor redColor];

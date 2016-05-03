@@ -10,6 +10,7 @@
 #import "MoreFZCChooseSceneController.h"
 #import "CalendarViewController.h"
 #import "GoalScheduleView.h"
+#import "NecessaryView.h"
 
 #import "MoreFZCDataManager.h"
 
@@ -39,6 +40,7 @@
     _lastScenePoint=CGPointMake(10, 0);
     _sceneArr=[NSMutableArray array];
     _sceneTitleArr=[NSMutableArray array];
+    
     //旅游目的地添加到该_scroll上
     _scroll=[[UIScrollView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.topLineView.bottom, KSCREEN_W-5*KEDGE_DISTANCE-28, 35)];
     _scroll.contentSize=CGSizeMake(_scroll.width, 0);
@@ -86,6 +88,11 @@
     _peoplePickerView=[[GoalPeoplePickerView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _scroll.bottom+110, 0, 0)];
     _peoplePickerView.numberPeople=4;
     [self.contentView addSubview:_peoplePickerView];
+    
+    //添加必填项标示符
+//    [self.contentView addSubview:[[NecessaryView alloc] initWithTop:20]];
+//    [self.contentView addSubview:[[NecessaryView alloc] initWithTop:95]];
+//    [self.contentView addSubview:[[NecessaryView alloc] initWithTop:165]];
 }
 
 #pragma mark --- 选择行程日期

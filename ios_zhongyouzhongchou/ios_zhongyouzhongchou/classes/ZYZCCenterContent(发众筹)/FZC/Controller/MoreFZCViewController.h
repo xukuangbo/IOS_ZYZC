@@ -33,6 +33,10 @@ typedef void(^ReturnKeyBordHidden)();
  *  承载4个tableview的view
  */
 @property (nonatomic, weak) UIView *clearMapView;
+/**
+ *  承载3个底部button的view
+ */
+@property (nonatomic, strong) UIView *bottomView;
 
 @property (nonatomic, copy) GoalKeyBordHidden goalKeyBordHidden;
 @property (nonatomic, copy) RaiseKeyBordHidden raiseKeyBordHidden;

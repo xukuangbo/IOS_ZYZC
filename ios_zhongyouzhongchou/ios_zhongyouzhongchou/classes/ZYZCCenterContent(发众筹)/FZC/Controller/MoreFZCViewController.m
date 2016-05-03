@@ -16,6 +16,8 @@
 #import "MoreFZCDataManager.h"
 #import "FZCReplaceDataKeys.h"
 #import "MBProgressHUD+MJ.h"
+#import "ZYZCOSSManager.h"
+#import "NecessoryAlertManager.h"
 
 #define kMoreFZCToolBar 20
 #define kNaviBar 64
@@ -70,12 +72,11 @@
     //不保存
     else
     {
-        /**
-         *  释放单例中存储的内容
-         */
+        
+        //释放单例中存储的内容
         MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-        //删除临时文件夹内容
         [manager initAllProperties];
+         //删除临时文件夹内容
         [self cleanTmpFile];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -171,7 +172,7 @@
     
     [bottomView addSubview:[UIView lineViewWithFrame:CGRectMake(0, 0, KSCREEN_W, 0.5) andColor:[UIColor lightGrayColor]]];
     
-    NSArray *titleArr=@[@"预   览",@"下一步",@"保   存"];
+    NSArray *titleArr=@[@"预览",@"下一步",@"保存"];
     CGFloat btn_width=100;
     CGFloat btn_edg  =(KSCREEN_W-btn_width*3)/4;
     for (int i=0; i<3; i++) {
@@ -186,6 +187,7 @@
         sureBtn.tag=SkimType+i;
         [bottomView addSubview:sureBtn];
     }
+    self.bottomView=bottomView;
 }
 
 #pragma mark - MoreFZCToolBarDelegate
@@ -215,9 +217,8 @@
             _returnKeyBordHidden();
         }
     }
-    
-    
 }
+
 #pragma mark --- 点击底部按钮触发事件
 -(void)clickBtn:(UIButton *)sender
 {
@@ -226,13 +227,49 @@
             
             break;
         case NextType:
-            
+            [self nextOneOrPublish:self.toolBar.preClickBtn];
             break;
         default:
         case SaveType:
             //保存数据
             [self saveData];
             break;
+    }
+}
+
+-(void)nextOneOrPublish:(UIButton *)button
+{
+    //下一步
+    if (button.tag<MoreFZCToolBarTypeReturn) {
+        UIButton *btn=(UIButton *)[self.toolBar viewWithTag:(button.tag+1)];
+        [self.toolBar buttonClickAction:btn];
+        
+        UIButton *nextBtn=(UIButton *)[self.bottomView viewWithTag:NextType];
+        if (btn.tag==MoreFZCToolBarTypeReturn) {
+            [nextBtn setTitle:@"发布" forState:UIControlStateNormal];
+            [nextBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            nextBtn.backgroundColor=[UIColor ZYZC_MainColor];
+        }
+    }
+    //发  布
+    else
+    {
+        NSLog(@"发布");
+        [self publishMyZhongChou];
+
+    }
+}
+
+#pragma mark --- 发布我的众筹
+-(void)publishMyZhongChou
+{
+    [self saveModelInManager];
+    BOOL hasLossMessage= [NecessoryAlertManager showNecessoryAlertView];
+    if (!hasLossMessage) {
+        //可发布状态
+        [MBProgressHUD showMessage:@"正在发布,请稍等..."];
+        
+        [MBProgressHUD hideHUD];
     }
 }
 
@@ -250,17 +287,9 @@
     _oneResouceFile=[self resoureSubFilePath];
     [MBProgressHUD showMessage:nil];
     
-    //保存每日行程安排到单例中
+    [self saveModelInManager];
+    
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    
-    [manager.travelDetailDays removeAllObjects];
-    MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
-    for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
-        TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
-        [travelSecondCell saveTravelOneDayDetailData];
-        [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
-    }
-    
     __weak typeof (&*self)weakSelf=self;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         //将图片，语音，视屏文件从tmp中移动到documents中
@@ -297,10 +326,82 @@
             [self saveDataInMyZhongChouPlist];
         });
     });
+}
+
+#pragma mark --- 保存行程安排model到manager中
+-(void)saveModelInManager
+{
+    //保存每日行程安排到单例中
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     
+    [manager.travelDetailDays removeAllObjects];
+    MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
+    for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
+        TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
+        [travelSecondCell saveTravelOneDayDetailData];
+        NSDictionary *modelDict = travelSecondCell.oneDetailModel.mj_keyValues;
+        NSLog(@"modelDict:%@",modelDict);
+        if (modelDict.count>3) {
+            [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
+        }
+    }
+}
+
+#pragma mark --- 保存数据到plist文档中
+-(void)saveDataInMyZhongChouPlist
+{
+    NSString *path=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0];
+    NSString *plistPath=[path stringByAppendingPathComponent:@"MyZhongChou.plist"];
+    NSArray *arr=[NSArray arrayWithContentsOfFile:plistPath];
+    NSMutableArray *mutArr=[NSMutableArray arrayWithArray:arr];
+     NSDictionary *dict=@{@"oneResouceFile":_oneResouceFile,@"archiveDataPath":_archiveDataPath};
+    if (!_isFirstTimeToSave) {
+        [mutArr addObject:dict];
+        _isFirstTimeToSave=YES;
+    }
+    else
+    {
+        [mutArr replaceObjectAtIndex:mutArr.count-1 withObject:dict];
+    }
+    [mutArr writeToFile:plistPath atomically:YES];
+}
+
+#pragma mark --- 在resoure文件下创建子文件来保存众筹的相关图片、语音、视屏资源
+-(NSString *)resoureSubFilePath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *createPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,[ZYZCTool getLocalTime]];
+    // 判断文件夹是否存在，如果不存在，则创建
+    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
+        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return createPath;
+}
+
+
+#pragma mark --- 将临时文件移到documents中
+-(NSString *)copyTmpFileToDocument:(NSString *)tmpFilePath
+{
+    NSFileManager*fileManager =[NSFileManager defaultManager];
+    NSString *filePath=nil;
+    if ([fileManager fileExistsAtPath:tmpFilePath]) {
+        NSRange fileNameRange=[tmpFilePath rangeOfString:@"tmp/"];
+        NSString *fileName= [tmpFilePath substringFromIndex:fileNameRange.location+fileNameRange.length];
+        filePath=[NSString stringWithFormat:@"%@/%@",_oneResouceFile,fileName];
+    if([fileManager fileExistsAtPath:filePath]==NO){
+            NSError*error;
+            BOOL hasCopy=[fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
+           [_picesSaveState addObject:[NSNumber numberWithBool:hasCopy]];
+        }
+    }
+    return filePath;
+}
+
+
 //    NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:dataDict];
 //    [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
-    
+
 //    NSDictionary *dataDic=@{
 //                            @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
 //                            @"status":@1,
@@ -401,83 +502,16 @@
 //                                           @"price": @1000
 //                                        }
 //                                       ]
-//                            
+//
 //                    };
 //    [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
 //        NSLog(@"%@",result);
-//        
+//
 //    }
 //    andFailBlock:^(id failResult)
 //    {
 //        NSLog(@"%@",failResult);
-//        
+//
 //    }];
-}
-
--(void)saveDataInMyZhongChouPlist
-{
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    NSString *path=[paths  objectAtIndex:0];
-    NSString *plistPath=[path stringByAppendingPathComponent:@"MyZhongChou.plist"];
-    NSArray *arr=[NSArray arrayWithContentsOfFile:plistPath];
-    NSLog(@"arr:%@",arr);
-    NSMutableArray *mutArr=[NSMutableArray arrayWithArray:arr];
-     NSDictionary *dict=@{@"oneResouceFile":_oneResouceFile,@"archiveDataPath":_archiveDataPath};
-    if (!_isFirstTimeToSave) {
-        [mutArr addObject:dict];
-        _isFirstTimeToSave=YES;
-    }
-    else
-    {
-        [mutArr replaceObjectAtIndex:mutArr.count-1 withObject:dict];
-    }
-    
-    [mutArr writeToFile:plistPath atomically:YES];
-    NSArray *arr01=[NSArray arrayWithContentsOfFile:plistPath];
-    NSLog(@"arr01:%@",arr01);
-
-    
-}
-
--(NSString *)turnJson:(NSDictionary *)dic
-{
-//   转换成json
-    NSData *data = [NSJSONSerialization dataWithJSONObject :dic options : NSJSONWritingPrettyPrinted error:NULL];
-    
-    NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
-    return jsonStr;
-}
-
-#pragma mark --- 在resoure文件下创建子文件来保存一个众筹的相关图片、语音、视屏资源
--(NSString *)resoureSubFilePath
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *createPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,[ZYZCTool getLocalTime]];
-    // 判断文件夹是否存在，如果不存在，则创建
-    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
-        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return createPath;
-}
-
-
-#pragma mark --- 将临时文件移到documents中
--(NSString *)copyTmpFileToDocument:(NSString *)tmpFilePath
-{
-    NSFileManager*fileManager =[NSFileManager defaultManager];
-    NSString *filePath=nil;
-    if ([fileManager fileExistsAtPath:tmpFilePath]) {
-        NSRange fileNameRange=[tmpFilePath rangeOfString:@"tmp/"];
-        NSString *fileName= [tmpFilePath substringFromIndex:fileNameRange.location+fileNameRange.length];
-        filePath=[NSString stringWithFormat:@"%@/%@",_oneResouceFile,fileName];
-    if([fileManager fileExistsAtPath:filePath]==NO){
-            NSError*error;
-            BOOL hasCopy=[fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
-           [_picesSaveState addObject:[NSNumber numberWithBool:hasCopy]];
-        }
-    }
-    return filePath;
-}
 
 @end

@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  ios_zhongyouzhongchou
+
+  Created by liuliang on 16/5/3.
+  Copyright © 2016年 liuliang. All rights reserved.
+*/
+
+/**
+ * Error
+ */
+"error_no_dest"="请添加旅行目的地";
+"error_no_travelTime"="请添加旅行时间";
+"error_no_travel_theme"="请添加旅行主题名";
+"error_no_travel_image"="请添加旅行主题封面";
+"error_no_spell_buy_price"="请添加预筹旅费金额";
+"error_no_travelDesc"="请添加众筹目的描述";
+"error_no_travelSchedule"="请添加行程安排";
+"error_no_togetherTravel_money_rate"="请添加一起游支持金额百分比";
+"error_no_return1"="请完善回报众筹一内容";
+"error_no_return2"="请完善回报众筹二内容";
+

@@ -41,4 +41,5 @@ typedef void (^ChangeHeightBlock)(RaiseMoneyFirstModel *);
 @property (nonatomic, strong) RaiseMoneyFirstModel *model;
 
 @property (nonatomic, copy) ChangeHeightBlock changeHeightBlock;
+
 @end

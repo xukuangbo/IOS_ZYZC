@@ -23,4 +23,5 @@ typedef enum {
 @interface MoreFZCToolBar : UIView
 @property (nonatomic, strong) UIButton *preClickBtn;
 @property (nonatomic, weak) id<MoreFZCToolBarDelegate> delegate;
+- (void)buttonClickAction:(UIButton *)button;
 @end

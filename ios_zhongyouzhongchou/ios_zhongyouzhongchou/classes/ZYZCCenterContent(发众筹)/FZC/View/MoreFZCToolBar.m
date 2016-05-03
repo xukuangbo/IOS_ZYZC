@@ -7,7 +7,7 @@
 //
 
 #import "MoreFZCToolBar.h"
-
+#import "MoreFZCViewController.h"
 @implementation MoreFZCToolBar
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -91,6 +91,20 @@
         //送到控制器去执行切换tableView视图效果
     if ([self.delegate respondsToSelector:@selector(toolBarWithButton:)]) {
         [self.delegate toolBarWithButton:button.tag];
+    }
+    
+    MoreFZCViewController *vc=(MoreFZCViewController *)self.viewController;
+     UIButton *nextBtn=(UIButton *)[vc.bottomView viewWithTag:NextType];
+    if (button.tag<MoreFZCToolBarTypeReturn) {
+        [nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
+        [nextBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
+        nextBtn.backgroundColor=[UIColor clearColor];
+    }
+    else
+    {
+        [nextBtn setTitle:@"发    布" forState:UIControlStateNormal];
+        [nextBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        nextBtn.backgroundColor=[UIColor ZYZC_MainColor];
     }
 }
 
