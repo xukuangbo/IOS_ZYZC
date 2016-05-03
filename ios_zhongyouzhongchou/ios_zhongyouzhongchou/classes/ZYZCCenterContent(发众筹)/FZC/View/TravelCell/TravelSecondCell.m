@@ -118,8 +118,9 @@
     
     //保存当日旅游文字描述
     WordView *wordView=(WordView *)[_contentEntryView viewWithTag:WordViewType];
-    _oneDetailModel.wordDes=wordView.textView.text;
-    
+    if (wordView.textView.text.length) {
+        _oneDetailModel.wordDes=wordView.textView.text;
+    }
     //保存当日旅游语音描述
     SoundView *soundView=(SoundView *)[_contentEntryView viewWithTag:SoundViewType];
     _oneDetailModel.voiceUrl=soundView.soundFilePath;

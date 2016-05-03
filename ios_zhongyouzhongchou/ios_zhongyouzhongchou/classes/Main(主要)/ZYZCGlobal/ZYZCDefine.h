@@ -9,12 +9,16 @@
 #ifndef ZYZCDefine_h
 #define ZYZCDefine_h
 
-//#define DOCUMENT_FILE @"WSMContent"
+#define KDOCUMENT_FILE @"Resoures"
 
 //屏幕宽
 #define KSCREEN_W [UIScreen mainScreen].bounds.size.width
 //屏幕高
 #define KSCREEN_H [UIScreen mainScreen].bounds.size.height
+
+// globalization
+#define ZYLocalizedString(x)   NSLocalizedString(x, nil)
+
 //比例系数
 #define KCOFFICIEMNT  KSCREEN_W/320
 

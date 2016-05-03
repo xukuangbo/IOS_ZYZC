@@ -38,7 +38,7 @@
 
 
 @interface ScheduleData : NSObject<MJCoding>
-@property (nonatomic, strong) NSNumber *day;
+@property (nonatomic, copy  ) NSString *day;
 @property (nonatomic, copy  ) NSString *spot;
 @property (nonatomic, strong) NSArray  *spots;
 @property (nonatomic, copy  ) NSString *trans;
