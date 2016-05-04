@@ -86,11 +86,11 @@
     //将已确定日程显示到界面上
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     if (manager.goal_startDate.length) {
-        _scheduleView.startLab.text=manager.goal_startDate;
+        _scheduleView.startLab.text=[self changeDateString:manager.goal_startDate];
         _scheduleView.startLab.textColor=[UIColor ZYZC_TextBlackColor];
     }
     if (manager.goal_backDate.length) {
-        _scheduleView.backLab.text=manager.goal_backDate;
+        _scheduleView.backLab.text=[self changeDateString:manager.goal_backDate];
         _scheduleView.backLab.textColor=[UIColor ZYZC_TextBlackColor];
     }
     //将目的地显示到scroll上
@@ -115,6 +115,14 @@
     if (_lastScenePoint.x<_scroll.width) {
         _scroll.left=2*KEDGE_DISTANCE+(_scroll.width-_lastScenePoint.x)/2;
     }
+}
+
+#pragma mark --- “2016-06－01” to “2016/06/01”
+-(NSString *)changeDateString:(NSString *)dateStr
+{
+    NSArray *arr=[dateStr componentsSeparatedByString:@"-"];
+    NSString *newDateStr=[arr componentsJoinedByString:@"/"];
+    return newDateStr;
 }
 
 @end

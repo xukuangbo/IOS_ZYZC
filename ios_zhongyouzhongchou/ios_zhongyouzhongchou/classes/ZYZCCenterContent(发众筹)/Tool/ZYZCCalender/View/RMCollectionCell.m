@@ -57,6 +57,8 @@
     
     UIImageView *occupyFlag=[[UIImageView alloc]initWithFrame:CGRectMake((self.bounds.size.width-5)/2,self.bounds.size.height*0.7 , 5, 5)];
     occupyFlag.image=[UIImage imageNamed:@"btn_xdd"];
+    occupyFlag.layer.cornerRadius=occupyFlag.width/2;
+    occupyFlag.layer.masksToBounds=YES;
     self.occupyFlag=occupyFlag;
     [self addSubview:occupyFlag];
 }
@@ -119,6 +121,8 @@
             self.dayLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)model.day];
             self.dayLabel.textColor = [UIColor ZYZC_TextGrayColor];
             self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CalendarDisableDate"]];
+            self.occupyFlag.image=nil;
+            self.occupyFlag.backgroundColor=[UIColor grayColor];
             break;
 
         default:

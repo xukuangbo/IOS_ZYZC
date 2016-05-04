@@ -36,6 +36,10 @@
     [detailBtn addTarget:self action:@selector(clickDetailTravel) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:detailBtn];
     
+    _addView=[[AddDetailView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.titleLab.bottom+10, KSCREEN_W-4*KEDGE_DISTANCE , TRAVELOPENHEIGHT-KEDGE_DISTANCE)];
+    [self.contentView addSubview:_addView];
+    _addView.hidden=YES;
+    
     //添加录入内容
      _contentEntryView=[[FZCContentEntryView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.topLineView.bottom, 0,0)];
     [self.contentView addSubview:_contentEntryView];
@@ -47,10 +51,6 @@
 -(void)getChangeHeightView
 {
     //创建添加详细行程视图
-    if (!_addView) {
-        _addView=[[AddDetailView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.titleLab.bottom+10, KSCREEN_W-4*KEDGE_DISTANCE , TRAVELOPENHEIGHT-KEDGE_DISTANCE)];
-        [self.contentView addSubview:_addView];
-    }
     _addView.hidden=NO;
     self.bgImg.height+=TRAVELOPENHEIGHT;
     self.topLineView.top+=TRAVELOPENHEIGHT;

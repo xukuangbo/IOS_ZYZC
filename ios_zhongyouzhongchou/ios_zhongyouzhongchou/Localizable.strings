@@ -27,3 +27,9 @@
 "error_no_return1"="请完善回报众筹1内容";
 "error_no_return2"="请完善回报众筹2内容";
 
+"error_no_startTime"="请添加出发时间";
+"error_no_endTime"="请添加返回时间";
+"error_no_startChoose_time"="时间有冲突！请重新选择开始日期";
+"error_no_endChoose_time"="时间有冲突！请重新选择返回日期";
+
+
