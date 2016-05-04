@@ -59,29 +59,11 @@
                 TacticImageView *imageView = self.viewArray[i];
                 [imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(videoModel.viewImg)] forState:UIControlStateNormal];
                 imageView.nameLabel.text = videoModel.name;
-                imageView.viewId = videoModel.viewid;
-                imageView.viewType = videoModel.viewType;
+//                imageView.viewId = videoModel.viewid;
+//                imageView.viewType = videoModel.viewType;
                 
                 //只添加这几个已有的view
                 [self addSubview:imageView];
-//                if (i == 0) {
-//                    [self.firstView sd_setImageWithURL:[NSURL URLWithString:KWebImage(videoModel.viewImg)] forState:UIControlStateNormal];
-//                    self.firstView.nameLabel.text = videoModel.name;
-//                    self.firstView.viewId = videoModel.viewid;
-//                    self.firstView.viewType = videoModel.viewType;
-//                }
-//                if (i == 1) {
-//                    [self.secondView sd_setImageWithURL:[NSURL URLWithString:KWebImage(videoModel.viewImg)] forState:UIControlStateNormal];
-//                    self.secondView.nameLabel.text = videoModel.name;
-//                    self.secondView.viewId = videoModel.viewid;
-//                    self.secondView.viewType = videoModel.viewType;
-//                }
-//                if (i == 2) {
-//                    [self.thirdView sd_setImageWithURL:[NSURL URLWithString:KWebImage(videoModel.viewImg)] forState:UIControlStateNormal];
-//                    self.thirdView.nameLabel.text = videoModel.name;
-//                    self.thirdView.viewId = videoModel.viewid;
-//                    self.thirdView.viewType = videoModel.viewType;
-//                }
                 
             }
     }

@@ -45,17 +45,32 @@
  */
 - (void)reloadRefreshData
 {
-    NSString *Json_path = [[NSBundle mainBundle] pathForResource:@"HomeMessage.json" ofType:nil];
-    //==Json数据
-    NSData *data=[NSData dataWithContentsOfFile:Json_path];
-    //==JsonObject
-    
-    NSDictionary *JsonObject=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    //拿到字典，转化成模型
-    TacticModel *model = [TacticModel mj_objectWithKeyValues:JsonObject[@"data"]];
-    _tacticModel = model;
-    
-    _headImageArray = model.pics;
+//    NSString *Json_path = [[NSBundle mainBundle] pathForResource:@"HomeMessage.json" ofType:nil];
+//    //==Json数据
+//    NSData *data=[NSData dataWithContentsOfFile:Json_path];
+//    //==JsonObject
+//    
+//    NSDictionary *JsonObject=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//    //拿到字典，转化成模型
+//    TacticModel *model = [TacticModel mj_objectWithKeyValues:JsonObject[@"data"]];
+//    _tacticModel = model;
+//    
+//    _headImageArray = model.pics;
+    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getIndexHot.action"];
+    //访问网络
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            //请求成功，转化为数组
+            TacticModel *tacticModel = [TacticModel mj_objectWithKeyValues:result[@"data"]];
+            weakSelf.tacticModel = tacticModel;
+            
+            [weakSelf reloadData];
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
     
    
 }

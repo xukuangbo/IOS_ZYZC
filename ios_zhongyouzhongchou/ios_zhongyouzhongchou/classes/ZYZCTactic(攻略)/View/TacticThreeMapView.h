@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef NS_ENUM(NSInteger, ThreeMapViewType)
+{
+    threeMapViewTypeVideo = 1,
+    threeMapViewTypeSingleView
+};
 @interface TacticThreeMapView : UIView
 
+@property (nonatomic, assign) ThreeMapViewType threeMapViewType;
 
 @property (nonatomic, strong) NSArray *videos;
 
