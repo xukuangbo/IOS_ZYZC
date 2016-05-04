@@ -5,8 +5,9 @@
 #import "MoreFZCBaseTableViewCell.h"
 #import "RaiseMoneyFirstModel.h"
 
-#define kRaiseMoneyRealHeight 100
-typedef void (^ChangeHeightBlock)(RaiseMoneyFirstModel *);
+#define kRaiseMoneyRealHeight 120
+
+typedef void (^ChangeHeightBlock)(BOOL open);
 
 
 @interface MoreFZCRaiseMoneyFirstCell : MoreFZCBaseTableViewCell<UITextFieldDelegate>
@@ -24,10 +25,6 @@ typedef void (^ChangeHeightBlock)(RaiseMoneyFirstModel *);
 @property (nonatomic, weak) UIView *detailView;
 
 /**
- *  真正的高度
- */
-@property (nonatomic, assign) CGFloat realHeight;
-/**
  *  money输入框
  */
 @property (nonatomic, weak) UITextField *moneyTextfiled;
@@ -38,8 +35,8 @@ typedef void (^ChangeHeightBlock)(RaiseMoneyFirstModel *);
 @property (nonatomic, weak) UITextField *liveTextfiled;
 @property (nonatomic, weak) UITextField *eatTextfiled;
 
-@property (nonatomic, strong) RaiseMoneyFirstModel *model;
-
 @property (nonatomic, copy) ChangeHeightBlock changeHeightBlock;
+
+@property (nonatomic, assign) BOOL open;
 
 @end

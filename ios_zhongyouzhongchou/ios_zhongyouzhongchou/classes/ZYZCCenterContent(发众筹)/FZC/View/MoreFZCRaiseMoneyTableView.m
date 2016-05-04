@@ -20,43 +20,29 @@
     if (self) {
         self.dataSource =self;
         self.delegate  = self;
-//        self.contentInset = UIEdgeInsetsMake(64 + 50 + 20, 0, 0, 0);
     }
     return self;
 }
 
 
-- (NSMutableArray *)realHeightArray
+- (NSMutableArray *)openArray
 {
-    if (_realHeightArray == nil) {
-        _realHeightArray = [NSMutableArray arrayWithArray:@[@10,@10,@10,@10]];
+    if (!_openArray) {
+        _openArray = [NSMutableArray arrayWithArray:@[@0]];
     }
-    return _realHeightArray;
+    return _openArray;
 }
 
 /**
- *  firstModel
+ *  初始化数组高度
  */
-- (RaiseMoneyFirstModel *)firstModel
+- (NSArray *)heightArray
 {
-    if (_firstModel == nil) {
-        _firstModel = [[RaiseMoneyFirstModel alloc] init];
-        _firstModel.openButtonSelected = NO;
-        _firstModel.realHeight = _firstModel.bgImageHeight = 120;
-        _firstModel.totalMoney = @"0.00 元";
-        _firstModel.detailViewHeight = 60;
-        _firstModel.moneyTextfliedBottom = _firstModel.detailViewHeight - 10;
-        _firstModel.sightTextfiledHidden = YES;
-//        _firstModel.sightMoney = @"点击可以更改文字哦~";
-//        _firstModel.transMoney = @"点击可以更改文字哦~";
-//        _firstModel.liveMoney = @"点击可以更改文字哦~";
-//        _firstModel.eatMoney = @"点击可以更改文字哦~";
+    if (!_heightArray) {
+        _heightArray = [NSMutableArray arrayWithArray:@[@kRaiseMoneyRealHeight,@10,@RAISECECONDHEIGHT,@10]];
     }
-    
-    
-    return _firstModel;
+    return _heightArray;
 }
-
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -66,28 +52,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //0 2 4灰色空白视图
+    //1 3灰色空白视图
     if (indexPath.row == 1 ||indexPath.row ==3) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"noneCell"];
         cell.contentView.backgroundColor = [UIColor ZYZC_BgGrayColor];
         return cell;
     }else if(indexPath.row == 0){
         
-        MoreFZCRaiseMoneyFirstCell *cell = [[MoreFZCRaiseMoneyFirstCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"firstCell"];
-        if (!self.firstModel) {
-            self.firstModel = cell.model;
+        NSString *ID = @"MoreFZCRaiseMoneyFirstCell";
+        MoreFZCRaiseMoneyFirstCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!cell) {
+            cell = [[MoreFZCRaiseMoneyFirstCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
         }
-        cell.model = self.firstModel;
+        cell.open = [self.openArray[indexPath.row] integerValue];
         //block的定义
         __weak typeof(&*self) weakSelf = self;
-        __weak typeof(&*cell) weakCell = cell;
         
-        cell.changeHeightBlock = ^(RaiseMoneyFirstModel *model){
-            //先添加到数组中，再刷新数据
-            weakSelf.firstModel = model;
-            //此方法拿到该cell,此时要刷新cell的数据
-            [weakSelf reloadRowsAtIndexPaths:@[[weakSelf indexPathForCell:weakCell]] withRowAnimation:UITableViewRowAnimationNone];
-            
+        cell.changeHeightBlock = ^(BOOL open){
+            weakSelf.openArray[indexPath.row] = (open == YES? @1 : @0);
+            CGFloat newHeight = (open == YES?kRaiseMoneyRealHeight + 200:kRaiseMoneyRealHeight);
+            weakSelf.heightArray[indexPath.row] = @(newHeight);
+            [weakSelf reloadData];
         };
         return cell;
     }else{//这里是第二个cell
@@ -103,18 +88,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {//第1中cell
-        return self.firstModel.realHeight;
-    }else if (indexPath.row == 2){//第二种cell
-        return RAISECECONDHEIGHT;
-    }
-    return [self.realHeightArray[indexPath.row] floatValue];
+    return [self.heightArray[indexPath.row] floatValue];
     
 }
-
-
-
-
 
 
 @end

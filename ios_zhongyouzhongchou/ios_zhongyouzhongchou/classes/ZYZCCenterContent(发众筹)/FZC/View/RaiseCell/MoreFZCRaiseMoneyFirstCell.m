@@ -5,19 +5,14 @@
 //  Created by mac on 16/3/19.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-#define kRaiseMoneyMargin 10
 #import "MoreFZCRaiseMoneyFirstCell.h"
 #import "MoreFZCViewController.h"
-//#import "<#header#>"
 @implementation MoreFZCRaiseMoneyFirstCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
-        self.model = [[RaiseMoneyFirstModel alloc] init];
-        
         
     }
     return self;
@@ -32,7 +27,7 @@
 - (void)configUI
 {
     [super configUI];
-    self.bgImg.height= 200;
+    self.bgImg.height= kRaiseMoneyRealHeight;
     self.titleLab.text= @"预筹旅费金额(元)";
     
     //然后呢，我可以在这里添加一个明细的按钮
@@ -43,22 +38,22 @@
     if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney) {
         self.moneyTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney;
     }else{
-        self.sightTextfiled.text = @"0.00元";
+//        self.sightTextfiled.text = nil;
     }
     if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney) {
         self.transportTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney;
     }else{
-        self.transportTextfiled.text = @"0.00元";
+//        self.transportTextfiled.text = nil;
     }
     if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney) {
         self.liveTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney;
     }else{
-        self.liveTextfiled.text = @"0.00元";
+//        self.liveTextfiled.text = nil;
     }
     if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney) {
         self.eatTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney;
     }else{
-        self.eatTextfiled.text = @"0.00元";
+//        self.eatTextfiled.text = nil;
     }
     
 }
@@ -91,9 +86,8 @@
  */
 - (void)createDetailView
 {
-    
     //创建一个添加明细的view
-    UIView *detailView = [[UIView alloc] initWithFrame:CGRectMake(self.titleLab.left + kRaiseMoneyMargin, self.titleLab.bottom + kRaiseMoneyMargin * 2, self.titleLab.width, 100)];
+    UIView *detailView = [[UIView alloc] initWithFrame:CGRectMake(self.titleLab.left + KEDGE_DISTANCE, self.titleLab.bottom + KEDGE_DISTANCE * 2, self.titleLab.width, 100)];
 //    detailView.backgroundColor = [UIColor yellowColor];
     [self.contentView addSubview:detailView];
     self.detailView = detailView;
@@ -101,10 +95,10 @@
     //这里应该创建一个6000元的textfiled
     UITextField *moneyTextFiled = [[UITextField alloc] init];
 //    moneyTextFiled.backgroundColor = [UIColor redColor];
-    moneyTextFiled.left = kRaiseMoneyMargin;
+    moneyTextFiled.left = KEDGE_DISTANCE;
     moneyTextFiled.height = 40;
     moneyTextFiled.bottom = detailView.height - 10;
-    moneyTextFiled.width = detailView.width - kRaiseMoneyMargin * 2;
+    moneyTextFiled.width = detailView.width - KEDGE_DISTANCE * 2;
     moneyTextFiled.textAlignment = NSTextAlignmentCenter;
     UILabel *sightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, moneyTextFiled.height, moneyTextFiled.height)];
     sightLabel.textAlignment = NSTextAlignmentCenter;
@@ -120,10 +114,10 @@
     
     //在明细的view里面添加4个内容
     
-    self.sightTextfiled = [self textfiledWithCGRect:CGRectMake(kRaiseMoneyMargin, kRaiseMoneyMargin + (35 + kRaiseMoneyMargin) * 0, detailView.width - kRaiseMoneyMargin * 2, 35) superView:detailView leftViewTitle:@"景点:"];
-    self.transportTextfiled = [self textfiledWithCGRect:CGRectMake(kRaiseMoneyMargin, kRaiseMoneyMargin + (35 + kRaiseMoneyMargin) * 1, detailView.width - kRaiseMoneyMargin * 2, 35) superView:detailView leftViewTitle:@"交通:"];
-    self.liveTextfiled = [self textfiledWithCGRect:CGRectMake(kRaiseMoneyMargin, kRaiseMoneyMargin + (35 + kRaiseMoneyMargin) * 2, detailView.width - kRaiseMoneyMargin * 2, 35) superView:detailView leftViewTitle:@"住宿:"];
-    self.eatTextfiled = [self textfiledWithCGRect:CGRectMake(kRaiseMoneyMargin, kRaiseMoneyMargin + (35 + kRaiseMoneyMargin) * 3, detailView.width - kRaiseMoneyMargin * 2, 35) superView:detailView leftViewTitle:@"餐饮:"];
+    self.sightTextfiled = [self textfiledWithCGRect:CGRectMake(KEDGE_DISTANCE, KEDGE_DISTANCE + (35 + KEDGE_DISTANCE) * 0, detailView.width - KEDGE_DISTANCE * 2, 35) superView:detailView leftViewTitle:@"景点:"];
+    self.transportTextfiled = [self textfiledWithCGRect:CGRectMake(KEDGE_DISTANCE, KEDGE_DISTANCE + (35 + KEDGE_DISTANCE) * 1, detailView.width - KEDGE_DISTANCE * 2, 35) superView:detailView leftViewTitle:@"交通:"];
+    self.liveTextfiled = [self textfiledWithCGRect:CGRectMake(KEDGE_DISTANCE, KEDGE_DISTANCE + (35 + KEDGE_DISTANCE) * 2, detailView.width - KEDGE_DISTANCE * 2, 35) superView:detailView leftViewTitle:@"住宿:"];
+    self.eatTextfiled = [self textfiledWithCGRect:CGRectMake(KEDGE_DISTANCE, KEDGE_DISTANCE + (35 + KEDGE_DISTANCE) * 3, detailView.width - KEDGE_DISTANCE * 2, 35) superView:detailView leftViewTitle:@"餐饮:"];
     
 }
 
@@ -156,55 +150,78 @@
     return sightTextfiled;
 }
 
+- (void)setOpen:(BOOL)open
+{
+        _open = open;
+        
+        
+        if (open == YES) {//1
+            //这里就是展开，改变所有东西的值
+            self.bgImg.height = 120 + 200;
+            self.openButton.selected = YES;
+            self.sightTextfiled.hidden = self.transportTextfiled.hidden = self.liveTextfiled.hidden = self.eatTextfiled.hidden = NO;
+            self.detailView.height = 200 + 60;
+            self.moneyTextfiled.bottom = self.detailView.height - KEDGE_DISTANCE;
+            
+        }else{
+            //这里就是收起，改变所有东西的值
+            self.bgImg.height = 120;
+            self.openButton.selected = NO;
+            self.sightTextfiled.hidden = self.transportTextfiled.hidden = self.liveTextfiled.hidden = self.eatTextfiled.hidden = YES;
+            self.detailView.height = 60;
+            self.moneyTextfiled.bottom = self.detailView.height - KEDGE_DISTANCE;
+        }
+    
+}
 
 /**
  *  设置属性
  */
-- (void)setModel:(RaiseMoneyFirstModel *)model
-{
-    if (_model != model) {
-        _model = model;
-        
-        self.bgImg.height = model.bgImageHeight;
-        self.openButton.selected = model.openButtonSelected;
-        self.realHeight = model.realHeight;
-        self.detailView.height = model.detailViewHeight;
-        self.moneyTextfiled.bottom = model.moneyTextfliedBottom;
-        self.sightTextfiled.hidden = self.transportTextfiled.hidden = self.liveTextfiled.hidden = self.eatTextfiled.hidden = model.sightTextfiledHidden;
-        
-//        self.moneyTextfiled.text = model.totalMoney;
-//        self.transportTextfiled.text = model.transMoney;
-//        self.liveTextfiled.text = model.liveMoney;
-//        self.eatTextfiled.text = model.eatMoney;
-        //这里应该去读取一下单例的内容
-        //1.
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney) {
-            self.sightTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney;
-        }else{
-            self.sightTextfiled.text = @"0.00元";
-        }
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney) {
-            self.transportTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney;
-        }else{
-            self.transportTextfiled.text = @"0.00元";
-        }
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney) {
-            self.liveTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney;
-        }else{
-            self.liveTextfiled.text = @"0.00元";
-        }
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney) {
-            self.eatTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney;
-        }else{
-            self.eatTextfiled.text = @"0.00元";
-        }
-        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney) {
-            self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",[[MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney floatValue]] ;
-        }else{
-            self.moneyTextfiled.text = @"0.00元";
-        }
-    }
-}
+//- (void)setModel:(RaiseMoneyFirstModel *)model
+//{
+//    if (_model != model) {
+//        _model = model;
+//        
+//        self.bgImg.height = model.bgImageHeight;
+//        self.openButton.selected = model.openButtonSelected;
+//        self.realHeight = model.realHeight;
+//        self.detailView.height = model.detailViewHeight;
+//        self.moneyTextfiled.bottom = model.moneyTextfliedBottom;
+//        self.sightTextfiled.hidden = self.transportTextfiled.hidden = self.liveTextfiled.hidden = self.eatTextfiled.hidden = model.sightTextfiledHidden;
+//        
+////        self.moneyTextfiled.text = model.totalMoney;
+////        self.transportTextfiled.text = model.transMoney;
+////        self.liveTextfiled.text = model.liveMoney;
+////        self.eatTextfiled.text = model.eatMoney;
+//        //这里应该去读取一下单例的内容
+//        //1.
+//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney) {
+//            self.sightTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney;
+//        }else{
+//            self.sightTextfiled.text = @"0.00元";
+//        }
+//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney) {
+//            self.transportTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney;
+//        }else{
+//            self.transportTextfiled.text = @"0.00元";
+//        }
+//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney) {
+//            self.liveTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney;
+//        }else{
+//            self.liveTextfiled.text = @"0.00元";
+//        }
+//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney) {
+//            self.eatTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney;
+//        }else{
+//            self.eatTextfiled.text = @"0.00元";
+//        }
+//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney) {
+//            self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",[[MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney floatValue]] ;
+//        }else{
+//            self.moneyTextfiled.text = @"0.00元";
+//        }
+//    }
+//}
 
 
 /**
@@ -212,32 +229,24 @@
  */
 - (void)openButtonACtion:(UIButton *)button
 {
-    
-    //点击动作，需要修改的是model里面的内容，所以，要传过去数据，而不是在这里赋值
+    self.open = !self.open;
     //这里的算钱是为了防止他们直接点返回
     CGFloat totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
     self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f 元",totalMoney];
     
-    self.model.openButtonSelected = !self.model.openButtonSelected;
-    self.model.realHeight = self.model.bgImageHeight = self.model.realHeight > 120? 120: 320;
-    self.model.detailViewHeight = self.model.realHeight - 60;
-    self.model.moneyTextfliedBottom = self.model.detailViewHeight - kRaiseMoneyMargin;
-    self.model.totalMoney = self.moneyTextfiled.text;
-    self.model.sightTextfiledHidden = self.model.transportTextfiledHidden = self.model.liveTextfiledHidden = self.model.eatTextfiledHidden = !self.model.sightTextfiledHidden;
-//    self.model.sightMoney = self.sightTextfiled.text;
-//    self.model.transMoney = self.transportTextfiled.text;
-//    self.model.liveMoney = self.liveTextfiled.text;
-//    self.model.eatMoney = self.eatTextfiled.text;
+    
     
     //这里应该把钱赋值给单例
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney = self.sightTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney = self.transportTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney = self.liveTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney = self.eatTextfiled.text;
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney) {
+        [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney = self.sightTextfiled.text;
+        [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney = self.transportTextfiled.text;
+        [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney = self.liveTextfiled.text;
+        [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney = self.eatTextfiled.text;
+        [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
+    }
     
     if (self.changeHeightBlock) {
-         self.changeHeightBlock(self.model);
+         self.changeHeightBlock(self.open);
     }
     
 }

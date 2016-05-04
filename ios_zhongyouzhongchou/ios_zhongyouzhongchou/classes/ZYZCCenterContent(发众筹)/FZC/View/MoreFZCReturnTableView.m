@@ -143,32 +143,12 @@
         [self reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     else if (indexPath.row == 4){//这个是第三个cell
-//        CGFloat height = [self.heightArray[indexPath.row] floatValue];
-//        if (height == 150) {
-//            //这里要改变里面的内容
-//            self.heightArray[indexPath.row] = @350;
-//            self.openArray[indexPath.row] = @1;
-//        }else
-//        {
-//            self.heightArray[indexPath.row] = @150;
-//            self.openArray[indexPath.row] = @0;
-//        }
         //这是回报众筹,点击的时候要让键盘弹回去
         ReturnThirdCell *cell = [self cellForRowAtIndexPath:indexPath];
         [cell.moneyTextFiled endEditing:YES];
         [cell.peopleTextfiled endEditing:YES];
     }
     else if (indexPath.row == 6){//这个是第三个cell
-        //        CGFloat height = [self.heightArray[indexPath.row] floatValue];
-        //        if (height == 150) {
-        //            //这里要改变里面的内容
-        //            self.heightArray[indexPath.row] = @350;
-        //            self.openArray[indexPath.row] = @1;
-        //        }else
-        //        {
-        //            self.heightArray[indexPath.row] = @150;
-        //            self.openArray[indexPath.row] = @0;
-        //        }
         //这是回报众筹,点击的时候要让键盘弹回去
         ReturnThirdCellTwo *cell = [self cellForRowAtIndexPath:indexPath];
         [cell.moneyTextFiled endEditing:YES];
