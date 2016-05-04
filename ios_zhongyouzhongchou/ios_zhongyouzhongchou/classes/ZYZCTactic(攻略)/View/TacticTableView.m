@@ -11,6 +11,7 @@
 #import "TacticMainViewController.h"
 #import "TacticModel.h"
 #import "MJExtension.h"
+#import "TacticCustomMapView.h"
 
 #import "TacticTableViewCell.h"
 @interface TacticTableView ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
@@ -45,17 +46,32 @@
  */
 - (void)reloadRefreshData
 {
-    NSString *Json_path = [[NSBundle mainBundle] pathForResource:@"HomeMessage.json" ofType:nil];
-    //==Json数据
-    NSData *data=[NSData dataWithContentsOfFile:Json_path];
-    //==JsonObject
-    
-    NSDictionary *JsonObject=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    //拿到字典，转化成模型
-    TacticModel *model = [TacticModel mj_objectWithKeyValues:JsonObject[@"data"]];
-    _tacticModel = model;
-    
-    _headImageArray = model.pics;
+//    NSString *Json_path = [[NSBundle mainBundle] pathForResource:@"HomeMessage.json" ofType:nil];
+//    //==Json数据
+//    NSData *data=[NSData dataWithContentsOfFile:Json_path];
+//    //==JsonObject
+//    
+//    NSDictionary *JsonObject=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//    //拿到字典，转化成模型
+//    TacticModel *model = [TacticModel mj_objectWithKeyValues:JsonObject[@"data"]];
+//    _tacticModel = model;
+//    
+//    _headImageArray = model.pics;
+    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getIndexHot.action"];
+    //访问网络
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            //请求成功，转化为数组
+            TacticModel *tacticModel = [TacticModel mj_objectWithKeyValues:result[@"data"]];
+            weakSelf.tacticModel = tacticModel;
+            
+            [weakSelf reloadData];
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
     
    
 }
@@ -91,14 +107,20 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     // 网络加载 --- 创建带标题的图片轮播器
-    NSArray *titles = @[@"柳亮机器人一号",@"柳亮机器人二号",@"柳亮机器人三号",@"柳亮机器人四号",@"柳亮机器人五号"];
+//    NSArray *titles = @[@"柳亮机器人一号",@"柳亮机器人二号",@"柳亮机器人三号",@"柳亮机器人四号",@"柳亮机器人五号"];
     SDCycleScrollView *headView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 280, KSCREEN_W, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     headView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
-    headView.titlesGroup = titles;
+//    headView.titlesGroup = titles;
     headView.currentPageDotColor = [UIColor ZYZC_MainColor]; // 自定义分页控件小圆标颜色
-    //         --- 模拟加载延迟
-    headView.imageURLStringsGroup = self.headImageArray;
+    NSMutableArray *headURLArray = [NSMutableArray array];
+    if (self.tacticModel.pics) {
+        for (NSString *urlString in self.tacticModel.pics) {
+            NSString *tempUrlString = KWebImage(urlString);
+            [headURLArray addObject:tempUrlString];
+        }
+    }
+    headView.imageURLStringsGroup = headURLArray;
     return headView;
 }
 
@@ -109,7 +131,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (threeViewHeight * 2) + TacticTableViewCellMargin * 3;
+    return (threeViewMapHeight * 2) + TacticTableViewCellMargin * 3;
 }
 /**
  *  navi背景色渐变的效果

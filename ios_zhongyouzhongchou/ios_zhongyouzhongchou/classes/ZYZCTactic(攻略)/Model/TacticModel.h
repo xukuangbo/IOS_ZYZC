@@ -11,21 +11,12 @@
 @interface TacticModel : NSObject
 //id 7
 @property (nonatomic, copy) NSString *ID;
-//"mgViewsName": "双龙寺,日本,越南",
-@property (nonatomic, copy) NSString *mgViewsName;
 //"pics": [
-//         "http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lLRF.jpg",
-//         "http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lLBA.jpg",
-//         "http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lKnA.jpg",
-//         "http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lK7A.jpg",
-//         "http://img.tvmao.com/stills/drama/73/422/b/Kn8qW78lKRA.jpg"
+//         "1462261928476.jpg",
+//         "1462261932195.jpg"
 //         ],
 @property (nonatomic, strong) NSArray *pics;
 
-//"status": 1,
-@property (nonatomic, assign) NSInteger status;
-//"videosName": "双龙寺,日本,越南,双龙寺",
-@property (nonatomic, copy) NSString *videosName;
 //"videos": [
 @property (nonatomic, strong) NSArray *videos;
 
