@@ -6,6 +6,13 @@
   Copyright © 2016年 liuliang. All rights reserved.
 */
 
+
+/**
+ *  Defaults
+ */
+
+"default_location"="杭州";
+
 /**
  * Error
  */
