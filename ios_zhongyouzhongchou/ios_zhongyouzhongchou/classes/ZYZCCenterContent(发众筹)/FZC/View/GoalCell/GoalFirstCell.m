@@ -18,8 +18,8 @@
 @property(nonatomic,strong)UIScrollView *scroll;
 @property(nonatomic,strong)GoalScheduleView *scheduleView;
 @property(nonatomic,assign)CGPoint lastScenePoint;
-@property(nonatomic,strong)NSMutableArray *sceneArr;
-@property(nonatomic,strong)NSMutableArray *sceneTitleArr;
+@property(nonatomic,strong)NSMutableArray *sceneArr;//目的地视图
+@property(nonatomic,strong)NSMutableArray *sceneTitleArr;//目的地名
 @property(nonatomic,strong)UIButton *startBtn;
 @end
 
@@ -71,8 +71,17 @@
     [_scroll addSubview:_startBtn];
     
     //添加第一个地址
-    [self addSceneByTitle:@"杭州"];
-    [_sceneTitleArr addObject:@"杭州"];
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *myLocation=[user objectForKey:KMY_LOCALTION];
+    if (myLocation) {
+        [self addSceneByTitle:myLocation];
+        [_sceneTitleArr addObject:myLocation];
+    }
+    else
+    {
+        [self addSceneByTitle:ZYLocalizedString(@"default_location")];
+        [_sceneTitleArr addObject:ZYLocalizedString(@"default_location")];
+    }
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     manager.goal_goals=_sceneTitleArr;//单例纪录目的地
     

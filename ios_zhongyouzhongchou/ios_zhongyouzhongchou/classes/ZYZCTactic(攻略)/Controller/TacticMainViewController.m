@@ -180,6 +180,13 @@
 //                self.cityDict[@*] = @[self.currentCity];
 //                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                 [self.cityChoseButton setTitle:self.currentCity forState:UIControlStateNormal];
+                
+                NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+                NSString *location=[user objectForKey:KMY_LOCALTION];
+                if (!location||![location isEqualToString:self.currentCity]) {
+                    [user setObject:self.currentCity forKey:KMY_LOCALTION];
+                    [user synchronize];
+                }
             });
     } else if (error == nil && placemarks.count == 0) {
         NSLog(@"No location and error returned");

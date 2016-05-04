@@ -9,7 +9,11 @@
 #ifndef ZYZCDefine_h
 #define ZYZCDefine_h
 
+//在documents中创建 Resoures文件，
+//在Resoures文件下创建两个文件：一个是保存发众筹临时文件，一个是保存发众筹存储的草稿文件
 #define KDOCUMENT_FILE @"Resoures"
+#define KMY_ZHONGCHOU_TMP  @"zhouchou_tmp"
+#define KMY_ZHONGCHOU_DOC  @"zhouchou_doc"
 
 //屏幕宽
 #define KSCREEN_W [UIScreen mainScreen].bounds.size.width
@@ -60,6 +64,7 @@
 #define KUSER_ID                     @"userId" //用于保存用户id
 #define KMOREFZC_RETURN_SUPPORTTYPE  @"return_supportType"
 #define KFIRST_ENTER                 @"firstEnter"//记录第一次进入
+#define KMY_LOCALTION                @"myLocation"//记录当地名
 
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]
