@@ -104,6 +104,7 @@
     sightLabel.textAlignment = NSTextAlignmentCenter;
     sightLabel.font = [UIFont systemFontOfSize:15];
     moneyTextFiled.leftView = sightLabel;
+    moneyTextFiled.clearsOnBeginEditing = YES;
     moneyTextFiled.leftViewMode = UITextFieldViewModeAlways;
     sightLabel.text = @"￥";
     moneyTextFiled.keyboardType = UIKeyboardTypeNumberPad;
@@ -153,8 +154,7 @@
 - (void)setOpen:(BOOL)open
 {
         _open = open;
-        
-        
+    
         if (open == YES) {//1
             //这里就是展开，改变所有东西的值
             self.bgImg.height = 120 + 200;
@@ -171,57 +171,8 @@
             self.detailView.height = 60;
             self.moneyTextfiled.bottom = self.detailView.height - KEDGE_DISTANCE;
         }
-    
 }
 
-/**
- *  设置属性
- */
-//- (void)setModel:(RaiseMoneyFirstModel *)model
-//{
-//    if (_model != model) {
-//        _model = model;
-//        
-//        self.bgImg.height = model.bgImageHeight;
-//        self.openButton.selected = model.openButtonSelected;
-//        self.realHeight = model.realHeight;
-//        self.detailView.height = model.detailViewHeight;
-//        self.moneyTextfiled.bottom = model.moneyTextfliedBottom;
-//        self.sightTextfiled.hidden = self.transportTextfiled.hidden = self.liveTextfiled.hidden = self.eatTextfiled.hidden = model.sightTextfiledHidden;
-//        
-////        self.moneyTextfiled.text = model.totalMoney;
-////        self.transportTextfiled.text = model.transMoney;
-////        self.liveTextfiled.text = model.liveMoney;
-////        self.eatTextfiled.text = model.eatMoney;
-//        //这里应该去读取一下单例的内容
-//        //1.
-//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney) {
-//            self.sightTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney;
-//        }else{
-//            self.sightTextfiled.text = @"0.00元";
-//        }
-//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney) {
-//            self.transportTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney;
-//        }else{
-//            self.transportTextfiled.text = @"0.00元";
-//        }
-//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney) {
-//            self.liveTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney;
-//        }else{
-//            self.liveTextfiled.text = @"0.00元";
-//        }
-//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney) {
-//            self.eatTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney;
-//        }else{
-//            self.eatTextfiled.text = @"0.00元";
-//        }
-//        if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney) {
-//            self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",[[MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney floatValue]] ;
-//        }else{
-//            self.moneyTextfiled.text = @"0.00元";
-//        }
-//    }
-//}
 
 
 /**
@@ -230,20 +181,25 @@
 - (void)openButtonACtion:(UIButton *)button
 {
     self.open = !self.open;
+    
     //这里的算钱是为了防止他们直接点返回
-    CGFloat totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
-    self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f 元",totalMoney];
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney){
+        self.moneyTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney;
+    }
     
-    
-    
-    //这里应该把钱赋值给单例
-    if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney) {
+    if (self.open == YES) {
+        self.sightTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney;
+        self.transportTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney;
+        self.liveTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney;
+        self.eatTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney;
+    }else{
         [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney = self.sightTextfiled.text;
         [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_transMoney = self.transportTextfiled.text;
         [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_liveMoney = self.liveTextfiled.text;
         [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_eatMoney = self.eatTextfiled.text;
-        [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
     }
+    
+
     
     if (self.changeHeightBlock) {
          self.changeHeightBlock(self.open);
@@ -266,12 +222,18 @@
 {
     //监听键盘的出现和收起
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
     return YES;
+    
+    
 }
 
 #pragma mark --- 键盘出现方法
 -(void)keyboardWillShow:(NSNotification *)notify
 {
+    self.openButton.enabled = NO;
+    
     MoreFZCViewController *superVC=(MoreFZCViewController *)self.viewController;
     __weak typeof (&*self)weakSelf=self;
     superVC.raiseKeyBordHidden=^()
@@ -287,12 +249,26 @@
     
 }
 
+- (void)keyboardHide:(NSNotification *)notify
+{
+    //键盘隐藏的时候
+    self.openButton.enabled = YES;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    CGFloat totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
+    //让键盘的openbtn可以点击
+    CGFloat totalMoney = 0;
+    if (textField == self.moneyTextfiled) {
+        totalMoney = [self.moneyTextfiled.text floatValue];
+    }else{
+        totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
+    }
     //这里可以拿到数据，存到单例里面去
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString  stringWithFormat:@"%.2f",totalMoney];
+    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
     
     self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",totalMoney];
     [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_sightMoney = self.sightTextfiled.text;
@@ -304,19 +280,20 @@
 }
 
 
-/**
- *  点击空白让键盘落下
- */
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self.moneyTextfiled endEditing:YES];
-    [self.sightTextfiled endEditing:YES];
-    [self.transportTextfiled endEditing:YES];
-    [self.liveTextfiled endEditing:YES];
-    [self.eatTextfiled endEditing:YES];
-    
-    CGFloat totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
-    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
-    self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f 元",totalMoney];
-}
+
+///**
+// *  点击空白让键盘落下
+// */
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [self.moneyTextfiled endEditing:YES];
+//    [self.sightTextfiled endEditing:YES];
+//    [self.transportTextfiled endEditing:YES];
+//    [self.liveTextfiled endEditing:YES];
+//    [self.eatTextfiled endEditing:YES];
+//    
+//    CGFloat totalMoney = [self.transportTextfiled.text floatValue]+ [self.sightTextfiled.text floatValue] + [self.liveTextfiled.text floatValue] + [self.eatTextfiled.text floatValue];
+//    [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney = [NSString stringWithFormat:@"%.2f",totalMoney];
+//    self.moneyTextfiled.text = [NSString stringWithFormat:@"%.2f",totalMoney];
+//}
 @end
