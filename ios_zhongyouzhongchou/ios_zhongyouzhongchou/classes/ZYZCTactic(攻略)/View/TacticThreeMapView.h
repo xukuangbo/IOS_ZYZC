@@ -10,7 +10,8 @@
 typedef NS_ENUM(NSInteger, ThreeMapViewType)
 {
     threeMapViewTypeVideo = 1,
-    threeMapViewTypeSingleView
+    threeMapViewTypeSingleView,
+    threeMapViewTypeFood
 };
 @interface TacticThreeMapView : UIView
 
@@ -20,5 +21,4 @@ typedef NS_ENUM(NSInteger, ThreeMapViewType)
 
 @property (nonatomic, strong) NSArray *foodsArray;
 
-@property (nonatomic, strong) NSArray *singleMustPlayArray;
 @end

@@ -55,6 +55,11 @@
     }else{
 //        self.eatTextfiled.text = nil;
     }
+    if ([MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney) {
+        self.moneyTextfiled.text = [MoreFZCDataManager sharedMoreFZCDataManager].raiseMoney_totalMoney;
+    }else{
+        //        self.eatTextfiled.text = nil;
+    }
     
 }
 

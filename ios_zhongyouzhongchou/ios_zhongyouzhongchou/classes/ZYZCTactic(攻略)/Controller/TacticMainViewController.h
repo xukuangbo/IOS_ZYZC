@@ -9,7 +9,7 @@
 #import "ZYZCBaseViewController.h"
 
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
-#define headViewHeight 200
+#define headViewHeight (KSCREEN_W / 16 * 9)
 @interface TacticMainViewController : ZYZCBaseViewController
 
 @end

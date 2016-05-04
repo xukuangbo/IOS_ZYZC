@@ -21,6 +21,10 @@
 @property (nonatomic, copy) NSString *videoUrl;
 ////"name": "越南",
 @property (nonatomic, copy) NSString *name;
+////"id": 12
+@property (nonatomic, assign) NSInteger viewid;
+//        "viewType": 3
+@property (nonatomic, assign) NSInteger viewType;
 
 
 

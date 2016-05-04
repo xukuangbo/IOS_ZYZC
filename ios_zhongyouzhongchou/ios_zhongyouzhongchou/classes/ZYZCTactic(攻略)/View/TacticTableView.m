@@ -11,6 +11,7 @@
 #import "TacticMainViewController.h"
 #import "TacticModel.h"
 #import "MJExtension.h"
+#import "TacticCustomMapView.h"
 
 #import "TacticTableViewCell.h"
 @interface TacticTableView ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
@@ -106,14 +107,20 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     // 网络加载 --- 创建带标题的图片轮播器
-    NSArray *titles = @[@"柳亮机器人一号",@"柳亮机器人二号",@"柳亮机器人三号",@"柳亮机器人四号",@"柳亮机器人五号"];
+//    NSArray *titles = @[@"柳亮机器人一号",@"柳亮机器人二号",@"柳亮机器人三号",@"柳亮机器人四号",@"柳亮机器人五号"];
     SDCycleScrollView *headView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 280, KSCREEN_W, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     headView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
-    headView.titlesGroup = titles;
+//    headView.titlesGroup = titles;
     headView.currentPageDotColor = [UIColor ZYZC_MainColor]; // 自定义分页控件小圆标颜色
-    //         --- 模拟加载延迟
-    headView.imageURLStringsGroup = self.headImageArray;
+    NSMutableArray *headURLArray = [NSMutableArray array];
+    if (self.tacticModel.pics) {
+        for (NSString *urlString in self.tacticModel.pics) {
+            NSString *tempUrlString = KWebImage(urlString);
+            [headURLArray addObject:tempUrlString];
+        }
+    }
+    headView.imageURLStringsGroup = headURLArray;
     return headView;
 }
 
@@ -124,7 +131,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (threeViewHeight * 2) + TacticTableViewCellMargin * 3;
+    return (threeViewMapHeight * 2) + TacticTableViewCellMargin * 3;
 }
 /**
  *  navi背景色渐变的效果

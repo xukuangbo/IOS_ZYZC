@@ -8,20 +8,23 @@
 
 #import <UIKit/UIKit.h>
 @class TacticSingleFoodModel;
+@class TacticVideoModel;
+
+//写一个代理
+@protocol TacticImageViewDelegate <NSObject>
+
+- (void)TacticImageViewPushActionWithvideoModel:(TacticVideoModel *)videoModel tacticSingleFoodModel:(TacticSingleFoodModel *)singleFoodModel;
+@end
+
 @interface TacticImageView : UIButton
-/**
- *  view类型
- */
-@property (nonatomic, assign) NSInteger viewType;
-/**
- *  城市的编号
- */
-@property (nonatomic, assign) NSInteger viewId;
-/**
- *  地名
- */
-@property (nonatomic, weak) UILabel *nameLabel;
+
+
+@property (nonatomic, strong) TacticVideoModel *tacticVideoModel;
 
 
 @property (nonatomic, strong) TacticSingleFoodModel *tacticSingleFoodModel;
+
+@property (nonatomic, assign) NSInteger viewType;
+
+@property (nonatomic, weak) id<TacticImageViewDelegate> delegate;
 @end
