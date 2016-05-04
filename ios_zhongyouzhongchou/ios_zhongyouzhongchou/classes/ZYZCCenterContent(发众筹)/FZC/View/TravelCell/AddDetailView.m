@@ -82,19 +82,15 @@
     
     switch (button.tag) {
         case SceneType:
-            NSLog(@"SceneType");
             [self bringSubviewToFront:[self viewWithTag:SceneContentType]];
             break;
         case TrafficType:
-            NSLog(@"TrafficType");
             [self bringSubviewToFront:[self viewWithTag:TrafficContentType]];
             break;
         case AccommodateType:
-            NSLog(@"AccommodateType");
             [self bringSubviewToFront:[self viewWithTag:AccommodateContentType]];
             break;
         case FoodType:
-            NSLog(@"FoodType");
             [self bringSubviewToFront:[self viewWithTag:FoodContentType]];
             break;
         default:

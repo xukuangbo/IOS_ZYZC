@@ -70,32 +70,51 @@
     [_startBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, _startBtn.height-1, _startBtn.width, 1) andColor:nil]];
     [_scroll addSubview:_startBtn];
     
-    //添加第一个地址
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    NSString *myLocation=[user objectForKey:KMY_LOCALTION];
-    if (myLocation) {
-        [self addSceneByTitle:myLocation];
-        [_sceneTitleArr addObject:myLocation];
-    }
-    else
-    {
-        [self addSceneByTitle:ZYLocalizedString(@"default_location")];
-        [_sceneTitleArr addObject:ZYLocalizedString(@"default_location")];
-    }
+    //判断单例中是否有目的地
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    manager.goal_goals=_sceneTitleArr;//单例纪录目的地
-    
+    if (manager.goal_goals.count) {
+        _sceneTitleArr=[NSMutableArray arrayWithArray:manager.goal_goals];
+        for (NSString *obj in _sceneTitleArr) {
+            [self addSceneByTitle:obj];
+        }
+    }
+    else{
+        //添加第一个地址
+        NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+        NSString *myLocation=[user objectForKey:KMY_LOCALTION];
+        if (myLocation) {
+            [self addSceneByTitle:myLocation];
+            [_sceneTitleArr addObject:myLocation];
+        }
+        else
+        {
+            [self addSceneByTitle:ZYLocalizedString(@"default_location")];
+            [_sceneTitleArr addObject:ZYLocalizedString(@"default_location")];
+        }
+         manager.goal_goals=_sceneTitleArr;//单例纪录目的地
+    }
     //添加旅行日程显示视图
     _scheduleView=[[GoalScheduleView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE*2, _scroll.bottom+40, KSCREEN_W-40, 40)];
     [self.contentView addSubview:_scheduleView];
-    
+    //添加旅行数据到日期视图上
+    if (manager.goal_startDate&&manager.goal_backDate) {
+        _scheduleView.startLab.text=[self changeDateString:manager.goal_startDate];
+        _scheduleView.startLab.textColor=[UIColor ZYZC_TextBlackColor];
+        _scheduleView.backLab.text=[self changeDateString:manager.goal_backDate];
+        _scheduleView.backLab.textColor=[UIColor ZYZC_TextBlackColor];
+    }
     //添加点击手势在日程显示视图上
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(getTap:)];
     [_scheduleView addGestureRecognizer:tap];
     
     //添加人数选择视图
     _peoplePickerView=[[GoalPeoplePickerView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _scroll.bottom+110, 0, 0)];
-    _peoplePickerView.numberPeople=4;
+    if (manager.goal_numberPeople) {
+        _peoplePickerView.numberPeople=[manager.goal_numberPeople integerValue];
+    }
+    else{
+        _peoplePickerView.numberPeople=4;
+    }
     [self.contentView addSubview:_peoplePickerView];
     
     //添加必填项标示符
@@ -113,11 +132,11 @@
     {
         MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
         if (manager.goal_startDate.length) {
-            weakSelf.scheduleView.startLab.text=manager.goal_startDate;
+            weakSelf.scheduleView.startLab.text=[self changeDateString:manager.goal_startDate];
             weakSelf.scheduleView.startLab.textColor=[UIColor ZYZC_TextBlackColor];
         }
         if (manager.goal_backDate.length) {
-            weakSelf.scheduleView.backLab.text=manager.goal_backDate;
+            weakSelf.scheduleView.backLab.text=[self changeDateString:manager.goal_backDate];
             weakSelf.scheduleView.backLab.textColor=[UIColor ZYZC_TextBlackColor];
         }
     };
@@ -241,6 +260,14 @@
     {
         _peoplePickerView.numberPeople=4;
     }
+}
+
+#pragma mark --- “2016-06－01” to “2016/06/01”
+-(NSString *)changeDateString:(NSString *)dateStr
+{
+    NSArray *arr=[dateStr componentsSeparatedByString:@"-"];
+    NSString *newDateStr=[arr componentsJoinedByString:@"/"];
+    return newDateStr;
 }
 
 @end

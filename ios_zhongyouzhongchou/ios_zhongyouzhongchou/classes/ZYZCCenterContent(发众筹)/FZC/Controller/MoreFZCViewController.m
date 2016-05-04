@@ -53,7 +53,7 @@
     NSDictionary *managerDict = manager.mj_keyValues;
     NSLog(@"%ld",managerDict.count);
     NSLog(@"%@",managerDict);
-    if (managerDict.count>=6&&manager.goal_goals.count>1&&manager.travelDetailDays.count>0) {
+    if (managerDict.count>6||(managerDict.count==6&&manager.goal_goals.count>1)||(managerDict.count==6&&manager.travelDetailDays.count>0)) {
         UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存已编辑的数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
         [alertView show];
     }
@@ -76,8 +76,8 @@
     {
         
         //释放单例中存储的内容
-        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-        [manager initAllProperties];
+//        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+//        [manager initAllProperties];
          //删除临时文件夹内容
         [self cleanTmpFile];
         [self.navigationController popViewControllerAnimated:YES];

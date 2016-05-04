@@ -14,8 +14,6 @@
 #import "MoreFZCViewController.h"
 #import "ZYZCTool+getLocalTime.h"
 @interface GoalSecondCell()
-@property (nonatomic,strong)UILabel *alertLab;
-@property (nonatomic,strong)UIImageView *iconImg;
 @end
 
 @implementation GoalSecondCell
@@ -41,6 +39,10 @@
     _textField.returnKeyType=UIReturnKeyDone;
     [self.contentView addSubview:_textField];
     
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    if (manager.goal_travelTheme) {
+        _textField.text=manager.goal_travelTheme;
+    }
     //添加空白框架背景
     UIImageView *frameImg=[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.topLineView.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE, 125*KCOFFICIEMNT)];
     frameImg.layer.cornerRadius=5;
@@ -52,23 +54,29 @@
     _frameImg=frameImg;
     //添加提示文字lab
     CGFloat labWidth=[ZYZCTool calculateStrLengthByText:ALERTTEXT andFont:[UIFont systemFontOfSize:15] andMaxWidth:KSCREEN_W].width+5;
-    UILabel *alertLab=[[UILabel alloc]initWithFrame:CGRectMake((frameImg.width-labWidth-26)/2, (frameImg.height-20)/2, 0, 0)];
+    UILabel *alertLab=[[UILabel alloc]init];
+    alertLab.size=CGSizeMake(labWidth, 20);
+    alertLab.center=frameImg.center;
     alertLab.font=[UIFont systemFontOfSize:15];
     alertLab.text=ALERTTEXT;
     alertLab.textColor=[UIColor ZYZC_TextGrayColor01];
-    [alertLab setSize:CGSizeMake(labWidth, 20)];
-    [frameImg addSubview:alertLab];
-    _alertLab=alertLab;
+    [self.contentView addSubview:alertLab];
+    
     //添加图片标示
-    UIImageView *iconImg=[[UIImageView alloc]initWithFrame:CGRectMake(alertLab.right, (frameImg.height-19)/2,26, 19)];
+    UIImageView *iconImg=[[UIImageView alloc]initWithFrame:CGRectMake(alertLab.right, alertLab.top,26, 19)];
     iconImg.userInteractionEnabled=NO;
     iconImg.image=[UIImage imageNamed:@"ico_fmpic"];
-    [frameImg addSubview:iconImg];
-    _iconImg=iconImg;
+    [self.contentView addSubview:iconImg];
+    
+    [self.contentView bringSubviewToFront:frameImg];
     
     //给图片添加点击手势
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHappen:)];
     [frameImg addGestureRecognizer:tap];
+    
+    if (manager.goal_travelThemeImgUrl) {
+        frameImg.image =[UIImage imageWithContentsOfFile:manager.goal_travelThemeImgUrl];
+    }
 }
 
 #pragma mark --- 选择图片
@@ -82,10 +90,10 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     //选择众游图库
-    UIAlertAction *collectionAction = [UIAlertAction actionWithTitle:@"众游图库" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action){
-            ChooseSceneImgController *chooseImgVC=[[ChooseSceneImgController alloc]init];
-            [weakSelf.viewController.navigationController pushViewController:chooseImgVC animated:YES];
-    }];
+//    UIAlertAction *collectionAction = [UIAlertAction actionWithTitle:@"众游图库" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action){
+//            ChooseSceneImgController *chooseImgVC=[[ChooseSceneImgController alloc]init];
+//            [weakSelf.viewController.navigationController pushViewController:chooseImgVC animated:YES];
+//    }];
     //选择本地相册
     UIAlertAction *draftsAction = [UIAlertAction actionWithTitle:@"本地相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         weakSelf.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -99,7 +107,7 @@
         [weakSelf.viewController presentViewController:weakSelf.imagePicker animated:YES completion:nil];
     }];
     [alertController addAction:cancelAction];
-    [alertController addAction:collectionAction];
+//    [alertController addAction:collectionAction];
     [alertController addAction:draftsAction];
     [alertController addAction:giftCardAction];
     
@@ -117,8 +125,6 @@
             selectImgVC.imageBlock=^(UIImage *img)
             {
                 weakSelf.frameImg.image=img;
-                weakSelf.alertLab.hidden=YES;
-                weakSelf.iconImg.hidden=YES;
                 // 将图片保存为png格式到documents中
                 NSString *filePath=[weakSelf getImagePath];
                 [UIImagePNGRepresentation(img)

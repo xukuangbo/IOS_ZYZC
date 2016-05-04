@@ -11,7 +11,7 @@
 #import "RMCalendarCollectionViewLayout.h"
 #import "RMCollectionCell.h"
 #import "RMCalendarMonthHeaderView.h"
-
+#import "MBProgressHUD+MJ.h"
 #import "MoreFZCDataManager.h"
 typedef NS_ENUM(NSInteger, ChooseState) {
     ChooseNone,
@@ -197,17 +197,23 @@ static NSString *DayCell = @"DayCell";
     NSDate *selectdate  = [NSDate date];
     //返回数据模型数组
     
-    NSString *dateStr01=@"2016-04-15 +0000";
-    NSString *dateStr02=@"2016-04-16 +0000";
-    NSString *dateStr03=@"2016-04-17 +0000";
-    NSString *dateStr04=@"2016-04-18 +0000";
+    NSString *dateStr01=@"2016-05-02 +0000";
+    NSString *dateStr02=@"2016-05-03 +0000";
+    NSString *dateStr03=@"2016-05-04 +0000";
+    NSString *dateStr04=@"2016-05-05 +0000";
+    NSString *dateStr05=@"2016-06-16 +0000";
+    NSString *dateStr06=@"2016-06-17 +0000";
+    NSString *dateStr07=@"2016-06-18 +0000";
     NSDateFormatter *dateForma=[[NSDateFormatter alloc]init];
     dateForma.dateFormat=@"yyyy-MM-dd Z";
     NSDate *date01=[dateForma dateFromString:dateStr01];
     NSDate *date02=[dateForma dateFromString:dateStr02];
     NSDate *date03=[dateForma dateFromString:dateStr03];
     NSDate *date04=[dateForma dateFromString:dateStr04];
-    _occupyDays=@[date01,date02,date03,date04];
+    NSDate *date05=[dateForma dateFromString:dateStr05];
+    NSDate *date06=[dateForma dateFromString:dateStr06];
+    NSDate *date07=[dateForma dateFromString:dateStr07];
+    _occupyDays=@[date01,date02,date03,date04,date05,date06,date07];
     return [self.calendarLogic reloadCalendarView:date selectDate:selectdate occupyDates:_occupyDays needDays:days showType:type isEnable:isEnable priceModelArr:arr];
 }
 
@@ -251,19 +257,27 @@ static NSString *DayCell = @"DayCell";
 }
 
 - (void)collectionView:(nonnull UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-
+    
     NSArray *months = [self.calendarMonth objectAtIndex:indexPath.section];
     RMCalendarModel *model = [months objectAtIndex:indexPath.row];
+    if ([NSDate compareDate:model.date withDate:[NSDate date]]==1) {
+        return;
+    }
     /**
      *  选择出发时间与返回时间
      *
      */
     if (_chooseState==ChooseNone) {//选择开始时间
         _keepStartDateMdel=model;
-        _segmentedControl.selectedSegmentIndex=1;
-        if (model.style == CellDayTypeClick || model.style == CellDayTypeFutur || model.style == CellDayTypeWeek) {
+        if ((model.style == CellDayTypeClick || model.style == CellDayTypeFutur || model.style == CellDayTypeWeek)&&model.style!=CellDayTypeNoPassOccupy) {
             [self.calendarLogic selectLogic:model];
         }
+        else
+        {
+            [MBProgressHUD showError:ZYLocalizedString(@"error_no_startChoose_time")];
+            return;
+        }
+         _segmentedControl.selectedSegmentIndex=1;
         //将开始日期显示到界面上
         _scheduleView.startLab.text=[ZYZCTool turnDateToCustomDate:model.date];
         _startDate=model.date;
@@ -281,7 +295,7 @@ static NSString *DayCell = @"DayCell";
         for (NSDate *obj in _occupyDays) {
             if ([NSDate compareDate:_keepStartDateMdel.date withDate:obj]==1){
                 if ([NSDate compareDate:obj withDate:model.date]==1) {
-                    NSLog(@"选择有冲突！请重新选择选择返回时间");
+                    [MBProgressHUD showError:ZYLocalizedString(@"error_no_endChoose_time")];
                     return;
                 }
             }
@@ -310,6 +324,15 @@ static NSString *DayCell = @"DayCell";
 #pragma mark --- 复写父类点击方法
 -(void)clickBtn
 {
+    if (!_startDate) {
+        [MBProgressHUD showError:ZYLocalizedString(@"error_no_startTime")];
+        return;
+    }
+    if(!_endDate)
+    {
+        [MBProgressHUD showError:ZYLocalizedString(@"error_no_endTime")];
+        return;
+    }
     //单例纪录开始时间
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     manager.goal_startDate=[NSDate stringFromDate:_startDate];
