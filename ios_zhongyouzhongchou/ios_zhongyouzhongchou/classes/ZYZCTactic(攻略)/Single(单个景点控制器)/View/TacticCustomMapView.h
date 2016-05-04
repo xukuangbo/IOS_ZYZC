@@ -20,7 +20,11 @@
 //这是3个view视频那种
 #define threeViewMapHeight ((KSCREEN_W - TacticTableViewCellMargin * 6) / 3.0 + descLabelBottom + TacticTableViewCellTextMargin + TacticTableViewCellMargin)
 #define threeViewHeight ((KSCREEN_W - TacticTableViewCellMargin * 6) / 3.0)
+
+
 @interface TacticCustomMapView : UIImageView
 @property (nonatomic, weak) UILabel *titleLabel;
 @property (nonatomic, weak) UILabel *descLabel;
+
+@property (nonatomic, weak) UIButton *moreButton;
 @end

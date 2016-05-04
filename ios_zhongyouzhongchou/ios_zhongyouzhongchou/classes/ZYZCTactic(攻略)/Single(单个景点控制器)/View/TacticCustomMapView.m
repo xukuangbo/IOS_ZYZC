@@ -43,6 +43,7 @@
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
         rightButton.frame = CGRectMake(rightButtonX, rightButtonY, rightButtonW, rightButtonH);
         [rightButton setImage:[UIImage imageNamed:@"btn_rig_mor"] forState:UIControlStateNormal];
+        rightButton.hidden = YES;
         [rightButton setTitle:@"更多" forState:UIControlStateNormal];
         [rightButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
         rightButton.titleLabel.font = descFont;
@@ -53,7 +54,7 @@
         rightButton.imageEdgeInsets = UIEdgeInsetsMake(0, labelWidth, 0, -labelWidth);
         CGFloat imageWith = rightButton.currentImage.size.width + 2;
         rightButton.titleEdgeInsets = UIEdgeInsetsMake(0, -imageWith, 0, imageWith);
-        
+        [rightButton addTarget:self action:@selector(moreButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:rightButton];
         //创建描述
         CGFloat descLabelX = margin * 2;
@@ -67,5 +68,12 @@
         self.descLabel = descLabel;
     }
     return self;
+}
+
+
+- (void)moreButtonAction:(UIButton *)button
+{
+    NSLog(@"你好啊，更多按钮");
+    
 }
 @end

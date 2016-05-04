@@ -10,6 +10,8 @@
 typedef NS_ENUM(NSInteger, ThreeMapViewType)
 {
     threeMapViewTypeVideo = 1,
+    threeMapViewTypeCountryView,
+    threeMapViewTypeCityView,
     threeMapViewTypeSingleView,
     threeMapViewTypeFood
 };
