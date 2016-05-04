@@ -12,10 +12,9 @@
 #import "MoreFZCRaiseMoneySecondCell.h"
 @interface MoreFZCRaiseMoneyTableView : MoreFZCBaseTableView<UITableViewDataSource,UITableViewDelegate>
 
-/**
- *  定义个数组来接受openHeight
- */
-@property (nonatomic, strong) NSMutableArray *realHeightArray;
 
-@property (nonatomic, strong) RaiseMoneyFirstModel *firstModel;
+@property (nonatomic, strong) NSMutableArray *openArray;
+
+@property (nonatomic, strong) NSMutableArray *heightArray;
+
 @end
