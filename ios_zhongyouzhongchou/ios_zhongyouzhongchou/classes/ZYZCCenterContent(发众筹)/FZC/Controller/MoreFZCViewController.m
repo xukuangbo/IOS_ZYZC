@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSString *archiveDataPath;
 @property (nonatomic, strong) NSMutableArray *picesSaveState;
 @property (nonatomic, assign) BOOL isFirstTimeToSave;
+@property (nonatomic, strong) NSTimer *timer;
 @end
 
 @implementation MoreFZCViewController
@@ -51,7 +52,8 @@
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     NSDictionary *managerDict = manager.mj_keyValues;
     NSLog(@"%ld",managerDict.count);
-    if (managerDict.count>6||manager.goal_goals.count>1) {
+    NSLog(@"%@",managerDict);
+    if (managerDict.count>=6&&manager.goal_goals.count>1&&manager.travelDetailDays.count>0) {
         UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存已编辑的数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
         [alertView show];
     }
@@ -224,7 +226,8 @@
 {
     switch (sender.tag) {
         case SkimType:
-            
+//            [self getHttpData];
+            [self getHttp];
             break;
         case NextType:
             [self nextOneOrPublish:self.toolBar.preClickBtn];
@@ -237,6 +240,7 @@
     }
 }
 
+#pragma mark --- 下一步或发布
 -(void)nextOneOrPublish:(UIButton *)button
 {
     //下一步
@@ -256,6 +260,7 @@
     {
         NSLog(@"发布");
         [self publishMyZhongChou];
+        
 
     }
 }
@@ -401,116 +406,137 @@
 //    NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:dataDict];
 //    [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
 
-//    NSDictionary *dataDic=@{
-//                            @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
-//                            @"status":@1,
-//                            @"title":@"海岛游",
-//                            @"productCountryId":@[@"1",@"2"],
-//                            @"dest":@[@"普吉岛",@"清迈"],
-//                            @"spell_buy_price":@5000,
-//                            @"start_time":@"2016-4-28",
-//                            @"end_time":@"2016-5-10",
-//                            @"spell_end_time":@"2016-7-28",
-//                            @"people":@8,
-//                            @"cover":@"http://....",
-//                            @"desc":@"筹旅费文字描述",
-//                            @"voice":@"http://....",
-//                            @"video":@"http://....",
-//                            @"videoImg":@"http://...",
-//                            @"schedule":@[
-//                                        @{
-//                                             @"day": @1,
-//                                             @"spot": @"景点描述",
-//                                             @"spots":@[@"url1",@"url2"],
-//                                             @"trans":@"交通描述",
-//                                             @"live":@"住宿描述",
-//                                             @"food":@"饮食描述",
-//                                             @"desc":@"第一天描述",
-//                                             @"voice":@"http://...",
-//                                             @"video":@"http://...",
-//                                             @"videoImg":@"http://..."
-//                                           },
-//                                        @{
-//                                            @"day": @2,
-//                                            @"spot": @"景点描述2",
-//                                            @"spots":@[@"url1",@"url2"],
-//                                            @"trans":@"交通描述2",
-//                                            @"live":@"住宿描述2",
-//                                            @"desc":@"第二天描述",
-//                                            @"voice":@"http://...",
-//                                            @"video":@"http://...",
-//                                            @"videoImg":@"http://..."
-//                                        },
-//                                        @{
-//                                            @"day": @3,
-//                                            @"spot": @"景点描述3",
-//                                            @"spots":@[@"url1",@"url2"],
-//                                            @"trans":@"交通描述3",
-//                                            @"live":@"住宿描述3",
-//                                            @"desc":@"第三天描述",
-//                                            @"voice":@"http://...",
-//                                            @"video":@"http://...",
-//                                            @"videoImg":@"http://..."
-//                                        }],
-//                            @"report": @[
-//                                       @{
-//                                           @"style": @1,
-//                                           @"price": @1
-//                                       },
-//                                       @{
-//                                           @"style": @2,
-//                                           @"price": @0
-//                                       },
-//                                       @{
-//                                           @"style": @3,
-//                                           @"price": @200,
-//                                           @"people": @5,
-//                                           @"desc": @"回报目的1",
-//                                           @"voice":@"http://",
-//                                           @"video":@"http://",
-//                                           @"videoImg":@"http://..."
-//                                       },
-//                                       @{
-//                                           @"style": @4,
-//                                           @"price": @300,
-//                                           @"people": @6,
-//                                           @"desc": @"回报目的2",
-//                                           @"voice":@"http://",
-//                                           @"video":@"http://",
-//                                           @"videoImg":@"http://..."
-//                                        },
-//                                       @{
-//                                           @"style": @5,
-//                                           @"people":@8,
-//                                           @"price": @100
-//                                       },
-//                                       @{
-//                                           @"style": @6,
-//                                           @"price": @1000
-//                                        },
-//                                       @{
-//                                           @"style": @7,
-//                                           @"price": @1000
-//                                        },
-//                                       @{
-//                                           @"style": @8,
-//                                           @"price": @1000
-//                                        },
-//                                       @{
-//                                           @"style": @9,
-//                                           @"price": @1000
-//                                        }
-//                                       ]
-//
-//                    };
-//    [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
-//        NSLog(@"%@",result);
-//
-//    }
-//    andFailBlock:^(id failResult)
-//    {
-//        NSLog(@"%@",failResult);
-//
-//    }];
+-(void)getHttpData
+{
+    NSString *dest=[@"普吉岛" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@",dest);
+    
+    NSDictionary *dataDic=@{
+                            @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
+                            @"status":@1,
+                            @"title":@"海岛游",
+                            @"productCountryId":@"2",
+                            @"dest":@[@"普吉岛"],
+                            @"spell_buy_price":@5000,
+                            @"start_time":@"2016-4-28",
+                            @"end_time":@"2016-5-10",
+                            @"spell_end_time":@"2016-7-28",
+                            @"people":@8,
+                            @"cover":@"http://....",
+                            @"desc":@"筹旅费文字描述",
+                            @"voice":@"http://....",
+                            @"video":@"http://....",
+                            @"videoImg":@"http://...",
+                            @"schedule":@[
+                                    @{
+                                        @"day": @1,
+                                        @"spot": @"景点描述",
+                                        @"spots":@[@"url1",@"url2"],
+                                        @"trans":@"交通描述",
+                                        @"live":@"住宿描述",
+                                        @"food":@"饮食描述",
+                                        @"desc":@"第一天描述",
+                                        @"voice":@"http://...",
+                                        @"video":@"http://...",
+                                        @"videoImg":@"http://..."
+                                        },
+                                    @{
+                                        @"day": @2,
+                                        @"spot": @"景点描述2",
+                                        @"spots":@[@"url1",@"url2"],
+                                        @"trans":@"交通描述2",
+                                        @"live":@"住宿描述2",
+                                        @"desc":@"第二天描述",
+                                        @"voice":@"http://...",
+                                        @"video":@"http://...",
+                                        @"videoImg":@"http://..."
+                                        },
+                                    @{
+                                        @"day": @3,
+                                        @"spot": @"景点描述3",
+                                        @"spots":@[@"url1",@"url2"],
+                                        @"trans":@"交通描述3",
+                                        @"live":@"住宿描述3",
+                                        @"desc":@"第三天描述",
+                                        @"voice":@"http://...",
+                                        @"video":@"http://...",
+                                        @"videoImg":@"http://..."
+                                        }],
+                            @"report": @[
+                                    @{
+                                        @"style": @1,
+                                        @"price": @1
+                                        },
+                                    @{
+                                        @"style": @2,
+                                        @"price": @0
+                                        },
+                                    @{
+                                        @"style": @3,
+                                        @"price": @200,
+                                        @"people": @5,
+                                        @"desc": @"回报目的1",
+                                        @"voice":@"http://",
+                                        @"video":@"http://",
+                                        @"videoImg":@"http://..."
+                                        },
+                                    @{
+                                        @"style": @4,
+                                        @"price": @300,
+                                        @"people": @6,
+                                        @"desc": @"回报目的2",
+                                        @"voice":@"http://",
+                                        @"video":@"http://",
+                                        @"videoImg":@"http://..."
+                                        },
+                                    @{
+                                        @"style": @5,
+                                        @"people":@8,
+                                        @"price": @100
+                                        },
+                                    @{
+                                        @"style": @6,
+                                        @"price": @1000
+                                        },
+                                    @{
+                                        @"style": @7,
+                                        @"price": @1000
+                                        },
+                                    @{
+                                        @"style": @8,
+                                        @"price": @1000
+                                        },
+                                    @{
+                                        @"style": @9,
+                                        @"price": @1000
+                                        }
+                                    ]
+                            
+                            };
+    [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+        
+    }
+    andFailBlock:^(id failResult)
+     {
+         NSLog(@"%@",failResult);
+         
+     }];
+}
+
+-(void)getHttp
+{
+    [ZYZCHTTPTool getHttpDataByURL:@"http://121.40.225.119:8080/user/getCountryInfo.action?" withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+    } andFailBlock:^(id failResult) {
+        
+    }];
+}
+
+#pragma mark --- 定时保存数据
+-(void)timeRunToSaveData
+{
+    
+}
 
 @end

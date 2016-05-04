@@ -443,7 +443,7 @@
     
     [bottomView addSubview:[UIView lineViewWithFrame:CGRectMake(0, 0, KSCREEN_W, 0.5) andColor:[UIColor lightGrayColor]]];
     
-    NSArray *titleArr=@[@"想去",@"支持",@"分享"];
+    NSArray *titleArr=@[@"分享",@"支持",@"想去"];
     CGFloat btn_width=KSCREEN_W/3;
     for (int i=0; i<3; i++) {
         UIButton *sureBtn=[UIButton buttonWithType:UIButtonTypeCustom];

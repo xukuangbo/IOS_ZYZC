@@ -46,8 +46,7 @@
         [MBProgressHUD showError:ZYLocalizedString(@"error_no_togetherTravel_money_rate")];
         return YES;
     }
-     NSLog(@"%@",manager.return_returnPeopleStatus);
-    if (manager.return_returnPeopleStatus) {
+    if ([manager.return_returnPeopleStatus isEqualToString:@"1"]) {
         if (!manager.return_returnPeopleNumber||!manager.return_returnPeopleMoney) {
             [MBProgressHUD showError:ZYLocalizedString(@"error_no_return1")];
             return YES;
@@ -62,13 +61,13 @@
     }
     if (manager.return_returnPeopleStatus01) {
         if (!manager.return_returnPeopleNumber01||!manager.return_returnPeopleMoney01) {
-            [MBProgressHUD showError:ZYLocalizedString(@"error_no_return1")];
+            [MBProgressHUD showError:ZYLocalizedString(@"error_no_return2")];
             return YES;
         }
         else
         {
             if (!manager.return_wordDes01&&!manager.return_voiceUrl01&&!manager.return_movieUrl01) {
-                [MBProgressHUD showError:ZYLocalizedString(@"error_no_return1")];
+                [MBProgressHUD showError:ZYLocalizedString(@"error_no_return2")];
                 return YES;
             }
         }

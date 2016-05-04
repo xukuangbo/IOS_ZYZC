@@ -62,30 +62,30 @@
     {
         if (textStr.length) {
             weakSelf.placeHolderLab.hidden=YES;
-            weakSelf.textView.text=textStr;
             
-            //文字描述存入单例中
-            MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-            //筹旅费文字描述
-            if([weakSelf.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG])
-            {
-                manager.raiseMoney_wordDes=textStr;
-            }
-            //回报1文字描述
-            else if ([weakSelf.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
-            {
-                manager.return_wordDes=textStr;
-            }
-            //回报2文字描述
-            else if ([weakSelf.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
-            {
-                manager.return_wordDes01=textStr;
-            }
-
         }
         else
         {
             weakSelf.placeHolderLab.hidden=NO;
+            textStr=nil;
+        }
+        weakSelf.textView.text=textStr;
+        //文字描述存入单例中
+        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+        //筹旅费文字描述
+        if([weakSelf.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG])
+        {
+            manager.raiseMoney_wordDes=textStr;
+        }
+        //回报1文字描述
+        else if ([weakSelf.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
+        {
+            manager.return_wordDes=textStr;
+        }
+        //回报2文字描述
+        else if ([weakSelf.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
+        {
+            manager.return_wordDes01=textStr;
         }
     };
 

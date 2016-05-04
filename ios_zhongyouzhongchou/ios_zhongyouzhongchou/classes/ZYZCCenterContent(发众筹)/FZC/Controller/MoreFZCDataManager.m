@@ -46,8 +46,6 @@ static id _instace;
         //这里写要初始化的东西！！！
         _travelDetailDays=[NSMutableArray array];
         _goal_TotalTravelDay=@"1";
-        _return_supportOneYuanStatus=@"1";
-        _return_supportAnyYuanStatus=@"1";
         _return_returnPeopleStatus = @"1";
         _return_returnPeopleStatus01 = @"1";
         //第四个界面

@@ -36,6 +36,9 @@
     [self cleanTmpFile];
     //更改appBadge
     [self changeAppBadge];
+    //首次进入app获取地名库
+    [self saveLocalDesct];
+    
     
     /**
      初始化微信
@@ -45,24 +48,28 @@
 //    [self getFileToTmp];
     return YES;
 }
+
+#pragma mark --- 设置根控制器
+-(void)getRootViewController
+{
+    UIStoryboard *storyboard= [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    ZYZCTabBarController *mainTab=[storyboard instantiateViewControllerWithIdentifier:@"ZYZCTabBarController"];
+    self.window.rootViewController=mainTab;
+}
+
+#pragma mark --- 设置状态栏
+-(void)setStatusBarStyle
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:
+     UIStatusBarStyleLightContent];
+}
+
 /**
  初始化微信
  */
 - (void)initWithWechat
 {
     [WXApi registerApp:@"wx4f5dad0f41bb5a7d" withDescription:@"ZYZC"];
-}
-
-
-
-
--(void)getFileToTmp
-{
-    [ZYZCTool saveUserIdById:@"110"];
-    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"collectionView" ofType:@"png"];
-    NSLog(@"++++%@", [ossManager getfileURLWhenUploadObjectAsyncBydocDir:path andFileType:@"png"] );
-    
 }
 
 #pragma mark - 打开微信，回调微信
@@ -74,19 +81,36 @@
     return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
 }
 
-#pragma mark --- 设置状态栏
--(void)setStatusBarStyle
+#pragma mark --- 保存地名库
+-(void)saveLocalDesct
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:
-     UIStatusBarStyleLightContent];
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *str=[user objectForKey:KFIRST_ENTER];
+    if (str) {
+        [ZYZCHTTPTool getHttpDataByURL:GETCOUNTRYINFO withSuccessGetBlock:^(id result, BOOL isSuccess) {
+            if (isSuccess) {
+                [user setObject:@"yes" forKey:KFIRST_ENTER];
+                [user synchronize];
+                
+            }
+            
+            NSLog(@"%@",result);
+            NSLog(@"%d",isSuccess);
+        } andFailBlock:^(id failResult) {
+            
+        }];
+    }
+    
+    
 }
 
-#pragma mark --- 设置根控制器
--(void)getRootViewController
+-(void)getFileToTmp
 {
-    UIStoryboard *storyboard= [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    ZYZCTabBarController *mainTab=[storyboard instantiateViewControllerWithIdentifier:@"ZYZCTabBarController"];
-    self.window.rootViewController=mainTab;
+    [ZYZCTool saveUserIdById:@"110"];
+    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"collectionView" ofType:@"png"];
+    NSLog(@"++++%@", [ossManager getfileURLWhenUploadObjectAsyncBydocDir:path andFileType:@"png"] );
+    
 }
 
 #pragma mark --- 在Documents中创建资源文件存放视屏、语音、图片

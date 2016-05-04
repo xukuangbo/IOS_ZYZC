@@ -57,8 +57,9 @@
 #define KWebImage(urlImage) [[NSString stringWithFormat:@"http://zhongyou-hz.oss-cn-hangzhou.aliyuncs.com/%@",urlImage] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] //网络访问阿里云的图片
 
 //NSUserDefaults-key使用
-#define KUSER_ID  @"userId"            //用于保存用户id
+#define KUSER_ID                     @"userId" //用于保存用户id
 #define KMOREFZC_RETURN_SUPPORTTYPE  @"return_supportType"
+#define KFIRST_ENTER                 @"firstEnter"//记录第一次进入
 
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]

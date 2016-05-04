@@ -93,7 +93,7 @@ MJCodingImplementation
     report02.price=@0;
     [_report addObject:report02];
     //回报支持1
-    if(manager.return_returnPeopleStatus){
+    if([manager.return_returnPeopleStatus isEqualToString:@"1"]){
         ReportData *report03=[[ReportData alloc]init];
         report03.style=@3;
         report03.price=(NSNumber *)manager.return_returnPeopleMoney;
@@ -112,7 +112,7 @@ MJCodingImplementation
     [_report addObject:report04];
     
     //回报支持2
-    if (manager.return_returnPeopleStatus01) {
+    if ([manager.return_returnPeopleStatus01 isEqualToString:@"1"]) {
         ReportData *report05=[[ReportData alloc]init];
         report05.style=@5;
         report05.price=(NSNumber *)manager.return_returnPeopleMoney01;
