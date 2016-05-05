@@ -121,9 +121,18 @@
     NSString *createPath = [NSString stringWithFormat:@"%@/%@", pathDocuments,KDOCUMENT_FILE];
     // 判断文件夹是否存在，如果不存在，则创建
     if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
-        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
+        BOOL fileCreate=[fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
+        if (fileCreate==YES) {
+            
+            NSString *createTmpPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
+           
+            if (![[NSFileManager defaultManager] fileExistsAtPath:createTmpPath]) {
+                [fileManager createDirectoryAtPath:createTmpPath withIntermediateDirectories:YES attributes:nil error:nil];
+            }
+        }
         NSLog(@"createPath:%@",createPath);
     }
+    
 }
 
 #pragma mark --- 删除临时文件

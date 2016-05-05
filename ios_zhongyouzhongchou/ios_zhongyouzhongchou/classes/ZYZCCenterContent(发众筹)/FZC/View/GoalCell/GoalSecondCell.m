@@ -75,7 +75,7 @@
     [frameImg addGestureRecognizer:tap];
     
     if (manager.goal_travelThemeImgUrl) {
-        frameImg.image =[UIImage imageWithContentsOfFile:manager.goal_travelThemeImgUrl];
+        frameImg.image =[UIImage imageWithContentsOfFile:KMY_ZHONGCHOU_DOCUMENT_PATH(manager.goal_travelThemeImgUrl)];
     }
 }
 
@@ -126,27 +126,20 @@
             {
                 weakSelf.frameImg.image=img;
                 // 将图片保存为png格式到documents中
-                NSString *filePath=[weakSelf getImagePath];
+                NSString *fileName=[NSString stringWithFormat:@"%@/%@/%@.png",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
+                
+                NSString *filePath=KMY_ZHONGCHOU_DOCUMENT_PATH(fileName);
                 [UIImagePNGRepresentation(img)
                  writeToFile:filePath atomically:YES];
-                //将图片路径保存到单例中
+                //将图片名保存到单例中
                 MoreFZCDataManager  *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-                manager.goal_travelThemeImgUrl=filePath;
+                manager.goal_travelThemeImgUrl=fileName;
             };
             [weakSelf.viewController.navigationController pushViewController:selectImgVC animated:YES];
         }];
     }
 }
 
-#pragma mark --- 获取图片存储在tmp的路径下
--(NSString *)getImagePath
-{
-    NSString *tmpDir = NSTemporaryDirectory();
-    NSString *localTime=[ZYZCTool getLocalTime];
-    NSString *pngPath =[tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",localTime]];
-    return pngPath;
-   
-}
 
 #pragma mark --- textField代理方法
 -(BOOL)textFieldShouldReturn:(UITextField *)textField

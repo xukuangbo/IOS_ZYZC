@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSString *archiveDataPath;
 @property (nonatomic, strong) NSMutableArray *picesSaveState;
 @property (nonatomic, assign) BOOL isFirstTimeToSave;
+@property (nonatomic, assign) BOOL needPopVC;
 @property (nonatomic, strong) NSTimer *timer;
 @end
 
@@ -48,19 +49,22 @@
  */
 -(void)pressBack
 {
+    [self saveModelInManager];
+    [self.navigationController popViewControllerAnimated:YES];
+    return;
     //退出时，如果有填写发众筹内容，提示保存
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    NSDictionary *managerDict = manager.mj_keyValues;
-    NSLog(@"%ld",managerDict.count);
-    NSLog(@"%@",managerDict);
-    if (managerDict.count>6||(managerDict.count==6&&manager.goal_goals.count>1)||(managerDict.count==6&&manager.travelDetailDays.count>0)) {
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存已编辑的数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
-        [alertView show];
-    }
-    else
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+//    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+//    NSDictionary *managerDict = manager.mj_keyValues;
+//    NSLog(@"%ld",managerDict.count);
+//    NSLog(@"%@",managerDict);
+//    if (managerDict.count>6||(managerDict.count==6&&manager.goal_goals.count>1)||(managerDict.count==6&&manager.travelDetailDays.count>0)) {
+//        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存已编辑的数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
+//        [alertView show];
+//    }
+//    else
+//    {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
 }
 
 #pragma mark --- alertView代理方法
@@ -69,6 +73,7 @@
     //保存数据
     if (buttonIndex ==1)
     {
+        _needPopVC=YES;
         [self saveData];
     }
     //不保存
@@ -79,26 +84,7 @@
 //        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
 //        [manager initAllProperties];
          //删除临时文件夹内容
-        [self cleanTmpFile];
         [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-#pragma mark --- 删除临时文件
--(void)cleanTmpFile
-{
-    NSString *tmpDir = NSTemporaryDirectory();
-    
-    NSFileManager *manager=[NSFileManager defaultManager];
-    
-    NSArray *fileArr=[manager subpathsAtPath:tmpDir];
-    
-    for (NSString *fileName in fileArr) {
-        
-        NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
-         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-             [manager removeItemAtPath:filePath error:nil];
-         });
     }
 }
 
@@ -245,20 +231,46 @@
 {
     //下一步
     if (button.tag<MoreFZCToolBarTypeReturn) {
+        
+        if (button.tag==MoreFZCToolBarTypeGoal) {
+            BOOL lossMessage01=[NecessoryAlertManager showNecessoryAlertView01];
+            if (lossMessage01) {
+                return;
+            }
+        }
+        if (button.tag==MoreFZCToolBarTypeRaiseMoney) {
+            BOOL lossMessage02=[NecessoryAlertManager showNecessoryAlertView02];
+            if (lossMessage02) {
+                return;
+            }
+        }
+        if (button.tag==MoreFZCToolBarTypeTravel) {
+            [self saveModelInManager];
+            BOOL lossMessage03=[NecessoryAlertManager showNecessoryAlertView03];
+            if (lossMessage03) {
+                return;
+            }
+        }
         UIButton *btn=(UIButton *)[self.toolBar viewWithTag:(button.tag+1)];
         [self.toolBar buttonClickAction:btn];
-        
         UIButton *nextBtn=(UIButton *)[self.bottomView viewWithTag:NextType];
         if (btn.tag==MoreFZCToolBarTypeReturn) {
             [nextBtn setTitle:@"发布" forState:UIControlStateNormal];
             [nextBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             nextBtn.backgroundColor=[UIColor ZYZC_MainColor];
         }
+        
     }
     //发  布
     else
     {
         NSLog(@"发布");
+        if (button.tag==MoreFZCToolBarTypeReturn) {
+            BOOL lossMessage04=[NecessoryAlertManager showNecessoryAlertView04];
+            if (lossMessage04) {
+                return;
+            }
+        }
         [self publishMyZhongChou];
         
 
@@ -269,13 +281,11 @@
 -(void)publishMyZhongChou
 {
     [self saveModelInManager];
-    BOOL hasLossMessage= [NecessoryAlertManager showNecessoryAlertView];
-    if (!hasLossMessage) {
-        //可发布状态
-        [MBProgressHUD showMessage:@"正在发布,请稍等..."];
-        
-        [MBProgressHUD hideHUD];
-    }
+           //可发布状态
+    [MBProgressHUD showMessage:@"正在发布,请稍等..."];
+    
+    [MBProgressHUD hideHUD];
+    
 }
 
 #pragma mark --- 保存数据
@@ -289,7 +299,8 @@
         });
     }
    //创建保存某个众筹的资源文件
-    _oneResouceFile=[self resoureSubFilePath];
+    NSString *pathDocuments=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    _oneResouceFile = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
     [MBProgressHUD showMessage:nil];
     
     [self saveModelInManager];
@@ -328,7 +339,11 @@
             [NSKeyedArchiver archiveRootObject:manager toFile:weakSelf.archiveDataPath];
             [MBProgressHUD hideHUD];
             [MBProgressHUD showSuccess:@"保存成功!"];
-            [self saveDataInMyZhongChouPlist];
+            [weakSelf saveDataInMyZhongChouPlist];
+            if (weakSelf.needPopVC) {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+                weakSelf.needPopVC=NO;
+            }
         });
     });
 }
@@ -338,14 +353,13 @@
 {
     //保存每日行程安排到单例中
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    
     [manager.travelDetailDays removeAllObjects];
     MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
     for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
         TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
         [travelSecondCell saveTravelOneDayDetailData];
         NSDictionary *modelDict = travelSecondCell.oneDetailModel.mj_keyValues;
-        if (modelDict.count>3) {
+        if (modelDict.count>2) {
             [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
         }
     }
@@ -369,20 +383,6 @@
     }
     [mutArr writeToFile:plistPath atomically:YES];
 }
-
-#pragma mark --- 在resoure文件下创建子文件来保存众筹的相关图片、语音、视屏资源
--(NSString *)resoureSubFilePath
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *createPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-    // 判断文件夹是否存在，如果不存在，则创建
-    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
-        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return createPath;
-}
-
 
 #pragma mark --- 将临时文件移到documents中
 -(NSString *)copyTmpFileToDocument:(NSString *)tmpFilePath
@@ -421,12 +421,11 @@
                             @"start_time":@"2016-4-28",
                             @"end_time":@"2016-5-10",
                             @"spell_end_time":@"2016-7-28",
-                            @"people":@8,
                             @"cover":@"http://....",
                             @"desc":@"筹旅费文字描述",
-                            @"voice":@"http://....",
-                            @"video":@"http://....",
-                            @"videoImg":@"http://...",
+//                            @"voice":@"http://....",
+//                            @"video":@"http://....",
+//                            @"videoImg":@"http://...",
                             @"schedule":@[
                                     @{
                                         @"day": @1,
@@ -513,6 +512,7 @@
                                     ]
                             
                             };
+    NSLog(@"%@",[self turnJson:dataDic]);
     [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"%@",result);
         
@@ -531,6 +531,16 @@
     } andFailBlock:^(id failResult) {
         
     }];
+}
+
+-(NSString *)turnJson:(NSDictionary *)dic
+{
+//    转换成json
+        NSData *data = [NSJSONSerialization dataWithJSONObject :dic options : NSJSONWritingPrettyPrinted error:NULL];
+    
+        NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+    
+    return jsonStr;
 }
 
 #pragma mark --- 定时保存数据

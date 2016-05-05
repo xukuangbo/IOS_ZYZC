@@ -25,5 +25,5 @@ typedef enum{
 
 @property (nonatomic, weak) UILabel *discLab;
 
-@property (nonatomic, weak) FZCContentEntryView *contentEntryView;
+@property (nonatomic, strong) FZCContentEntryView *contentEntryView;
 @end

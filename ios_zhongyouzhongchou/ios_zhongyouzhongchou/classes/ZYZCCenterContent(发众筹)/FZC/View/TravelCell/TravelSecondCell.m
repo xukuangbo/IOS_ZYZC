@@ -95,26 +95,91 @@
     _contentEntryView.contentBelong=contentBelong;
 }
 
+#pragma mark --- 加载数据
+-(void)setOneDetailModel:(MoreFZCTravelOneDayDetailMdel *)oneDetailModel
+{
+    self.titleLab.text=[NSString stringWithFormat:@"第%.2zd天:",oneDetailModel.day];
+    
+    AddSceneView *sceneContentView=[_addView viewWithTag:SceneContentType];
+    if(oneDetailModel.siteDes.length)
+    {
+        sceneContentView.textView.text=oneDetailModel.siteDes;
+        sceneContentView.placeholdLab.hidden=YES;
+    }
+    
+    AddSceneView *trafficContentView=[_addView viewWithTag:TrafficContentType];
+    if(oneDetailModel.trafficDes.length)
+    {
+        trafficContentView.textView.text=oneDetailModel.trafficDes;;
+        trafficContentView.placeholdLab.hidden=YES;
+    }
+    
+    AddSceneView *accommodateContentView=[_addView viewWithTag:AccommodateContentType];
+    if (oneDetailModel.liveDes.length) {
+        accommodateContentView.textView.text=oneDetailModel.trafficDes;;
+        accommodateContentView.placeholdLab.hidden=YES;
+    }
+
+    AddSceneView *foodContentView=[_addView viewWithTag:FoodContentType];
+    if (oneDetailModel.foodDes.length) {
+        foodContentView.textView.text=oneDetailModel.foodDes;
+        foodContentView.placeholdLab.hidden=YES;
+    }
+    
+    WordView *wordView=(WordView *)[_contentEntryView viewWithTag:WordViewType];
+    if (oneDetailModel.wordDes.length) {
+        wordView.textView.text=oneDetailModel.wordDes;
+        wordView.placeHolderLab.hidden=YES;
+    }
+    
+    SoundView *soundView=(SoundView *)[_contentEntryView viewWithTag:SoundViewType];
+    if (oneDetailModel.voiceUrl.length) {
+        soundView.soundFileName=oneDetailModel.voiceUrl;
+        soundView.soundProgress=0;
+    }
+    
+    MovieView *movieView=(MovieView *)[_contentEntryView viewWithTag:MovieViewType];
+    if (oneDetailModel.voiceUrl.length) {
+        soundView.soundFileName=oneDetailModel.voiceUrl;
+        soundView.soundProgress=0;
+    }
+    if (oneDetailModel.movieImg.length) {
+        movieView.movieImg.image=[UIImage imageWithContentsOfFile:KMY_ZHONGCHOU_DOCUMENT_PATH(oneDetailModel.movieImg)];
+        movieView.movieImgFileName=oneDetailModel.movieImg;
+        movieView.movieFileName=oneDetailModel.movieUrl;
+    }
+
+    
+}
+
 #pragma mark --- 存储数据到模型中
 -(void)saveTravelOneDayDetailData
 {
     AddSceneView *sceneContentView=[_addView viewWithTag:SceneContentType];
     //保存景点描述文字
-    _oneDetailModel.siteDes=sceneContentView.textView.text;
+    if (sceneContentView.textView.text.length) {
+        _oneDetailModel.siteDes=sceneContentView.textView.text;
+    }
     //保存景点图库标示符
-    _oneDetailModel.sites=sceneContentView.siteTagArr;
+    if (sceneContentView.siteTagArr.count) {
+        _oneDetailModel.sites=sceneContentView.siteTagArr;
+    }
     
     AddSceneView *trafficContentView=[_addView viewWithTag:TrafficContentType];
     //保存交通描述文字
-    _oneDetailModel.trafficDes=trafficContentView.textView.text;
-    
+    if (trafficContentView.textView.text.length) {
+        _oneDetailModel.trafficDes=trafficContentView.textView.text;
+    }
     AddSceneView *accommodateContentView=[_addView viewWithTag:AccommodateContentType];
     //保存住宿描述文字
-    _oneDetailModel.liveDes=accommodateContentView.textView.text;
-    
+    if (accommodateContentView.textView.text.length) {
+         _oneDetailModel.liveDes=accommodateContentView.textView.text;
+    }
      AddSceneView *foodContentView=[_addView viewWithTag:FoodContentType];
     //保存餐饮描述文字
-    _oneDetailModel.foodDes=foodContentView.textView.text;
+    if (foodContentView.textView.text.length) {
+        _oneDetailModel.foodDes=foodContentView.textView.text;
+    }
     
     //保存当日旅游文字描述
     WordView *wordView=(WordView *)[_contentEntryView viewWithTag:WordViewType];
@@ -123,12 +188,12 @@
     }
     //保存当日旅游语音描述
     SoundView *soundView=(SoundView *)[_contentEntryView viewWithTag:SoundViewType];
-    _oneDetailModel.voiceUrl=soundView.soundFilePath;
+    _oneDetailModel.voiceUrl=soundView.soundFileName;
     //保存当日旅游视屏描述
     MovieView *movieView=(MovieView *)[_contentEntryView viewWithTag:MovieViewType];
-    _oneDetailModel.movieUrl=[movieView.movieFilePath path];
+    _oneDetailModel.movieUrl=movieView.movieFileName;
     //保存当日旅行视屏第一帧
-    _oneDetailModel.movieImg=movieView.movieImgPath;
+    _oneDetailModel.movieImg=movieView.movieImgFileName;
     
 }
 

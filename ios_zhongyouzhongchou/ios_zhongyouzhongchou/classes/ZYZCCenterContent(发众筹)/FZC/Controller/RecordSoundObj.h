@@ -9,15 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import "lame.h"
+typedef void(^SoundPlayEnd)();
+
 @interface RecordSoundObj : NSObject<AVAudioRecorderDelegate,AVAudioPlayerDelegate>
 @property (nonatomic, strong) AVAudioRecorder *audioRecorder;//音频录音机
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;//音频播放器，用于播放录音文件
 @property (nonatomic, copy  ) NSString *soundFileName;
 
-/**
- *  获取语音路径
- */
--(NSString *)getSavePath;
+@property (nonatomic, copy  ) SoundPlayEnd soundPlayEnd;
 
 /**
  *  语音录制
@@ -31,6 +30,11 @@
  *  语音播放
  */
 -(void)playSound;
+
+/**
+ *  语音播放停止
+ */
+-(void)stopSound;
 /**
  *  删除语音
  */

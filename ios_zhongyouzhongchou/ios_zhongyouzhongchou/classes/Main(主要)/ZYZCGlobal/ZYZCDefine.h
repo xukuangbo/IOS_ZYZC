@@ -15,6 +15,8 @@
 #define KMY_ZHONGCHOU_TMP  @"zhouchou_tmp"
 #define KMY_ZHONGCHOU_DOC  @"zhouchou_doc"
 
+#define KMY_ZHONGCHOU_DOCUMENT_PATH(fileName)  [NSString stringWithFormat:@"%@/%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0],fileName]
+
 //屏幕宽
 #define KSCREEN_W [UIScreen mainScreen].bounds.size.width
 //屏幕高

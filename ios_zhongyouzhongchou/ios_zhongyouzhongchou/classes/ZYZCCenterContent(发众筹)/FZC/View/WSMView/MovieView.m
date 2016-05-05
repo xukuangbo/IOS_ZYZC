@@ -64,10 +64,15 @@
     _movieImg=[[UIImageView alloc]initWithFrame:self.bounds];
     _movieImg.contentMode=UIViewContentModeScaleAspectFill;
     [self addSubview:_movieImg];
-    
+        
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addMyMovie:)];
     [self addGestureRecognizer:tap];
     
+    _turnImageView=[[UIImageView alloc]initWithFrame:CGRectMake(_movieImg.width-50, _movieImg.height-50, 40, 40)];
+    _turnImageView.image=[UIImage imageNamed:@"icon_change_video"];
+    _turnImageView.hidden=YES;
+    _turnImageView.userInteractionEnabled=NO;
+    [_movieImg addSubview:_turnImageView];
 }
 
 -(void)addMyMovie:(UIGestureRecognizer *)tap
@@ -188,30 +193,37 @@
             }
             else
             {
-                //保存视屏图片
-                self.movieImgPath=[self getImagePath];
+                //赋值图片数据
+                self.movieImg.image=_preMovImg;
+                _turnImageView.hidden=NO;
+                //保存图片
+                [self saveMovieImg];
+                
+                
                 //如果此处已存在文件删除已保存的文件
-                if (self.movieFilePath) {
+                if (self.movieFileName) {
                     //开启线程删除
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                         NSError *error03=nil;
+                        //移除mp4视屏文件
                         NSFileManager *manager=[NSFileManager defaultManager];
-                        BOOL isRemovePreMP4File=[manager removeItemAtURL:self.movieFilePath error:&error03];
-                        if (isRemovePreMP4File) {
-                            NSLog(@"pre_mp4文件已移出");
-                        }
-                        else
-                        {
-                            NSLog(@"pre_mp4文件移出失败");
-                        }
+                        [manager removeItemAtURL:[NSURL fileURLWithPath:KMY_ZHONGCHOU_DOCUMENT_PATH(self.movieFileName)]  error:&error03];
+                        
+                        //同时移除视屏图片文件
+                        [manager removeItemAtURL:[NSURL fileURLWithPath:KMY_ZHONGCHOU_DOCUMENT_PATH(self.movieImgFileName)]  error:nil];
+                        
                     });
                 }
                 //开启线程将文件转换成MP4格式
                  __weak typeof (&*self)weakSelf=self;
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    
                     NSURL  *inputURL  = mediaURL;
-                    NSString *outPutURLStr=[self pathForMP4File];
+                    
+                    NSString *outPutFileName=[NSString stringWithFormat:@"%@/%@/%@.mp4",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
+                    NSString *outPutURLStr=KMY_ZHONGCHOU_DOCUMENT_PATH(outPutFileName);
                     NSURL  *outputURL = [NSURL fileURLWithPath:outPutURLStr];
+                    
                     [weakSelf turntoMP4WithInputURL:inputURL
                                       outputURL:outputURL
                                    blockHandler:^(AVAssetExportSession *hander){
@@ -228,34 +240,30 @@
                                                NSLog(@"mov文件未移出");
                                            }
                                        });
-                                       //记录文件路径
-                                       weakSelf.movieFilePath=outputURL;
+                                       //记录mp4文件名
+                                       weakSelf.movieFileName=outPutFileName;
                                        
                                        //将MP4文件和第一帧图片路径保存到单例中
                                        MoreFZCDataManager *dataManager=[MoreFZCDataManager sharedMoreFZCDataManager];
                                        if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
-                                           dataManager.raiseMoney_movieUrl=outPutURLStr;
-                                           dataManager.raiseMoney_movieImg=weakSelf.movieImgPath;
+                                           dataManager.raiseMoney_movieUrl=outPutFileName;
+                                           dataManager.raiseMoney_movieImg=weakSelf.movieImgFileName;
                                        }
                                        else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
                                        {
-                                            dataManager.return_movieUrl=outPutURLStr;
-                                           dataManager.return_movieImg=weakSelf.movieImgPath;
+                                            dataManager.return_movieUrl=outPutFileName;
+                                           dataManager.return_movieImg=weakSelf.movieImgFileName;
                                        }
                                        else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
                                        {
-                                           dataManager.return_movieUrl01=outPutURLStr;
-                                           dataManager.return_movieImg01=weakSelf.movieImgPath;
+                                           dataManager.return_movieUrl01=outPutFileName;
+                                           dataManager.return_movieImg01=weakSelf.movieImgFileName;
                                        }
                                    }];
                 });
                 
                 //选择器消失
-                [picker dismissViewControllerAnimated:YES completion:^{
-                    if (weakSelf.preMovImg) {
-                        weakSelf.movieImg.image=weakSelf.preMovImg;
-                    }
-                }];
+                [picker dismissViewControllerAnimated:YES completion:nil];
             }
         }
     
@@ -358,29 +366,29 @@
             
 }
 
-#pragma mark --- alertView方法回调
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-    if (alertView.tag==KFZC_MOVIERECORDSAVE_TAG||buttonIndex==1) {
-        //保存视频至相册（异步线程）
-        NSString *urlStr = [self.movieFilePath path];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(urlStr)) {
-                UISaveVideoAtPathToSavedPhotosAlbum(urlStr, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
-            }
-        });
-    }
-}
+//#pragma mark --- alertView方法回调
+//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    
+//    if (alertView.tag==KFZC_MOVIERECORDSAVE_TAG||buttonIndex==1) {
+//        //保存视频至相册（异步线程）
+//        NSString *urlStr = [self.movieFilePath path];
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(urlStr)) {
+//                UISaveVideoAtPathToSavedPhotosAlbum(urlStr, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+//            }
+//        });
+//    }
+//}
 
-#pragma mark 视频保存完毕的回调
-- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInf{
-    if (error) {
-        NSLog(@"保存视频过程中发生错误，错误信息:%@",error.localizedDescription);
-    }else{
-        NSLog(@"视频保存成功.");
-    }
-}
+//#pragma mark 视频保存完毕的回调
+//- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInf{
+//    if (error) {
+//        NSLog(@"保存视频过程中发生错误，错误信息:%@",error.localizedDescription);
+//    }else{
+//        NSLog(@"视频保存成功.");
+//    }
+//}
 
 /**
  *  获取视屏第一帧图片
@@ -394,6 +402,7 @@
     
     MPMoviePlayerController *mp = [[MPMoviePlayerController alloc]
                                    initWithContentURL:videoURL];
+    mp.shouldAutoplay=NO;
     UIImage *images = [mp thumbnailImageAtTime:0.0
                                     timeOption:MPMovieTimeOptionNearestKeyFrame];
     return images;
@@ -513,29 +522,37 @@
     }
 }
 
-#pragma mark --- 视屏文件转换为MP4格式后的存储路径,放到临时文件夹中
- 
--(NSString *)pathForMP4File
-{
-    //用时间给文件全名，以免重复，在测试的时候其实可以判断文件是否存在若存在，则删除，重新生成文件即可
-    NSString *tmpDir = NSTemporaryDirectory();
-    NSString * filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4",[ZYZCTool getLocalTime]]];
-    return filePath;
+-(void)saveMovieImg{
+    
+    self.movieImgFileName=[NSString stringWithFormat:@"%@/%@/%@.png",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
+    //将图片数据转换成png格式文件并存储
+    if (self.movieImg.image){
+        [UIImagePNGRepresentation(self.movieImg.image) writeToFile:KMY_ZHONGCHOU_DOCUMENT_PATH(self.movieImgFileName) atomically:YES];
+    }
+
 }
 
-#pragma mark --- 获取图片存储在tmp的路径下
--(NSString *)getImagePath
-{
-    NSString *tmpDir = NSTemporaryDirectory();
-    NSString *localTime=[ZYZCTool getLocalTime];
-    NSString *pngPath =[tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",localTime]];
-    
-    //将图片数据转换成png格式文件到tmp中
-    if (self.movieImg.image){
-        [UIImagePNGRepresentation(self.movieImg.image) writeToFile:pngPath atomically:YES];
-    }
-    
-    return pngPath;
-}
+//#pragma mark --- 视屏文件转换为MP4格式后的存储路径
+
+//-(NSString *)pathForMP4File
+//{
+//
+//    NSString *documentsPath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0];
+//    NSString * filePath=[NSString stringWithFormat:@"%@/%@/%@/%@.mp4",documentsPath,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
+//    return filePath;
+//}
+
+//#pragma mark --- 获取图片存储在tmp的路径下
+//-(NSString *)getImagePath
+//{
+//    NSString *documentsPath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0];
+//    NSString * pngPath=[NSString stringWithFormat:@"%@/%@/%@/%@.png",documentsPath,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
+//    
+//    //将图片数据转换成png格式文件到tmp中
+//    if (self.movieImg.image){
+//        [UIImagePNGRepresentation(self.movieImg.image) writeToFile:pngPath atomically:YES];
+//    }
+//    return pngPath;
+//}
 
 @end

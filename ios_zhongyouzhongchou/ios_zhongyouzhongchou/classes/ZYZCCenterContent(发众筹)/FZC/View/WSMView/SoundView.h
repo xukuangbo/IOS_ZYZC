@@ -8,6 +8,7 @@
 
 #import "WSMBaseView.h"
 #import "DrawCircleView.h"
+#import "RecordSoundObj.h"
 @interface SoundView : WSMBaseView
 /**
  *  时间显示
@@ -27,7 +28,11 @@
  */
 @property (nonatomic, strong)  DrawCircleView *circleView;
 
-@property (nonatomic, copy  )  NSString *soundFilePath;
+@property (nonatomic, copy  )  NSString *soundFileName;
+
+@property (nonatomic, assign)  CGFloat soundProgress;
+
+@property (nonatomic, strong)RecordSoundObj *soundObj;
 
 
 @end
