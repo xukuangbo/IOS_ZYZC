@@ -1,28 +1,30 @@
 //
-//  TacticSingleFoodController.m
+//  TacticSingleFoodVC.m
 //  ios_zhongyouzhongchou
 //
-//  Created by mac on 16/5/2.
+//  Created by mac on 16/5/5.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#import "TacticSingleFoodController.h"
+#import "TacticSingleFoodVC.h"
 #import "TacticSingleFoodModel.h"
-
-#define labelViewFont [UIFont systemFontOfSize:16]
-#define titleLabelFont [UIFont systemFontOfSize:18]
+#import "TacticVideoModel.h"
+#import "TacticFoodPicCell.h"
+#import "TacticFoodTextCell.h"
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
 #define imageViewHeight (KSCREEN_W / 16 * 9)
-@interface TacticSingleFoodController ()<UIScrollViewDelegate>
+@interface TacticSingleFoodVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, weak) UIImageView *mapView;
 @property (nonatomic, weak) UILabel *labelView;
-@property (nonatomic, weak) UIScrollView *scrollView;
+@property (nonatomic, weak) UITableView *tableView;
 
 @end
 
-@implementation TacticSingleFoodController
+static NSString *textCellID = @"TacticFoodTextCell";
+static NSString *picCellID = @"TacticFoodPicCell";
 
+@implementation TacticSingleFoodVC
 - (instancetype)init
 {
     self = [super init];
@@ -35,10 +37,6 @@
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -51,62 +49,15 @@
 - (void)setUpUI
 {
     /**
-     *  创建Scrollview
+     *  创建UITableView
      */
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49)];
-    scrollView.backgroundColor = [UIColor clearColor];
-    scrollView.bounces = YES;
-    scrollView.delegate = self;
-    [self.view addSubview:scrollView];
-    self.scrollView = scrollView;
-    /**
-     *  创建图片
-     */
-    CGFloat imageViewX = 0;
-    CGFloat imageViewY = 0;
-    CGFloat imageViewW = KSCREEN_W;
-    CGFloat imageViewH = imageViewHeight;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH)];
-    [scrollView addSubview:imageView];
-    imageView.backgroundColor = [UIColor redColor];
-    self.imageView = imageView;
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49) style:UITableViewStylePlain];
+    tableView.backgroundColor = [UIColor clearColor];
+    tableView.bounces = YES;
+    tableView.delegate = self;
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
     
-    /**
-     创建容器
-    */
-    UIImageView *mapView = [[UIImageView alloc] init];
-    mapView.userInteractionEnabled = YES;
-    mapView.layer.cornerRadius = 5;
-    mapView.layer.masksToBounds = YES;
-    [scrollView addSubview:mapView];
-    self.mapView = mapView;
-    //创建绿线
-    CGFloat lineHeight = 15;
-    [mapView addSubview:[UIView lineViewWithFrame:CGRectMake(KEDGE_DISTANCE , KEDGE_DISTANCE, 2,lineHeight) andColor:[UIColor ZYZC_MainColor]]];
-    //创建标题
-    CGFloat titleLabelX = KEDGE_DISTANCE * 2;
-    CGFloat titleLabelY = KEDGE_DISTANCE;
-    CGFloat titleLabelW = 200;
-    CGFloat titleLabelH = lineHeight;
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH)];
-    titleLabel.textColor = [UIColor colorWithRed:84/256.0 green:84/256.0 blue:84/256.0 alpha:1];
-    titleLabel.text = @"美食介绍";
-    titleLabel.font = titleLabelFont;
-    [mapView addSubview:titleLabel];
-    /**
-     *  创建文字
-     */
-    UILabel *labelView = [[UILabel alloc] init];
-    //    labelView.lineBreakMode = NSLineBreakByCharWrapping;
-    labelView.textAlignment = NSTextAlignmentCenter;
-    labelView.layer.cornerRadius = 5;
-    labelView.layer.masksToBounds = YES;
-    labelView.font = labelViewFont;
-//    labelView.backgroundColor = [UIColor whiteColor];
-    labelView.textColor = [UIColor ZYZC_TextGrayColor];
-    labelView.numberOfLines = 0;
-    [mapView addSubview:labelView];
-    self.labelView = labelView;
 }
 
 - (void)setTacticSingleFoodModel:(TacticSingleFoodModel *)tacticSingleFoodModel
@@ -132,7 +83,7 @@
     
     
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.foodImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
-
+    
     self.labelView.text = tacticSingleFoodModel.foodText;
     self.labelView.frame = CGRectMake(labelViewX, labelViewY, labelViewW, labelViewH);
     
@@ -140,10 +91,50 @@
     self.mapView.frame = CGRectMake(mapViewX, mapViewY, mapViewW, mapViewH);
     self.mapView.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     
-    CGFloat scrollViewH = self.imageView.height + mapViewH + KEDGE_DISTANCE * 2 + 44;
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, scrollViewH);
     
+}
+
+
+#pragma mark - UITableViewDelegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        TacticFoodPicCell *cell = [tableView dequeueReusableCellWithIdentifier:picCellID];
+        if (!cell) {
+            cell = [[TacticFoodPicCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:picCellID];
+        }
+        
+        
+        
+        return cell;
+    }else if(indexPath.row == 1) {
+        TacticFoodTextCell *cell = [tableView dequeueReusableCellWithIdentifier:textCellID];
+        if (!cell) {
+            cell = [[TacticFoodTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:textCellID];
+        }
+        
+        
+        return cell;
+    }else{
+        TacticFoodPicCell *cell = [tableView dequeueReusableCellWithIdentifier:picCellID];
+        if (!cell) {
+            cell = [[TacticFoodPicCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:picCellID];
+        }
+        
+        return cell;
+    }
     
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 200;
 }
 
 #pragma mark - UISrollViewDelegate
@@ -168,4 +159,24 @@
         
     }
 }
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
 @end

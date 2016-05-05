@@ -56,7 +56,7 @@
         tipsViewY = CGRectGetMaxY(self.pictureViewF) + TacticTableViewCellMargin;
         
     }else{//无长图
-        tipsViewY = CGRectGetMaxY(self.flashViewF);
+        tipsViewY = CGRectGetMaxY(self.flashViewF) +TacticTableViewCellMargin;
         self.pictureViewF = CGRectMake(0, pictureViewY, 0, 0);
     }
     
@@ -78,7 +78,7 @@
         mustPlayViewY = CGRectGetMaxY(self.tipsViewF) + TacticTableViewCellMargin;
     }else{
         self.tipsViewF = CGRectMake(0, tipsViewY, 0, 0);
-        mustPlayViewY = CGRectGetMaxY(self.pictureShowButtonF);
+        mustPlayViewY = CGRectGetMaxY(self.pictureShowButtonF) + TacticTableViewCellMargin;
     }
     
     //必玩景点

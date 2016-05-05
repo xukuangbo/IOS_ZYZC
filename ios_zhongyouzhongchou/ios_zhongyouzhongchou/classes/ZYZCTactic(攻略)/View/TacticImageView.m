@@ -8,8 +8,8 @@
 
 #import "TacticImageView.h"
 #import "TacticSingleViewController.h"
-#import "TacticSingleFoodController.h"
 #import "TacticVideoModel.h"
+#import "TacticSingleFoodModel.h"
 
 @interface TacticImageView ()
 /**
@@ -54,6 +54,14 @@
     self.nameLabel.text = tacticVideoModel.name;
     self.viewType = tacticVideoModel.viewType;
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.viewImg)] forState:UIControlStateNormal];
+}
+
+- (void)setTacticSingleFoodModel:(TacticSingleFoodModel *)tacticSingleFoodModel
+{
+    _tacticSingleFoodModel = tacticSingleFoodModel;
+    
+    self.nameLabel.text = tacticSingleFoodModel.name;
+    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.foodImg)] forState:UIControlStateNormal];
 }
 
 //这里写个跳转到单个景点

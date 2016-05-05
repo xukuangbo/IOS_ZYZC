@@ -1,15 +1,17 @@
 //
-//  TacticSingleFoodController.h
+//  TacticSingleFoodVC.h
 //  ios_zhongyouzhongchou
 //
-//  Created by mac on 16/5/2.
+//  Created by mac on 16/5/5.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
 #import "ZYZCBaseViewController.h"
 @class TacticSingleFoodModel;
+@class TacticVideoModel;
 
 
-@interface TacticSingleFoodController : ZYZCBaseViewController
+@interface TacticSingleFoodVC : ZYZCBaseViewController
 @property (nonatomic, strong) TacticSingleFoodModel *tacticSingleFoodModel;
+@property (nonatomic, strong) TacticVideoModel *tacticVideoModel;
 @end

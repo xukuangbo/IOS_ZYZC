@@ -159,6 +159,7 @@
     CGFloat foodsPlayViewButtonW = mustPlayView.width - TacticTableViewCellMargin * 2;
     CGFloat foodsPlayViewButtonH = (KSCREEN_W - 10 * 6) / 3.0;
     TacticThreeMapView *foodsPlayViewButton = [[TacticThreeMapView alloc] initWithFrame:CGRectMake(foodsPlayViewButtonX, foodsPlayViewButtonY, foodsPlayViewButtonW, foodsPlayViewButtonH)];
+    foodsPlayViewButton.threeMapViewType = threeMapViewTypeFood;
     foodsPlayViewButton.layer.cornerRadius = 5;
     foodsPlayViewButton.layer.masksToBounds = YES;
     [foodsView addSubview:foodsPlayViewButton];
