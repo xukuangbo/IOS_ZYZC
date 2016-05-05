@@ -145,9 +145,10 @@
 		04F836461CD72C3300140980 /* SDRotationLoopProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8363E1CD72C3300140980 /* SDRotationLoopProgressView.m */; };
 		04F836471CD72C3300140980 /* SDTransparentPieProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836401CD72C3300140980 /* SDTransparentPieProgressView.m */; };
 		04F8364D1CD734CD00140980 /* TacticSingleTipsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8364C1CD734CD00140980 /* TacticSingleTipsController.m */; };
-		04F836531CD7637C00140980 /* TacticSingleFoodController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836521CD7637C00140980 /* TacticSingleFoodController.m */; };
-		04F836561CD77C5C00140980 /* TacticSingleAttractionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836551CD77C5C00140980 /* TacticSingleAttractionsController.m */; };
 		04F836581CD82FD600140980 /* other.json in Resources */ = {isa = PBXBuildFile; fileRef = 04F836571CD82FD600140980 /* other.json */; };
+		04FCCAA21CDB246F00540B28 /* TacticSingleFoodVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAA11CDB246F00540B28 /* TacticSingleFoodVC.m */; };
+		04FCCAA71CDB249C00540B28 /* TacticFoodPicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAA41CDB249C00540B28 /* TacticFoodPicCell.m */; };
+		04FCCAA81CDB249C00540B28 /* TacticFoodTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAA61CDB249C00540B28 /* TacticFoodTextCell.m */; };
 		2C2C2A281CCE395E0068A883 /* ZCDetailReturnCusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */; };
 		2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */; };
 		2C4615AA1CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */; };
@@ -473,11 +474,13 @@
 		04F836401CD72C3300140980 /* SDTransparentPieProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTransparentPieProgressView.m; sourceTree = "<group>"; };
 		04F8364B1CD734CD00140980 /* TacticSingleTipsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleTipsController.h; sourceTree = "<group>"; };
 		04F8364C1CD734CD00140980 /* TacticSingleTipsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleTipsController.m; sourceTree = "<group>"; };
-		04F836511CD7637C00140980 /* TacticSingleFoodController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleFoodController.h; sourceTree = "<group>"; };
-		04F836521CD7637C00140980 /* TacticSingleFoodController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleFoodController.m; sourceTree = "<group>"; };
-		04F836541CD77C5C00140980 /* TacticSingleAttractionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleAttractionsController.h; sourceTree = "<group>"; };
-		04F836551CD77C5C00140980 /* TacticSingleAttractionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleAttractionsController.m; sourceTree = "<group>"; };
 		04F836571CD82FD600140980 /* other.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = other.json; sourceTree = "<group>"; };
+		04FCCAA01CDB246F00540B28 /* TacticSingleFoodVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleFoodVC.h; sourceTree = "<group>"; };
+		04FCCAA11CDB246F00540B28 /* TacticSingleFoodVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleFoodVC.m; sourceTree = "<group>"; };
+		04FCCAA31CDB249C00540B28 /* TacticFoodPicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticFoodPicCell.h; sourceTree = "<group>"; };
+		04FCCAA41CDB249C00540B28 /* TacticFoodPicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticFoodPicCell.m; sourceTree = "<group>"; };
+		04FCCAA51CDB249C00540B28 /* TacticFoodTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticFoodTextCell.h; sourceTree = "<group>"; };
+		04FCCAA61CDB249C00540B28 /* TacticFoodTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticFoodTextCell.m; sourceTree = "<group>"; };
 		2C2C2A261CCE395E0068A883 /* ZCDetailReturnCusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailReturnCusView.h; sourceTree = "<group>"; };
 		2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnCusView.m; sourceTree = "<group>"; };
 		2C2DEF131CCB4D3100111459 /* ZCDetailArrangeFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailArrangeFirstCell.h; sourceTree = "<group>"; };
@@ -671,10 +674,6 @@
 				04F836291CD7102200140980 /* ZYZCPlayViewController.m */,
 				04F8364B1CD734CD00140980 /* TacticSingleTipsController.h */,
 				04F8364C1CD734CD00140980 /* TacticSingleTipsController.m */,
-				04F836511CD7637C00140980 /* TacticSingleFoodController.h */,
-				04F836521CD7637C00140980 /* TacticSingleFoodController.m */,
-				04F836541CD77C5C00140980 /* TacticSingleAttractionsController.h */,
-				04F836551CD77C5C00140980 /* TacticSingleAttractionsController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1165,6 +1164,7 @@
 		04A99C871CBF848D00C6F5F0 /* ZYZCTactic(攻略) */ = {
 			isa = PBXGroup;
 			children = (
+				04FCCA991CDB235B00540B28 /* foodVC(食物跟一般景点界面) */,
 				040651441CC87A1C003FD539 /* Single(单个景点控制器) */,
 				040651281CC6356C003FD539 /* Controller */,
 				0406512B1CC6356C003FD539 /* Model */,
@@ -1325,6 +1325,43 @@
 				04F836401CD72C3300140980 /* SDTransparentPieProgressView.m */,
 			);
 			path = SDPieProgressView;
+			sourceTree = "<group>";
+		};
+		04FCCA991CDB235B00540B28 /* foodVC(食物跟一般景点界面) */ = {
+			isa = PBXGroup;
+			children = (
+				04FCCA9A1CDB235B00540B28 /* Controller */,
+				04FCCA9B1CDB235B00540B28 /* Model */,
+				04FCCA9C1CDB235B00540B28 /* View */,
+			);
+			path = "foodVC(食物跟一般景点界面)";
+			sourceTree = "<group>";
+		};
+		04FCCA9A1CDB235B00540B28 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				04FCCAA01CDB246F00540B28 /* TacticSingleFoodVC.h */,
+				04FCCAA11CDB246F00540B28 /* TacticSingleFoodVC.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		04FCCA9B1CDB235B00540B28 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		04FCCA9C1CDB235B00540B28 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04FCCAA31CDB249C00540B28 /* TacticFoodPicCell.h */,
+				04FCCAA41CDB249C00540B28 /* TacticFoodPicCell.m */,
+				04FCCAA51CDB249C00540B28 /* TacticFoodTextCell.h */,
+				04FCCAA61CDB249C00540B28 /* TacticFoodTextCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		2C901DAF1C89788C004B844B = {
@@ -1666,6 +1703,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FCCAA81CDB249C00540B28 /* TacticFoodTextCell.m in Sources */,
 				04A99C921CBF848D00C6F5F0 /* ZYZCHTTPTool.m in Sources */,
 				0406513E1CC76B4F003FD539 /* TacticThreeMapView.m in Sources */,
 				04A99CA01CBF848D00C6F5F0 /* FZCContentEntryView.m in Sources */,
@@ -1684,7 +1722,6 @@
 				2CF7EB041CC78582007074FE /* ZCDetailIntroSecondCell.m in Sources */,
 				04A99CBA1CBF848D00C6F5F0 /* TravelSecondCell.m in Sources */,
 				04A99CD31CBF848D00C6F5F0 /* ZCFilterTableViewCell.m in Sources */,
-				04F836561CD77C5C00140980 /* TacticSingleAttractionsController.m in Sources */,
 				2CCB52ED1CC70F1800F99CD3 /* ZCDetailTableHeadView.m in Sources */,
 				04A99CA41CBF848D00C6F5F0 /* GoalSecondCell.m in Sources */,
 				2CE074BB1CCF487B006D312D /* ZCDetailCustomButton.m in Sources */,
@@ -1717,7 +1754,6 @@
 				04F836451CD72C3300140980 /* SDPieProgressView.m in Sources */,
 				2CE074C31CCF7ECC006D312D /* ZYZCTabBarController.m in Sources */,
 				0490D1591CC9BFB60064844C /* TacticSingleModelFrame.m in Sources */,
-				04F836531CD7637C00140980 /* TacticSingleFoodController.m in Sources */,
 				2CD4B4551CCDE807006A7CE8 /* ZCDetailReturnThridCell.m in Sources */,
 				04A99CB51CBF848D00C6F5F0 /* ReturnSecondCell.m in Sources */,
 				0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */,
@@ -1784,6 +1820,7 @@
 				2CD4B4541CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m in Sources */,
 				04A99CA31CBF848D00C6F5F0 /* GoalScheduleView.m in Sources */,
 				04A99CAE1CBF848D00C6F5F0 /* MoreFZCRaiseMoneySecondCell.m in Sources */,
+				04FCCAA71CDB249C00540B28 /* TacticFoodPicCell.m in Sources */,
 				2CE21A7B1CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.m in Sources */,
 				04A99CBB1CBF848D00C6F5F0 /* DrawCircleView.m in Sources */,
 				040651221CC62FC7003FD539 /* TAAnimatedDotView.m in Sources */,
@@ -1797,6 +1834,7 @@
 				04A99CCD1CBF848D00C6F5F0 /* MineCenterTableViewCell.m in Sources */,
 				04A99CD01CBF848D00C6F5F0 /* ZCDetailInfoModel.m in Sources */,
 				04A99CB71CBF848D00C6F5F0 /* AddDetailView.m in Sources */,
+				04FCCAA21CDB246F00540B28 /* TacticSingleFoodVC.m in Sources */,
 				04A99D1E1CC07E1800C6F5F0 /* WXApiRequestHandler.m in Sources */,
 				040651381CC728E9003FD539 /* TacticTableViewCell.m in Sources */,
 				2C901DBD1C89788C004B844B /* main.m in Sources */,

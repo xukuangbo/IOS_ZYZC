@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 typedef NS_ENUM(NSInteger, ThreeMapViewType)
 {
-    threeMapViewTypeVideo = 1,
-    threeMapViewTypeCountryView,
-    threeMapViewTypeCityView,
-    threeMapViewTypeSingleView,
-    threeMapViewTypeFood
+    threeMapViewTypeDefult = 0,
+    threeMapViewTypeCountryView,//国家
+    threeMapViewTypeCityView,//城市
+    threeMapViewTypeSingleView,//一般景点
+    threeMapViewTypeFood,//食物
+    threeMapViewTypeVideo
 };
 @interface TacticThreeMapView : UIView
 

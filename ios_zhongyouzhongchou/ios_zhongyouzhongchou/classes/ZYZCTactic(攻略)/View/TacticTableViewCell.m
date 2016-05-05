@@ -105,7 +105,6 @@
     CGFloat threeMapViewW = hotDestViewW - TacticTableViewCellMargin * 2;
     CGFloat threeMapViewH = threeViewHeight;
     TacticThreeMapView *threeMapView = [[TacticThreeMapView alloc] initWithFrame:CGRectMake(threeMapViewX, threeMapViewY, threeMapViewW, threeMapViewH)];
-    threeMapView.threeMapViewType = threeMapViewTypeSingleView;
     [hotDestView addSubview:threeMapView];
     self.hotDestMapView = threeMapView;
     

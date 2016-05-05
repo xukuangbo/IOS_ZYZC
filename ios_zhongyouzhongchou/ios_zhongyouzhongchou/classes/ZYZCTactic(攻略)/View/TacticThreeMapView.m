@@ -13,7 +13,7 @@
 #import "TacticSingleFoodModel.h"
 #import "ZYZCPlayViewController.h"
 #import "TacticSingleViewController.h"
-#import "TacticSingleFoodController.h"
+#import "TacticSingleFoodVC.h"
 @interface TacticThreeMapView()<TacticImageViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *viewArray;
@@ -58,7 +58,7 @@
         int maxCount = videos.count >= 3? 3:(int)videos.count;
             for (int i = 0; i < maxCount; i++) {
                 TacticVideoModel *videoModel = (TacticVideoModel *)videos[i];
-                if (self.threeMapViewType == 0) {
+                if (self.threeMapViewType == threeMapViewTypeDefult) {
                     //如果之前没有被设置过的话
                     if (videoModel.viewType == 1) {
                         self.threeMapViewType = threeMapViewTypeCountryView;
@@ -66,10 +66,7 @@
                         self.threeMapViewType = threeMapViewTypeCityView;
                     }else if (videoModel.viewType == 3){
                         self.threeMapViewType = threeMapViewTypeSingleView;
-                    }else{
-                        self.threeMapViewType = threeMapViewTypeFood;
                     }
-                    
                 }
                 TacticImageView *imageView = self.viewArray[i];
                 imageView.tacticVideoModel = videoModel;
@@ -110,17 +107,17 @@
         
         [self.viewController presentViewController:playVC animated:YES completion:nil];
     }else if(self.threeMapViewType == threeMapViewTypeCountryView || self.threeMapViewType == threeMapViewTypeCityView) {
-            //说明是国家或者城市
-            TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:videoModel.viewid];
-            [self.viewController.navigationController pushViewController:singleVC animated:YES];
+        //说明是国家或者城市
+        TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:videoModel.viewid];
+        [self.viewController.navigationController pushViewController:singleVC animated:YES];
     }else if(self.threeMapViewType == threeMapViewTypeSingleView) {
         //说明是一般景点
         NSLog(@"一般景点");
     }else if (self.threeMapViewType == threeMapViewTypeFood){
         //说明是食物
-        TacticSingleFoodController *foodVC = [[TacticSingleFoodController alloc] init];
-        foodVC.tacticSingleFoodModel = singleFoodModel;
-
+        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
+        
+//        foodVC.tacticVideoModel
         [self.viewController.navigationController pushViewController:foodVC animated:YES];
     }
 }

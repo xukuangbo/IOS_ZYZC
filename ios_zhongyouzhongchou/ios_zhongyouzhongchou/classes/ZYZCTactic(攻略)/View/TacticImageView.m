@@ -8,7 +8,6 @@
 
 #import "TacticImageView.h"
 #import "TacticSingleViewController.h"
-#import "TacticSingleFoodController.h"
 #import "TacticVideoModel.h"
 #import "TacticSingleFoodModel.h"
 
