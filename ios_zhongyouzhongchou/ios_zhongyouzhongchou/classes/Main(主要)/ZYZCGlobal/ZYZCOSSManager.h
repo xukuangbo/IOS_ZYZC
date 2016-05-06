@@ -18,15 +18,17 @@
  *  删除存储空间
  */
 - (void)deleteBucket;
+
+/**
+ *  同步上传文件
+ *
+ */
+- (BOOL )uploadObjectSyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath;
 /**
  *  异步上传文件
  *
- *  @param docDir   文件路径
- *  @param fileType 文件类型（png，caf，mp4）
- *
- *  @return         文件名
  */
-- (NSString *)getfileURLWhenUploadObjectAsyncBydocDir:(NSString *)docDir andFileType:(NSString *)fileType;
+- (NSString *)getfileURLWhenUploadObjectAsyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath;
 
 /**
  *  异步下载

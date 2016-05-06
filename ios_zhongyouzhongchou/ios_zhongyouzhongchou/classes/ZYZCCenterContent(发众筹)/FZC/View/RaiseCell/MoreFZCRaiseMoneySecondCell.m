@@ -49,11 +49,68 @@
     [recordView addSubview:lianView];
     
     
-    FZCContentEntryView *contentEntryView = [[FZCContentEntryView alloc] initWithFrame:CGRectMake(kRaiseMoneySecondCellMargin, lianView.bottom, recordView.width - 2 * kRaiseMoneySecondCellMargin, recordView.height - lianView.bottom - kRaiseMoneySecondCellMargin)];
-    contentEntryView.contentBelong=RAISEMONEY_CONTENTBELONG;
-    [recordView addSubview:contentEntryView];
-    self.contentEntryView = contentEntryView;
+   _contentEntryView = [[FZCContentEntryView alloc] initWithFrame:CGRectMake(kRaiseMoneySecondCellMargin, lianView.bottom, recordView.width - 2 * kRaiseMoneySecondCellMargin, recordView.height - lianView.bottom - kRaiseMoneySecondCellMargin)];
+    _contentEntryView.contentBelong=RAISEMONEY_CONTENTBELONG;
+    [recordView addSubview:_contentEntryView];
+
+    [self initDataToContentEntryView:_contentEntryView];
 }
+
+-(void)initDataToContentEntryView:(FZCContentEntryView *)contentEntryView
+{
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    
+    WordView *wordView=(WordView *)[contentEntryView viewWithTag:WordViewType];
+    if (manager.raiseMoney_wordDes.length) {
+        wordView.textView.text=manager.raiseMoney_wordDes;
+        wordView.placeHolderLab.hidden=YES;
+    }
+    
+    SoundView *soundView=(SoundView *)[contentEntryView viewWithTag:SoundViewType];
+    if (manager.raiseMoney_voiceUrl.length) {
+        soundView.soundFileName=manager.raiseMoney_voiceUrl;
+        soundView.soundProgress=0;
+    }
+    
+    MovieView *movieView=(MovieView *)[contentEntryView viewWithTag:MovieViewType];
+    if (manager.raiseMoney_movieImg.length) {
+        movieView.movieImg.image=[UIImage imageWithContentsOfFile:KMY_ZHONGCHOU_DOCUMENT_PATH(manager.raiseMoney_movieImg)];
+        movieView.movieImgFileName=manager.raiseMoney_movieImg;
+        movieView.movieFileName=manager.raiseMoney_movieUrl;
+        movieView.turnImageView.hidden=NO;
+    }
+}
+//-(void)setContentBelong:(NSString *)contentBelong
+//{
+//    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+//
+//    if([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG])
+//    {
+//        if (manager.raiseMoney_wordDes.length) {
+//            _textView.text=manager.raiseMoney_wordDes;
+//            _placeHolderLab.hidden=YES;
+//        }
+//    }
+//    //回报1文字描述
+//    else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
+//    {
+//        if (manager.return_wordDes.length) {
+//            _textView.text=manager.return_wordDes;
+//            _placeHolderLab.hidden=YES;
+//        }
+//    }
+//    //回报2文字描述
+//    else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
+//    {
+//        if (manager.return_wordDes01.length) {
+//            _textView.text=manager.return_wordDes01;
+//            _placeHolderLab.hidden=YES;
+//        }
+//
+//    }
+//
+//}
+
 
 /**
  *  返回被选中的view

@@ -7,14 +7,13 @@
 //
 
 #import "SoundView.h"
-#import "RecordSoundObj.h"
 #import "ZYZCTool+getLocalTime.h"
 @interface SoundView ()
 @property (nonatomic, strong)NSTimer        *timer;
 @property (nonatomic, assign)BOOL           isRecord;
+@property (nonatomic, assign)BOOL           hasPlaySound;
 @property (nonatomic, assign)NSInteger      secRecord;
 @property (nonatomic, assign)NSInteger      millisecRecord;
-@property (nonatomic, strong)RecordSoundObj *soundObj;
 @end
 
 @implementation SoundView
@@ -61,8 +60,8 @@
     _playerBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _playerBtn.frame=CGRectMake(0, 0, 68, 68);
     _playerBtn.center=_soundBtn.center;
-    [_playerBtn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
-    [_playerBtn addTarget:self action:@selector(playerSound) forControlEvents:UIControlEventTouchUpInside];
+    [_playerBtn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_pause"] forState:UIControlStateNormal];
+    [_playerBtn addTarget:self action:@selector(playerSound:) forControlEvents:UIControlEventTouchUpInside];
     _playerBtn.hidden=YES;
     [self addSubview:_playerBtn];
     
@@ -80,6 +79,16 @@
     //圆环进度条
     [self createDrawCircle];
     
+    //初始化语音
+     _soundObj=[[RecordSoundObj alloc]init];
+    __weak typeof (&*self)weakSelf=self;
+    _soundObj.soundPlayEnd=^()
+    {
+        //语音播放完成播放按钮切换成停止状态
+        [weakSelf.playerBtn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
+        weakSelf.hasPlaySound=NO;
+    };
+    
 }
 
 #pragma mark --- 创建圆环进度条
@@ -87,6 +96,7 @@
 {
     UIView *view=[[UIView alloc]init];
     view.center=_soundBtn.center;
+    view.userInteractionEnabled=NO;
     view.bounds=CGRectMake(0, 0, 80, 80);
     [self addSubview:view];
     _circleView=[[DrawCircleView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
@@ -100,29 +110,27 @@
 #pragma mark --- 语音录制
 -(void)recordSound
 {
-    if (!_soundObj) {
-        //创建语音录制对象
-        _soundObj=[[RecordSoundObj alloc]init];
-    }
-    
+    //创建语音文件名
+    self.soundFileName=[NSString stringWithFormat:@"%@/%@/%@.caf",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
+    //进度条加载
     if (!_timer) {
         _timer=[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(changeProgressValue) userInfo:nil repeats:YES];
     }
-    _soundObj.soundFileName=[ZYZCTool getLocalTime];
+    //开启语音录制
     [_soundObj recordMySound];
-    self.soundFilePath=[_soundObj getSavePath];
-    //保存语音路径到单例中
+    
+    //保存语音文件名到单例中
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
-        manager.raiseMoney_voiceUrl=self.soundFilePath;
+        manager.raiseMoney_voiceUrl=self.soundFileName;
     }
     else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
     {
-        manager.return_voiceUrl=self.soundFilePath;
+        manager.return_voiceUrl=self.soundFileName;
     }
     else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
     {
-        manager.return_voiceUrl01=self.soundFilePath;
+        manager.return_voiceUrl01=self.soundFileName;
     }
 }
 
@@ -144,9 +152,18 @@
 }
 
 #pragma mark --- 播放语音
--(void)playerSound
+-(void)playerSound:(UIButton *)btn
 {
-    [_soundObj playSound];
+    if (!_hasPlaySound) {
+        [_soundObj playSound];
+        [btn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_pause"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_soundObj stopSound];
+        [btn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
+    }
+    _hasPlaySound=!_hasPlaySound;
 }
 
 #pragma mark --- 删除语音
@@ -161,19 +178,18 @@
     
     [_soundObj deleteMySound];
     
-    self.soundFilePath=nil;
     //删除单例中语音路径，赋值为空
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
-        manager.raiseMoney_voiceUrl= self.soundFilePath;
+        manager.raiseMoney_voiceUrl= nil;
     }
     else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
     {
-        manager.return_voiceUrl= self.soundFilePath;
+        manager.return_voiceUrl= nil;
     }
     else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
     {
-        manager.return_voiceUrl01= self.soundFilePath;
+        manager.return_voiceUrl01= nil;
     }
 
 }
@@ -214,6 +230,19 @@
     }
    
     return  attrStr;
+}
+
+-(void)setSoundProgress:(CGFloat )soundProgress
+{
+    _circleView.progressValue=soundProgress;
+    _playerBtn.hidden=NO;
+    _soundBtn.hidden=YES;
+}
+
+-(void)setSoundFileName:(NSString *)soundFileName
+{
+    _soundFileName=soundFileName;
+    self.soundObj.soundFileName=soundFileName;
 }
 
 

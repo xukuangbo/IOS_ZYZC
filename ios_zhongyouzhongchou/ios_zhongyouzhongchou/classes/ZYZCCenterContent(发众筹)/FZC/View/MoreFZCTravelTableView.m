@@ -18,10 +18,11 @@
         _travelDetailCellArr=[NSMutableArray array];
         _travelDays=1;
         self.dataSource =self;
-        self.delegate  = self;
+        self.delegate   =self;
     }
     return self;
 }
+
 #pragma mark --- 获取总的行程时间
 -(void)getTravelDays
 {
@@ -30,8 +31,17 @@
     if (_travelDetailCellArr.count) {
         [_travelDetailCellArr removeAllObjects];
     }
+   
     for (int i=0; i<_travelDays; i++) {
         TravelSecondCell *secondCell=[[TravelSecondCell alloc]init];
+        secondCell.oneDetailModel.day=[NSNumber numberWithInt:i+1];
+        if (manager.travelDetailDays.count) {
+            for (MoreFZCTravelOneDayDetailMdel *model in manager.travelDetailDays) {
+                if ([model.day integerValue]==i+1) {
+                    secondCell.oneDetailModel=model;
+                }
+            }
+        }
         [_travelDetailCellArr addObject:secondCell];
     }
 }
@@ -46,7 +56,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     if (indexPath.row==0) {
         TravelFirstCell *travelFirstCell=[tableView dequeueReusableCellWithIdentifier:@"travelFirstCell"];
         if (!travelFirstCell) {
@@ -66,22 +75,34 @@
         __weak typeof (&*self)weakSelf=self;
         travelSecondCell.reloadTableBlock=^(BOOL isChangeHeight)
         {
+            MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+            [manager.travelDetailDays removeAllObjects];
+            for (NSInteger i=0; i<weakSelf.travelDetailCellArr.count; i++) {
+                TravelSecondCell *travelSecondCell=weakSelf.travelDetailCellArr[i];
+                [travelSecondCell saveTravelOneDayDetailData];
+                NSDictionary *modelDict = travelSecondCell.oneDetailModel.mj_keyValues;
+                if (modelDict.count>3) {
+                    [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
+                }
+            }
             [weakSelf.rowsChangeHeight setObject:[NSNumber numberWithBool:isChangeHeight] forKey:[NSNumber numberWithInteger:indexPath.row]];
+            
             [tableView reloadData];
         };
+        
+        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+        if (manager.travelDetailDays.count) {
+            for (MoreFZCTravelOneDayDetailMdel *model in manager.travelDetailDays) {
+                if ([model.day integerValue]==cellNumber) {
+                    travelSecondCell.oneDetailModel=model;
+                }
+            }
+        }
+        
         travelSecondCell.titleLab.text=[NSString stringWithFormat:@"第%.2zd天:",indexPath.row/2];
-        //计算cell的日期
-        NSDate *startDate=nil;
-        if (!manager.goal_startDate) {
-            startDate=[NSDate date];
-        }
-        else{
-            startDate=[NSDate dateFromString:manager.goal_startDate];
-        }
-        NSDate *cellDate=[NSDate dateWithTimeInterval:cellNumber*24*60*60 sinceDate:startDate];
-        travelSecondCell.oneDetailModel.date=[NSString stringWithFormat:@"%@",cellDate];
         travelSecondCell.oneDetailModel.day=[NSNumber numberWithInteger:indexPath.row/2];
         travelSecondCell.contentBelong=TRAVEL_CONTENTBELONG(indexPath.row/2);
+        
         return travelSecondCell;
     }
     else

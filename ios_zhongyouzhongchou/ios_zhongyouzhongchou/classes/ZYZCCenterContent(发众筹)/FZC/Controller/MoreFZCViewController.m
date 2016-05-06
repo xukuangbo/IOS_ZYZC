@@ -21,11 +21,17 @@
 
 #define kMoreFZCToolBar 20
 #define kNaviBar 64
+
+#define ALERT_BACK_TAG   1
+#define ALERT_UPLOAD_TAG 2
+#define ALERT_PUBLISH_TAG 3
+
 @interface MoreFZCViewController ()<MoreFZCToolBarDelegate,UIAlertViewDelegate>
 @property (nonatomic, strong) NSString *oneResouceFile;
 @property (nonatomic, strong) NSString *archiveDataPath;
 @property (nonatomic, strong) NSMutableArray *picesSaveState;
 @property (nonatomic, assign) BOOL isFirstTimeToSave;
+@property (nonatomic, assign) BOOL needPopVC;
 @property (nonatomic, strong) NSTimer *timer;
 @end
 
@@ -35,6 +41,9 @@
 - (void)viewDidLoad {
    
     [super viewDidLoad];
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [user setObject:[NSNumber numberWithInteger:0] forKey:KMOREFZC_RETURN_SUPPORTTYPE];
+    [user synchronize];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     _picesSaveState=[NSMutableArray array];
     [self setBackItem];
@@ -48,13 +57,12 @@
  */
 -(void)pressBack
 {
-    //退出时，如果有填写发众筹内容，提示保存
+//  退出时，如果有填写发众筹内容，提示保存
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     NSDictionary *managerDict = manager.mj_keyValues;
-    NSLog(@"%ld",managerDict.count);
-    NSLog(@"%@",managerDict);
     if (managerDict.count>6||(managerDict.count==6&&manager.goal_goals.count>1)||(managerDict.count==6&&manager.travelDetailDays.count>0)) {
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存已编辑的数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
+        alertView.tag=ALERT_BACK_TAG;
         [alertView show];
     }
     else
@@ -66,41 +74,60 @@
 #pragma mark --- alertView代理方法
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //保存数据
-    if (buttonIndex ==1)
-    {
-        [self saveData];
-    }
-    //不保存
-    else
-    {
-        
-        //释放单例中存储的内容
-//        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-//        [manager initAllProperties];
-         //删除临时文件夹内容
-        [self cleanTmpFile];
+    if (alertView.tag==ALERT_BACK_TAG) {
+        //保存数据
+        if (buttonIndex ==1)
+        {
+            _needPopVC=YES;
+            [self saveData];
+        }
+        //不保存
+        else
+        {
+            //删除Documents中临时存储文件
+            [self cleanTmpFile];
+            
+        }
         [self.navigationController popViewControllerAnimated:YES];
+        // 释放单例中存储的内容
+        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+        [manager initAllProperties];
+    }
+    //数据上传到oss失败，提示重新上传
+    else if (alertView.tag ==ALERT_UPLOAD_TAG)
+    {
+        if (buttonIndex ==1) {
+            [self uploadDataToOSS];
+        }
+    }
+    //发布请求失败，提示重新发布
+    else if (alertView.tag ==ALERT_PUBLISH_TAG)
+    {
+        if (buttonIndex ==1) {
+            [self publishMyZhongchou];
+        }
     }
 }
 
-#pragma mark --- 删除临时文件
+#pragma mark --- 删除Documents中临时存储文件
 -(void)cleanTmpFile
 {
-    NSString *tmpDir = NSTemporaryDirectory();
+    NSString *fileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
+    NSString *tmpDir=KMY_ZHONGCHOU_DOCUMENT_PATH(fileName);
     
     NSFileManager *manager=[NSFileManager defaultManager];
     
     NSArray *fileArr=[manager subpathsAtPath:tmpDir];
     
     for (NSString *fileName in fileArr) {
-        
         NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
-         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-             [manager removeItemAtPath:filePath error:nil];
-         });
+        dispatch_async(dispatch_get_global_queue(0, 0), ^
+        {
+            [manager removeItemAtPath:filePath error:nil];
+        });
     }
 }
+
 
 /**
  *  创建空白容器，并创建4个tableview
@@ -235,7 +262,7 @@
         default:
         case SaveType:
             //保存数据
-            [self saveData];
+//            [self saveData];
             break;
     }
 }
@@ -245,9 +272,28 @@
 {
     //下一步
     if (button.tag<MoreFZCToolBarTypeReturn) {
+        
+        if (button.tag==MoreFZCToolBarTypeGoal) {
+            BOOL lossMessage01=[NecessoryAlertManager showNecessoryAlertView01];
+            if (lossMessage01) {
+                return;
+            }
+        }
+        if (button.tag==MoreFZCToolBarTypeRaiseMoney) {
+            BOOL lossMessage02=[NecessoryAlertManager showNecessoryAlertView02];
+            if (lossMessage02) {
+                return;
+            }
+        }
+        if (button.tag==MoreFZCToolBarTypeTravel) {
+            [self saveModelInManager];
+            BOOL lossMessage03=[NecessoryAlertManager showNecessoryAlertView03];
+            if (lossMessage03) {
+                return;
+            }
+        }
         UIButton *btn=(UIButton *)[self.toolBar viewWithTag:(button.tag+1)];
         [self.toolBar buttonClickAction:btn];
-        
         UIButton *nextBtn=(UIButton *)[self.bottomView viewWithTag:NextType];
         if (btn.tag==MoreFZCToolBarTypeReturn) {
             [nextBtn setTitle:@"发布" forState:UIControlStateNormal];
@@ -258,25 +304,115 @@
     //发  布
     else
     {
-        NSLog(@"发布");
-        [self publishMyZhongChou];
-        
-
+        if (button.tag==MoreFZCToolBarTypeReturn) {
+            BOOL lossMessage04=[NecessoryAlertManager showNecessoryAlertView04];
+            if (lossMessage04) {
+                return;
+            }
+        }
+        [self uploadDataToOSS];
     }
 }
 
 #pragma mark --- 发布我的众筹
--(void)publishMyZhongChou
+//上传数据到oss
+-(void)uploadDataToOSS
 {
+    [MBProgressHUD showMessage:@"正在发布,请稍等..."];
     [self saveModelInManager];
-    BOOL hasLossMessage= [NecessoryAlertManager showNecessoryAlertView];
-    if (!hasLossMessage) {
-        //可发布状态
-        [MBProgressHUD showMessage:@"正在发布,请稍等..."];
-        
-        [MBProgressHUD hideHUD];
+    [MBProgressHUD hideHUD];
+//    //上传数据到oss
+    NSFileManager *fileManager=[NSFileManager defaultManager];
+    NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
+    NSString *tmpFile=KMY_ZHONGCHOU_DOCUMENT_PATH(tmpFileName);
+    NSArray *tmpFileArr=[fileManager subpathsAtPath:tmpFile];
+    NSMutableArray *uploadSuccessArr=[NSMutableArray array];
+    for (NSString *fileName in tmpFileArr) {
+        ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+       BOOL uploadSuccess=[ossManager uploadObjectSyncByFileName:fileName andFilePath:[tmpFile stringByAppendingPathComponent:fileName]];
+        [uploadSuccessArr addObject:[NSNumber numberWithBool:uploadSuccess]];
+    }
+   
+    for (NSNumber *obj in uploadSuccessArr) {
+        if (![obj boolValue]) {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alert.tag=ALERT_UPLOAD_TAG;
+            [alert show];
+            return;
+        }
+    }
+    //上传数据成功，开始发布
+    [self publishMyZhongchou];
+}
+
+-(void)publishMyZhongchou
+{
+    [self changeManagerFileName];
+    //将数据转化成上传数据对应的类型
+    FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
+    [replaceKeys replaceDataKeys];
+    // 模型转字典
+    NSDictionary *dataDict = replaceKeys.mj_keyValues;
+    NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:dataDict];
+    [newParameters addEntriesFromDictionary:@{@"productCountryId":@1}];
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:dataDict andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            [self cleanTmpFile];
+            [MBProgressHUD showSuccess:@"发布成功!"];
+        }
+        else
+        {
+            [MBProgressHUD showError:@"数据丢失，请检查数据"];
+        }
+    } andFailBlock:^(id failResult) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alert.tag=ALERT_PUBLISH_TAG;
+        [alert show];
+    }];
+}
+
+
+#pragma mark --- 存储数据上传到oss后的链接
+-(void)changeManagerFileName
+{
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    manager.goal_travelThemeImgUrl=[self changeFileName:manager.goal_travelThemeImgUrl];
+    manager.raiseMoney_voiceUrl=[self changeFileName:manager.raiseMoney_voiceUrl];
+    manager.raiseMoney_movieUrl=[self changeFileName:manager.raiseMoney_movieUrl];
+    manager.raiseMoney_movieImg=[self changeFileName:manager.raiseMoney_movieImg];
+    for (MoreFZCTravelOneDayDetailMdel *model in manager.travelDetailDays) {
+        model.voiceUrl=[self changeFileName:model.voiceUrl];
+        model.movieUrl=[self changeFileName:model.movieUrl];
+        model.movieImg=[self changeFileName:model.movieImg];
+    }
+    
+    manager.return_voiceUrl=[self changeFileName:manager.return_voiceUrl];
+    manager.return_movieUrl=[self changeFileName:manager.return_movieUrl];
+    manager.return_movieImg=[self changeFileName:manager.return_movieImg];
+    manager.return_voiceUrl01=[self changeFileName:manager.return_voiceUrl01];
+    manager.return_movieUrl01=[self changeFileName:manager.return_movieUrl01];
+    manager.return_movieImg01=[self changeFileName:manager.return_movieImg01];
+}
+
+-(NSString *)changeFileName:(NSString *)fileName
+{
+    NSString *subFileName=nil;
+    NSRange strRange=[fileName rangeOfString:KMY_ZHONGCHOU_TMP];
+    if (strRange.length) {
+       subFileName=[fileName substringFromIndex:(strRange.location+strRange.length+1)];
+    }
+    if (subFileName) {
+        return [NSString stringWithFormat:@"%@/%@/%@",KHTTP_FILE_HEAD,[ZYZCTool getUserId],subFileName];
+    }
+    else
+    {
+        return nil;
     }
 }
+
+
+
+
 
 #pragma mark --- 保存数据
 -(void)saveData
@@ -289,7 +425,8 @@
         });
     }
    //创建保存某个众筹的资源文件
-    _oneResouceFile=[self resoureSubFilePath];
+    NSString *pathDocuments=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    _oneResouceFile = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
     [MBProgressHUD showMessage:nil];
     
     [self saveModelInManager];
@@ -298,23 +435,23 @@
     __weak typeof (&*self)weakSelf=self;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         //将图片，语音，视屏文件从tmp中移动到documents中
-        manager.goal_travelThemeImgUrl=[weakSelf copyTmpFileToDocument:manager.goal_travelThemeImgUrl ];
-        manager.raiseMoney_voiceUrl=[weakSelf copyTmpFileToDocument:manager.raiseMoney_voiceUrl ];
-        manager.raiseMoney_movieUrl=[weakSelf copyTmpFileToDocument:manager.raiseMoney_movieUrl ];
-        manager.raiseMoney_movieImg=[weakSelf copyTmpFileToDocument:manager.raiseMoney_movieImg ];
-        for (int i=0; i<manager.travelDetailDays.count; i++) {
-            MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
-            model.voiceUrl=[weakSelf copyTmpFileToDocument:model.voiceUrl ];
-            model.movieUrl=[weakSelf copyTmpFileToDocument:model.movieUrl ];
-            model.movieImg=[weakSelf copyTmpFileToDocument:model.movieImg ];
-            [manager.travelDetailDays replaceObjectAtIndex:i withObject:model];
-        }
-        manager.return_voiceUrl=[weakSelf copyTmpFileToDocument:manager.return_voiceUrl ];
-        manager.return_movieUrl=[weakSelf copyTmpFileToDocument:manager.return_movieUrl ];
-        manager.return_movieImg=[weakSelf copyTmpFileToDocument:manager.return_movieImg ];
-        manager.return_voiceUrl01=[weakSelf copyTmpFileToDocument:manager.return_voiceUrl01 ];
-        manager.return_movieUrl01=[weakSelf copyTmpFileToDocument:manager.return_movieUrl01 ];
-        manager.return_movieImg01=[weakSelf copyTmpFileToDocument:manager.return_movieImg01 ];
+//        manager.goal_travelThemeImgUrl=[weakSelf copyTmpFileToDocument:manager.goal_travelThemeImgUrl ];
+//        manager.raiseMoney_voiceUrl=[weakSelf copyTmpFileToDocument:manager.raiseMoney_voiceUrl ];
+//        manager.raiseMoney_movieUrl=[weakSelf copyTmpFileToDocument:manager.raiseMoney_movieUrl ];
+//        manager.raiseMoney_movieImg=[weakSelf copyTmpFileToDocument:manager.raiseMoney_movieImg ];
+//        for (int i=0; i<manager.travelDetailDays.count; i++) {
+//            MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
+//            model.voiceUrl=[weakSelf copyTmpFileToDocument:model.voiceUrl ];
+//            model.movieUrl=[weakSelf copyTmpFileToDocument:model.movieUrl ];
+//            model.movieImg=[weakSelf copyTmpFileToDocument:model.movieImg ];
+//            [manager.travelDetailDays replaceObjectAtIndex:i withObject:model];
+//        }
+//        manager.return_voiceUrl=[weakSelf copyTmpFileToDocument:manager.return_voiceUrl ];
+//        manager.return_movieUrl=[weakSelf copyTmpFileToDocument:manager.return_movieUrl ];
+//        manager.return_movieImg=[weakSelf copyTmpFileToDocument:manager.return_movieImg ];
+//        manager.return_voiceUrl01=[weakSelf copyTmpFileToDocument:manager.return_voiceUrl01 ];
+//        manager.return_movieUrl01=[weakSelf copyTmpFileToDocument:manager.return_movieUrl01 ];
+//        manager.return_movieImg01=[weakSelf copyTmpFileToDocument:manager.return_movieImg01 ];
         dispatch_async(dispatch_get_main_queue(), ^{
             //将数据转化成上传数据对应的类型
             FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
@@ -328,7 +465,11 @@
             [NSKeyedArchiver archiveRootObject:manager toFile:weakSelf.archiveDataPath];
             [MBProgressHUD hideHUD];
             [MBProgressHUD showSuccess:@"保存成功!"];
-            [self saveDataInMyZhongChouPlist];
+            [weakSelf saveDataInMyZhongChouPlist];
+            if (weakSelf.needPopVC) {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+                weakSelf.needPopVC=NO;
+            }
         });
     });
 }
@@ -338,14 +479,13 @@
 {
     //保存每日行程安排到单例中
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    
     [manager.travelDetailDays removeAllObjects];
     MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
     for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
         TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
         [travelSecondCell saveTravelOneDayDetailData];
         NSDictionary *modelDict = travelSecondCell.oneDetailModel.mj_keyValues;
-        if (modelDict.count>3) {
+        if (modelDict.count>2) {
             [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
         }
     }
@@ -370,36 +510,45 @@
     [mutArr writeToFile:plistPath atomically:YES];
 }
 
-#pragma mark --- 在resoure文件下创建子文件来保存众筹的相关图片、语音、视屏资源
--(NSString *)resoureSubFilePath
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *createPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-    // 判断文件夹是否存在，如果不存在，则创建
-    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
-        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return createPath;
-}
-
-
 #pragma mark --- 将临时文件移到documents中
--(NSString *)copyTmpFileToDocument:(NSString *)tmpFilePath
+-(void)copyTmpFileToDoc
 {
     NSFileManager*fileManager =[NSFileManager defaultManager];
-    NSString *filePath=nil;
-    if ([fileManager fileExistsAtPath:tmpFilePath]) {
-        NSRange fileNameRange=[tmpFilePath rangeOfString:@"tmp/"];
-        NSString *fileName= [tmpFilePath substringFromIndex:fileNameRange.location+fileNameRange.length];
-        filePath=[NSString stringWithFormat:@"%@/%@",_oneResouceFile,fileName];
-    if([fileManager fileExistsAtPath:filePath]==NO){
-            NSError*error;
-            BOOL hasCopy=[fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
-           [_picesSaveState addObject:[NSNumber numberWithBool:hasCopy]];
-        }
+    
+    NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
+    NSString *tmpFile=KMY_ZHONGCHOU_DOCUMENT_PATH(tmpFileName);
+    
+    NSString *docFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_DOC];
+    NSString *docFile=KMY_ZHONGCHOU_DOCUMENT_PATH(docFileName);
+    
+    //清空doc中文件
+    NSArray *docFileArr=[fileManager subpathsAtPath:docFile];
+    for (NSString *fileName in docFileArr) {
+        NSString *filePath = [docFile stringByAppendingPathComponent:fileName];
+        [fileManager removeItemAtPath:filePath error:nil];
     }
-    return filePath;
+    //将tmpFile中的文件移动到doc中
+    NSArray *tmpFileArr=[fileManager subpathsAtPath:tmpFile];
+    for (NSString *fileName in tmpFileArr) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSError *error;
+            NSString * tmpFilePath = [tmpFile stringByAppendingPathComponent:fileName];
+            NSString * docFilePath = [docFile stringByAppendingPathComponent:fileName];
+            [fileManager copyItemAtPath:tmpFilePath toPath:docFilePath error:&error];
+        });
+    }
+    
+//    if ([fileManager fileExistsAtPath:tmpFilePath]) {
+//        NSRange fileNameRange=[tmpFilePath rangeOfString:@"tmp/"];
+//        NSString *fileName= [tmpFilePath substringFromIndex:fileNameRange.location+fileNameRange.length];
+//        filePath=[NSString stringWithFormat:@"%@/%@",_oneResouceFile,fileName];
+//    if([fileManager fileExistsAtPath:filePath]==NO){
+//            NSError*error;
+//            BOOL hasCopy=[fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
+//           [_picesSaveState addObject:[NSNumber numberWithBool:hasCopy]];
+//        }
+//    }
+//    return filePath;
 }
 
 
@@ -412,7 +561,7 @@
     NSLog(@"%@",dest);
     
     NSDictionary *dataDic=@{
-                            @"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
+                            @"openid": @"oulbuvtpzxiOe6t9hVBh2mNRgiaI",
                             @"status":@1,
                             @"title":@"海岛游",
                             @"productCountryId":@"2",
@@ -421,47 +570,25 @@
                             @"start_time":@"2016-4-28",
                             @"end_time":@"2016-5-10",
                             @"spell_end_time":@"2016-7-28",
-                            @"people":@8,
                             @"cover":@"http://....",
                             @"desc":@"筹旅费文字描述",
-                            @"voice":@"http://....",
+//                            @"voice":@"http://....",
                             @"video":@"http://....",
                             @"videoImg":@"http://...",
                             @"schedule":@[
                                     @{
                                         @"day": @1,
-                                        @"spot": @"景点描述",
-                                        @"spots":@[@"url1",@"url2"],
-                                        @"trans":@"交通描述",
-                                        @"live":@"住宿描述",
-                                        @"food":@"饮食描述",
-                                        @"desc":@"第一天描述",
+//                                        @"spot": @"景点描述",
+//                                        @"spots":@[@"url1",@"url2"],
+//                                        @"trans":@"交通描述",
+//                                        @"live":@"住宿描述",
+//                                        @"food":@"饮食描述",
+//                                        @"desc":@"第一天描述",
                                         @"voice":@"http://...",
                                         @"video":@"http://...",
                                         @"videoImg":@"http://..."
-                                        },
-                                    @{
-                                        @"day": @2,
-                                        @"spot": @"景点描述2",
-                                        @"spots":@[@"url1",@"url2"],
-                                        @"trans":@"交通描述2",
-                                        @"live":@"住宿描述2",
-                                        @"desc":@"第二天描述",
-                                        @"voice":@"http://...",
-                                        @"video":@"http://...",
-                                        @"videoImg":@"http://..."
-                                        },
-                                    @{
-                                        @"day": @3,
-                                        @"spot": @"景点描述3",
-                                        @"spots":@[@"url1",@"url2"],
-                                        @"trans":@"交通描述3",
-                                        @"live":@"住宿描述3",
-                                        @"desc":@"第三天描述",
-                                        @"voice":@"http://...",
-                                        @"video":@"http://...",
-                                        @"videoImg":@"http://..."
-                                        }],
+                                        }
+                                    ],
                             @"report": @[
                                     @{
                                         @"style": @1,
@@ -472,39 +599,21 @@
                                         @"price": @0
                                         },
                                     @{
-                                        @"style": @3,
-                                        @"price": @200,
-                                        @"people": @5,
-                                        @"desc": @"回报目的1",
-                                        @"voice":@"http://",
-                                        @"video":@"http://",
-                                        @"videoImg":@"http://..."
-                                        },
-                                    @{
-                                        @"style": @4,
-                                        @"price": @300,
-                                        @"people": @6,
-                                        @"desc": @"回报目的2",
-                                        @"voice":@"http://",
-                                        @"video":@"http://",
-                                        @"videoImg":@"http://..."
-                                        },
-                                    @{
                                         @"style": @5,
                                         @"people":@8,
                                         @"price": @100
                                         },
                                     @{
                                         @"style": @6,
-                                        @"price": @1000
+                                        @"price": @0
                                         },
                                     @{
                                         @"style": @7,
-                                        @"price": @1000
+                                        @"price": @0
                                         },
                                     @{
                                         @"style": @8,
-                                        @"price": @1000
+                                        @"price": @0
                                         },
                                     @{
                                         @"style": @9,
@@ -513,6 +622,7 @@
                                     ]
                             
                             };
+    NSLog(@"%@",[self turnJson:dataDic]);
     [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:ADDPRODUCT andParameters:dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"%@",result);
         
@@ -531,6 +641,16 @@
     } andFailBlock:^(id failResult) {
         
     }];
+}
+
+-(NSString *)turnJson:(NSDictionary *)dic
+{
+//    转换成json
+        NSData *data = [NSJSONSerialization dataWithJSONObject :dic options : NSJSONWritingPrettyPrinted error:NULL];
+    
+        NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+    
+    return jsonStr;
 }
 
 #pragma mark --- 定时保存数据

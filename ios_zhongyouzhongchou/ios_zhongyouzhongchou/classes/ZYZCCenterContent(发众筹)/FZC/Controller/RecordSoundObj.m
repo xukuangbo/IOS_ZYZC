@@ -27,18 +27,6 @@
     [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     [audioSession setActive:YES error:nil];
 }
-/**
- *  取得录音文件保存路径
- *
- *  @return 录音文件路径，放在临时文件夹下
- */
--(NSString *)getSavePath{
-    
-    NSString *tmpDir = NSTemporaryDirectory();
-    NSString *path =[tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",_soundFileName]];
-    NSLog(@"kWAVAudioFile_path:%@",path);
-    return path;
-}
 
 /**
  *  取得录音文件设置
@@ -71,7 +59,7 @@
     _audioRecorder=nil;
     if (!_audioRecorder) {
         //创建录音文件保存路径
-        NSURL *url=[NSURL fileURLWithPath:[self getSavePath]];
+        NSURL *url=[NSURL fileURLWithPath:KMY_ZHONGCHOU_DOCUMENT_PATH(self.soundFileName)];
         //创建录音格式设置
         NSDictionary *setting=[self getAudioSetting];
         //创建录音机
@@ -110,10 +98,10 @@
     _audioPlayer=nil;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     if (!_audioPlayer) {
-        NSString *path=[self getSavePath];
-        NSURL *url=[NSURL fileURLWithPath:path];
+        NSURL *url=[NSURL fileURLWithPath:KMY_ZHONGCHOU_DOCUMENT_PATH(self.soundFileName)];
         NSError *error=nil;
         _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+        _audioPlayer.delegate=self;
         _audioPlayer.numberOfLoops=0;
         [_audioPlayer prepareToPlay];
         if (error) {
@@ -130,17 +118,21 @@
     }
 }
 
+-(void)stopSound
+{
+    [_audioPlayer stop];
+}
+
 #pragma mark --- 删除语音
 -(void)deleteMySound
 {
     [_audioPlayer stop];
     
-    NSString *urlStr=[self getSavePath];
+    NSString *urlStr=KMY_ZHONGCHOU_DOCUMENT_PATH(self.soundFileName);
     NSError *error=nil;
     if ([[NSFileManager defaultManager] fileExistsAtPath:urlStr]) {
         [[NSFileManager defaultManager] removeItemAtPath:urlStr error:&error];
     }
-    
 }
 
 #pragma mark - 录音机代理方法
@@ -152,6 +144,13 @@
  */
 -(void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
         NSLog(@"录音完成!");
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    if (_soundPlayEnd) {
+        _soundPlayEnd();
+    }
 }
 
 

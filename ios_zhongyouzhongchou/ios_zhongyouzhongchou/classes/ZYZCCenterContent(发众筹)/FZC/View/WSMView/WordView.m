@@ -43,6 +43,7 @@
     [_textView addSubview:_placeHolderLab];
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHappen:)];
     [_textView addGestureRecognizer:tap];
+    
 }
 
 #pragma mark --- 添加图片描述

@@ -175,6 +175,9 @@
     NSString *moneyString = [NSString stringWithFormat:@"￥ %.2f 元",returnMoneyCount];
     [self changeMoneyLabelStringWithString:moneyString];
     
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    manager.return_togetherRateMoney= [NSString stringWithFormat:@"%f",returnMoneyCount];
+    
 }
 
 - (void)reloadManagerData

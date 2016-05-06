@@ -45,18 +45,15 @@ MJCodingImplementation
 -(void)replaceDataKeys
 {
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-//    self.openid=[ZYZCTool getUserId];
-    self.openid=@"o6_bmjrPTlm6_2sgVt7hMZOPfL2M";
+    self.openid=[ZYZCTool getUserId];
     self.status=@1;
     self.title=manager.goal_travelTheme;
     self.spell_buy_price=(NSNumber *)manager.raiseMoney_totalMoney;
     self.dest=manager.goal_goals;
-    self.productCountryId=@[@1,@2];//需更改
     self.start_time=manager.goal_startDate;
     self.end_time=manager.goal_backDate;
-    NSDate *date=[[NSDate date] dayInTheFollowingMonth:3];
+    NSDate *date=[[NSDate dateFromString:self.start_time] dayInTheFollowingDay:-15];
     self.spell_end_time=[NSDate stringFromDate:date];
-    self.people=(NSNumber *)manager.goal_numberPeople;
     self.cover=manager.goal_travelThemeImgUrl;
     self.desc=manager.raiseMoney_wordDes;
     self.voice=manager.raiseMoney_voiceUrl;
@@ -123,7 +120,7 @@ MJCodingImplementation
         report05.videoImg=manager.return_movieImg01;
         [_report addObject:report05];
     }
-    if ((NSNumber *)manager.raiseMoney_sightMoney) {
+    if (manager.raiseMoney_sightMoney.floatValue>0) {
         //筹旅费景点花费
         ReportData *report06=[[ReportData alloc]init];
         report06.style=@6;
@@ -131,7 +128,7 @@ MJCodingImplementation
         [_report addObject:report06];
     }
     
-    if ((NSNumber *)manager.raiseMoney_transMoney) {
+    if (manager.raiseMoney_transMoney.floatValue>0) {
         //筹旅费交通花费
         ReportData *report07=[[ReportData alloc]init];
         report07.style=@7;
@@ -139,14 +136,14 @@ MJCodingImplementation
         [_report addObject:report07];
     }
     
-    if ((NSNumber *)manager.raiseMoney_liveMoney) {
+    if (manager.raiseMoney_liveMoney.floatValue>0) {
         //筹旅费住宿花费
         ReportData *report08=[[ReportData alloc]init];
         report08.style=@8;
         report08.price=(NSNumber *)manager.raiseMoney_liveMoney;
         [_report addObject:report08];
     }
-    if ((NSNumber *)manager.raiseMoney_eatMoney) {
+    if (manager.raiseMoney_eatMoney.floatValue>0) {
         //筹旅费餐饮花费
         ReportData *report09=[[ReportData alloc]init];
         report09.style=@9;

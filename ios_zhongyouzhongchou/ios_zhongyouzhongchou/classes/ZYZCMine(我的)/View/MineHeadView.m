@@ -246,7 +246,7 @@
 {
     
     NSDictionary *parameter = @{
-                                 @"openid": @"wdsdbsfgndfnzsgf",
+                                 @"openid":[ZYZCTool getUserId],
                                 };
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:@"http://121.40.225.119:8080/register/saveWeixinInfo.action" andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {

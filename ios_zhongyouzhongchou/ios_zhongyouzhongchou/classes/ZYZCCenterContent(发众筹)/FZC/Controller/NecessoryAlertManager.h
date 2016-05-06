@@ -14,5 +14,9 @@
  *
  */
 + (BOOL)showNecessoryAlertView;
++ (BOOL)showNecessoryAlertView01;
++ (BOOL)showNecessoryAlertView02;
++ (BOOL)showNecessoryAlertView03;
++ (BOOL)showNecessoryAlertView04;
 
 @end

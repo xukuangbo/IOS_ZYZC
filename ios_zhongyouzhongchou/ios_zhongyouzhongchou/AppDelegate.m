@@ -39,7 +39,7 @@
     //首次进入app获取地名库
     [self saveLocalDesct];
     
-    
+    NSLog(@"%@",KMY_ZHONGCHOU_DOCUMENT_PATH(@""));
     /**
      初始化微信
      */
@@ -100,17 +100,6 @@
             
         }];
     }
-    
-    
-}
-
--(void)getFileToTmp
-{
-    [ZYZCTool saveUserIdById:@"110"];
-    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"collectionView" ofType:@"png"];
-    NSLog(@"++++%@", [ossManager getfileURLWhenUploadObjectAsyncBydocDir:path andFileType:@"png"] );
-    
 }
 
 #pragma mark --- 在Documents中创建资源文件存放视屏、语音、图片
@@ -121,8 +110,19 @@
     NSString *createPath = [NSString stringWithFormat:@"%@/%@", pathDocuments,KDOCUMENT_FILE];
     // 判断文件夹是否存在，如果不存在，则创建
     if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
-        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
-        NSLog(@"createPath:%@",createPath);
+        BOOL fileCreate=[fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
+        if (fileCreate==YES) {
+            
+            NSString *createTmpPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:createTmpPath]) {
+                [fileManager createDirectoryAtPath:createTmpPath withIntermediateDirectories:YES attributes:nil error:nil];
+            }
+            
+            NSString *createDocPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_DOC];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:createDocPath]) {
+                [fileManager createDirectoryAtPath:createDocPath withIntermediateDirectories:YES attributes:nil error:nil];
+            }
+        }
     }
 }
 

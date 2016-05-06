@@ -9,6 +9,7 @@
 #import "ZYZCCenterContentView.h"
 #import "CustomItemView.h"
 #import "MoreFZCViewController.h"
+#import "MoreFZCDataManager.h"
 @interface ZYZCCenterContentView ()
 {
     NSArray *btnArr;
