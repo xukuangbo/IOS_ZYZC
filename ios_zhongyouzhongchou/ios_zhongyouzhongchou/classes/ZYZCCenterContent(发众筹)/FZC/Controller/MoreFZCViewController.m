@@ -253,8 +253,6 @@
 {
     switch (sender.tag) {
         case SkimType:
-//            [self getHttpData];
-            [self getHttp];
             break;
         case NextType:
             [self nextOneOrPublish:self.toolBar.preClickBtn];
@@ -270,6 +268,8 @@
 #pragma mark --- 下一步或发布
 -(void)nextOneOrPublish:(UIButton *)button
 {
+    [self uploadDataToOSS];
+    return;
     //下一步
     if (button.tag<MoreFZCToolBarTypeReturn) {
         
@@ -320,29 +320,57 @@
 {
     [MBProgressHUD showMessage:@"正在发布,请稍等..."];
     [self saveModelInManager];
-    [MBProgressHUD hideHUD];
 //    //上传数据到oss
     NSFileManager *fileManager=[NSFileManager defaultManager];
     NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
     NSString *tmpFile=KMY_ZHONGCHOU_DOCUMENT_PATH(tmpFileName);
     NSArray *tmpFileArr=[fileManager subpathsAtPath:tmpFile];
+    NSLog(@"%@",tmpFileArr);
     NSMutableArray *uploadSuccessArr=[NSMutableArray array];
-    for (NSString *fileName in tmpFileArr) {
-        ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-       BOOL uploadSuccess=[ossManager uploadObjectSyncByFileName:fileName andFilePath:[tmpFile stringByAppendingPathComponent:fileName]];
-        [uploadSuccessArr addObject:[NSNumber numberWithBool:uploadSuccess]];
-    }
-   
-    for (NSNumber *obj in uploadSuccessArr) {
-        if (![obj boolValue]) {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-            alert.tag=ALERT_UPLOAD_TAG;
-            [alert show];
-            return;
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        for (int i=0; i<tmpFileArr.count; i++) {
+//            SuccessUploadBlock successBlock=nil;
+//            FailBlock          failBlock=nil;
+            ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+            [ossManager uploadObjectAsyncByFileName:tmpFileArr[i] andFilePath:[tmpFile stringByAppendingPathComponent:tmpFileArr[i]] withSuccessUpload:^
+             {
+                 [uploadSuccessArr addObject:[NSNumber numberWithBool:YES]];
+             }
+              andFailUpload:^
+             {
+                 [uploadSuccessArr addObject:[NSNumber numberWithBool:NO]];
+             }];
         }
-    }
-    //上传数据成功，开始发布
-    [self publishMyZhongchou];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //回调或者说是通知主线程刷新，
+            NSLog(@"%@",uploadSuccessArr);
+            [MBProgressHUD hideHUD];
+        }); 
+        
+    });
+
+        
+    
+//    for (NSString *fileName in tmpFileArr) {
+//        ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+//        
+//       BOOL uploadSuccess=[ossManager uploadObjectSyncByFileName:fileName andFilePath:[tmpFile stringByAppendingPathComponent:fileName]];
+//        
+//        [uploadSuccessArr addObject:[NSNumber numberWithBool:uploadSuccess]];
+//    }
+//   
+//    for (NSNumber *obj in uploadSuccessArr) {
+//        if (![obj boolValue]) {
+//            //提示发布失败
+//            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//            alert.tag=ALERT_UPLOAD_TAG;
+//            [alert show];
+//            return;
+//        }
+//    }
+//    //上传数据成功，开始发布
+//    [self publishMyZhongchou];
 }
 
 -(void)publishMyZhongchou
@@ -357,6 +385,7 @@
     [newParameters addEntriesFromDictionary:@{@"productCountryId":@1}];
     [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:dataDict andSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
+            //发送成功，删除本地数据
             [self cleanTmpFile];
             [MBProgressHUD showSuccess:@"发布成功!"];
         }
@@ -365,7 +394,8 @@
             [MBProgressHUD showError:@"数据丢失，请检查数据"];
         }
     } andFailBlock:^(id failResult) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        //提示发布失败
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"网络出错，发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alert.tag=ALERT_PUBLISH_TAG;
         [alert show];
     }];
@@ -394,6 +424,7 @@
     manager.return_movieImg01=[self changeFileName:manager.return_movieImg01];
 }
 
+#pragma mark --- 本地路径名改成网络数据链接名
 -(NSString *)changeFileName:(NSString *)fileName
 {
     NSString *subFileName=nil;
@@ -409,9 +440,6 @@
         return nil;
     }
 }
-
-
-
 
 
 #pragma mark --- 保存数据

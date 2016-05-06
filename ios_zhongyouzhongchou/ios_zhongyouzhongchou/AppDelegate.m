@@ -39,6 +39,11 @@
     //首次进入app获取地名库
     [self saveLocalDesct];
     
+    NSFileManager *fileManager=[NSFileManager defaultManager];
+    NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
+    NSString *tmpFile=KMY_ZHONGCHOU_DOCUMENT_PATH(tmpFileName);
+    NSArray *tmpFileArr=[fileManager subpathsAtPath:tmpFile];
+    NSLog(@"%@",tmpFileArr);
     NSLog(@"%@",KMY_ZHONGCHOU_DOCUMENT_PATH(@""));
     /**
      初始化微信

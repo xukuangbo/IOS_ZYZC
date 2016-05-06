@@ -128,9 +128,6 @@ OSSClient * client;
     
     // required fields
     NSString *openId=[ZYZCTool getUserId];
-    if (!openId) {
-        openId=@"o6_bmjrPTlm6_2sgVt7hMZOPfL2M";
-    }
     put.bucketName = _bucketName;
     put.objectKey = [NSString stringWithFormat:@"%@/%@",openId,fileName];
     put.uploadingFileURL = [NSURL fileURLWithPath:filePath];
@@ -161,27 +158,15 @@ OSSClient * client;
 
 
 #pragma mark --- 异步上传对象
-- (NSString *)getfileURLWhenUploadObjectAsyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath{
-    //文件类型错误，上传失败
-//    if (!([fileType isEqualToString:@"png"]||[fileType isEqualToString:@"caf"]||[fileType isEqualToString:@"mp4"])) {
-//        NSLog(@"fileType 类型错误，上传失败");
-//        return nil;
-//    }
-    //文件类型正确
-    //获取文件名
+- (void )uploadObjectAsyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath withSuccessUpload:(SuccessUploadBlock )successUpload andFailUpload:(FailUploadBlock )failUpload{
+      //获取文件名
     NSString *openId=[ZYZCTool getUserId];
-    if (!openId) {
-        openId=@"o6_bmjrPTlm6_2sgVt7hMZOPfL2M";
-    }
+    NSLog(@"openId:%@",openId);
     OSSPutObjectRequest * put = [OSSPutObjectRequest new];
     // required fields
     put.bucketName = _bucketName;
     put.objectKey  = [NSString stringWithFormat:@"%@/%@",openId,fileName];
     put.uploadingFileURL = [NSURL fileURLWithPath:filePath];
-       // optional fields
-//    put.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
-//        NSLog(@"%lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
-//    };
     put.contentType = @"";
     put.contentMd5 = @"";
     put.contentEncoding = @"";
@@ -190,18 +175,17 @@ OSSClient * client;
     OSSTask * putTask = [client putObject:put];
     
     [putTask continueWithBlock:^id(OSSTask *task) {
-        NSLog(@"objectKey: %@", put.objectKey);
         if (!task.error) {
-            NSLog(@"upload object success!");
+            if (successUpload) {
+                successUpload();
+            }
         } else {
-            NSLog(@"upload object failed, error: %@" , task.error);
+            if (failUpload) {
+                failUpload();
+            }
         }
         return nil;
     }];
-    [putTask waitUntilFinished];
-    
-    NSString *fileUrl=[NSString stringWithFormat:@"http://%@.%@/%@",_bucketName,[endPoint substringFromIndex:7],[NSString stringWithFormat:@"%@/%@",openId,fileName]];
-    return fileUrl;
 }
 
 #pragma mark --- 异步下载数据
@@ -236,6 +220,8 @@ OSSClient * client;
         }
         return nil;
     }];
+    
+    [getTask waitUntilFinished];
 }
 
 #pragma mark --- 删除文件
