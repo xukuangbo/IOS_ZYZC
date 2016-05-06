@@ -133,7 +133,6 @@
 		04A99D271CC0924E00C6F5F0 /* ZYZCAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D261CC0924E00C6F5F0 /* ZYZCAccountModel.m */; };
 		04A99D2A1CC0926400C6F5F0 /* ZYZCAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D291CC0926400C6F5F0 /* ZYZCAccountTool.m */; };
 		04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */; };
-		04C841801CD87EAB00D6094E /* TacticMoreVideosController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C8417F1CD87EAB00D6094E /* TacticMoreVideosController.m */; };
 		04F68C9F1CD6E3E3000CA70D /* ReturnThirdCellTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F68C9E1CD6E3E3000CA70D /* ReturnThirdCellTwo.m */; };
 		04F8362A1CD7102200140980 /* ZYZCPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836291CD7102200140980 /* ZYZCPlayViewController.m */; };
 		04F8362D1CD7225200140980 /* TacticSingleLongPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8362C1CD7225200140980 /* TacticSingleLongPicture.m */; };
@@ -149,6 +148,8 @@
 		04FCCAA21CDB246F00540B28 /* TacticSingleFoodVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAA11CDB246F00540B28 /* TacticSingleFoodVC.m */; };
 		04FCCAA71CDB249C00540B28 /* TacticFoodPicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAA41CDB249C00540B28 /* TacticFoodPicCell.m */; };
 		04FCCAA81CDB249C00540B28 /* TacticFoodTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAA61CDB249C00540B28 /* TacticFoodTextCell.m */; };
+		04FCCAAC1CDC454C00540B28 /* TacticMoreVideosController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAAB1CDC454C00540B28 /* TacticMoreVideosController.m */; };
+		04FCCAAF1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAAE1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m */; };
 		2C2C2A281CCE395E0068A883 /* ZCDetailReturnCusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */; };
 		2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */; };
 		2C4615AA1CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */; };
@@ -449,8 +450,6 @@
 		04A99D291CC0926400C6F5F0 /* ZYZCAccountTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCAccountTool.m; sourceTree = "<group>"; };
 		04A99D2B1CC0C6EE00C6F5F0 /* MineMessageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineMessageTool.h; sourceTree = "<group>"; };
 		04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineMessageTool.m; sourceTree = "<group>"; };
-		04C8417E1CD87EAB00D6094E /* TacticMoreVideosController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticMoreVideosController.h; sourceTree = "<group>"; };
-		04C8417F1CD87EAB00D6094E /* TacticMoreVideosController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMoreVideosController.m; sourceTree = "<group>"; };
 		04F68C9D1CD6E3E3000CA70D /* ReturnThirdCellTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnThirdCellTwo.h; sourceTree = "<group>"; };
 		04F68C9E1CD6E3E3000CA70D /* ReturnThirdCellTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnThirdCellTwo.m; sourceTree = "<group>"; };
 		04F836281CD7102200140980 /* ZYZCPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCPlayViewController.h; sourceTree = "<group>"; };
@@ -481,6 +480,10 @@
 		04FCCAA41CDB249C00540B28 /* TacticFoodPicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticFoodPicCell.m; sourceTree = "<group>"; };
 		04FCCAA51CDB249C00540B28 /* TacticFoodTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticFoodTextCell.h; sourceTree = "<group>"; };
 		04FCCAA61CDB249C00540B28 /* TacticFoodTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticFoodTextCell.m; sourceTree = "<group>"; };
+		04FCCAAA1CDC454C00540B28 /* TacticMoreVideosController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticMoreVideosController.h; sourceTree = "<group>"; };
+		04FCCAAB1CDC454C00540B28 /* TacticMoreVideosController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMoreVideosController.m; sourceTree = "<group>"; };
+		04FCCAAD1CDC45AD00540B28 /* TacticMoreCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticMoreCollectionViewCell.h; sourceTree = "<group>"; };
+		04FCCAAE1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMoreCollectionViewCell.m; sourceTree = "<group>"; };
 		2C2C2A261CCE395E0068A883 /* ZCDetailReturnCusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailReturnCusView.h; sourceTree = "<group>"; };
 		2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnCusView.m; sourceTree = "<group>"; };
 		2C2DEF131CCB4D3100111459 /* ZCDetailArrangeFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailArrangeFirstCell.h; sourceTree = "<group>"; };
@@ -623,8 +626,6 @@
 			children = (
 				040651291CC6356C003FD539 /* TacticMainViewController.h */,
 				0406512A1CC6356C003FD539 /* TacticMainViewController.m */,
-				04C8417E1CD87EAB00D6094E /* TacticMoreVideosController.h */,
-				04C8417F1CD87EAB00D6094E /* TacticMoreVideosController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1166,6 +1167,7 @@
 			children = (
 				04FCCA991CDB235B00540B28 /* foodVC(食物跟一般景点界面) */,
 				040651441CC87A1C003FD539 /* Single(单个景点控制器) */,
+				04FCCAA91CDC454C00540B28 /* MoreVC(更多界面) */,
 				040651281CC6356C003FD539 /* Controller */,
 				0406512B1CC6356C003FD539 /* Model */,
 				0406512C1CC6356C003FD539 /* View */,
@@ -1362,6 +1364,17 @@
 				04FCCAA61CDB249C00540B28 /* TacticFoodTextCell.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		04FCCAA91CDC454C00540B28 /* MoreVC(更多界面) */ = {
+			isa = PBXGroup;
+			children = (
+				04FCCAAA1CDC454C00540B28 /* TacticMoreVideosController.h */,
+				04FCCAAB1CDC454C00540B28 /* TacticMoreVideosController.m */,
+				04FCCAAD1CDC45AD00540B28 /* TacticMoreCollectionViewCell.h */,
+				04FCCAAE1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m */,
+			);
+			path = "MoreVC(更多界面)";
 			sourceTree = "<group>";
 		};
 		2C901DAF1C89788C004B844B = {
@@ -1802,6 +1815,7 @@
 				041D06ED1CD322AB002B8329 /* ZYZCAVPlayer.m in Sources */,
 				04A99C9D1CBF848D00C6F5F0 /* MoreFZCViewController.m in Sources */,
 				04A99CCE1CBF848D00C6F5F0 /* MineFootTableView.m in Sources */,
+				04FCCAAF1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m in Sources */,
 				04A99CC01CBF848D00C6F5F0 /* WSMBaseView.m in Sources */,
 				04A99CC11CBF848D00C6F5F0 /* CustomItemView.m in Sources */,
 				04A99C941CBF848D00C6F5F0 /* ZYZCTool.m in Sources */,
@@ -1815,7 +1829,6 @@
 				04A99CB41CBF848D00C6F5F0 /* ReturnFourthCell.m in Sources */,
 				2C901DC01C89788C004B844B /* AppDelegate.m in Sources */,
 				2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */,
-				04C841801CD87EAB00D6094E /* TacticMoreVideosController.m in Sources */,
 				04A99CC71CBF848D00C6F5F0 /* MineViewController.m in Sources */,
 				2CD4B4541CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m in Sources */,
 				04A99CA31CBF848D00C6F5F0 /* GoalScheduleView.m in Sources */,
@@ -1854,6 +1867,7 @@
 				04A99CC61CBF848D00C6F5F0 /* FZCBaseViewController.m in Sources */,
 				04A99CB01CBF848D00C6F5F0 /* RaiseMoneySecondCellView.m in Sources */,
 				04A99CA21CBF848D00C6F5F0 /* GoalPeoplePickerView.m in Sources */,
+				04FCCAAC1CDC454C00540B28 /* TacticMoreVideosController.m in Sources */,
 				04A99C9A1CBF848D00C6F5F0 /* ChooseSiteImgController.m in Sources */,
 				0490D1561CC9B4310064844C /* UIView+TacticMapView.m in Sources */,
 				2C8288341CD886DE004873B6 /* NecessoryAlertManager.m in Sources */,

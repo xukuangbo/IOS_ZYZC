@@ -14,13 +14,11 @@
 #import "ZYZCPlayViewController.h"
 #import "TacticSingleViewController.h"
 #import "TacticSingleFoodVC.h"
+#import "TacticSingleModel.h"
 @interface TacticThreeMapView()<TacticImageViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *viewArray;
 
-@property (nonatomic, weak) TacticImageView *firstView;
-@property (nonatomic, weak) TacticImageView *secondView;
-@property (nonatomic, weak) TacticImageView *thirdView;
 @end
 @implementation TacticThreeMapView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -77,6 +75,36 @@
     }
 }
 
+- (void)setSingleViews:(NSArray *)singleViews
+{
+    if (_singleViews != singleViews) {
+        _singleViews = singleViews;
+        //先清空原来的view
+        for (UIView *view in self.subviews) {
+            [view removeFromSuperview];
+        }
+        int maxCount = singleViews.count >= 3? 3:(int)singleViews.count;
+        for (int i = 0; i < maxCount; i++) {
+            TacticSingleModel *singleModel = (TacticSingleModel *)singleViews[i];
+            if (self.threeMapViewType == threeMapViewTypeDefult) {
+                //如果之前没有被设置过的话
+                if (singleModel.viewType == 1) {
+                    self.threeMapViewType = threeMapViewTypeCountryView;
+                }else if (singleModel.viewType == 2){
+                    self.threeMapViewType = threeMapViewTypeCityView;
+                }else if (singleModel.viewType == 3){
+                    self.threeMapViewType = threeMapViewTypeSingleView;
+                }
+            }
+            TacticImageView *imageView = self.viewArray[i];
+            imageView.tacticSingleModel = singleModel;
+            //只添加这几个已有的view
+            [self addSubview:imageView];
+            
+        }
+    }
+}
+
 - (void)setFoodsArray:(NSArray *)foodsArray
 {
     if (_foodsArray != foodsArray) {
@@ -97,7 +125,7 @@
 }
 
 #pragma mark - TacticImageViewDelegate
-- (void)TacticImageViewPushActionWithvideoModel:(TacticVideoModel *)videoModel tacticSingleFoodModel:(TacticSingleFoodModel *)singleFoodModel
+- (void)TacticImageViewPushActionWithvideoModel:(TacticVideoModel *)videoModel tacticSingleFoodModel:(TacticSingleFoodModel *)singleFoodModel tacticSingleModel:(TacticSingleModel *)tacticSingleModel
 {
     
     if (self.threeMapViewType == threeMapViewTypeVideo) {
@@ -112,12 +140,15 @@
         [self.viewController.navigationController pushViewController:singleVC animated:YES];
     }else if(self.threeMapViewType == threeMapViewTypeSingleView) {
         //说明是一般景点
-        NSLog(@"一般景点");
+        TacticSingleViewController *foodVC = [[TacticSingleViewController alloc] initWithViewId:tacticSingleModel.ID];
+        
+//        foodVC.tacticSingleFoodModel = singleFoodModel;
+        [self.viewController.navigationController pushViewController:foodVC animated:YES];
     }else if (self.threeMapViewType == threeMapViewTypeFood){
         //说明是食物
         TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
         
-//        foodVC.tacticVideoModel
+        foodVC.tacticVideoModel = videoModel;
         [self.viewController.navigationController pushViewController:foodVC animated:YES];
     }
 }

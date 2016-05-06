@@ -14,13 +14,15 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.contentView.backgroundColor = [UIColor redColor];
+        [self configUI];
     }
     return self;
 }
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
+- (void)configUI
+{
+    UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, imageViewHeight)];
+    [self.contentView addSubview:iconView];
+    self.iconView = iconView;
 }
 
 @end

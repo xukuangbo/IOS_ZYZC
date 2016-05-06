@@ -10,11 +10,10 @@
 #import "TacticSingleViewController.h"
 #import "TacticVideoModel.h"
 #import "TacticSingleFoodModel.h"
+#import "TacticSingleModel.h"
 
 @interface TacticImageView ()
-/**
- *  地名
- */
+
 @property (nonatomic, weak) UILabel *nameLabel;
 
 @end
@@ -49,12 +48,24 @@
 
 - (void)setTacticVideoModel:(TacticVideoModel *)tacticVideoModel
 {
+    
     _tacticVideoModel = tacticVideoModel;
     
     self.nameLabel.text = tacticVideoModel.name;
     self.viewType = tacticVideoModel.viewType;
-    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.viewImg)] forState:UIControlStateNormal];
+    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.videoImg)] forState:UIControlStateNormal];
+    
 }
+
+- (void)setTacticSingleModel:(TacticSingleModel *)tacticSingleModel
+{
+    _tacticSingleModel = tacticSingleModel;
+    
+    self.nameLabel.text = tacticSingleModel.name;
+    self.viewType = tacticSingleModel.viewType;
+    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleModel.viewImg)] forState:UIControlStateNormal];
+}
+
 
 - (void)setTacticSingleFoodModel:(TacticSingleFoodModel *)tacticSingleFoodModel
 {
@@ -64,27 +75,15 @@
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.foodImg)] forState:UIControlStateNormal];
 }
 
+
+
 //这里写个跳转到单个景点
 - (void)clickAction:(UIButton *)button
 {
     
-    if ([self.delegate respondsToSelector:@selector(TacticImageViewPushActionWithvideoModel:tacticSingleFoodModel:)]) {
-        [self.delegate TacticImageViewPushActionWithvideoModel:self.tacticVideoModel tacticSingleFoodModel:self.tacticSingleFoodModel];
+    if ([self.delegate respondsToSelector:@selector(TacticImageViewPushActionWithvideoModel:tacticSingleFoodModel:tacticSingleModel:)]) {
+        [self.delegate TacticImageViewPushActionWithvideoModel:self.tacticVideoModel tacticSingleFoodModel:self.tacticSingleFoodModel tacticSingleModel:self.tacticSingleModel];
     }
-//    if (self.viewType == 3) {
-//        NSLog(@"这是一个景点的描述！！！！！");
-//        
-//    }else if (self.viewType == 1 || self.viewType == 2){
-//        TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:self.viewId];
-//        [self.viewController.navigationController pushViewController:singleVC animated:YES];
-//    }else if (self.viewType == 0){
-//        //说明他不是一个国家那种东西，而是一个景点
-//        
-//        TacticSingleFoodController *foodVC = [[TacticSingleFoodController alloc] init];
-//        foodVC.tacticSingleFoodModel = self.tacticSingleFoodModel;
-//        
-//        [self.viewController.navigationController pushViewController:foodVC animated:YES];
-//    }
  
 }
 @end

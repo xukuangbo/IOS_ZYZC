@@ -74,7 +74,7 @@
      */
     UILabel *labelView = [[UILabel alloc] init];
 //    labelView.lineBreakMode = NSLineBreakByCharWrapping;
-    labelView.textAlignment = NSTextAlignmentCenter;
+//    labelView.textAlignment = NSTextAlignmentCenter;
     labelView.layer.cornerRadius = 5;
     labelView.layer.masksToBounds = YES;
     labelView.font = labelViewFont;

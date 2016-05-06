@@ -15,7 +15,8 @@
 #import "TacticSingleTipsModel.h"
 #import "TacticSingleLongPicture.h"
 #import "TacticSingleTipsController.h"
-@interface TacticSingleTableViewCell()
+#import "TacticMoreVideosController.h"
+@interface TacticSingleTableViewCell()<TacticCustomMapViewDelegate>
 //描述
 @property (nonatomic, weak) TacticCustomMapView *descView;
 @property (nonatomic, weak) UILabel *descLabel;
@@ -139,6 +140,9 @@
     CGFloat mustPlayViewButtonW = mustPlayView.width - TacticTableViewCellMargin * 2;
     CGFloat mustPlayViewButtonH = (KSCREEN_W - 10 * 6) / 3.0;
     TacticThreeMapView *mustPlayViewButton = [[TacticThreeMapView alloc] initWithFrame:CGRectMake(mustPlayViewButtonX, mustPlayViewButtonY, mustPlayViewButtonW, mustPlayViewButtonH)];
+    mustPlayView.moreButton.hidden = NO;
+    mustPlayView.moreButton.tag = MoreVCTypeTypeCountryView;
+    mustPlayView.delegate = self;
     mustPlayViewButton.layer.cornerRadius = 5;
     mustPlayViewButton.layer.masksToBounds = YES;
     [mustPlayView addSubview:mustPlayViewButton];
@@ -148,6 +152,7 @@
     CGFloat foodsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
     CGFloat foodsViewH = threeViewMapHeight;
     TacticCustomMapView *foodsView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,foodsViewW, foodsViewH)];
+    foodsView.delegate = self;
     foodsView.backgroundColor = [UIColor redColor];
     foodsView.titleLabel.text = @"特色美食";
     foodsView.descLabel.text = @"用味蕾探索世界";
@@ -160,6 +165,8 @@
     CGFloat foodsPlayViewButtonH = (KSCREEN_W - 10 * 6) / 3.0;
     TacticThreeMapView *foodsPlayViewButton = [[TacticThreeMapView alloc] initWithFrame:CGRectMake(foodsPlayViewButtonX, foodsPlayViewButtonY, foodsPlayViewButtonW, foodsPlayViewButtonH)];
     foodsPlayViewButton.threeMapViewType = threeMapViewTypeFood;
+    foodsView.moreButton.hidden = NO;
+    foodsView.moreButton.tag = MoreVCTypeTypeFood;
     foodsPlayViewButton.layer.cornerRadius = 5;
     foodsPlayViewButton.layer.masksToBounds = YES;
     [foodsView addSubview:foodsPlayViewButton];
@@ -214,5 +221,24 @@
     self.foodsView.frame = tacticSingleModelFrame.foodsViewF;
     self.foodsPlayViewButton.foodsArray = tacticSingleModel.foods;
     self.foodsPlayViewButton.frame = tacticSingleModelFrame.foodsPlayViewButtonF;
+}
+
+
+#pragma mark - TacticCustomMapViewDelegate
+- (void)pushToMoreVC:(UIButton *)button
+{
+    if (button.tag == MoreVCTypeTypeVideo) {
+        NSLog(@"我是更多视频");
+    }else if (button.tag == MoreVCTypeTypeCountryView || button.tag == MoreVCTypeTypeCityView){
+        NSLog(@"我是更多景点");
+        TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
+        moreVC.moreArray = self.tacticSingleModelFrame.tacticSingleModel.mgViews;
+        [self.viewController.navigationController pushViewController:moreVC animated:YES];
+    }else if (button.tag == MoreVCTypeTypeFood){
+        NSLog(@"我是更多美食");
+        TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
+        moreVC.moreArray = self.tacticSingleModelFrame.tacticSingleModel.foods;
+        [self.viewController.navigationController pushViewController:moreVC animated:YES];
+    }
 }
 @end

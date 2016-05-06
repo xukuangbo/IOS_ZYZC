@@ -12,7 +12,6 @@
 #import "TacticFoodPicCell.h"
 #import "TacticFoodTextCell.h"
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
-#define imageViewHeight (KSCREEN_W / 16 * 9)
 @interface TacticSingleFoodVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, weak) UIImageView *mapView;
@@ -43,6 +42,7 @@ static NSString *picCellID = @"TacticFoodPicCell";
     [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(0)];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
+
 /**
  *  创建界面
  */
@@ -55,6 +55,7 @@ static NSString *picCellID = @"TacticFoodPicCell";
     tableView.backgroundColor = [UIColor clearColor];
     tableView.bounces = YES;
     tableView.delegate = self;
+    tableView.dataSource = self;
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
@@ -81,7 +82,6 @@ static NSString *picCellID = @"TacticFoodPicCell";
         labelViewH = 0;
     }
     
-    
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.foodImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     
     self.labelView.text = tacticSingleFoodModel.foodText;
@@ -91,9 +91,17 @@ static NSString *picCellID = @"TacticFoodPicCell";
     self.mapView.frame = CGRectMake(mapViewX, mapViewY, mapViewW, mapViewH);
     self.mapView.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     
-    
 }
 
+
+- (void)setTacticVideoModel:(TacticVideoModel *)tacticVideoModel
+{
+    _tacticVideoModel = tacticVideoModel;
+    
+    if (tacticVideoModel.viewImg){
+        
+    }
+}
 
 #pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -107,6 +115,7 @@ static NSString *picCellID = @"TacticFoodPicCell";
         TacticFoodPicCell *cell = [tableView dequeueReusableCellWithIdentifier:picCellID];
         if (!cell) {
             cell = [[TacticFoodPicCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:picCellID];
+            
         }
         
         
@@ -125,7 +134,6 @@ static NSString *picCellID = @"TacticFoodPicCell";
         if (!cell) {
             cell = [[TacticFoodPicCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:picCellID];
         }
-        
         return cell;
     }
     
@@ -168,15 +176,5 @@ static NSString *picCellID = @"TacticFoodPicCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
