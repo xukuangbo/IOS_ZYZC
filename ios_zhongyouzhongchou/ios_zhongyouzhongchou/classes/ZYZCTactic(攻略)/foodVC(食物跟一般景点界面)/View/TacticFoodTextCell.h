@@ -14,4 +14,5 @@
 @property (nonatomic, weak) UIImageView *mapView;
 @property (nonatomic, weak) UILabel *titleLabel;
 @property (nonatomic, weak) UILabel *labelView;
+
 @end

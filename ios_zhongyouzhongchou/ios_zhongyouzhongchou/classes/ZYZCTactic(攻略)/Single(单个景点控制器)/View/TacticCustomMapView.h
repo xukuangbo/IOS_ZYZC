@@ -21,10 +21,26 @@
 #define threeViewMapHeight ((KSCREEN_W - TacticTableViewCellMargin * 6) / 3.0 + descLabelBottom + TacticTableViewCellTextMargin + TacticTableViewCellMargin)
 #define threeViewHeight ((KSCREEN_W - TacticTableViewCellMargin * 6) / 3.0)
 
+typedef NS_ENUM(NSInteger, MoreVCType)
+{
+    MoreVCTypeDefult = 0,
+    MoreVCTypeTypeCountryView,//国家
+    MoreVCTypeTypeCityView,//城市
+    MoreVCTypeTypeSingleView,//一般景点
+    MoreVCTypeTypeFood,//食物
+    MoreVCTypeTypeVideo//视频
+};
+
+@protocol TacticCustomMapViewDelegate <NSObject>
+
+- (void)pushToMoreVC:(UIButton *)button;
+@end
 
 @interface TacticCustomMapView : UIImageView
 @property (nonatomic, weak) UILabel *titleLabel;
 @property (nonatomic, weak) UILabel *descLabel;
 
 @property (nonatomic, weak) UIButton *moreButton;
+
+@property (nonatomic, weak) id<TacticCustomMapViewDelegate> delegate;
 @end

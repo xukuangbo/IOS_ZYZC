@@ -91,7 +91,7 @@
 //    return ;
 //    http://www.sosona.com:8080/viewSpot/getVideoViewList.action
 //    http://localhost:8080/viewSpot/getViewSpot.action?viewId=13
-    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
+    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=81",(long)viewId];
 //    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getVideoViewList.action"];
     //访问网络
     

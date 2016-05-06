@@ -6,9 +6,9 @@
 #import "TacticThreeMapView.h"
 #import "TacticCustomMapView.h"
 #import "ZYZCTool.h"
+#import "TacticMoreVideosController.h"
 
-
-@interface TacticTableViewCell()
+@interface TacticTableViewCell()<TacticCustomMapViewDelegate>
 /**
  *  视频view
  */
@@ -62,6 +62,9 @@
 //    UIView *videoView = [UIView viewWithIndex:1 frame:CGRectMake(videoViewX, videoViewY, videoViewW, videoViewH) Title:@"视频攻略" desc:@"3分钟看懂旅行目的地核心攻略"];
     TacticCustomMapView *videoView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(videoViewX, videoViewY, videoViewW, videoViewH)];
     videoView.titleLabel.text = @"视频攻略";
+    videoView.moreButton.tag = MoreVCTypeTypeVideo;
+    videoView.delegate = self;
+    videoView.moreButton.hidden = NO;
     videoView.descLabel.text = @"三分钟看懂旅行目的地核心攻略";
     self.videoView = videoView;
     //添加点击手势
@@ -96,6 +99,9 @@
     CGFloat hotDestViewW = KSCREEN_W - hotDestViewX * 2;
     CGFloat hotDestViewH = threeViewMapHeight;
     TacticCustomMapView *hotDestView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(hotDestViewX, hotDestViewY, hotDestViewW, hotDestViewH)];
+    hotDestView.moreButton.tag = MoreVCTypeTypeCountryView;
+    hotDestView.moreButton.hidden = NO;
+    hotDestView.delegate = self;
     hotDestView.titleLabel.text = @"热门目的地";
     hotDestView.descLabel.text = @"根据兴趣标签精准匹配更靠谱";
     //创建3个图片的容器
@@ -119,20 +125,26 @@
     if (_tacticModel != tacticModel) {
         _tacticModel = tacticModel;
         self.videoThreeMapView.videos = tacticModel.videos;
-        self.hotDestMapView.videos = tacticModel.videos;
-//        //如果视频内容大于等于3，就可以显示
-//        if (tacticModel.videos.count >= 3) {
-//            self.videoView.hidden = NO;
-//            self.videoThreeMapView.videos = tacticModel.videos;
-//            
-//        }else{
-////            self.videoMapView.hidden = YES;
-//        }
-//        //目的地内容显示
-//        if (tacticModel.mgViews.count >= 3) {
-//            self.hotDestView.hidden = NO;
-//           self.videoThreeMapView.videos = tacticModel.videos;
-//        }
+        self.hotDestMapView.singleViews = tacticModel.mgViews;
+    }
+}
+
+#pragma mark - TacticCustomMapViewDelegate
+- (void)pushToMoreVC:(UIButton *)button
+{
+    if (button.tag == MoreVCTypeTypeVideo) {
+        NSLog(@"我是更多视频");
+        TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
+
+        moreVC.moreArray = self.tacticModel.videos;
+        [self.viewController.navigationController pushViewController:moreVC animated:YES];
+    }else if (button.tag == MoreVCTypeTypeCountryView || button.tag == MoreVCTypeTypeCityView){
+        NSLog(@"我是更多景点");
+        TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
+        moreVC.moreArray = self.tacticModel.mgViews;
+        [self.viewController.navigationController pushViewController:moreVC animated:YES];
+    }else if (button.tag == MoreVCTypeTypeFood){
+        NSLog(@"我是更多美食");
     }
 }
 @end

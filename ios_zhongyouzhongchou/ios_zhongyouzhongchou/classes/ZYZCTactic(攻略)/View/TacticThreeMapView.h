@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, ThreeMapViewType)
 
 @property (nonatomic, strong) NSArray *videos;
 
+@property (nonatomic, strong) NSArray *singleViews;
+
 @property (nonatomic, strong) NSArray *foodsArray;
 
 @end

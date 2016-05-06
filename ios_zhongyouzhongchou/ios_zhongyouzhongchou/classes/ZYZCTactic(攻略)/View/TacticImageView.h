@@ -9,20 +9,20 @@
 #import <UIKit/UIKit.h>
 @class TacticSingleFoodModel;
 @class TacticVideoModel;
-
+@class TacticSingleModel;
 //写一个代理
 @protocol TacticImageViewDelegate <NSObject>
 
-- (void)TacticImageViewPushActionWithvideoModel:(TacticVideoModel *)videoModel tacticSingleFoodModel:(TacticSingleFoodModel *)singleFoodModel;
+- (void)TacticImageViewPushActionWithvideoModel:(TacticVideoModel *)videoModel tacticSingleFoodModel:(TacticSingleFoodModel *)singleFoodModel tacticSingleModel:(TacticSingleModel *)tacticSingleModel;
 @end
 
 @interface TacticImageView : UIButton
 
-
 @property (nonatomic, strong) TacticVideoModel *tacticVideoModel;
 
-
 @property (nonatomic, strong) TacticSingleFoodModel *tacticSingleFoodModel;
+
+@property (nonatomic, strong) TacticSingleModel *tacticSingleModel;
 
 @property (nonatomic, assign) NSInteger viewType;
 

@@ -9,6 +9,7 @@
 #import "TacticModel.h"
 #import "MJExtension.h"
 #import "TacticVideoModel.h"
+#import "TacticSingleModel.h"
 @implementation TacticModel
 
 
@@ -16,7 +17,7 @@
 {
     return @{
              @"videos" : [TacticVideoModel class],
-             @"mgViews" : [TacticVideoModel class]
+             @"mgViews" : [TacticSingleModel class]
              };
 }
 

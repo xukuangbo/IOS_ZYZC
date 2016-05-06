@@ -10,4 +10,5 @@
 
 @interface TacticMoreVideosController : ZYZCBaseViewController
 
+@property (nonatomic, strong) NSArray *moreArray;
 @end

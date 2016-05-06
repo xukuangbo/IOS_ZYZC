@@ -47,6 +47,7 @@
         [rightButton setTitle:@"更多" forState:UIControlStateNormal];
         [rightButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
         rightButton.titleLabel.font = descFont;
+        self.moreButton = rightButton;
         
         //得出文字的宽度,交换两个的位置
         CGSize rightButtonTitleSize = [ZYZCTool calculateStrLengthByText:@"更多" andFont:descFont andMaxWidth:MAXFLOAT];
@@ -73,7 +74,9 @@
 
 - (void)moreButtonAction:(UIButton *)button
 {
-    NSLog(@"你好啊，更多按钮");
+    if ([self.delegate respondsToSelector:@selector(pushToMoreVC:)]) {
+        [self.delegate pushToMoreVC:button];
+    }
     
 }
 @end
