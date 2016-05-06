@@ -200,7 +200,7 @@
     self.flashView.descLabel.text = [NSString stringWithFormat:@"%@最棒的旅行目的地",tacticSingleModel.name];
     self.flashPlayButton.frame = tacticSingleModelFrame.flashPlayButtonF;
     self.flashPlayButton.playUrl = tacticSingleModel.videoUrl;
-    [self.flashPlayButton sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.videoImage)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    [self.flashPlayButton sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.videoImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     
     self.pictureView.frame = tacticSingleModelFrame.pictureViewF;
     self.pictureView.descLabel.text = [NSString stringWithFormat:@"一张图玩转%@",tacticSingleModel.name];

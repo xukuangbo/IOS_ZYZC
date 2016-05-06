@@ -30,11 +30,13 @@ static NSString *const ID = @"MoreCollectioncell";
 {
     [self setBackItem];
     
+    self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
     UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49) collectionViewLayout:layout];
+    collectionView.backgroundColor = [UIColor ZYZC_BgGrayColor];
     [collectionView registerClass:[TacticMoreCollectionViewCell class] forCellWithReuseIdentifier:ID];
     collectionView.dataSource = self;
     collectionView.delegate = self;

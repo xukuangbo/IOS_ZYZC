@@ -50,7 +50,7 @@
 //"videoUrl":"",
 @property (nonatomic, copy) NSString *videoUrl;
 
-@property (nonatomic, copy) NSString *videoImage;
+@property (nonatomic, copy) NSString *videoImg;
 //"destDate":1460530621000,
 //"viewType":2,
 @property (nonatomic, assign) NSInteger viewType;
