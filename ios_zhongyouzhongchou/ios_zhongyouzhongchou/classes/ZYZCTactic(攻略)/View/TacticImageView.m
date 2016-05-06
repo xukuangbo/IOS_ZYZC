@@ -63,7 +63,10 @@
     
     self.nameLabel.text = tacticSingleModel.name;
     self.viewType = tacticSingleModel.viewType;
-    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleModel.viewImg)] forState:UIControlStateNormal];
+    
+    NSString *string = tacticSingleModel.viewImg;
+    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(string)] forState:UIControlStateNormal];
 }
 
 
