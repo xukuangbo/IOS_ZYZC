@@ -29,10 +29,12 @@
 @interface MoreFZCViewController ()<MoreFZCToolBarDelegate,UIAlertViewDelegate>
 @property (nonatomic, strong) NSString *oneResouceFile;
 @property (nonatomic, strong) NSString *archiveDataPath;
-@property (nonatomic, strong) NSMutableArray *picesSaveState;
 @property (nonatomic, assign) BOOL isFirstTimeToSave;
 @property (nonatomic, assign) BOOL needPopVC;
 @property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) NSMutableArray *uploadDataState;
+@property (nonatomic, assign) NSInteger uploadDataNumber;
+@property (nonatomic, assign) BOOL hasPulish;
 @end
 
 @implementation MoreFZCViewController
@@ -45,11 +47,12 @@
     [user setObject:[NSNumber numberWithInteger:0] forKey:KMOREFZC_RETURN_SUPPORTTYPE];
     [user synchronize];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-    _picesSaveState=[NSMutableArray array];
+    _uploadDataState=[NSMutableArray array];
     [self setBackItem];
     [self createToolBar];
     [self createClearMapView];
     [self createBottomView];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reciveNotify:) name:@"uploadData" object:nil];
 }
 #pragma mark - 自定义方法
 /**
@@ -268,8 +271,6 @@
 #pragma mark --- 下一步或发布
 -(void)nextOneOrPublish:(UIButton *)button
 {
-    [self uploadDataToOSS];
-    return;
     //下一步
     if (button.tag<MoreFZCToolBarTypeReturn) {
         
@@ -318,39 +319,39 @@
 //上传数据到oss
 -(void)uploadDataToOSS
 {
+    if (_hasPulish) {
+        [MBProgressHUD showSuccess:@"您已发布成功!"];
+        return;
+    }
+    
     [MBProgressHUD showMessage:@"正在发布,请稍等..."];
+    
+    if (_uploadDataState.count) {
+        [_uploadDataState removeAllObjects];
+    }
+    
     [self saveModelInManager];
 //    //上传数据到oss
     NSFileManager *fileManager=[NSFileManager defaultManager];
     NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
     NSString *tmpFile=KMY_ZHONGCHOU_DOCUMENT_PATH(tmpFileName);
     NSArray *tmpFileArr=[fileManager subpathsAtPath:tmpFile];
-    NSLog(@"%@",tmpFileArr);
-    NSMutableArray *uploadSuccessArr=[NSMutableArray array];
+    _uploadDataNumber=tmpFileArr.count;
     
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//    NSMutableArray *uploadSuccessArr=[NSMutableArray array];
         for (int i=0; i<tmpFileArr.count; i++) {
-//            SuccessUploadBlock successBlock=nil;
-//            FailBlock          failBlock=nil;
             ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
             [ossManager uploadObjectAsyncByFileName:tmpFileArr[i] andFilePath:[tmpFile stringByAppendingPathComponent:tmpFileArr[i]] withSuccessUpload:^
              {
-                 [uploadSuccessArr addObject:[NSNumber numberWithBool:YES]];
+                  [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadData" object:nil userInfo:@{@"upload":@"success"}];
+
              }
               andFailUpload:^
              {
-                 [uploadSuccessArr addObject:[NSNumber numberWithBool:NO]];
+                  [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadData" object:nil userInfo:@{@"upload":@"fail"}];
              }];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //回调或者说是通知主线程刷新，
-            NSLog(@"%@",uploadSuccessArr);
-            [MBProgressHUD hideHUD];
-        }); 
-        
-    });
-
-        
+    
     
 //    for (NSString *fileName in tmpFileArr) {
 //        ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
@@ -359,7 +360,7 @@
 //        
 //        [uploadSuccessArr addObject:[NSNumber numberWithBool:uploadSuccess]];
 //    }
-//   
+//
 //    for (NSNumber *obj in uploadSuccessArr) {
 //        if (![obj boolValue]) {
 //            //提示发布失败
@@ -371,6 +372,43 @@
 //    }
 //    //上传数据成功，开始发布
 //    [self publishMyZhongchou];
+}
+
+-(void)reciveNotify:(NSNotification *)notify
+{
+    NSLog(@"_uploadDataNumber:%ld",_uploadDataNumber);
+    
+    NSDictionary *notifyDic = notify.userInfo;
+    NSLog(@"notifyDic:%@",notifyDic);
+    if ([notifyDic[@"upload"] isEqualToString:@"success"]) {
+        [_uploadDataState addObject:@1] ;
+    }
+    if ([notifyDic[@"upload"] isEqualToString:@"fail"]) {
+        [_uploadDataState addObject:@0];
+    }
+    
+    
+    if (_uploadDataState.count==_uploadDataNumber) {
+        BOOL upDatasSuccess=YES;
+        for (int i=0; i<_uploadDataState.count; i++) {
+            if (![_uploadDataState[i] boolValue]) {
+                upDatasSuccess=NO;
+            }
+        }
+        
+        if (upDatasSuccess) {
+            [self publishMyZhongchou];
+        }
+        else
+        {
+            [MBProgressHUD hideHUD];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                alert.tag=ALERT_UPLOAD_TAG;
+                [alert show];
+        }
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"uploadData" object:nil];
+    }
 }
 
 -(void)publishMyZhongchou
@@ -387,13 +425,17 @@
         if (isSuccess) {
             //发送成功，删除本地数据
             [self cleanTmpFile];
+            [MBProgressHUD hideHUD];
             [MBProgressHUD showSuccess:@"发布成功!"];
+            _hasPulish=YES;
         }
         else
         {
+            [MBProgressHUD hideHUD];
             [MBProgressHUD showError:@"数据丢失，请检查数据"];
         }
     } andFailBlock:^(id failResult) {
+        [MBProgressHUD hideHUD];
         //提示发布失败
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"网络出错，发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alert.tag=ALERT_PUBLISH_TAG;
