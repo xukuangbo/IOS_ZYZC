@@ -10,6 +10,7 @@
 #import "CustomItemView.h"
 #import "MoreFZCViewController.h"
 #import "MoreFZCDataManager.h"
+#import "MBProgressHUD+MJ.h"
 @interface ZYZCCenterContentView ()
 {
     NSArray *btnArr;
@@ -70,6 +71,11 @@
     }
     
     if (myItemView.tag==KZYZC_CENTERCONTENT_BTN_TAG+1) {
+        NSString *openId=[ZYZCTool getUserId];
+        if (!openId) {
+            [MBProgressHUD showError:@"未登录,请先进行登录!"];
+            return;
+        }
         MoreFZCViewController *fzcVC=[[MoreFZCViewController alloc]init];
         fzcVC.title=@"发起众筹";
         if (self.pushVCBlock) {

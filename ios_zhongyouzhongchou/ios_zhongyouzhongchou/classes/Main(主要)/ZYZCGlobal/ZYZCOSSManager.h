@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
+typedef void(^SuccessUploadBlock)();
+typedef void(^FailUploadBlock)();
 @interface ZYZCOSSManager : NSObject
 +(instancetype )defaultOSSManager;
 /**
@@ -28,7 +29,7 @@
  *  异步上传文件
  *
  */
-- (NSString *)getfileURLWhenUploadObjectAsyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath;
+- (void )uploadObjectAsyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath withSuccessUpload:(SuccessUploadBlock )successUpload andFailUpload:(FailUploadBlock )failUpload;
 
 /**
  *  异步下载
