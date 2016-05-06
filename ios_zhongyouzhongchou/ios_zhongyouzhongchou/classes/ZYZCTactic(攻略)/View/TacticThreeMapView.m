@@ -140,9 +140,9 @@
         [self.viewController.navigationController pushViewController:singleVC animated:YES];
     }else if(self.threeMapViewType == threeMapViewTypeSingleView) {
         //说明是一般景点
-        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
+        TacticSingleViewController *foodVC = [[TacticSingleViewController alloc] initWithViewId:tacticSingleModel.ID];
         
-        foodVC.tacticSingleFoodModel = singleFoodModel;
+//        foodVC.tacticSingleFoodModel = singleFoodModel;
         [self.viewController.navigationController pushViewController:foodVC animated:YES];
     }else if (self.threeMapViewType == threeMapViewTypeFood){
         //说明是食物

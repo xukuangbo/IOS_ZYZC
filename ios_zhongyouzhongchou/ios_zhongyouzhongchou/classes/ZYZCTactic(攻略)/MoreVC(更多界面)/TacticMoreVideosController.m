@@ -30,8 +30,6 @@ static NSString *const ID = @"MoreCollectioncell";
 {
     [self setBackItem];
     
-    self.automaticallyAdjustsScrollViewInsets =NO;
-    
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -41,13 +39,6 @@ static NSString *const ID = @"MoreCollectioncell";
     collectionView.dataSource = self;
     collectionView.delegate = self;
     [self.view addSubview:collectionView];
-}
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(0)];
-    
-    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
 
 - (void)setMoreArray:(NSArray *)moreArray
@@ -102,25 +93,5 @@ static NSString *const ID = @"MoreCollectioncell";
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsMake(10, 10, 10, 10);
-}
-#pragma mark - UISrollViewDelegate
-/**
- *  navi背景色渐变的效果
- */
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    
-    
-    if (offsetY <= naviHeight) {
-        CGFloat alpha = MAX(0, offsetY/naviHeight);
-        
-        [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(alpha)];
-        self.title = @"";
-    } else {
-        [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(1)];
-        self.title = @"更多";
-        
-    }
 }
 @end
