@@ -114,7 +114,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
     //  [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
-    [dateFormatter setDateFormat: @"yyyy/MM/dd Z"];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd Z"];
     
 //    NSDate *destDate= [dateFormatter dateFromString:dateString];
     if (dateString.length==10) {

@@ -146,10 +146,6 @@
 {
     if(textField ==_textField){
         [_textField endEditing:YES];
-        if (![_textField.text isEqualToString:@""]) {
-            MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-            manager.goal_travelTheme=_textField.text;
-        }
     }
     return YES;
 }
@@ -181,6 +177,15 @@
 {
     self.getSuperTableView.contentInset = UIEdgeInsetsMake(64 + 40, 0, 49, 0);
     [[NSNotificationCenter defaultCenter] removeObserver: self name:UIKeyboardWillHideNotification object:nil];
+    
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    if (_textField.text.length) {
+        manager.goal_travelTheme=_textField.text;
+    }
+    else
+    {
+        manager.goal_travelTheme=nil;
+    }
 }
 
 

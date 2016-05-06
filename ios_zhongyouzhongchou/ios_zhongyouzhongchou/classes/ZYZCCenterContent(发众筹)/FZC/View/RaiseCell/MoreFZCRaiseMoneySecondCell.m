@@ -77,6 +77,7 @@
         movieView.movieImg.image=[UIImage imageWithContentsOfFile:KMY_ZHONGCHOU_DOCUMENT_PATH(manager.raiseMoney_movieImg)];
         movieView.movieImgFileName=manager.raiseMoney_movieImg;
         movieView.movieFileName=manager.raiseMoney_movieUrl;
+        movieView.turnImageView.hidden=NO;
     }
 }
 //-(void)setContentBelong:(NSString *)contentBelong

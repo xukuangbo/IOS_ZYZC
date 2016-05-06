@@ -31,6 +31,7 @@
      *  openid
      */
     accountModel.openid = dict[@"openid"];
+    [ZYZCTool saveUserIdById:accountModel.openid];
     /** 用户的昵称 */
     accountModel.nickname = dict[@"nickname"];
     /**

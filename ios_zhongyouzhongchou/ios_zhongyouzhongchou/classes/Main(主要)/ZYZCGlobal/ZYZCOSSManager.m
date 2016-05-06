@@ -122,25 +122,66 @@ OSSClient * client;
     }];
 }
 
-#pragma mark --- 异步上传对象
-- (NSString *)getfileURLWhenUploadObjectAsyncBydocDir:(NSString *)docDir andFileType:(NSString *)fileType{
-    //文件类型错误，上传失败
-    if (!([fileType isEqualToString:@"png"]||[fileType isEqualToString:@"caf"]||[fileType isEqualToString:@"mp4"])) {
-        NSLog(@"fileType 类型错误，上传失败");
-        return nil;
+#pragma mark --- 同步上传对象
+- (BOOL )uploadObjectSyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath {
+    OSSPutObjectRequest * put = [OSSPutObjectRequest new];
+    
+    // required fields
+    NSString *openId=[ZYZCTool getUserId];
+    if (!openId) {
+        openId=@"o6_bmjrPTlm6_2sgVt7hMZOPfL2M";
     }
+    put.bucketName = _bucketName;
+    put.objectKey = [NSString stringWithFormat:@"%@/%@",openId,fileName];
+    put.uploadingFileURL = [NSURL fileURLWithPath:filePath];
+    
+    // optional fields
+//    put.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+//        NSLog(@"%lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+//    };
+    put.contentType = @"";
+    put.contentMd5 = @"";
+    put.contentEncoding = @"";
+    put.contentDisposition = @"";
+    
+    OSSTask * putTask = [client putObject:put];
+    
+    [putTask waitUntilFinished]; // 阻塞直到上传完成
+    
+    if (!putTask.error) {
+        NSLog(@"upload object success!");
+        return YES;
+        
+    } else {
+        NSLog(@"upload object failed, error: %@" , putTask.error);
+        return NO;
+       
+    }
+}
+
+
+#pragma mark --- 异步上传对象
+- (NSString *)getfileURLWhenUploadObjectAsyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath{
+    //文件类型错误，上传失败
+//    if (!([fileType isEqualToString:@"png"]||[fileType isEqualToString:@"caf"]||[fileType isEqualToString:@"mp4"])) {
+//        NSLog(@"fileType 类型错误，上传失败");
+//        return nil;
+//    }
     //文件类型正确
     //获取文件名
-    NSString *fileName=[self getPutFileNameByType:fileType];
+    NSString *openId=[ZYZCTool getUserId];
+    if (!openId) {
+        openId=@"o6_bmjrPTlm6_2sgVt7hMZOPfL2M";
+    }
     OSSPutObjectRequest * put = [OSSPutObjectRequest new];
     // required fields
     put.bucketName = _bucketName;
-    put.objectKey  = fileName;
-    put.uploadingFileURL = [NSURL fileURLWithPath:docDir];
-    // optional fields
-    put.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
-        NSLog(@"%lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
-    };
+    put.objectKey  = [NSString stringWithFormat:@"%@/%@",openId,fileName];
+    put.uploadingFileURL = [NSURL fileURLWithPath:filePath];
+       // optional fields
+//    put.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+//        NSLog(@"%lld, %lld, %lld", bytesSent, totalByteSent, totalBytesExpectedToSend);
+//    };
     put.contentType = @"";
     put.contentMd5 = @"";
     put.contentEncoding = @"";
@@ -157,7 +198,9 @@ OSSClient * client;
         }
         return nil;
     }];
-    NSString *fileUrl=[NSString stringWithFormat:@"http://%@.%@/%@",_bucketName,[endPoint substringFromIndex:7],fileName];
+    [putTask waitUntilFinished];
+    
+    NSString *fileUrl=[NSString stringWithFormat:@"http://%@.%@/%@",_bucketName,[endPoint substringFromIndex:7],[NSString stringWithFormat:@"%@/%@",openId,fileName]];
     return fileUrl;
 }
 
@@ -237,16 +280,6 @@ OSSClient * client;
         return nil;
     }];
 
-}
-
-
-#pragma mark --- 上传文件名（用户id/文件类型/时间轴.文件类型（png，caf，mp4）保证文件名的唯一性）
--(NSString *)getPutFileNameByType:(NSString *)type
-{
-    NSString *userId=[ZYZCTool getUserId];
-    NSString *timestamp=[ZYZCTool getLocalTime];
-    NSString *fileName=[NSString stringWithFormat:@"%@/%@/%@.%@",userId,type,timestamp,type];
-    return fileName;
 }
 
 @end

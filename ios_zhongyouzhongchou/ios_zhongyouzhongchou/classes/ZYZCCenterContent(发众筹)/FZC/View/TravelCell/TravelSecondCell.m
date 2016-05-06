@@ -147,6 +147,7 @@
         movieView.movieImg.image=[UIImage imageWithContentsOfFile:KMY_ZHONGCHOU_DOCUMENT_PATH(oneDetailModel.movieImg)];
         movieView.movieImgFileName=oneDetailModel.movieImg;
         movieView.movieFileName=oneDetailModel.movieUrl;
+        movieView.turnImageView.hidden=NO;
     }
 
     

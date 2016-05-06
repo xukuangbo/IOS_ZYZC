@@ -70,10 +70,6 @@
     if (![self showNecessoryAlertView03]) {
         MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
         
-        if (!manager.return_togetherMoneyPercent) {
-            [MBProgressHUD showError:ZYLocalizedString(@"error_no_togetherTravel_money_rate")];
-            return YES;
-        }
         if ([manager.return_returnPeopleStatus isEqualToString:@"1"]) {
             if (!manager.return_returnPeopleNumber||!manager.return_returnPeopleMoney) {
                 [MBProgressHUD showError:ZYLocalizedString(@"error_no_return1")];
@@ -87,7 +83,7 @@
                 }
             }
         }
-        if (manager.return_returnPeopleStatus01) {
+        if ([manager.return_returnPeopleStatus01 isEqualToString:@"1"]) {
             if (!manager.return_returnPeopleNumber01||!manager.return_returnPeopleMoney01) {
                 [MBProgressHUD showError:ZYLocalizedString(@"error_no_return2")];
                 return YES;
@@ -99,6 +95,11 @@
                     return YES;
                 }
             }
+        }
+        
+        if (!manager.return_togetherRateMoney) {
+            [MBProgressHUD showError:ZYLocalizedString(@"error_no_togetherTravel_money_rate")];
+            return YES;
         }
         return NO;
     }

@@ -70,8 +70,6 @@
     }
     
     if (myItemView.tag==KZYZC_CENTERCONTENT_BTN_TAG+1) {
-        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-
         MoreFZCViewController *fzcVC=[[MoreFZCViewController alloc]init];
         fzcVC.title=@"发起众筹";
         if (self.pushVCBlock) {

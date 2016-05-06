@@ -17,6 +17,9 @@
 
 #define KMY_ZHONGCHOU_DOCUMENT_PATH(fileName)  [NSString stringWithFormat:@"%@/%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0],fileName]
 
+
+#define KHTTP_FILE_HEAD @"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com"
+
 //屏幕宽
 #define KSCREEN_W [UIScreen mainScreen].bounds.size.width
 //屏幕高
