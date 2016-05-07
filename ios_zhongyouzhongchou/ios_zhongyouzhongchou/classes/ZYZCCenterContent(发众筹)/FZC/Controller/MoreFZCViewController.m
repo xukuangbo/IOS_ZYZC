@@ -35,6 +35,7 @@
 @property (nonatomic, strong) NSMutableArray *uploadDataState;
 @property (nonatomic, assign) NSInteger uploadDataNumber;
 @property (nonatomic, assign) BOOL hasPulish;
+@property (nonatomic, assign) BOOL hasUpload;
 @end
 
 @implementation MoreFZCViewController
@@ -54,84 +55,6 @@
     [self createBottomView];
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reciveNotify:) name:@"uploadData" object:nil];
 }
-#pragma mark - 自定义方法
-/**
- *  重写返回键方法
- */
--(void)pressBack
-{
-//  退出时，如果有填写发众筹内容，提示保存
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    NSDictionary *managerDict = manager.mj_keyValues;
-    if (managerDict.count>6||(managerDict.count==6&&manager.goal_goals.count>1)||(managerDict.count==6&&manager.travelDetailDays.count>0)) {
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
-        alertView.tag=ALERT_BACK_TAG;
-        [alertView show];
-    }
-    else
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-#pragma mark --- alertView代理方法
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag==ALERT_BACK_TAG) {
-        //保存数据
-        if (buttonIndex ==1)
-        {
-            _needPopVC=YES;
-            [self saveData];
-        }
-        //不保存
-        else
-        {
-            //删除Documents中临时存储文件
-            [self cleanTmpFile];
-            
-        }
-        [self.navigationController popViewControllerAnimated:YES];
-        // 释放单例中存储的内容
-        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-        [manager initAllProperties];
-    }
-    //数据上传到oss失败，提示重新上传
-    else if (alertView.tag ==ALERT_UPLOAD_TAG)
-    {
-        if (buttonIndex ==1) {
-            [self uploadDataToOSS];
-        }
-    }
-    //发布请求失败，提示重新发布
-    else if (alertView.tag ==ALERT_PUBLISH_TAG)
-    {
-        if (buttonIndex ==1) {
-            [self publishMyZhongchou];
-        }
-    }
-}
-
-#pragma mark --- 删除Documents中临时存储文件
--(void)cleanTmpFile
-{
-    NSString *fileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-    NSString *tmpDir=KMY_ZHONGCHOU_DOCUMENT_PATH(fileName);
-    
-    NSFileManager *manager=[NSFileManager defaultManager];
-    
-    NSArray *fileArr=[manager subpathsAtPath:tmpDir];
-    
-    for (NSString *fileName in fileArr) {
-        NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
-        dispatch_async(dispatch_get_global_queue(0, 0), ^
-        {
-            [manager removeItemAtPath:filePath error:nil];
-        });
-    }
-}
-
-
 /**
  *  创建空白容器，并创建4个tableview
  */
@@ -251,6 +174,83 @@
     }
 }
 
+#pragma mark - 自定义方法
+/**
+ *  重写返回键方法
+ */
+-(void)pressBack
+{
+    //  退出时，如果有填写发众筹内容，提示保存
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    NSDictionary *managerDict = manager.mj_keyValues;
+    if (managerDict.count>6||(managerDict.count==6&&manager.goal_goals.count>1)||(managerDict.count==6&&manager.travelDetailDays.count>0)) {
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
+        alertView.tag=ALERT_BACK_TAG;
+        [alertView show];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+#pragma mark --- alertView代理方法
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag==ALERT_BACK_TAG) {
+        //保存数据
+        if (buttonIndex ==1)
+        {
+            _needPopVC=YES;
+            [self saveData];
+        }
+        //不保存
+        else
+        {
+            //删除Documents中临时存储文件
+            [self cleanTmpFile];
+            
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+        // 释放单例中存储的内容
+        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+        [manager initAllProperties];
+    }
+    //数据上传到oss失败，提示重新上传
+    else if (alertView.tag ==ALERT_UPLOAD_TAG)
+    {
+        if (buttonIndex ==1) {
+            [self uploadDataToOSS];
+        }
+    }
+    //发布请求失败，提示重新发布
+    else if (alertView.tag ==ALERT_PUBLISH_TAG)
+    {
+        if (buttonIndex ==1) {
+            [self publishMyZhongchou];
+        }
+    }
+}
+
+#pragma mark --- 删除Documents中临时存储文件
+-(void)cleanTmpFile
+{
+    NSString *fileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
+    NSString *tmpDir=KMY_ZHONGCHOU_DOCUMENT_PATH(fileName);
+    
+    NSFileManager *manager=[NSFileManager defaultManager];
+    
+    NSArray *fileArr=[manager subpathsAtPath:tmpDir];
+    
+    for (NSString *fileName in fileArr) {
+        NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^
+                       {
+                           [manager removeItemAtPath:filePath error:nil];
+                       });
+    }
+}
+
 #pragma mark --- 点击底部按钮触发事件
 -(void)clickBtn:(UIButton *)sender
 {
@@ -305,6 +305,7 @@
     //发  布
     else
     {
+        [self saveModelInManager];
         if (button.tag==MoreFZCToolBarTypeReturn) {
             BOOL lossMessage04=[NecessoryAlertManager showNecessoryAlertView04];
             if (lossMessage04) {
@@ -319,6 +320,9 @@
 //上传数据到oss
 -(void)uploadDataToOSS
 {
+    if (_hasUpload) {
+        [self publishMyZhongchou];
+    }
     if (_hasPulish) {
         [MBProgressHUD showSuccess:@"您已发布成功!"];
         return;
@@ -351,7 +355,6 @@
                   [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadData" object:nil userInfo:@{@"upload":@"fail"}];
              }];
         }
-    
     
 //    for (NSString *fileName in tmpFileArr) {
 //        ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
@@ -397,6 +400,7 @@
         }
         
         if (upDatasSuccess) {
+            _hasUpload=YES;
             [self publishMyZhongchou];
         }
         else

@@ -11,4 +11,5 @@
 @interface GoalScheduleView : UIView
 @property(nonatomic,strong)UILabel *startLab;
 @property(nonatomic,strong)UILabel *backLab;
+-(void)initViews;
 @end

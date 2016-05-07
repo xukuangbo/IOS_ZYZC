@@ -128,6 +128,9 @@ static NSString *DayCell = @"DayCell";
          self.calendarMonth = [self getMonthArrayOfDays:self.days showType:self.type isEnable:self.isEnable modelArr:self.modelArr];
         _keepStartDateMdel=nil;
         _chooseState=ChooseNone;
+        _startDate=nil;
+        _endDate=nil;
+        [_scheduleView initViews];
         [self.collectionView reloadData];
     }
 }
@@ -196,25 +199,64 @@ static NSString *DayCell = @"DayCell";
     
     NSDate *selectdate  = [NSDate date];
     //返回数据模型数组
-    
-    NSString *dateStr01=@"2016-05-02 +0000";
-    NSString *dateStr02=@"2016-05-03 +0000";
-    NSString *dateStr03=@"2016-05-04 +0000";
-    NSString *dateStr04=@"2016-05-05 +0000";
-    NSString *dateStr05=@"2016-06-16 +0000";
-    NSString *dateStr06=@"2016-06-17 +0000";
-    NSString *dateStr07=@"2016-06-18 +0000";
-    NSDateFormatter *dateForma=[[NSDateFormatter alloc]init];
-    dateForma.dateFormat=@"yyyy-MM-dd Z";
-    NSDate *date01=[dateForma dateFromString:dateStr01];
-    NSDate *date02=[dateForma dateFromString:dateStr02];
-    NSDate *date03=[dateForma dateFromString:dateStr03];
-    NSDate *date04=[dateForma dateFromString:dateStr04];
-    NSDate *date05=[dateForma dateFromString:dateStr05];
-    NSDate *date06=[dateForma dateFromString:dateStr06];
-    NSDate *date07=[dateForma dateFromString:dateStr07];
-    _occupyDays=@[date01,date02,date03,date04,date05,date06,date07];
     return [self.calendarLogic reloadCalendarView:date selectDate:selectdate occupyDates:_occupyDays needDays:days showType:type isEnable:isEnable priceModelArr:arr];
+}
+
+#pragma mark --- 获取我已参与的日期
+-(void )getMyOccupyDays
+{
+    NSString *url=[NSString stringWithFormat:@"%@cache=false&orderType=1&pageNo=1&pageSize=20&openid=%@",GET_MY_OCCUPY_TIME,[ZYZCTool getUserId]];
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+//        if (isSuccess) {
+//            NSDictionary *dateDic=result[@"data"];
+//            NSMutableArray *datesArr=[NSMutableArray array];
+//            for (int i=0; i<dateDic.count/2; i++) {
+//                NSString *startStr=[self changStrToDateStr:
+//                dateDic[[NSString stringWithFormat:@"startTime%d",i]]];
+//                
+//                NSString *endStr=[self changStrToDateStr:
+//                dateDic[[NSString stringWithFormat:@"EndTime%d",i]]];
+//                
+//                NSDate *startDate= [NSDate dateFromString:startStr];
+//                NSDate *endDate  = [NSDate dateFromString:endStr];
+//                NSArray *dateArr=[NSDate getDatesBetweenDate:startDate toDate:endDate];
+//                for (NSDate *date in dateArr) {
+//                    BOOL hasExit=NO;
+//                    for (NSDate *obj in datesArr) {
+//                        if ([date isEqual:obj]) {
+//                            hasExit=YES;
+//                        }
+//                    }
+//                    if (!hasExit) {
+//                        [datesArr addObject:date];
+//                    }
+//                }
+//            }
+//            _occupyDays=datesArr;
+            [self createCollectionView];
+//          }
+//        else
+//        {
+//            NSLog(@"%@",result);
+//        }
+      }
+    andFailBlock:^(id failResult){
+        NSLog(@"failResult:%@",failResult);
+    }];
+}
+
+#pragma mark --- 将2016-1-1格式转成2016-01－01
+-(NSString *)changStrToDateStr:(NSString *)string
+{
+    NSMutableArray *subArr=[NSMutableArray arrayWithArray:[string componentsSeparatedByString:@"-"]];
+    for (int i=0;i<subArr.count;i++) {
+        NSString *str=subArr[i];
+        if (str.length<2) {
+            NSString *newStr=[NSString stringWithFormat:@"0%@",str];
+            [subArr replaceObjectAtIndex:i withObject:newStr];
+        }
+    }
+    return [subArr componentsJoinedByString:@"-"];
 }
 
 #pragma mark - CollectionView 数据源

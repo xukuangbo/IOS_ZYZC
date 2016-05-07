@@ -60,7 +60,7 @@
     _playerBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _playerBtn.frame=CGRectMake(0, 0, 68, 68);
     _playerBtn.center=_soundBtn.center;
-    [_playerBtn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_pause"] forState:UIControlStateNormal];
+    [_playerBtn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
     [_playerBtn addTarget:self action:@selector(playerSound:) forControlEvents:UIControlEventTouchUpInside];
     _playerBtn.hidden=YES;
     [self addSubview:_playerBtn];
@@ -85,7 +85,7 @@
     _soundObj.soundPlayEnd=^()
     {
         //语音播放完成播放按钮切换成停止状态
-        [weakSelf.playerBtn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
+        [weakSelf.playerBtn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_pause"] forState:UIControlStateNormal];
         weakSelf.hasPlaySound=NO;
     };
     
@@ -156,12 +156,12 @@
 {
     if (!_hasPlaySound) {
         [_soundObj playSound];
-        [btn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_pause"] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
     }
     else
     {
         [_soundObj stopSound];
-        [btn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_pause"] forState:UIControlStateNormal];
     }
     _hasPlaySound=!_hasPlaySound;
 }

@@ -228,7 +228,6 @@
     table.contentOffset = contentOffset;
     table.keyboardOpen = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    
 }
 
 

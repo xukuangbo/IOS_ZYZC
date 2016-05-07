@@ -27,14 +27,21 @@
 -(void)configUI
 {
     _startLab=[self createLabWithFrame:CGRectMake(0, 0, (self.width-15)/2, self.height)];
-    _startLab.text=[ZYZCTool getLocalDate];
     [self addSubview:_startLab];
     _backLab=[self createLabWithFrame:CGRectMake((self.width+15)/2, 0, (self.width-15)/2, self.height)];
-     _backLab.text=[ZYZCTool getLocalDate];
     [self addSubview:_backLab];
     UILabel *centerLab=[self createLabWithFrame:CGRectMake(_startLab.right, 0, 15, self.height)];
     centerLab.text=@"~";
+    [self initViews];
     [self addSubview:centerLab];
+}
+
+-(void)initViews
+{
+    _startLab.text=[ZYZCTool getLocalDate];
+    _startLab.textColor=[UIColor ZYZC_TextGrayColor];
+    _backLab.text=[ZYZCTool getLocalDate];
+    _backLab.textColor=[UIColor ZYZC_TextGrayColor];
 }
 
 -(UILabel *)createLabWithFrame:(CGRect)frame
