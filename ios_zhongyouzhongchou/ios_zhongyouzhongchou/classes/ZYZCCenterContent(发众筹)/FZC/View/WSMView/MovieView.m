@@ -196,7 +196,7 @@
                 //赋值图片数据
                 self.movieImg.image=_preMovImg;
                 _turnImageView.hidden=NO;
-                //保存图片
+                //保存图片到本地
                 [self saveMovieImg];
                 
                 
@@ -245,16 +245,16 @@
                                        
                                        //将MP4文件和第一帧图片路径保存到单例中
                                        MoreFZCDataManager *dataManager=[MoreFZCDataManager sharedMoreFZCDataManager];
-                                       if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
+                                       if ([weakSelf.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
                                            dataManager.raiseMoney_movieUrl=outPutFileName;
                                            dataManager.raiseMoney_movieImg=weakSelf.movieImgFileName;
                                        }
-                                       else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
+                                       else if ([weakSelf.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
                                        {
                                             dataManager.return_movieUrl=outPutFileName;
                                            dataManager.return_movieImg=weakSelf.movieImgFileName;
                                        }
-                                       else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
+                                       else if ([weakSelf.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
                                        {
                                            dataManager.return_movieUrl01=outPutFileName;
                                            dataManager.return_movieImg01=weakSelf.movieImgFileName;

@@ -132,19 +132,23 @@
 }
 
 #pragma mark --- 删除临时文件
+
+
 -(void)cleanTmpFile
 {
-    NSString *tmpDir = NSTemporaryDirectory();
+    NSString *fileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
+    NSString *tmpDir=KMY_ZHONGCHOU_DOCUMENT_PATH(fileName);
     
     NSFileManager *manager=[NSFileManager defaultManager];
     
     NSArray *fileArr=[manager subpathsAtPath:tmpDir];
     
     for (NSString *fileName in fileArr) {
-        
         NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
-        
-        [manager removeItemAtPath:filePath error:nil];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^
+                       {
+                           [manager removeItemAtPath:filePath error:nil];
+                       });
     }
 }
 

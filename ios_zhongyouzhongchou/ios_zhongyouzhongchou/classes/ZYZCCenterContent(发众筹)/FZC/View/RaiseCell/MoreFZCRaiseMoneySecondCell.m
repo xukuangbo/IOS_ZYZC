@@ -56,6 +56,7 @@
     [self initDataToContentEntryView:_contentEntryView];
 }
 
+#pragma mark --- 加载初始化数据
 -(void)initDataToContentEntryView:(FZCContentEntryView *)contentEntryView
 {
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];

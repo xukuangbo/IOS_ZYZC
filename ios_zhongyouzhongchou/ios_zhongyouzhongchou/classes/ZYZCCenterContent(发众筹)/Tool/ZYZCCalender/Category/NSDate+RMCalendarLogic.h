@@ -44,4 +44,7 @@
 //通过数字返回星期几
 +(NSString *)getWeekStringFromInteger:(int)week;
 
+#pragma mark --- 获取两个日历间的所有日历
++ (NSArray *)getDatesBetweenDate:(NSDate *)startDate toDate:(NSDate *)endDate;
+
 @end

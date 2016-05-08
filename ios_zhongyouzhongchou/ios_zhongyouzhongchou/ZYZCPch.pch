@@ -103,6 +103,8 @@
 //获取国家-省份-城市信息
 #define GETCOUNTRYINFO    HTTPURL(@"user/getCountryInfo")
 
+#define GET_MY_OCCUPY_TIME  HTTPURL(@"list/listMyProductsTime")
+
 
 
 #endif /* ZYZCPch_pch */

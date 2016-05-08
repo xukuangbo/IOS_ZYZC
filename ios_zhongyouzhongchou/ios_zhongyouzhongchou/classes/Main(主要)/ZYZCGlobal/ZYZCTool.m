@@ -100,6 +100,9 @@
 {
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     NSString *userId=[user objectForKey:KUSER_ID];
+    if (!userId) {
+        userId=@"oulbuvtpzxiOe6t9hVBh2mNRgiaI";
+    }
     return userId;
 }
 

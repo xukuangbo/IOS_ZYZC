@@ -160,6 +160,18 @@
     return day;
 }
 
+#pragma mark --- 获取两个日历间的所有日历
++ (NSArray *)getDatesBetweenDate:(NSDate *)startDate toDate:(NSDate *)endDate
+{
+    NSMutableArray *dateArr=[NSMutableArray array];
+    
+    int days=[self getDayNumbertoDay:startDate beforDay:endDate];
+    for (int i=0; i<days; i++) {
+        NSDate *oneDate=[startDate dayInTheFollowingDay:i];
+        [dateArr addObject:oneDate];
+    }
+    return dateArr;
+}
 
 //周日是“1”，周一是“2”...
 - (int)getWeekIntValueWithDate
