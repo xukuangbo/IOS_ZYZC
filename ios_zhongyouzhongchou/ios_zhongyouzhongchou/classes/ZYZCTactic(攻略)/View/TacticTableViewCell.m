@@ -135,7 +135,6 @@
     if (button.tag == MoreVCTypeTypeVideo) {
         NSLog(@"我是更多视频");
         TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
-
         moreVC.moreArray = self.tacticModel.videos;
         [self.viewController.navigationController pushViewController:moreVC animated:YES];
     }else if (button.tag == MoreVCTypeTypeCountryView || button.tag == MoreVCTypeTypeCityView){

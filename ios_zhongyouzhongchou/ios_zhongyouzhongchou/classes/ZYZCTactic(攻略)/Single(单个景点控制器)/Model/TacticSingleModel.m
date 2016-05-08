@@ -21,7 +21,7 @@
 + (NSDictionary *)mj_objectClassInArray
 {
     return @{
-             @"mgViews" : [TacticVideoModel class],
+             @"mgViews" : [TacticSingleModel class],
              @"foods" : [TacticSingleFoodModel class]
              };
 }

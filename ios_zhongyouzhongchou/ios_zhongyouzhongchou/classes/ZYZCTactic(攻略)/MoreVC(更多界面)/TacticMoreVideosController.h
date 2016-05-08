@@ -7,8 +7,10 @@
 //
 
 #import "ZYZCBaseViewController.h"
-
+#import "TacticCustomMapView.h"
 @interface TacticMoreVideosController : ZYZCBaseViewController
 
 @property (nonatomic, strong) NSArray *moreArray;
+
+@property (nonatomic, assign) MoreVCType moreVCType;
 @end

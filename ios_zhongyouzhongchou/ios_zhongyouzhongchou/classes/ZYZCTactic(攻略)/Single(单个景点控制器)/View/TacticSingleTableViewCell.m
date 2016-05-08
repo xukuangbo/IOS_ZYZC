@@ -233,6 +233,7 @@
         NSLog(@"我是更多景点");
         TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
         moreVC.moreArray = self.tacticSingleModelFrame.tacticSingleModel.mgViews;
+//        moreVC.moreVCType = 
         [self.viewController.navigationController pushViewController:moreVC animated:YES];
     }else if (button.tag == MoreVCTypeTypeFood){
         NSLog(@"我是更多美食");

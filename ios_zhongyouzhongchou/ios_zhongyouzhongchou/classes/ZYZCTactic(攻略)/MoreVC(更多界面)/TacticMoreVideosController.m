@@ -15,7 +15,7 @@
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
 #define naviHeight 64
 @interface TacticMoreVideosController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
-@property (nonatomic, assign) PushVCType pushType;
+//@property (nonatomic, assign) PushVCType pushType;
 @end
 static NSString *const ID = @"MoreCollectioncell";
 @implementation TacticMoreVideosController
@@ -43,23 +43,6 @@ static NSString *const ID = @"MoreCollectioncell";
     [self.view addSubview:collectionView];
 }
 
-- (void)setMoreArray:(NSArray *)moreArray
-{
-    _moreArray = moreArray;
-    if (moreArray.count > 0) {
-        if ([moreArray[0] isKindOfClass:[TacticVideoModel class]]) {
-            //说明是更多视频
-            self.pushType = pushVCTypeVideo;
-        }else if ([moreArray[0] isKindOfClass:[TacticSingleFoodModel class]]){
-            //说明是更多食物
-            self.pushType = pushVCTypeFood;
-        }else{
-            //说明是更多景点
-            self.pushType = pushVCTypeSingleView;
-        }
-    }
-}
-
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -70,20 +53,32 @@ static NSString *const ID = @"MoreCollectioncell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TacticMoreCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
-    if (self.pushType == pushVCTypeVideo) {
-        TacticVideoModel *model = self.moreArray[indexPath.item];
+    if ([self.moreArray[indexPath.item] isKindOfClass:[TacticVideoModel class]]) {//视频
+         TacticVideoModel *model = self.moreArray[indexPath.item];
         cell.imageView.tacticVideoModel = model;
-    }else if (self.pushType == pushVCTypeFood){
-        TacticSingleFoodModel *model = self.moreArray[indexPath.item];
-        cell.imageView.tacticSingleFoodModel = model;
-    }else if (self.pushType == pushVCTypeSingleView){
+    }else if ([self.moreArray[indexPath.item] isKindOfClass:[TacticSingleModel class]]){
+        //判断是否国家城市一般景点
         TacticSingleModel *model = self.moreArray[indexPath.item];
+        if (model.viewType == 1) {
+            cell.imageView.pushType = threeMapViewTypeCountryView;
+        }else if (model.viewType == 2){
+            cell.imageView.pushType = threeMapViewTypeCityView;
+        }else if (model.viewType == 3){
+            cell.imageView.pushType = threeMapViewTypeSingleView;
+        }
         cell.imageView.tacticSingleModel = model;
+    }else if ([self.moreArray[indexPath.item] isKindOfClass:[TacticSingleFoodModel class]]){
+        TacticSingleFoodModel *model = self.moreArray[indexPath.item];
+        cell.imageView.pushType = threeMapViewTypeFood;
+        cell.imageView.tacticSingleFoodModel = model;
+    }else{
+        NSLog(@"mgviews种类不定");
     }
     
-    cell.pushVCType = self.pushType;
     return cell;
 }
+
+
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

@@ -9,15 +9,18 @@
 #import "TacticSingleFoodVC.h"
 #import "TacticSingleFoodModel.h"
 #import "TacticVideoModel.h"
-#import "TacticFoodPicCell.h"
-#import "TacticFoodTextCell.h"
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
-@interface TacticSingleFoodVC ()<UITableViewDelegate,UITableViewDataSource>
+
+#define imageViewHeight (KSCREEN_W / 16 * 9)
+
+#define labelViewFont [UIFont systemFontOfSize:16]
+
+@interface TacticSingleFoodVC ()<UIScrollViewDelegate>
 @property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, weak) UIImageView *mapView;
 @property (nonatomic, weak) UILabel *labelView;
-@property (nonatomic, weak) UITableView *tableView;
-
+@property (nonatomic, strong) NSMutableArray *imageArray;
+@property (nonatomic, weak) UIScrollView *scrollView;
 @end
 
 static NSString *textCellID = @"TacticFoodTextCell";
@@ -49,16 +52,51 @@ static NSString *picCellID = @"TacticFoodPicCell";
 - (void)setUpUI
 {
     /**
-     *  创建UITableView
+     *  创建Scrollview
      */
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49) style:UITableViewStylePlain];
-    tableView.backgroundColor = [UIColor clearColor];
-    tableView.bounces = YES;
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49)];
+    scrollView.backgroundColor = [UIColor clearColor];
+    scrollView.delegate = self;
+    [self.view addSubview:scrollView];
+    self.scrollView = scrollView;
+    /**
+     *  创建图片
+     */
+    CGFloat imageViewX = 0;
+    CGFloat imageViewY = 0;
+    CGFloat imageViewW = KSCREEN_W;
+    CGFloat imageViewH = imageViewHeight;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH)];
+    [scrollView addSubview:imageView];
+    imageView.backgroundColor = [UIColor redColor];
+    self.imageView = imageView;
     
+    /**
+     创建白色背景
+     */
+    UIImageView *mapView = [[UIImageView alloc] init];
+    mapView.userInteractionEnabled = YES;
+    [self.scrollView addSubview:mapView];
+    self.mapView = mapView;
+    /**
+     *  创建文字
+     */
+    UILabel *labelView = [[UILabel alloc] init];
+    labelView.layer.cornerRadius = 5;
+    labelView.layer.masksToBounds = YES;
+    labelView.font = [UIFont systemFontOfSize:16];
+    labelView.backgroundColor = [UIColor whiteColor];
+    labelView.textColor = [UIColor ZYZC_TextGrayColor];
+    labelView.numberOfLines = 0;
+    [mapView addSubview:labelView];
+    self.labelView = labelView;
+    
+    //创造3个imageView的数组
+    self.imageArray = [NSMutableArray array];
+    for (int i = 0; i < 3; i++) {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        [self.imageArray addObject:imageView];
+    }
 }
 
 - (void)setTacticSingleFoodModel:(TacticSingleFoodModel *)tacticSingleFoodModel
@@ -68,29 +106,28 @@ static NSString *picCellID = @"TacticFoodPicCell";
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     //肯定有图片
     CGFloat mapViewX = KEDGE_DISTANCE;
-    CGFloat mapViewY = self.imageView.height + KEDGE_DISTANCE;
+    CGFloat mapViewY = imageViewHeight + KEDGE_DISTANCE;
     CGFloat mapViewW = KSCREEN_W - mapViewX * 2;
     //先计算文字高度
     CGFloat labelViewX = KEDGE_DISTANCE;
-    CGFloat labelViewY = 44;
+    CGFloat labelViewY = KEDGE_DISTANCE;
     CGFloat labelViewW = mapViewW - KEDGE_DISTANCE * 2;
     CGFloat labelViewH = 0;
-    if (tacticSingleFoodModel.foodText) {
-        CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticSingleFoodModel.foodText andFont:labelViewFont andMaxWidth:labelViewW];
-        labelViewH = textSize.height;
-    }else{
-        labelViewH = 0;
-    }
+    CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticSingleFoodModel.foodText andFont:labelViewFont andMaxWidth:labelViewW];
+    labelViewH = textSize.height;
     
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.foodImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     
     self.labelView.text = tacticSingleFoodModel.foodText;
     self.labelView.frame = CGRectMake(labelViewX, labelViewY, labelViewW, labelViewH);
     
-    CGFloat mapViewH = labelViewH + 44 + KEDGE_DISTANCE * 2;
+    CGFloat mapViewH = labelViewH + KEDGE_DISTANCE * 2;
+    
     self.mapView.frame = CGRectMake(mapViewX, mapViewY, mapViewW, mapViewH);
     self.mapView.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     
+    
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, self.mapView.height + KEDGE_DISTANCE * 2 + imageViewHeight);
 }
 
 
@@ -98,52 +135,50 @@ static NSString *picCellID = @"TacticFoodPicCell";
 {
     _tacticVideoModel = tacticVideoModel;
     
-    if (tacticVideoModel.viewImg){
-        
-    }
-}
-
-#pragma mark - UITableViewDelegate
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 3;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        TacticFoodPicCell *cell = [tableView dequeueReusableCellWithIdentifier:picCellID];
-        if (!cell) {
-            cell = [[TacticFoodPicCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:picCellID];
-            
+    SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
+    //肯定有图片
+    CGFloat mapViewX = KEDGE_DISTANCE;
+    CGFloat mapViewY = imageViewHeight + KEDGE_DISTANCE;
+    CGFloat mapViewW = KSCREEN_W - mapViewX * 2;
+    //先计算文字高度
+    CGFloat labelViewX = KEDGE_DISTANCE + 2;
+    CGFloat labelViewY = KEDGE_DISTANCE;
+    CGFloat labelViewW = mapViewW - labelViewX * 2;
+    CGFloat labelViewH = 0;
+    CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticVideoModel.viewText andFont:labelViewFont andMaxWidth:labelViewW];
+    labelViewH = textSize.height;
+    
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    
+    self.labelView.text = tacticVideoModel.viewText;
+    self.labelView.frame = CGRectMake(labelViewX, labelViewY, labelViewW, labelViewH);
+    
+    CGFloat mapViewH = labelViewH + KEDGE_DISTANCE * 2;
+    
+    if (tacticVideoModel.pics) {
+        NSArray *detailImageArray = [tacticVideoModel.pics componentsSeparatedByString:@","];
+        for (int i = 0; i < detailImageArray.count; i++) {
+            CGFloat imageX = KEDGE_DISTANCE;
+            CGFloat imageW = mapViewW - imageX * 2;
+            CGFloat imageH = imageW / 16 * 9;
+            CGFloat imageY = CGRectGetMaxY(self.labelView.frame) + i * imageH;
+            UIImageView *imageView = self.imageArray[i];
+            [self.mapView addSubview:imageView];
+            imageView.backgroundColor = [UIColor redColor];
+            imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
+            [imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(detailImageArray[i])] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+            mapViewH = mapViewH + imageH;
         }
-        
-        
-        
-        return cell;
-    }else if(indexPath.row == 1) {
-        TacticFoodTextCell *cell = [tableView dequeueReusableCellWithIdentifier:textCellID];
-        if (!cell) {
-            cell = [[TacticFoodTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:textCellID];
-        }
-        
-        
-        return cell;
-    }else{
-        TacticFoodPicCell *cell = [tableView dequeueReusableCellWithIdentifier:picCellID];
-        if (!cell) {
-            cell = [[TacticFoodPicCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:picCellID];
-        }
-        return cell;
     }
     
+    self.mapView.frame = CGRectMake(mapViewX, mapViewY, mapViewW, mapViewH);
+    self.mapView.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
+    
+    
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, self.mapView.height + KEDGE_DISTANCE * 2 + imageViewHeight);
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 200;
-}
 
 #pragma mark - UISrollViewDelegate
 /**

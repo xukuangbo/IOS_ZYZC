@@ -11,6 +11,9 @@
 #import "TacticVideoModel.h"
 #import "TacticSingleFoodModel.h"
 #import "TacticSingleModel.h"
+#import "ZYZCPlayViewController.h"
+#import "TacticSingleViewController.h"
+#import "TacticSingleFoodVC.h"
 
 @interface TacticImageView ()
 
@@ -78,15 +81,34 @@
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.foodImg)] forState:UIControlStateNormal];
 }
 
-
-
 //这里写个跳转到单个景点
 - (void)clickAction:(UIButton *)button
 {
-    
-    if ([self.delegate respondsToSelector:@selector(TacticImageViewPushActionWithvideoModel:tacticSingleFoodModel:tacticSingleModel:)]) {
-        [self.delegate TacticImageViewPushActionWithvideoModel:self.tacticVideoModel tacticSingleFoodModel:self.tacticSingleFoodModel tacticSingleModel:self.tacticSingleModel];
+    if (self.pushType == threeMapViewTypeVideo) {
+        //说明是播放器
+        ZYZCPlayViewController *playVC = [[ZYZCPlayViewController alloc] init];
+        playVC.urlString = self.tacticVideoModel.videoUrl;
+        
+        [self.viewController presentViewController:playVC animated:YES completion:nil];
+    }else if(self.pushType == threeMapViewTypeCountryView || self.pushType == threeMapViewTypeCityView) {
+        //说明是国家或者城市
+        TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:self.tacticVideoModel.viewid];
+        [self.viewController.navigationController pushViewController:singleVC animated:YES];
+    }else if(self.pushType == threeMapViewTypeSingleView) {
+        //说明是一般景点
+        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
+        
+        foodVC.tacticVideoModel = self.tacticVideoModel;
+        [self.viewController.navigationController pushViewController:foodVC animated:YES];
+    }else if (self.pushType == threeMapViewTypeFood){
+        //说明是食物
+        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
+        
+        foodVC.tacticSingleFoodModel = self.tacticSingleFoodModel;
+        [self.viewController.navigationController pushViewController:foodVC animated:YES];
     }
  
 }
+
+
 @end
