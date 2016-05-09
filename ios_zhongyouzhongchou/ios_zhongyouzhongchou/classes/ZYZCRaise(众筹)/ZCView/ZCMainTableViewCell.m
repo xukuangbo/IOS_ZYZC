@@ -7,6 +7,7 @@
 //
 
 #import "ZCMainTableViewCell.h"
+#import "UIImageView+WebCache.h"
 @interface ZCMainTableViewCell ()
 @property(nonatomic,weak)IBOutlet UIView  *lineView;
 @property(nonatomic,strong)  UILabel      *distanceLab;
@@ -99,12 +100,25 @@
     [_infoView addSubview:_specialtyView];
 }
 
--(void)setMainModel:(ZCMainModel *)mainModel
+-(void)setOneModel:(ZCOneModel *)oneModel
 {
+    _oneModel=oneModel;
     _lineView.hidden=YES;
-    _mainModel=mainModel;
+    [_sceneryImg sd_setImageWithURL:[NSURL URLWithString:oneModel.product.headImage]  placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
+    _sceneryImg.contentMode=UIViewContentModeScaleToFill;
     //计算目的地的文字长度
-    NSString *place=@"普吉岛大大好";
+    NSMutableString *place=[NSMutableString string];
+    NSArray *dest=[ZYZCTool turnJsonStrToArray:oneModel.product.productDest];
+    NSInteger destNumber=dest.count;
+    for (NSInteger i=0; i<destNumber;i++) {
+        if (i==0) {
+            [place appendString:dest[i]];
+        }
+        else
+        {
+            [place appendString:[NSString stringWithFormat:@"—%@",dest[i]]];
+        }
+    }
     CGFloat placeStrWidth=[ZYZCTool calculateStrLengthByText:place andFont:_placeLab.font andMaxWidth:KSCREEN_W].width;
     //改变目的地展示标签的长度
     _placeLab.width=placeStrWidth;
@@ -113,7 +127,7 @@
     _placeBgImg.width=placeStrWidth+40;
     
     //计算名字的文字长度
-    NSString *name=@"杨大大";
+    NSString *name=oneModel.user.userName;
     CGFloat nameStrWidth=[ZYZCTool calculateStrLengthByText:name andFont:_nameLab.font andMaxWidth:KSCREEN_W].width;
     CGFloat width=KSCREEN_W-250;
     CGFloat edgToName=nameStrWidth;
@@ -126,10 +140,19 @@
     _nameLab.frame=CGRectMake(0, 22, nameStrWidth, 20);
     //改变性别展示图的frame
     _sexImg.frame=CGRectMake(edgToName, 22, 20, 20);
+    if ([oneModel.user.sex isEqualToString:@"1"]) {
+        _sexImg.image=[UIImage imageNamed:@"btn_sex_mal"];
+    }
+    else if ([oneModel.user.sex isEqualToString:@"2"])
+    {
+       _sexImg.image=[UIImage imageNamed:@"btn_sex_fem"];
+    }
     //改变VIP展示图的frame
     _vipImg.frame=CGRectMake(edgToName+22, 23, 18, 18);
+    _vipImg.hidden=YES;
     //距离标签
     _distanceLab.text=@"距离1.2km";
+    _distanceLab.hidden=YES;
     //职位标签
     _careerLab.text=@"建筑师";
     //个人基本信息
@@ -220,5 +243,6 @@
 
     // Configure the view for the selected state
 }
+
 
 @end

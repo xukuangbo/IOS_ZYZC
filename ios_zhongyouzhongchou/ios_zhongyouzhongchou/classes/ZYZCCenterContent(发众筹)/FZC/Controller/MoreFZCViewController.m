@@ -27,11 +27,12 @@
 #define ALERT_PUBLISH_TAG 3
 
 @interface MoreFZCViewController ()<MoreFZCToolBarDelegate,UIAlertViewDelegate>
-@property (nonatomic, strong) NSString *oneResouceFile;
-@property (nonatomic, strong) NSString *archiveDataPath;
+@property (nonatomic, copy  ) NSString *oneResouceFile;
+@property (nonatomic, copy  ) NSString *archiveDataPath;
 @property (nonatomic, assign) BOOL isFirstTimeToSave;
 @property (nonatomic, assign) BOOL needPopVC;
 @property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, copy  ) NSString *myZhouChouMarkName;
 @property (nonatomic, strong) NSMutableArray *uploadDataState;
 @property (nonatomic, assign) NSInteger uploadDataNumber;
 @property (nonatomic, assign) BOOL hasPulish;
@@ -53,7 +54,7 @@
     [self createToolBar];
     [self createClearMapView];
     [self createBottomView];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reciveNotify:) name:@"uploadData" object:nil];
+//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reciveNotify:) name:@"uploadData" object:nil];
 }
 /**
  *  创建空白容器，并创建4个tableview
@@ -201,8 +202,9 @@
         //保存数据
         if (buttonIndex ==1)
         {
+            [self cleanTmpFile];
             _needPopVC=YES;
-            [self saveData];
+//            [self saveData];
         }
         //不保存
         else
@@ -219,8 +221,15 @@
     //数据上传到oss失败，提示重新上传
     else if (alertView.tag ==ALERT_UPLOAD_TAG)
     {
+        //点击确定，重新上传数据到oss
         if (buttonIndex ==1) {
             [self uploadDataToOSS];
+        }
+        //点击取消，删除oss上已上传的数据
+        else if (buttonIndex ==0)
+        {
+            ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+            [ossManager deleteObjectsByPrefix:[NSString stringWithFormat:@"%@/%@",[ZYZCTool getUserId],_myZhouChouMarkName]];
         }
     }
     //发布请求失败，提示重新发布
@@ -322,6 +331,7 @@
 {
     if (_hasUpload) {
         [self publishMyZhongchou];
+        return;
     }
     if (_hasPulish) {
         [MBProgressHUD showSuccess:@"您已发布成功!"];
@@ -333,96 +343,72 @@
     if (_uploadDataState.count) {
         [_uploadDataState removeAllObjects];
     }
-    
-    [self saveModelInManager];
 //    //上传数据到oss
     NSFileManager *fileManager=[NSFileManager defaultManager];
     NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
     NSString *tmpFile=KMY_ZHONGCHOU_DOCUMENT_PATH(tmpFileName);
     NSArray *tmpFileArr=[fileManager subpathsAtPath:tmpFile];
     _uploadDataNumber=tmpFileArr.count;
-    
-//    NSMutableArray *uploadSuccessArr=[NSMutableArray array];
+    _myZhouChouMarkName=[ZYZCTool getLocalTime];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^
+    {
         for (int i=0; i<tmpFileArr.count; i++) {
+            __weak typeof (&*self )weakSelf=self;
+            //文件上传到oss中已openId为文件名下的以_myZhouChouMarkName为文件名下
             ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-            [ossManager uploadObjectAsyncByFileName:tmpFileArr[i] andFilePath:[tmpFile stringByAppendingPathComponent:tmpFileArr[i]] withSuccessUpload:^
+            [ossManager uploadObjectAsyncByFileName:[NSString stringWithFormat:@"%@/%@",weakSelf.myZhouChouMarkName,tmpFileArr[i]] andFilePath:[tmpFile stringByAppendingPathComponent:tmpFileArr[i]] withSuccessUpload:^
              {
-                  [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadData" object:nil userInfo:@{@"upload":@"success"}];
-
+                 [weakSelf.uploadDataState addObject:[NSNumber numberWithBool:YES]];
+                 [weakSelf reciveUploadResult];
              }
-              andFailUpload:^
+                                      andFailUpload:^
              {
-                  [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadData" object:nil userInfo:@{@"upload":@"fail"}];
+                 [weakSelf.uploadDataState addObject:[NSNumber numberWithBool:NO]];
+                 [weakSelf reciveUploadResult];
              }];
         }
-    
-//    for (NSString *fileName in tmpFileArr) {
-//        ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-//        
-//       BOOL uploadSuccess=[ossManager uploadObjectSyncByFileName:fileName andFilePath:[tmpFile stringByAppendingPathComponent:fileName]];
-//        
-//        [uploadSuccessArr addObject:[NSNumber numberWithBool:uploadSuccess]];
-//    }
-//
-//    for (NSNumber *obj in uploadSuccessArr) {
-//        if (![obj boolValue]) {
-//            //提示发布失败
-//            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//            alert.tag=ALERT_UPLOAD_TAG;
-//            [alert show];
-//            return;
-//        }
-//    }
-//    //上传数据成功，开始发布
-//    [self publishMyZhongchou];
+    });
 }
 
--(void)reciveNotify:(NSNotification *)notify
+#pragma mark --- 每个文件上传到oss后的结果
+-(void)reciveUploadResult
 {
-    NSLog(@"_uploadDataNumber:%ld",_uploadDataNumber);
-    
-    NSDictionary *notifyDic = notify.userInfo;
-    NSLog(@"notifyDic:%@",notifyDic);
-    if ([notifyDic[@"upload"] isEqualToString:@"success"]) {
-        [_uploadDataState addObject:@1] ;
-    }
-    if ([notifyDic[@"upload"] isEqualToString:@"fail"]) {
-        [_uploadDataState addObject:@0];
-    }
-    
-    
-    if (_uploadDataState.count==_uploadDataNumber) {
-        BOOL upDatasSuccess=YES;
-        for (int i=0; i<_uploadDataState.count; i++) {
-            if (![_uploadDataState[i] boolValue]) {
-                upDatasSuccess=NO;
+    BOOL hasAlert=NO;
+    //如果有一个数据上传失败，则表示数据上传失败
+    if (_uploadDataState.count) {
+        for (NSNumber *obj in _uploadDataState) {
+            if (![obj boolValue]) {
+                [MBProgressHUD hideHUD];
+                if (!hasAlert) {
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                    alert.tag=ALERT_UPLOAD_TAG;
+                    [alert show];
+                    hasAlert=YES;
+                }
+                return;
             }
         }
-        
-        if (upDatasSuccess) {
-            _hasUpload=YES;
-            [self publishMyZhongchou];
-        }
-        else
-        {
-            [MBProgressHUD hideHUD];
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-                alert.tag=ALERT_UPLOAD_TAG;
-                [alert show];
-        }
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"uploadData" object:nil];
     }
+    //如果_uploadDataState中的结果数与上传文件数相同，说明文件都进行了上传并且上传成功
+    if (_uploadDataState.count==_uploadDataNumber) {
+        _hasUpload=YES;
+        [self publishMyZhongchou];
+    }
+    
 }
 
+#pragma mark --- 发布我的众筹
 -(void)publishMyZhongchou
 {
+    //将oss的链接保存到manager中
     [self changeManagerFileName];
+    
     //将数据转化成上传数据对应的类型
     FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
     [replaceKeys replaceDataKeys];
     // 模型转字典
     NSDictionary *dataDict = replaceKeys.mj_keyValues;
+    NSLog(@"%@",dataDict);
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:dataDict];
     [newParameters addEntriesFromDictionary:@{@"productCountryId":@1}];
     [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:dataDict andSuccessGetBlock:^(id result, BOOL isSuccess) {
@@ -431,12 +417,16 @@
             [self cleanTmpFile];
             [MBProgressHUD hideHUD];
             [MBProgressHUD showSuccess:@"发布成功!"];
+            [self.navigationController popViewControllerAnimated:YES];
+            MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+            [manager initAllProperties];
+            [self cleanTmpFile];
             _hasPulish=YES;
         }
         else
         {
             [MBProgressHUD hideHUD];
-            [MBProgressHUD showError:@"数据丢失，请检查数据"];
+            [MBProgressHUD showError:@"数据丢失，发布失败"];
         }
     } andFailBlock:^(id failResult) {
         [MBProgressHUD hideHUD];
@@ -479,7 +469,7 @@
        subFileName=[fileName substringFromIndex:(strRange.location+strRange.length+1)];
     }
     if (subFileName) {
-        return [NSString stringWithFormat:@"%@/%@/%@",KHTTP_FILE_HEAD,[ZYZCTool getUserId],subFileName];
+        return [NSString stringWithFormat:@"%@/%@/%@/%@",KHTTP_FILE_HEAD,[ZYZCTool getUserId],_myZhouChouMarkName,subFileName];
     }
     else
     {
@@ -508,24 +498,7 @@
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     __weak typeof (&*self)weakSelf=self;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        //将图片，语音，视屏文件从tmp中移动到documents中
-//        manager.goal_travelThemeImgUrl=[weakSelf copyTmpFileToDocument:manager.goal_travelThemeImgUrl ];
-//        manager.raiseMoney_voiceUrl=[weakSelf copyTmpFileToDocument:manager.raiseMoney_voiceUrl ];
-//        manager.raiseMoney_movieUrl=[weakSelf copyTmpFileToDocument:manager.raiseMoney_movieUrl ];
-//        manager.raiseMoney_movieImg=[weakSelf copyTmpFileToDocument:manager.raiseMoney_movieImg ];
-//        for (int i=0; i<manager.travelDetailDays.count; i++) {
-//            MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
-//            model.voiceUrl=[weakSelf copyTmpFileToDocument:model.voiceUrl ];
-//            model.movieUrl=[weakSelf copyTmpFileToDocument:model.movieUrl ];
-//            model.movieImg=[weakSelf copyTmpFileToDocument:model.movieImg ];
-//            [manager.travelDetailDays replaceObjectAtIndex:i withObject:model];
-//        }
-//        manager.return_voiceUrl=[weakSelf copyTmpFileToDocument:manager.return_voiceUrl ];
-//        manager.return_movieUrl=[weakSelf copyTmpFileToDocument:manager.return_movieUrl ];
-//        manager.return_movieImg=[weakSelf copyTmpFileToDocument:manager.return_movieImg ];
-//        manager.return_voiceUrl01=[weakSelf copyTmpFileToDocument:manager.return_voiceUrl01 ];
-//        manager.return_movieUrl01=[weakSelf copyTmpFileToDocument:manager.return_movieUrl01 ];
-//        manager.return_movieImg01=[weakSelf copyTmpFileToDocument:manager.return_movieImg01 ];
+      
         dispatch_async(dispatch_get_main_queue(), ^{
             //将数据转化成上传数据对应的类型
             FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];

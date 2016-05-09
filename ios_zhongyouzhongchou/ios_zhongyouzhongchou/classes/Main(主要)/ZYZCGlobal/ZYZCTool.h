@@ -55,4 +55,7 @@
  */
 +(NSString *)getUserId;
 
++(NSArray *)turnJsonStrToArray:(NSString *)jsonStr;
+
+
 @end

@@ -96,14 +96,25 @@
 }
 
 #pragma mark --- 获取用户Id
-+(NSString *)getUserId
++ (NSString *)getUserId
 {
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     NSString *userId=[user objectForKey:KUSER_ID];
-    if (!userId) {
-        userId=@"oulbuvtpzxiOe6t9hVBh2mNRgiaI";
-    }
+//    if (!userId) {
+//        userId=@"oulbuvtpzxiOe6t9hVBh2mNRgiaI";
+//    }
     return userId;
+}
+
+#pragma mark --- 将jsonStr转nsarray
++ (NSArray *)turnJsonStrToArray:(NSString *)jsonStr
+{
+    NSError  *error=nil;
+    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSArray *array = (NSArray *)[NSJSONSerialization JSONObjectWithData:
+                                jsonData options:NSJSONReadingAllowFragments
+                                error:&error];
+    return array;
 }
 
 

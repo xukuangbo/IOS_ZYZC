@@ -186,6 +186,7 @@ OSSClient * client;
         }
         return nil;
     }];
+    [putTask waitUntilFinished];
 }
 
 #pragma mark --- 异步下载数据
