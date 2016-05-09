@@ -24,5 +24,4 @@
 
 @property (nonatomic, assign) NSInteger viewType;
 
-//@property (nonatomic, weak) id<TacticImageViewDelegate> delegate;
 @end

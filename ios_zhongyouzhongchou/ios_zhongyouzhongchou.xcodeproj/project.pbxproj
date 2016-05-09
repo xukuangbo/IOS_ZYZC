@@ -35,7 +35,6 @@
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
 		0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */; };
 		0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */; };
-		0490D1561CC9B4310064844C /* UIView+TacticMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1551CC9B4310064844C /* UIView+TacticMapView.m */; };
 		0490D1591CC9BFB60064844C /* TacticSingleModelFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1581CC9BFB60064844C /* TacticSingleModelFrame.m */; };
 		0490D15C1CC9FAA80064844C /* TacticSingleHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D15B1CC9FAA80064844C /* TacticSingleHeadView.m */; };
 		0490D15F1CCB6A3E0064844C /* TacticCustomMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D15E1CCB6A3E0064844C /* TacticCustomMapView.m */; };
@@ -255,8 +254,6 @@
 		0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleFoodModel.m; sourceTree = "<group>"; };
 		0490D1511CC92BF40064844C /* TacticSingleTipsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleTipsModel.h; sourceTree = "<group>"; };
 		0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleTipsModel.m; sourceTree = "<group>"; };
-		0490D1541CC9B4310064844C /* UIView+TacticMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TacticMapView.h"; sourceTree = "<group>"; };
-		0490D1551CC9B4310064844C /* UIView+TacticMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TacticMapView.m"; sourceTree = "<group>"; };
 		0490D1571CC9BFB60064844C /* TacticSingleModelFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleModelFrame.h; sourceTree = "<group>"; };
 		0490D1581CC9BFB60064844C /* TacticSingleModelFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticSingleModelFrame.m; sourceTree = "<group>"; };
 		0490D15A1CC9FAA80064844C /* TacticSingleHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleHeadView.h; sourceTree = "<group>"; };
@@ -789,8 +786,6 @@
 				04A99BDE1CBF848C00C6F5F0 /* UIView+ViewController.m */,
 				04A99BDF1CBF848C00C6F5F0 /* UIView+ZYZCLineView.h */,
 				04A99BE01CBF848C00C6F5F0 /* UIView+ZYZCLineView.m */,
-				0490D1541CC9B4310064844C /* UIView+TacticMapView.h */,
-				0490D1551CC9B4310064844C /* UIView+TacticMapView.m */,
 				04A99BE11CBF848C00C6F5F0 /* UIViewExt.h */,
 				04A99BE21CBF848C00C6F5F0 /* UIViewExt.m */,
 				04A99BE31CBF848C00C6F5F0 /* ZYZCDefine.h */,
@@ -1857,7 +1852,6 @@
 				04A99CA21CBF848D00C6F5F0 /* GoalPeoplePickerView.m in Sources */,
 				04FCCAAC1CDC454C00540B28 /* TacticMoreVideosController.m in Sources */,
 				04A99C9A1CBF848D00C6F5F0 /* ChooseSiteImgController.m in Sources */,
-				0490D1561CC9B4310064844C /* UIView+TacticMapView.m in Sources */,
 				2C8288341CD886DE004873B6 /* NecessoryAlertManager.m in Sources */,
 				04A99CB81CBF848D00C6F5F0 /* AddSceneView.m in Sources */,
 			);

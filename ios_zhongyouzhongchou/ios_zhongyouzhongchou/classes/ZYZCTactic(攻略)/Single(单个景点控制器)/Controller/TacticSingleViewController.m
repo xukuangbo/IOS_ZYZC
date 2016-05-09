@@ -12,7 +12,6 @@
 #import "TacticSingleTipsModel.h"
 #import "TacticSingleTableViewCell.h"
 #import "TacticSingleHeadView.h"
-//#import "UIView+TacticMapView.h"
 #import "TacticCustomMapView.h"
 
 #import "TacticSingleModelFrame.h"
@@ -57,13 +56,6 @@
     
 }
 
-- (void)setViewId:(NSInteger)viewId
-{
-    if (_viewId != viewId) {
-        _viewId = viewId;
-        
-    }
-}
 
 - (TacticSingleModelFrame *)tacticSingleModelFrame
 {
@@ -89,9 +81,7 @@
 //    [self.tableView reloadData];
 //    
 //    return ;
-//    http://www.sosona.com:8080/viewSpot/getVideoViewList.action
-//    http://localhost:8080/viewSpot/getViewSpot.action?viewId=13
-    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=213",(long)viewId];
+    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
 //    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getVideoViewList.action"];
     //访问网络
     
@@ -131,6 +121,11 @@
     tableView.dataSource = self;
     [self.view addSubview:tableView];
     self.tableView = tableView;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self scrollViewDidScroll:self.tableView];
 }
 
 #pragma mark - UITableDataSource
