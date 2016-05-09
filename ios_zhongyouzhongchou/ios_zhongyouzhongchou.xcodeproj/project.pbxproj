@@ -150,6 +150,7 @@
 		04FCCAA81CDB249C00540B28 /* TacticFoodTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAA61CDB249C00540B28 /* TacticFoodTextCell.m */; };
 		04FCCAAC1CDC454C00540B28 /* TacticMoreVideosController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAAB1CDC454C00540B28 /* TacticMoreVideosController.m */; };
 		04FCCAAF1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FCCAAE1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m */; };
+		2C0A0A641CDF1293007A8B70 /* ZCListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0A0A631CDF1293007A8B70 /* ZCListModel.m */; };
 		2C2C2A281CCE395E0068A883 /* ZCDetailReturnCusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */; };
 		2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */; };
 		2C4615AA1CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */; };
@@ -168,6 +169,7 @@
 		2C901DD61C89788C004B844B /* ios_zhongyouzhongchouTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DD51C89788C004B844B /* ios_zhongyouzhongchouTests.m */; };
 		2C901DE11C89788C004B844B /* ios_zhongyouzhongchouUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DE01C89788C004B844B /* ios_zhongyouzhongchouUITests.m */; };
 		2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */; };
+		2CAF7BB41CE02B6600CB0885 /* ZCOneProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF7BB31CE02B6600CB0885 /* ZCOneProductCell.m */; };
 		2CC2D1211CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D1201CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.m */; };
 		2CCB4DDD1CD1D86300ABA1DB /* FZCReplaceDataKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB4DDC1CD1D86300ABA1DB /* FZCReplaceDataKeys.m */; };
 		2CCB52ED1CC70F1800F99CD3 /* ZCDetailTableHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB52EC1CC70F1800F99CD3 /* ZCDetailTableHeadView.m */; };
@@ -484,6 +486,8 @@
 		04FCCAAB1CDC454C00540B28 /* TacticMoreVideosController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMoreVideosController.m; sourceTree = "<group>"; };
 		04FCCAAD1CDC45AD00540B28 /* TacticMoreCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticMoreCollectionViewCell.h; sourceTree = "<group>"; };
 		04FCCAAE1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMoreCollectionViewCell.m; sourceTree = "<group>"; };
+		2C0A0A621CDF1293007A8B70 /* ZCListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCListModel.h; sourceTree = "<group>"; };
+		2C0A0A631CDF1293007A8B70 /* ZCListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCListModel.m; sourceTree = "<group>"; };
 		2C2C2A261CCE395E0068A883 /* ZCDetailReturnCusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailReturnCusView.h; sourceTree = "<group>"; };
 		2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnCusView.m; sourceTree = "<group>"; };
 		2C2DEF131CCB4D3100111459 /* ZCDetailArrangeFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailArrangeFirstCell.h; sourceTree = "<group>"; };
@@ -521,6 +525,8 @@
 		2C901DEE1C89809A004B844B /* ZYZCPch.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZYZCPch.pch; sourceTree = "<group>"; };
 		2CAAB26C1CC23FD6006D4827 /* ZYZCTool+getLocalTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZYZCTool+getLocalTime.h"; sourceTree = "<group>"; };
 		2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZYZCTool+getLocalTime.m"; sourceTree = "<group>"; };
+		2CAF7BB21CE02B6600CB0885 /* ZCOneProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCOneProductCell.h; sourceTree = "<group>"; };
+		2CAF7BB31CE02B6600CB0885 /* ZCOneProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCOneProductCell.m; sourceTree = "<group>"; };
 		2CC2D11F1CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailIntroFirstCellVoiceShowView.h; sourceTree = "<group>"; };
 		2CC2D1201CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailIntroFirstCellVoiceShowView.m; sourceTree = "<group>"; };
 		2CCB4DDB1CD1D86300ABA1DB /* FZCReplaceDataKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZCReplaceDataKeys.h; sourceTree = "<group>"; };
@@ -1116,6 +1122,8 @@
 		04A99C751CBF848D00C6F5F0 /* ZCModel */ = {
 			isa = PBXGroup;
 			children = (
+				2C0A0A621CDF1293007A8B70 /* ZCListModel.h */,
+				2C0A0A631CDF1293007A8B70 /* ZCListModel.m */,
 				04A99C761CBF848D00C6F5F0 /* ZCDetailInfoModel.h */,
 				04A99C771CBF848D00C6F5F0 /* ZCDetailInfoModel.m */,
 				04A99C781CBF848D00C6F5F0 /* ZCFilterModel.h */,
@@ -1143,6 +1151,8 @@
 				04A99C7F1CBF848D00C6F5F0 /* ZCMainTableViewCell.h */,
 				04A99C801CBF848D00C6F5F0 /* ZCMainTableViewCell.m */,
 				04A99C811CBF848D00C6F5F0 /* ZCMainTableViewCell.xib */,
+				2CAF7BB21CE02B6600CB0885 /* ZCOneProductCell.h */,
+				2CAF7BB31CE02B6600CB0885 /* ZCOneProductCell.m */,
 				2C4EEFC21CC6316900AA99F6 /* ZCDetailFirstCell.h */,
 				2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */,
 				2CCB52EB1CC70F1800F99CD3 /* ZCDetailTableHeadView.h */,
@@ -1781,6 +1791,7 @@
 				04A99CA91CBF848D00C6F5F0 /* MoreFZCReturnTableView.m in Sources */,
 				04A99CA61CBF848D00C6F5F0 /* MoreFZCBaseTableViewCell.m in Sources */,
 				2CD4B4491CCDAA2B006A7CE8 /* ZCDetailReturnSecondCell.m in Sources */,
+				2C0A0A641CDF1293007A8B70 /* ZCListModel.m in Sources */,
 				04A99D2A1CC0926400C6F5F0 /* ZYZCAccountTool.m in Sources */,
 				04A99C8D1CBF848D00C6F5F0 /* UIColor+ZYZCColors.m in Sources */,
 				04A99C991CBF848D00C6F5F0 /* ChooseSceneImgController.m in Sources */,
@@ -1840,6 +1851,7 @@
 				04A99D211CC07E1800C6F5F0 /* SendMessageToWXReq+requestWithTextOrMediaMessage.m in Sources */,
 				04A99CD11CBF848D00C6F5F0 /* ZCFilterModel.m in Sources */,
 				04A99C971CBF848D00C6F5F0 /* ZYZCNavigationController.m in Sources */,
+				2CAF7BB41CE02B6600CB0885 /* ZCOneProductCell.m in Sources */,
 				04A99CF31CBF851500C6F5F0 /* RMCollectionCell.m in Sources */,
 				04A99CBE1CBF848D00C6F5F0 /* WordEditViewController.m in Sources */,
 				04A99CCF1CBF848D00C6F5F0 /* MineHeadView.m in Sources */,

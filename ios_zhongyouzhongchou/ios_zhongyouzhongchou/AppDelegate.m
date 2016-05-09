@@ -37,7 +37,7 @@
     //更改appBadge
     [self changeAppBadge];
     //首次进入app获取地名库
-    [self saveLocalDesct];
+//    [self saveLocalDesct];
     
     NSFileManager *fileManager=[NSFileManager defaultManager];
     NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];

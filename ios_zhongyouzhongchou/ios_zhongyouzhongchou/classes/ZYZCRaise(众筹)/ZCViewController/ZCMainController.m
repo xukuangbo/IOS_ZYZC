@@ -6,24 +6,36 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
+#define GET_ALL_LIST(pageNo) [NSString stringWithFormat:@"cache=false&orderType=1&pageNo=%d&pageSize=10",pageNo]
+
 #import "ZCMainController.h"
 #import "ZCMainTableViewCell.h"
 #import "ZCFilterTableViewCell.h"
 #import "ZCPersonInfoController.h"
+#import "ZCListModel.h"
 @interface ZCMainController ()<UITableViewDataSource,UITableViewDelegate>
-@property(nonatomic,strong)UISegmentedControl *segmentedView;
-@property(nonatomic,strong)UITableView *table;
-@property(nonatomic,strong)UIImageView *fitersView;
-@property(nonatomic,strong)NSMutableArray *filterArr;
-@property(nonatomic,assign)BOOL isOpenFiters;
+
+@property (nonatomic, strong) UISegmentedControl *segmentedView;
+@property (nonatomic, strong) UITableView *table;
+@property (nonatomic, strong) UIImageView *fitersView;
+@property (nonatomic, strong) NSMutableArray *filterArr;
+@property (nonatomic, assign) BOOL isOpenFiters;
+@property (nonatomic, assign) int pageNo;
+@property (nonatomic, strong) ZCListModel *listModel;
+@property (nonatomic, strong) NSMutableArray *listArr;
+
 @end
+
 @implementation ZCMainController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 //    [self setNavBar];
+    _listArr=[NSMutableArray array];
+    _pageNo=1;
     self.title=@"众筹列表";
+    [self getHttpData];
     [self configUI];
 }
 #pragma mark --- 创建NavBar
@@ -78,6 +90,32 @@
     }
 }
 
+#pragma mark --- 获取众筹列表
+-(void)getHttpData
+{
+    [ZYZCHTTPTool getHttpDataByURL:[NSString stringWithFormat:@"%@%@",LISTALLPRODUCTS,GET_ALL_LIST(_pageNo)] withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            _listModel=[[ZCListModel alloc]mj_setKeyValues:result];
+            for(ZCOneModel *oneModel in _listModel.data)
+            {
+                [_listArr addObject:oneModel];
+            }
+            [_table reloadData];
+            //停止下拉刷新
+            [_table.mj_header endRefreshing];
+            //停止上拉刷新
+            [_table.mj_footer endRefreshing];
+        }
+
+    } andFailBlock:^(id failResult) {
+        NSLog(@"网络已断开");
+        //停止下拉刷新
+        [_table.mj_header endRefreshing];
+        //停止上拉刷新
+        [_table.mj_footer endRefreshing];
+    }];
+}
+
 #pragma mark --- 创建控件
 -(void)configUI
 {
@@ -96,6 +134,28 @@
     UINib *nib=[UINib nibWithNibName:@"ZCMainTableViewCell" bundle:nil];
     [_table registerNib:nib forCellReuseIdentifier:@"ZCMainTableViewCell"];
     _table.separatorStyle=UITableViewCellSeparatorStyleNone;
+    
+    //添加下拉刷新动画效果
+    MJRefreshGifHeader *gifHeader=[MJRefreshGifHeader headerWithRefreshingBlock:^{
+        _pageNo=1;
+        [_listArr removeAllObjects];
+        [self getHttpData];
+    }];
+    UIImage *img01=[UIImage imageNamed:@"btn_dy_pre"];
+    UIImage *img02=[UIImage imageNamed:@"btn_fzc_pre"];
+    UIImage *img03=[UIImage imageNamed:@"btn_ht_pre"];
+    UIImage *img04=[UIImage imageNamed:@"btn_lxxj_pre"];
+    
+    [gifHeader setImages:@[img01,img02,img03,img04] duration:0.4 forState:MJRefreshStatePulling];
+     gifHeader.lastUpdatedTimeLabel.hidden= YES;
+    _table.mj_header=gifHeader;
+    
+    //添加上拉刷新
+    _table.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _pageNo++;
+        [self getHttpData];
+    }];
+
 }
 #pragma mark --- 创建过滤选择项视图
 -(void)createFitersView
@@ -132,7 +192,7 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (tableView==_table) {
-        return 10;
+        return _listArr.count;
     }
     return 1;
 
@@ -149,8 +209,7 @@
     //tableView为主视图的table
     if (tableView==_table) {
         ZCMainTableViewCell *mainCell=[tableView dequeueReusableCellWithIdentifier:@"ZCMainTableViewCell"];
-        ZCMainModel *model=[[ZCMainModel alloc]init];
-        mainCell.mainModel=model;
+        mainCell.oneModel=_listArr[indexPath.row];
         return mainCell;
     }
     //tableView为过滤视图中的table
@@ -168,7 +227,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView==_table) {
-        return 186.5+134.5*KCOFFICIEMNT;
+        return 186.5+150*KCOFFICIEMNT;
     }
     return 39.5;
 }
