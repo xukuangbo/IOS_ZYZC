@@ -11,6 +11,9 @@
 #import "TacticVideoModel.h"
 #import "TacticSingleFoodModel.h"
 #import "TacticSingleModel.h"
+#import "ZYZCPlayViewController.h"
+#import "TacticSingleViewController.h"
+#import "TacticSingleFoodVC.h"
 
 @interface TacticImageView ()
 
@@ -53,6 +56,7 @@
     
     self.nameLabel.text = tacticVideoModel.name;
     self.viewType = tacticVideoModel.viewType;
+    self.pushType = threeMapViewTypeVideo;
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.videoImg)] forState:UIControlStateNormal];
     
 }
@@ -63,30 +67,64 @@
     
     self.nameLabel.text = tacticSingleModel.name;
     self.viewType = tacticSingleModel.viewType;
+    if (tacticSingleModel.viewType == 1) {
+        self.pushType = threeMapViewTypeCountryView;
+    }else if(tacticSingleModel.viewType == 2) {
+        self.pushType = threeMapViewTypeCityView;
+    }else if(tacticSingleModel.viewType == 3) {
+        self.pushType = threeMapViewTypeSingleView;
+    }
     
-    NSString *string = tacticSingleModel.viewImg;
-    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(string)] forState:UIControlStateNormal];
+    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleModel.viewImg)] forState:UIControlStateNormal];
 }
 
 
 - (void)setTacticSingleFoodModel:(TacticSingleFoodModel *)tacticSingleFoodModel
 {
     _tacticSingleFoodModel = tacticSingleFoodModel;
-    
+    self.pushType = threeMapViewTypeFood;
     self.nameLabel.text = tacticSingleFoodModel.name;
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.foodImg)] forState:UIControlStateNormal];
 }
 
-
-
 //这里写个跳转到单个景点
 - (void)clickAction:(UIButton *)button
 {
-    
-    if ([self.delegate respondsToSelector:@selector(TacticImageViewPushActionWithvideoModel:tacticSingleFoodModel:tacticSingleModel:)]) {
-        [self.delegate TacticImageViewPushActionWithvideoModel:self.tacticVideoModel tacticSingleFoodModel:self.tacticSingleFoodModel tacticSingleModel:self.tacticSingleModel];
+    if (self.pushType == threeMapViewTypeVideo) {
+        //说明是播放器
+        ZYZCPlayViewController *playVC = [[ZYZCPlayViewController alloc] init];
+        playVC.urlString = self.tacticVideoModel.videoUrl;
+        
+        [self.viewController presentViewController:playVC animated:YES completion:nil];
+    }else if(self.pushType == threeMapViewTypeCountryView || self.pushType == threeMapViewTypeCityView) {
+        //说明是国家或者城市
+        TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:self.tacticSingleModel.ID];
+        [self.viewController.navigationController pushViewController:singleVC animated:YES];
+    }else if(self.pushType == threeMapViewTypeSingleView) {
+        //说明是一般景点
+        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
+        //要转换成tacvideomodel
+        TacticVideoModel *model = [[TacticVideoModel alloc] init];
+        model.name = self.tacticSingleModel.name;
+        if (self.tacticSingleModel.pics) {
+            model.pics = self.tacticSingleModel.pics;
+        }
+        if (self.tacticSingleModel.viewImg) {
+            model.viewImg = self.tacticSingleModel.viewImg;
+        }
+        model.viewText = self.tacticSingleModel.viewText;
+        
+        foodVC.tacticVideoModel = model;
+        [self.viewController.navigationController pushViewController:foodVC animated:YES];
+    }else if (self.pushType == threeMapViewTypeFood){
+        //说明是食物
+        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
+        
+        foodVC.tacticSingleFoodModel = self.tacticSingleFoodModel;
+        [self.viewController.navigationController pushViewController:foodVC animated:YES];
     }
  
 }
+
+
 @end

@@ -95,4 +95,35 @@
 // *  长图，一张图看懂
 // */
 @property (nonatomic, copy) NSString *glid;
+
+//概况后面的内容
+/**
+ *  天气
+ */
+@property (nonatomic, copy) NSString *weather;
+/**
+ *  交通
+ */
+@property (nonatomic, copy) NSString *traffic;
+/**
+ *  住宿
+ */
+@property (nonatomic, copy) NSString *stay;
+/**
+ *  购物
+ */
+@property (nonatomic, copy) NSString *shopping;
+/**
+ *  语言
+ */
+@property (nonatomic, copy) NSString *language;
+/**
+ *  汇率
+ */
+@property (nonatomic, copy) NSString *parities;
+/**
+ *  签证
+ */
+@property (nonatomic, copy) NSString *visa;
+
 @end

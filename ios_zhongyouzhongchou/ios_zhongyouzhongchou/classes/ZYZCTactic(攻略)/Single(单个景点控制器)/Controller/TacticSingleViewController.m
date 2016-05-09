@@ -91,7 +91,7 @@
 //    return ;
 //    http://www.sosona.com:8080/viewSpot/getVideoViewList.action
 //    http://localhost:8080/viewSpot/getViewSpot.action?viewId=13
-    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=81",(long)viewId];
+    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=213",(long)viewId];
 //    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getVideoViewList.action"];
     //访问网络
     
@@ -166,9 +166,7 @@
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     
 //  [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
-    NSString *string = self.tacticSingleModelFrame.tacticSingleModel.viewImg;
-    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(string)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     return headView;
     
 }

@@ -124,5 +124,38 @@
     }
     
     self.realHeight = XXX + TacticTableViewCellMargin;
+    
+    //这里添加一个方法,返回一个字符串
+    self.allString = [self returnStr:tacticSingleModel];
+}
+
+- (NSString *)returnStr:(TacticSingleModel *)tacticSingleModel
+{
+    NSString *str = [NSString string];
+    if (tacticSingleModel.viewText) {//概况
+        str = [str stringByAppendingString:[NSString stringWithFormat:@"概况:\n\t%@。",tacticSingleModel.viewText]];
+    }
+    if (tacticSingleModel.weather) {//气候
+        str = [str stringByAppendingString:[NSString stringWithFormat:@"\n\r气候:\n\t%@。",tacticSingleModel.viewText]];
+    }
+    if (tacticSingleModel.traffic) {//交通
+        str = [str stringByAppendingString:[NSString stringWithFormat:@"\n\r交通:\n\t%@。",tacticSingleModel.viewText]];
+    }
+    if (tacticSingleModel.stay) {//住宿
+        str = [str stringByAppendingString:[NSString stringWithFormat:@"\n\r住宿:\n\t%@。",tacticSingleModel.viewText]];
+    }
+    if (tacticSingleModel.shopping) {//购物
+        str = [str stringByAppendingString:[NSString stringWithFormat:@"\n\r购物:\n\t%@。",tacticSingleModel.viewText]];
+    }
+    if (tacticSingleModel.language) {//语言
+        str = [str stringByAppendingString:[NSString stringWithFormat:@"\n\r语言:\n\t%@。",tacticSingleModel.viewText]];
+    }
+    if (tacticSingleModel.parities) {//汇率
+        str = [str stringByAppendingString:[NSString stringWithFormat:@"\n\r汇率:\n\t%@。",tacticSingleModel.viewText]];
+    }
+    if (tacticSingleModel.visa) {//签证
+        str = [str stringByAppendingString:[NSString stringWithFormat:@"\n\r签证:\n\t%@。",tacticSingleModel.viewText]];
+    }
+    return str;
 }
 @end

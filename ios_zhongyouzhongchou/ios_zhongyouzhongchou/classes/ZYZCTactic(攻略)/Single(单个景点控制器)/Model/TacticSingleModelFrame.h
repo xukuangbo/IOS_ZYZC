@@ -36,4 +36,6 @@
 
 //真实cell高度
 @property (nonatomic, assign) CGFloat realHeight;
+
+@property (nonatomic, copy) NSString *allString;
 @end

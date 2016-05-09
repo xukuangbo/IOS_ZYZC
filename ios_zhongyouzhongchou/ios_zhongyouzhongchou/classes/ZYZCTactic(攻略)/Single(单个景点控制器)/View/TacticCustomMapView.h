@@ -28,7 +28,8 @@ typedef NS_ENUM(NSInteger, MoreVCType)
     MoreVCTypeTypeCityView,//城市
     MoreVCTypeTypeSingleView,//一般景点
     MoreVCTypeTypeFood,//食物
-    MoreVCTypeTypeVideo//视频
+    MoreVCTypeTypeVideo,//视频
+    MoreVCTypeTypeMoreText
 };
 
 @protocol TacticCustomMapViewDelegate <NSObject>

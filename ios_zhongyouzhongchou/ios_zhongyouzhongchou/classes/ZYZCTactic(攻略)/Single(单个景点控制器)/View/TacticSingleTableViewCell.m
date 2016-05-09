@@ -16,6 +16,8 @@
 #import "TacticSingleLongPicture.h"
 #import "TacticSingleTipsController.h"
 #import "TacticMoreVideosController.h"
+#import "TacticSingleFoodVC.h"
+#import "TacticSingleFoodModel.h"
 @interface TacticSingleTableViewCell()<TacticCustomMapViewDelegate>
 //描述
 @property (nonatomic, weak) TacticCustomMapView *descView;
@@ -63,6 +65,9 @@
     //目的地概况
     TacticCustomMapView *descView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,  KSCREEN_W - TacticTableViewCellMargin * 2, 120)];
     descView.titleLabel.text = @"目的地概况";
+    descView.moreButton.hidden = NO;
+    descView.delegate = self;
+    descView.moreButton.tag = MoreVCTypeTypeMoreText;
     CGFloat descLabelH = descView.height - descLabelBottom - TacticTableViewCellTextMargin * 2;
     UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(TacticTableViewCellMargin, descLabelBottom + TacticTableViewCellTextMargin, descView.width - TacticTableViewCellMargin * 2, descLabelH)];
     descLabel.backgroundColor = [UIColor ZYZC_BgGrayColor];
@@ -215,7 +220,7 @@
     
     self.mustPlayView.frame = tacticSingleModelFrame.mustPlayViewF;
     self.mustPlayView.descLabel.text = [NSString stringWithFormat:@"%@最棒的旅行目的地",tacticSingleModel.name];
-    self.mustPlayViewButton.videos = tacticSingleModel.mgViews;
+    self.mustPlayViewButton.singleViews = tacticSingleModel.mgViews;
     self.mustPlayViewButton.frame = tacticSingleModelFrame.mustPlayViewButtonF;
     
     self.foodsView.frame = tacticSingleModelFrame.foodsViewF;
@@ -233,11 +238,20 @@
         NSLog(@"我是更多景点");
         TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
         moreVC.moreArray = self.tacticSingleModelFrame.tacticSingleModel.mgViews;
+//        moreVC.moreVCType = 
         [self.viewController.navigationController pushViewController:moreVC animated:YES];
     }else if (button.tag == MoreVCTypeTypeFood){
         NSLog(@"我是更多美食");
         TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
         moreVC.moreArray = self.tacticSingleModelFrame.tacticSingleModel.foods;
+        [self.viewController.navigationController pushViewController:moreVC animated:YES];
+    }else if (button.tag == MoreVCTypeTypeMoreText){
+        NSLog(@"我是更多介绍");
+        TacticSingleFoodVC *moreVC = [[TacticSingleFoodVC alloc] init];
+        TacticSingleFoodModel *model = [[TacticSingleFoodModel alloc] init];
+        model.foodText = self.tacticSingleModelFrame.allString;
+        model.foodImg = self.tacticSingleModelFrame.tacticSingleModel.viewImg;
+        moreVC.tacticSingleFoodModel = model;
         [self.viewController.navigationController pushViewController:moreVC animated:YES];
     }
 }
