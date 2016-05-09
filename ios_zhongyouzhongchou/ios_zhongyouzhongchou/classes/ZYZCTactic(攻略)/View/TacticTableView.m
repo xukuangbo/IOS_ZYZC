@@ -111,7 +111,6 @@
     SDCycleScrollView *headView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 280, KSCREEN_W, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     headView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
-//    headView.titlesGroup = titles;
     headView.currentPageDotColor = [UIColor ZYZC_MainColor]; // 自定义分页控件小圆标颜色
     NSMutableArray *headURLArray = [NSMutableArray array];
     if (self.tacticModel.pics) {

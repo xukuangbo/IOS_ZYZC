@@ -69,8 +69,8 @@
     descView.delegate = self;
     descView.moreButton.tag = MoreVCTypeTypeMoreText;
     CGFloat descLabelH = descView.height - descLabelBottom - TacticTableViewCellTextMargin * 2;
-    UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(TacticTableViewCellMargin, descLabelBottom + TacticTableViewCellTextMargin, descView.width - TacticTableViewCellMargin * 2, descLabelH)];
-    descLabel.backgroundColor = [UIColor ZYZC_BgGrayColor];
+    UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(TacticTableViewCellMargin, descLabelBottom, descView.width - TacticTableViewCellMargin * 2, descLabelH)];
+//    descLabel.backgroundColor = [UIColor ZYZC_BgGrayColor];
     descLabel.textColor = [UIColor ZYZC_TextGrayColor];
     descLabel.layer.cornerRadius = 5;
     descLabel.layer.masksToBounds = YES;
@@ -90,8 +90,7 @@
     
     CGFloat flashPlayButtonW = flashViewW - TacticTableViewCellMargin * 2;
     CGFloat flashPlayButtonH = oneViewHeight;
-    ZYZCCusomMovieImage *flashPlayButton = [[ZYZCCusomMovieImage alloc] initWithFrame:CGRectMake(0, 0, flashPlayButtonW, flashPlayButtonH)];;
-//    flashPlayButton.contentMode = UIViewContentModeScaleAspectFill;
+    ZYZCCusomMovieImage *flashPlayButton = [[ZYZCCusomMovieImage alloc] initWithFrame:CGRectMake(0, 0, flashPlayButtonW, flashPlayButtonH)];
     flashPlayButton.layer.cornerRadius = 5;
     flashPlayButton.layer.masksToBounds = YES;
     flashPlayButton.backgroundColor = [UIColor redColor];
@@ -251,6 +250,7 @@
         TacticSingleFoodModel *model = [[TacticSingleFoodModel alloc] init];
         model.foodText = self.tacticSingleModelFrame.allString;
         model.foodImg = self.tacticSingleModelFrame.tacticSingleModel.viewImg;
+        model.name = self.tacticSingleModelFrame.tacticSingleModel.name;
         moreVC.tacticSingleFoodModel = model;
         [self.viewController.navigationController pushViewController:moreVC animated:YES];
     }

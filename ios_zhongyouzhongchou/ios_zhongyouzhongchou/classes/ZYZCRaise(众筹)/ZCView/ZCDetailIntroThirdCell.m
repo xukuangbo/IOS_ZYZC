@@ -9,7 +9,6 @@
 #define SUBDES_FORMOVIE(goal) [NSString stringWithFormat:@"趣味动画教你畅游%@",goal]
 
 #import "ZCDetailIntroThirdCell.h"
-#import "UIView+TacticMapView.h"
 @implementation ZCDetailIntroThirdCell
 
 /*

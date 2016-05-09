@@ -19,6 +19,8 @@
 
 @property (nonatomic, weak) UILabel *nameLabel;
 
+@property (nonatomic, weak) UIImageView *startImg;
+
 @end
 
 @implementation TacticImageView
@@ -44,6 +46,15 @@
         self.nameLabel = nameLabel;
         [self addSubview:nameLabel];
         
+        //创建一个播放按钮
+        UIImageView *startImg=[[UIImageView alloc]init];
+        startImg.bounds=CGRectMake(0, 0, self.width/3, self.height/3);
+        startImg.center=CGPointMake(self.width/2, self.height/2);
+        startImg.image=[UIImage imageNamed:@"btn_v_on"];
+        startImg.hidden = YES;
+        [self addSubview:startImg];
+        self.startImg = startImg;
+        
         [self addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
@@ -57,6 +68,7 @@
     self.nameLabel.text = tacticVideoModel.name;
     self.viewType = tacticVideoModel.viewType;
     self.pushType = threeMapViewTypeVideo;
+    self.startImg.hidden = NO;
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.videoImg)] forState:UIControlStateNormal];
     
 }
