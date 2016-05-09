@@ -160,13 +160,6 @@
                         <color key="textColor" red="0.59607843137254901" green="0.59607843137254901" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剩余天数" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wK8-4S-Lal">
-                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                        <animations/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.59607843137254901" green="0.59607843137254901" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥4500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPB-IY-7ae">
                         <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                         <animations/>
@@ -295,6 +288,13 @@
                             </mask>
                         </variation>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剩余天数" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wK8-4S-Lal">
+                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.59607843137254901" green="0.59607843137254901" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <animations/>
                 <constraints>
@@ -359,7 +359,6 @@
                         <exclude reference="MMG-ns-j3o"/>
                         <exclude reference="01h-4p-aNU"/>
                         <exclude reference="hwg-kU-aX9"/>
-                        <exclude reference="wK8-4S-Lal"/>
                         <exclude reference="mPB-IY-7ae"/>
                         <exclude reference="BCT-gP-Gut"/>
                         <exclude reference="g4o-I5-wFy"/>
@@ -369,6 +368,7 @@
                         <exclude reference="Ana-zd-Vqb"/>
                         <exclude reference="a9A-sh-RiK"/>
                         <exclude reference="GfU-N4-yWD"/>
+                        <exclude reference="wK8-4S-Lal"/>
                     </mask>
                     <mask key="constraints">
                         <exclude reference="LD7-HL-6Tr"/>
@@ -433,7 +433,6 @@
                         <include reference="MMG-ns-j3o"/>
                         <include reference="01h-4p-aNU"/>
                         <include reference="hwg-kU-aX9"/>
-                        <include reference="wK8-4S-Lal"/>
                         <include reference="mPB-IY-7ae"/>
                         <include reference="BCT-gP-Gut"/>
                         <include reference="g4o-I5-wFy"/>
@@ -443,6 +442,7 @@
                         <include reference="Ana-zd-Vqb"/>
                         <include reference="a9A-sh-RiK"/>
                         <include reference="GfU-N4-yWD"/>
+                        <include reference="wK8-4S-Lal"/>
                     </mask>
                     <mask key="constraints">
                         <include reference="LD7-HL-6Tr"/>

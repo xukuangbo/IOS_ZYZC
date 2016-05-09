@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZCInfoView.h"
 #define CELL_HEIGHT 186.5+150*KCOFFICIEMNT
 @interface ZCOneProductCell : UITableViewCell
 @property (nonatomic, strong) UILabel      *titleLab;
@@ -15,4 +16,16 @@
 @property (nonatomic, strong) UILabel      *destLab;
 @property (nonatomic, strong) UIImageView  *destLayerImg;
 @property (nonatomic, strong) UIImageView  *iconImage;
+@property (nonatomic, strong) UILabel      *nameLab;
+@property (nonatomic, strong) UIImageView  *sexImg;
+@property (nonatomic, strong) UIImageView  *vipImg;
+@property (nonatomic, strong) UILabel      *destenceLab;
+@property (nonatomic, strong) UILabel      *jobLab;
+@property (nonatomic, strong) UILabel      *infoLab;
+@property (nonatomic, strong) UILabel      *moneyLab;
+@property (nonatomic, strong) UILabel      *startLab;
+@property (nonatomic, strong) UIImageView  *emptyProgress;
+@property (nonatomic, strong) UIImageView  *fillProgress;
+@property (nonatomic, weak  ) ZCInfoView   *zcInfoView;
+
 @end

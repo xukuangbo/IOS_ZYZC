@@ -168,6 +168,8 @@
 		2C901DE11C89788C004B844B /* ios_zhongyouzhongchouUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DE01C89788C004B844B /* ios_zhongyouzhongchouUITests.m */; };
 		2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */; };
 		2CAF7BB41CE02B6600CB0885 /* ZCOneProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF7BB31CE02B6600CB0885 /* ZCOneProductCell.m */; };
+		2CAF7BB71CE0363600CB0885 /* ZCInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF7BB61CE0363600CB0885 /* ZCInfoView.m */; };
+		2CAF7BBB1CE0390D00CB0885 /* ZCInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAF7BBA1CE0390D00CB0885 /* ZCInfoView.xib */; };
 		2CC2D1211CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D1201CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.m */; };
 		2CCB4DDD1CD1D86300ABA1DB /* FZCReplaceDataKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB4DDC1CD1D86300ABA1DB /* FZCReplaceDataKeys.m */; };
 		2CCB52ED1CC70F1800F99CD3 /* ZCDetailTableHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB52EC1CC70F1800F99CD3 /* ZCDetailTableHeadView.m */; };
@@ -521,6 +523,9 @@
 		2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZYZCTool+getLocalTime.m"; sourceTree = "<group>"; };
 		2CAF7BB21CE02B6600CB0885 /* ZCOneProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCOneProductCell.h; sourceTree = "<group>"; };
 		2CAF7BB31CE02B6600CB0885 /* ZCOneProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCOneProductCell.m; sourceTree = "<group>"; };
+		2CAF7BB51CE0363600CB0885 /* ZCInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCInfoView.h; sourceTree = "<group>"; };
+		2CAF7BB61CE0363600CB0885 /* ZCInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCInfoView.m; sourceTree = "<group>"; };
+		2CAF7BBA1CE0390D00CB0885 /* ZCInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCInfoView.xib; sourceTree = "<group>"; };
 		2CC2D11F1CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailIntroFirstCellVoiceShowView.h; sourceTree = "<group>"; };
 		2CC2D1201CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailIntroFirstCellVoiceShowView.m; sourceTree = "<group>"; };
 		2CCB4DDB1CD1D86300ABA1DB /* FZCReplaceDataKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZCReplaceDataKeys.h; sourceTree = "<group>"; };
@@ -1147,6 +1152,9 @@
 				04A99C811CBF848D00C6F5F0 /* ZCMainTableViewCell.xib */,
 				2CAF7BB21CE02B6600CB0885 /* ZCOneProductCell.h */,
 				2CAF7BB31CE02B6600CB0885 /* ZCOneProductCell.m */,
+				2CAF7BB51CE0363600CB0885 /* ZCInfoView.h */,
+				2CAF7BB61CE0363600CB0885 /* ZCInfoView.m */,
+				2CAF7BBA1CE0390D00CB0885 /* ZCInfoView.xib */,
 				2C4EEFC21CC6316900AA99F6 /* ZCDetailFirstCell.h */,
 				2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */,
 				2CCB52EB1CC70F1800F99CD3 /* ZCDetailTableHeadView.h */,
@@ -1636,6 +1644,7 @@
 				04A99CD51CBF848D00C6F5F0 /* ZCMainTableViewCell.xib in Resources */,
 				2C901DC61C89788C004B844B /* Main.storyboard in Resources */,
 				2C4EEFB91CC6087D00AA99F6 /* outboundCity.plist in Resources */,
+				2CAF7BBB1CE0390D00CB0885 /* ZCInfoView.xib in Resources */,
 				2C4EEFC11CC60D8600AA99F6 /* WeekDayView.xib in Resources */,
 				04A99CFB1CBF897A00C6F5F0 /* read_me.txt in Resources */,
 				040651321CC715E7003FD539 /* HomeMessage.json in Resources */,
@@ -1872,6 +1881,7 @@
 				0490D1561CC9B4310064844C /* UIView+TacticMapView.m in Sources */,
 				2C8288341CD886DE004873B6 /* NecessoryAlertManager.m in Sources */,
 				04A99CB81CBF848D00C6F5F0 /* AddSceneView.m in Sources */,
+				2CAF7BB71CE0363600CB0885 /* ZCInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
