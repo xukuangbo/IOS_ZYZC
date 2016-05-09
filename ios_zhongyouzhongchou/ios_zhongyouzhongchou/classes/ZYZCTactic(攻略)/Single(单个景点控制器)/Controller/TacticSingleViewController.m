@@ -166,9 +166,7 @@
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     
 //  [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
-    NSString *string = self.tacticSingleModelFrame.tacticSingleModel.viewImg;
-    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(string)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     return headView;
     
 }

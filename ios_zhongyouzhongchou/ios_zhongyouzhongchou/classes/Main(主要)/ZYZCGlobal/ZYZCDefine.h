@@ -63,7 +63,7 @@
 #define KFZC_INPUTCONTENTVIEW_TYPE  130//tag取值范围130～132
 #define KSUPPORTMONEY_TYPE          140//tag取值范围140～142
 
-#define KWebImage(urlImage) [[NSString stringWithFormat:@"http://zhongyou-hz.oss-cn-hangzhou.aliyuncs.com/%@",urlImage] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] //网络访问阿里云的图片
+#define KWebImage(urlImage) [[NSString stringWithFormat:@"http://zhongyou-hz.oss-cn-hangzhou.aliyuncs.com/%@",[urlImage stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] //网络访问阿里云的图片
 
 //NSUserDefaults-key使用
 #define KUSER_ID                     @"userId" //用于保存用户id

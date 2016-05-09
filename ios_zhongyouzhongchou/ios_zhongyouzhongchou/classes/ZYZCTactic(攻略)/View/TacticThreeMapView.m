@@ -124,33 +124,4 @@
         }
     }
 }
-//
-//#pragma mark - TacticImageViewDelegate
-//- (void)TacticImageViewPushActionWithvideoModel:(TacticVideoModel *)videoModel tacticSingleFoodModel:(TacticSingleFoodModel *)singleFoodModel tacticSingleModel:(TacticSingleModel *)tacticSingleModel
-//{
-//    
-//    if (self.threeMapViewType == threeMapViewTypeVideo) {
-//        //说明是播放器
-//        ZYZCPlayViewController *playVC = [[ZYZCPlayViewController alloc] init];
-//        playVC.urlString = videoModel.videoUrl;
-//        
-//        [self.viewController presentViewController:playVC animated:YES completion:nil];
-//    }else if(self.threeMapViewType == threeMapViewTypeCountryView || self.threeMapViewType == threeMapViewTypeCityView) {
-//        //说明是国家或者城市
-//        TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:videoModel.viewid];
-//        [self.viewController.navigationController pushViewController:singleVC animated:YES];
-//    }else if(self.threeMapViewType == threeMapViewTypeSingleView) {
-//        //说明是一般景点
-//        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
-//        
-//        foodVC.tacticSingleFoodModel = singleFoodModel;
-//        [self.viewController.navigationController pushViewController:foodVC animated:YES];
-//    }else if (self.threeMapViewType == threeMapViewTypeFood){
-//        //说明是食物
-//        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
-//        
-//        foodVC.tacticVideoModel = videoModel;
-//        [self.viewController.navigationController pushViewController:foodVC animated:YES];
-//    }
-//}
 @end
