@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZCMainModel.h"
 #import "ZCDetailInfoModel.h"
 #import "ZCListModel.h"
 @interface ZCMainTableViewCell : UITableViewCell
@@ -27,6 +26,5 @@
 
 
 @property (nonatomic, strong) ZCOneModel *oneModel;
-@property(nonatomic,strong)ZCMainModel *mainModel;
 @property(nonatomic,strong)ZCDetailInfoModel *detailInfoModel;
 @end

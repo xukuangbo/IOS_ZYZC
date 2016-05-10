@@ -6,11 +6,14 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
+#define KGET_DETAIL_PRODUCT(openid,productId)  [NSString stringWithFormat:@"%@openid=%@&productId=%@",GETPRODUCTDETAIL,openid,productId]
+
 #define BGIMAGEHEIGHT  200*KCOFFICIEMNT
 #define BLURHEIGHT     44
 
 #import "ZCPersonInfoController.h"
 #import "ZCMainTableViewCell.h"
+#import "ZCOneProductCell.h"
 #import "ZCDetailFirstCell.h"
 #import "ZCDetailTableHeadView.h"
 //介绍部分cells
@@ -62,9 +65,11 @@
      [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     [self initData];
+    [self getHttpData];
     [self setBackItem];
     [self configUI];
     [self createBottomView];
+
 }
 
 #pragma mark --- 初始化数据
@@ -82,13 +87,27 @@
     }
     
     self.contentType= IntroType;//展示介绍部分
-    _hasCosponsor   = YES;//添加联和发起人项
+    _hasCosponsor   = NO;//添加联和发起人项
     _hasIntroGoal   = YES;//添加众筹目的
     _hasIntroGeneral=YES;//添加目的地介绍
     _hasIntroMovie  =YES;//添加动画攻略
     _hasHotComment  =NO;//添加热门评论
     _hasInterestTravel=YES;//添加兴趣标签匹配的旅游
 
+}
+
+#pragma mark --- 获取数据
+-(void)getHttpData
+{
+    _productId=@14;
+    NSLog(@"%@,%@",[ZYZCTool getUserId],_productId);
+    NSString *urlStr=KGET_DETAIL_PRODUCT([ZYZCTool getUserId],_productId);
+    NSLog(@"%@",urlStr);
+    [ZYZCHTTPTool getHttpDataByURL:KGET_DETAIL_PRODUCT([ZYZCTool getUserId], _productId) withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
 }
 
 #pragma mark --- 创建控件

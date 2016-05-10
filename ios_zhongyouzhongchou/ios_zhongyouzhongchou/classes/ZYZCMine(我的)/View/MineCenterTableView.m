@@ -11,6 +11,7 @@
 #import "MineHeadView.h"
 #import "MineCenterTableViewCell.h"
 #import "MineMessageController.h"
+#import "ZCMainController.h"
 @interface MineCenterTableView()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSArray *titleArray;
@@ -59,39 +60,24 @@
     return cell;
 }
 
-///**
-// *  暂时不做下拉放大
-// */
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    // 向下拽了多少距离
-//    MineViewController *VC = (MineViewController *)[self getVC];
-//    CGFloat down = -(MineTopViewH * KCOFFICIEMNT) - scrollView.contentOffset.y;
-//    if (down < 0){
-//        VC.topView.top = down;
-//        return;
-//    }else{
-//        VC.topView.top = 0;
-//        CGRect frame = VC.topView.frame;
-//        // 5决定图片变大的速度,值越大,速度越快
-//        frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 1;
-//        VC.topView.frame = frame;
-//    }
-//}
-
--(UIViewController *)getVC
+/**
+ *  暂时不做下拉放大
+ */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    UIResponder *next = self.nextResponder;
-    while (next != nil) {
-        if ([next isKindOfClass:[UIViewController class]]) {
-            
-            return (UIViewController *)next;
-        }
-        
-        next = next.nextResponder;
+    // 向下拽了多少距离
+    MineViewController *VC = (MineViewController *)self.viewController;
+    CGFloat down = -(MineTopViewH * KCOFFICIEMNT) - scrollView.contentOffset.y;
+    if (down < 0){
+        VC.topView.top = down;
+        return;
+    }else{
+        VC.topView.top = 0;
+        CGRect frame = VC.topView.frame;
+        // 5决定图片变大的速度,值越大,速度越快
+        frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 1;
+        VC.topView.frame = frame;
     }
-    
-    return nil;
 }
 
 /**
@@ -104,7 +90,12 @@
         
 //        这里弹到消息界面
         MineMessageController *messageVC = [[MineMessageController alloc] init];
-        [[self getVC].navigationController pushViewController:messageVC animated:YES];
+        [self.viewController.navigationController pushViewController:messageVC animated:YES];
+    }
+    else if (indexPath.row == 2)
+    {
+        ZCMainController *myTravelVC=[[ZCMainController alloc]init];
+        [self.viewController.navigationController pushViewController:myTravelVC animated:YES];
     }
 }
 

@@ -50,6 +50,7 @@
 #define HTTPURL(APPEND_URL) [NSString stringWithFormat:@"%@%@.action?",BASE_URL,APPEND_URL]
 
 
+
 #pragma mark --- 项目网络接口
 //获取个人主页信息
 #define GETUSERDETAIL      HTTPURL(@"u/getUserDetail")
