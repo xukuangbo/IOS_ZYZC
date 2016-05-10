@@ -11,7 +11,7 @@
 #import "MineFootTableView.h"
 
 //const CGFloat MineTopViewH = 200;
-@interface MineViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface MineViewController ()
 
 @property (nonatomic, weak) MineCenterTableView *centerTableView;
 @property (nonatomic, weak) MineFootTableView *footTableView;
@@ -22,14 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self setBackItem];
-    
-    /**
-     *  设置导航栏的颜色
-     */
-    [self setUpNavi];
     
     /**
      *  创建2个tableView
@@ -52,13 +46,6 @@
 }
 
 #pragma mark - 自定义初始化方法
-/**
- *  设置导航栏的颜色
- */
-- (void)setUpNavi{
-//    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor clearColor]];
-    //    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-}
 
 /**
  *  创建头视图
@@ -69,7 +56,7 @@
 //    CGFloat topViewY = -MineTopViewH * KCOFFICIEMNT;
     CGFloat topViewY = 0;
     CGFloat topViewW = KSCREEN_W;
-    CGFloat topViewH = MineTopViewH * KCOFFICIEMNT;
+    CGFloat topViewH = mineHeadViewHeight;
     MineHeadView *topView = [[MineHeadView alloc] initWithFrame:CGRectMake(topViewX,topViewY, topViewW, topViewH)];
     
     topView.image = [UIImage imageNamed:@"abc"];
@@ -117,57 +104,5 @@
     [self.view insertSubview:footTableView belowSubview:centerTableView];
     self.footTableView = footTableView;
 }
-
-
-#pragma mark - UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 10;
-}
-
-- (UITableViewCell *)tableView: (UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-        cell.contentView.backgroundColor = [UIColor greenColor];
-//        cell.textLabel.text = [NSString stringWithFormat:@"第%zd个cell",indexPath.row];
-        return cell;
-    }
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    return cell;
-}
-
-///**
-// *  暂时不做下拉放大
-// */
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    // 向下拽了多少距离
-//    CGFloat down = -(MineTopViewH * KCOFFICIEMNT) - scrollView.contentOffset.y;
-//    if (down < 0){
-//        self.topView.top = down;
-//        return;
-//    }else{
-//        self.topView.top = 0;
-//        CGRect frame = self.topView.frame;
-//        // 5决定图片变大的速度,值越大,速度越快
-//        frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 1;
-//        self.topView.frame = frame;
-//    }
-//}
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    // 向下拽了多少距离
-//    CGFloat down = -(MineTopViewH * KCOFFICIEMNT * 0.7) - scrollView.contentOffset.y;
-//    if (down < 0) return;
-//    
-//    CGRect frame = se lf.topView.frame;
-//    // 5决定图片变大的速度,值越大,速度越快
-//    frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 3;
-//    self.topView.frame = frame;
-//}
-
-
 
 @end

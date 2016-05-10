@@ -16,7 +16,13 @@
 
 #import "MBProgressHUD+MJ.h"
 #define mineCornerRadius 5
-#define mineMargin 4
+
+#define shadowIconViewWH 76
+#define nameLabelH 20
+#define professionLabelH 15
+#define descLabelH 15
+#define centerAndFootMapViewH 25
+
 @interface MineHeadView ()<WXApiManagerDelegate>
 
 
@@ -29,15 +35,17 @@
     if (self) {
         AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
         
+        CGFloat mineHeadMargin = (self.height - shadowIconViewWH - nameLabelH - professionLabelH - descLabelH - centerAndFootMapViewH)/5;
+        
         mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
 //        NSLog(@"%@",mgr.responseSerializer.acceptableContentTypes);
         self.userInteractionEnabled = YES;
         [WXApiManager sharedManager].delegate = self;
         //0头像遮盖
-        CGFloat shadowIconViewWH = 76;
+//        CGFloat shadowIconViewWH = 76;
         UIView *shadowIconView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, shadowIconViewWH, shadowIconViewWH)];
         shadowIconView.centerX = self.centerX;
-        shadowIconView.top = 30;
+        shadowIconView.top = mineHeadMargin;
         shadowIconView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
         shadowIconView.layer.cornerRadius = mineCornerRadius;
         shadowIconView.layer.masksToBounds = YES;
@@ -67,9 +75,9 @@
         
         //2.名字
         UILabel *nameLabel = [[UILabel alloc] init];
-        nameLabel.size = CGSizeMake(60, 20);
+        nameLabel.size = CGSizeMake(60, nameLabelH);
         nameLabel.centerX = iconButton.centerX;
-        nameLabel.top = shadowIconView.bottom + mineMargin;
+        nameLabel.top = shadowIconView.bottom + mineHeadMargin;
         nameLabel.textAlignment = NSTextAlignmentCenter;
         nameLabel.textColor = [UIColor whiteColor];
         nameLabel.font = [UIFont systemFontOfSize:18];
@@ -99,10 +107,10 @@
         UILabel *professionLabel = [[UILabel alloc] init];
         professionLabel.text = @"暂无职业";
         professionLabel.font = [UIFont systemFontOfSize:13];
-        professionLabel.top = vipView.bottom + mineMargin;
+        professionLabel.top = nameLabel.bottom + mineHeadMargin;
         professionLabel.left = 0;
 //        professionLabel.backgroundColor = [UIColor redColor];
-        professionLabel.size = CGSizeMake(self.width, 15);
+        professionLabel.size = CGSizeMake(self.width, professionLabelH);
         professionLabel.textColor = [UIColor whiteColor];
         professionLabel.shadowColor = [UIColor colorWithWhite:0.1f alpha:0.8f];    //设置文本的阴影色彩和透明度。
         professionLabel.shadowOffset = CGSizeMake(1.0f, 1.0f);     //设置阴影的倾斜角度。
@@ -114,10 +122,9 @@
         UILabel *descLabel = [[UILabel alloc] init];
         descLabel.text = @"点击设置添加个人描述";
         descLabel.font = [UIFont systemFontOfSize:13];
-        descLabel.top = professionLabel.bottom + mineMargin;
+        descLabel.top = professionLabel.bottom + mineHeadMargin;
         descLabel.left = 0;
-        //        professionLabel.backgroundColor = [UIColor redColor];
-        descLabel.size = CGSizeMake(self.width, 15);
+        descLabel.size = CGSizeMake(self.width, descLabelH);
         descLabel.textColor = [UIColor whiteColor];
         descLabel.textAlignment = NSTextAlignmentCenter;
         descLabel.shadowColor = [UIColor colorWithWhite:0.1f alpha:0.8f];    //设置文本的阴影色彩和透明度。
@@ -129,12 +136,10 @@
         UIView *centerAndFootMapView = [[UIView alloc] init];
         centerAndFootMapView.left = 10;
         centerAndFootMapView.width = self.width - centerAndFootMapView.left * 2;
-        centerAndFootMapView.top = descLabel.bottom + mineMargin;
-        centerAndFootMapView.height = self.height - descLabel.bottom - mineMargin;
+        centerAndFootMapView.bottom = mineHeadViewHeight;
+        centerAndFootMapView.height = centerAndFootMapViewH;
         centerAndFootMapView.layer.cornerRadius = 5;
         centerAndFootMapView.layer.masksToBounds = YES;
-        
-//        centerAndFootMapView.backgroundColor = [UIColor colorWithRed:161 / 255.0 green:152 / 255.0 blue:111 / 255.0 alpha:1.0];
         [self addSubview:centerAndFootMapView];
 
         //8.我的中心

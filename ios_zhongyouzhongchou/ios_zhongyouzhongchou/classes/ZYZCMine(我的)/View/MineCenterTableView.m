@@ -52,10 +52,10 @@
     cell.titleLabel.text = self.titleArray[indexPath.row];
     
     
-    //显示打卡
-    if (indexPath.row == 0) {
-        cell.playCardBtn.hidden = NO;
-    }
+//    //显示打卡
+//    if (indexPath.row == 0) {
+//        cell.playCardBtn.hidden = NO;
+//    }
     
     return cell;
 }

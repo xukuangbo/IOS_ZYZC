@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #define kMineChangeButtonNormalColor [UIColor colorWithRed:161 / 255.0 green:152 / 255.0 blue:111 / 255.0 alpha:1.0]
+#define mineHeadViewHeight (KSCREEN_W / 16 * 9)
+
 @class MineUserModel;
 typedef void (^HeadChangeBlock)();
 
