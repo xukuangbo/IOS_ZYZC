@@ -8,11 +8,13 @@
 
 #define GET_ALL_LIST(pageNo) [NSString stringWithFormat:@"cache=false&orderType=1&pageNo=%d&pageSize=10",pageNo]
 
+#define GET_MY_LIST(openid,type,pageNo) [NSString stringWithFormat:@"cache=false&openid=%@&self=%ld&pageNo=%d&pageSize=10",openid,type,pageNo]
+
 #import "ZCMainController.h"
 #import "ZCOneProductCell.h"
 #import "ZCFilterTableViewCell.h"
 #import "ZCPersonInfoController.h"
-#import "ZCListModel.h"
+
 @interface ZCMainController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UISegmentedControl *segmentedView;
@@ -34,10 +36,40 @@
 //    [self setNavBar];
     _listArr=[NSMutableArray array];
     _pageNo=1;
+    _myZCType=MyPublish;
+    self.title=@"众筹";
     [self getHttpData];
     [self configUI];
+    if (self.zcType==Mylist) {
+        self.title=@"我的行程";
+        self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+        [self setBackItem];
+        [self setMYZCListHeadView];
+    }
 }
-#pragma mark --- 创建NavBar
+
+#pragma mark --- 创建我的众筹列表中的头视图
+-(void)setMYZCListHeadView
+{
+    UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, KNAV_STATUS_HEIGHT, KSCREEN_W, 44)];
+    headView.backgroundColor=[UIColor ZYZC_NavColor];
+    [self.view addSubview:headView];
+    
+    NSArray *titleArr=@[@"我发起",@"我报名",@"我推荐"];
+    _segmentedView = [[UISegmentedControl alloc]initWithItems:titleArr];
+    _segmentedView.frame = CGRectMake(KEDGE_DISTANCE, 0, headView.width-2*KEDGE_DISTANCE, headView.height-KEDGE_DISTANCE);
+    _segmentedView.selectedSegmentIndex =0;
+    _segmentedView.backgroundColor=[UIColor ZYZC_MainColor];
+    _segmentedView.tintColor = [UIColor whiteColor];
+    _segmentedView.layer.cornerRadius=4;
+    _segmentedView.layer.masksToBounds=YES;
+    [_segmentedView addTarget:self action:@selector(changeSegmented:) forControlEvents:UIControlEventValueChanged];
+    [headView addSubview:_segmentedView];
+
+    
+}
+
+#pragma mark --- 创建所有众筹列表的NavBar
 -(void)setNavBar
 {
     //nav左右两边按钮创建
@@ -56,18 +88,24 @@
     _segmentedView.layer.masksToBounds=YES;
     [_segmentedView addTarget:self action:@selector(changeSegmented:) forControlEvents:UIControlEventValueChanged];
 }
-#pragma mark --- 切换热门和附近
+#pragma mark --- 切换我的行程内容
 -(void)changeSegmented:(UISegmentedControl *)segemented
 {
     if (segemented.selectedSegmentIndex==0) {
-        //只看热门内容
-        NSLog(@"热门");
+        //我发起
+        self.myZCType=MyPublish;
     }
-    else
+    else if(segemented.selectedSegmentIndex==1){
+        //我报名
+        self.myZCType=MyJoin;
+    }
+    else if (segemented.selectedSegmentIndex==2)
     {
-        //只看附近内容
-        NSLog(@"附近");
+        //我推荐
+        self.myZCType=MyRecommend;
     }
+    
+    [self getHttpData];
 }
 
 #pragma mark --- 点击左侧导航栏按钮
@@ -92,7 +130,22 @@
 #pragma mark --- 获取众筹列表
 -(void)getHttpData
 {
-    [ZYZCHTTPTool getHttpDataByURL:[NSString stringWithFormat:@"%@%@",LISTALLPRODUCTS,GET_ALL_LIST(_pageNo)] withSuccessGetBlock:^(id result, BOOL isSuccess) {
+    NSString *httpUrl=nil;
+    //获取所有众筹详情
+    if (self.zcType==AllList) {
+        httpUrl=[NSString stringWithFormat:@"%@%@",LISTALLPRODUCTS,GET_ALL_LIST(_pageNo)];
+    }
+    //获取我的众筹详情
+    else if (self.zcType==Mylist)
+    {
+        httpUrl=[NSString stringWithFormat:@"%@%@",LISTMYPRODUCTS,
+        GET_MY_LIST(@"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",_myZCType,_pageNo)];
+    }
+    
+    NSLog(@"httpUrl:%@",httpUrl);
+    
+    [ZYZCHTTPTool getHttpDataByURL:httpUrl withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
         if (isSuccess) {
             if (_pageNo==1) {
                 [_listArr removeAllObjects];
@@ -100,14 +153,15 @@
             _listModel=[[ZCListModel alloc]mj_setKeyValues:result];
             for(ZCOneModel *oneModel in _listModel.data)
             {
+                oneModel.zcType=_zcType;
                 [_listArr addObject:oneModel];
             }
             [_table reloadData];
-            //停止下拉刷新
-            [_table.mj_header endRefreshing];
-            //停止上拉刷新
-            [_table.mj_footer endRefreshing];
         }
+        //停止下拉刷新
+        [_table.mj_header endRefreshing];
+        //停止上拉刷新
+        [_table.mj_footer endRefreshing];
 
     } andFailBlock:^(id failResult) {
         NSLog(@"网络已断开");
@@ -134,6 +188,13 @@
     _table.backgroundColor=[UIColor ZYZC_BgGrayColor];
     [self.view addSubview:_table];
     _table.separatorStyle=UITableViewCellSeparatorStyleNone;
+    
+    //如果是我的众筹列表改变table的初始位置
+    if (self.zcType==Mylist) {
+        _table.contentInset=UIEdgeInsetsMake(44, 0, 0, 0) ;
+        _table.frame=CGRectMake(0, 0, KSCREEN_W, KSCREEN_H);
+    }
+
     
     //添加下拉刷新动画效果
     MJRefreshGifHeader *gifHeader=[MJRefreshGifHeader headerWithRefreshingBlock:^{
@@ -232,6 +293,9 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView==_table) {
+        if (_zcType==Mylist) {
+            return MY_ZC_CELL_HEIGHT;
+        }
         return PRODUCT_CELL_HEIGHT;
     }
     return 39.5;
@@ -265,6 +329,7 @@
         ZCPersonInfoController *personInfoVC=[[ZCPersonInfoController alloc]init];
         personInfoVC.hidesBottomBarWhenPushed=YES;
         ZCOneModel *oneModel=_listArr[indexPath.section];
+        personInfoVC.oneModel=oneModel;
         personInfoVC.productId=oneModel.product.productId;
         [self.navigationController pushViewController:personInfoVC animated:YES];
     }
@@ -278,14 +343,14 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_segmentedView removeFromSuperview];
+//    [_segmentedView removeFromSuperview];
 }
 
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar addSubview:_segmentedView];
+//    [self.navigationController.navigationBar addSubview:_segmentedView];
 
 }
 

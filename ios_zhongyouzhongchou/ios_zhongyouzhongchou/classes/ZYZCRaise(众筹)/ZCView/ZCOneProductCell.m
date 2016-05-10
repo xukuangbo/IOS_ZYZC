@@ -12,7 +12,9 @@
 #define KSTART_TIME(time)     [NSString stringWithFormat:@"%@出发",time]
 
 @interface ZCOneProductCell ()
-
+{
+    UIImageView *bgImg;
+}
 @end
 
 @implementation ZCOneProductCell
@@ -33,7 +35,7 @@
 
 -(void)configUI
 {
-    UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, 0, KSCREEN_W-2*KEDGE_DISTANCE, PRODUCT_CELL_HEIGHT)];
+    bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, 0, KSCREEN_W-2*KEDGE_DISTANCE, PRODUCT_CELL_HEIGHT)];
     bgImg.image=KPULLIMG(@"tab_bg_boss0", 10, 0, 10, 0);
     [self.contentView addSubview:bgImg];
     
@@ -62,30 +64,30 @@
     _destLayerImg.alpha=0.7;
         [bgImg  addSubview:_destLayerImg];
         //添加✈️
-        UIImageView *planeImg=[[UIImageView alloc]initWithFrame:CGRectMake(0,_headImage.top+15, 18, 17)];
-        planeImg.image=[UIImage imageNamed:@"btn_p"];
-        [bgImg addSubview:planeImg];
+        _planeImg=[[UIImageView alloc]initWithFrame:CGRectMake(0,_headImage.top+15, 18, 17)];
+        _planeImg.image=[UIImage imageNamed:@"btn_p"];
+        [bgImg addSubview:_planeImg];
         //添加目的地
         _destLab=[self createLabWithFrame:CGRectMake(20, _headImage.top+9, 0, 29) andFont:[UIFont boldSystemFontOfSize:20] andTitleColor:[UIColor whiteColor]];
         [bgImg addSubview:_destLab];
     
     
     //添加头像
-    UIView *iconBgView=[[UIView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, _headImage.bottom-KEDGE_DISTANCE, 82, 82)];
-    iconBgView.layer.cornerRadius=KCORNERRADIUS;
-    iconBgView.layer.masksToBounds=YES;
-    iconBgView.backgroundColor=[UIColor colorWithRed:170/255 green:170/255 blue:170/255 alpha:0.2];
+    _iconBgView=[[UIView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, _headImage.bottom-KEDGE_DISTANCE, 82, 82)];
+    _iconBgView.layer.cornerRadius=KCORNERRADIUS;
+    _iconBgView.layer.masksToBounds=YES;
+    _iconBgView.backgroundColor=[UIColor colorWithRed:170/255 green:170/255 blue:170/255 alpha:0.2];
     
-    [bgImg addSubview:iconBgView];
+    [bgImg addSubview:_iconBgView];
     
     _iconImage=[[UIImageView alloc]initWithFrame:CGRectMake(4, 4, 74, 74)];
     _iconImage.layer.cornerRadius=3;
     _iconImage.layer.masksToBounds=YES;
     _iconImage.backgroundColor=[UIColor yellowColor];
-    [iconBgView addSubview:_iconImage];
+    [_iconBgView addSubview:_iconImage];
     
     //添加姓名
-    _nameLab=[self createLabWithFrame:CGRectMake(iconBgView.right+ KEDGE_DISTANCE-4, _headImage.bottom+KEDGE_DISTANCE, 50, 20)  andFont:[UIFont systemFontOfSize:17] andTitleColor:[UIColor ZYZC_TextBlackColor]];
+    _nameLab=[self createLabWithFrame:CGRectMake(_iconBgView.right+ KEDGE_DISTANCE-4, _headImage.bottom+KEDGE_DISTANCE, 50, 20)  andFont:[UIFont systemFontOfSize:17] andTitleColor:[UIColor ZYZC_TextBlackColor]];
     _nameLab.text=@"杨大";
     [bgImg addSubview:_nameLab];
     
@@ -116,7 +118,7 @@
     [bgImg addSubview:_infoLab];
     
     //添加预筹资金
-    _moneyLab=[self createLabWithFrame:CGRectMake(KEDGE_DISTANCE, iconBgView.bottom+KEDGE_DISTANCE-4, bgImg.width/2-KEDGE_DISTANCE, 15) andFont:[UIFont boldSystemFontOfSize:14] andTitleColor:[UIColor ZYZC_TextBlackColor]];
+    _moneyLab=[self createLabWithFrame:CGRectMake(KEDGE_DISTANCE, _iconBgView.bottom+KEDGE_DISTANCE-4, bgImg.width/2-KEDGE_DISTANCE, 15) andFont:[UIFont boldSystemFontOfSize:14] andTitleColor:[UIColor ZYZC_TextBlackColor]];
     _moneyLab.text=@"预筹¥5000";
     [bgImg addSubview:_moneyLab];
     
@@ -140,18 +142,85 @@
     _zcInfoView=[nibView objectAtIndex:0];
     _zcInfoView.frame=CGRectMake(1, _emptyProgress.bottom+5, bgImg.width-2, 40);
     [bgImg addSubview:_zcInfoView];
+    
+    _lineView=[UIView lineViewWithFrame:CGRectMake(KEDGE_DISTANCE, _titleLab.bottom, bgImg.width-2*KEDGE_DISTANCE, 1) andColor:nil];
+    [bgImg addSubview:_lineView];
+    _lineView.hidden=YES;
+    
+    //添加兴趣展示视图
+    _interstView=[[UIScrollView alloc]initWithFrame:CGRectMake(_nameLab.left, _infoLab.bottom+3,  _infoLab.width, 22)];
+    _interstView.contentSize=CGSizeMake( _infoLab.width, 0);
+    _interstView.showsHorizontalScrollIndicator=NO;
+    _interstView.bounces=NO;
+    [bgImg addSubview:_interstView];
+    
 }
 
 #pragma mark --- 众筹列表单数据
 -(void)setOneModel:(ZCOneModel *)oneModel
 {
-     _oneModel = oneModel;
-    _vipImg.hidden=YES;
-    _destenceLab.hidden=YES;
+    _oneModel = oneModel;
+    
+    //众筹详情
+    if (oneModel.zcType==DetailType) {
+        bgImg.height=PRODUCT_DETAIL_CELL_HEIGHT;
+        _lineView.hidden=NO;
+        _destLayerImg.hidden=YES;
+        _headImage.hidden=YES;
+        _titleLab.hidden=YES;
+        _planeImg.image=[UIImage imageNamed:@"btn_p_green"];
+        _planeImg.top=KEDGE_DISTANCE+5;
+        _planeImg.left=KEDGE_DISTANCE;
+        _destLab.top=KEDGE_DISTANCE;
+        _destLab.left=_planeImg.right+5;
+        _destLab.textColor=[UIColor ZYZC_TextBlackColor];
+        _destLab.font=[UIFont systemFontOfSize:18];
+        _iconBgView.top=_lineView.bottom+KEDGE_DISTANCE;
+        _nameLab.top=_lineView.bottom+KEDGE_DISTANCE;
+        _sexImg.top=_nameLab.top;
+        _vipImg.top=_nameLab.top;
+        _destenceLab.top=_nameLab.top;
+        _jobLab.top=_nameLab.bottom+3;
+        _infoLab.top=_jobLab.bottom+3;
+        _moneyLab.top=_iconBgView.bottom+KEDGE_DISTANCE-4;
+        _startLab.top=_moneyLab.top;
+        _emptyProgress.top=_moneyLab.bottom+5;
+        _zcInfoView.top=_emptyProgress.bottom+5;
+        _zcInfoView.height=40;
+        _interstView.top=_infoLab.bottom+3;
+        //添加特长
+        NSArray *intersts=@[@"旅游",@"唱歌",@"跳舞",@"自驾",@"文艺"];
+        NSArray *subViews=[_interstView subviews];
+        for (UIView *obj in subViews) {
+            if ([obj isKindOfClass:[UILabel class]]) {
+                [obj removeFromSuperview];
+            }
+        }
+        CGFloat edg=5*KCOFFICIEMNT;
+        for (int i=0; i<intersts.count; i++) {
+            UILabel *lab=[self createTextLab];
+            CGFloat width=[ZYZCTool calculateStrLengthByText:intersts[i] andFont:lab.font andMaxWidth:KSCREEN_W].width+5*KCOFFICIEMNT;
+            lab.frame=CGRectMake((edg+width)*i, 4, width, 16) ;
+            lab.text=intersts[i];
+            [_interstView addSubview:lab];
+        }
+    }
+
+    //我的众筹
+    if (oneModel.zcType==Mylist) {
+        bgImg.height=MY_ZC_CELL_HEIGHT;
+        _zcInfoView.height=40;
+    }
+    
+    NSDate *nowDate=[NSDate date];
+    _vipImg.hidden=NO;
+    _destenceLab.hidden=NO;
     //标题
     _titleLab.text=oneModel.product.productName;
     //风景图
-    [_headImage sd_setImageWithURL:[NSURL URLWithString:oneModel.product.headImage]  placeholderImage:[UIImage imageNamed:@"abc"]];
+    if (!_headImage.hidden) {
+         [_headImage sd_setImageWithURL:[NSURL URLWithString:oneModel.product.headImage]  placeholderImage:[UIImage imageNamed:@"abc"]];
+    }
     //计算目的地的文字长度
     NSMutableString *place=[NSMutableString string];
     NSArray *dest=[ZYZCTool turnJsonStrToArray:oneModel.product.productDest];
@@ -207,13 +276,12 @@
     //个人信息
     NSMutableString *userInfo=[NSMutableString string];
         //添加年龄
-        NSDate *nowDate=[NSDate date];
         int age=0;
         if (oneModel.user.birthday.length) {
             NSDate *brithDay=[NSDate dateFromString:[self changStrToDateStr:oneModel.user.birthday]];
-            int days=[NSDate getDayNumbertoDay:nowDate beforDay:brithDay]+1;
+            int days=[NSDate getDayNumbertoDay:brithDay beforDay:nowDate]+1;
             age=days/365;
-            [userInfo appendString:[NSString stringWithFormat:@"%d",age]];
+            [userInfo appendString:[NSString stringWithFormat:@"%d岁",age]];
         }
         //添加星座
         if (oneModel.user.constellation.length) {
@@ -278,7 +346,61 @@
     NSString *productEndStr=[self changStrToDateStr:oneModel.product.productEndTime];
     NSDate *productEndDate=[NSDate dateFromString:productEndStr];
     int leftDays=[NSDate getDayNumbertoDay:nowDate beforDay:productEndDate]+1;
+    if (leftDays<0) {
+        leftDays=0;
+    }
     _zcInfoView.leftDayLab.text=[NSString stringWithFormat:@"%d",leftDays];
+    
+//    if (oneModel.zcType==Mylist) {
+//        // 判断项目状态
+//        if ([oneModel.product.status integerValue]==1) {
+//            oneModel.zcStateType=ZCStateTypeGoing;
+//        }
+//        else if ([oneModel.product.status integerValue]==2) {
+//            oneModel.zcStateType=ZCStateTypeFail;
+//            _zcInfoView.hidden=YES;
+//            [_button01 setTitle:@"众筹失败" forState:UIControlStateNormal];
+//            _button01.hidden=NO;
+//            _button01.enabled=NO;
+//        }
+//        else if ([oneModel.product.status integerValue]==3)
+//        {
+//            //旅行开始时间
+//            NSString *startTravelDateStr=[self changStrToDateStr:oneModel.product.travelstartTime];
+//            NSDate *startTravelDate=[NSDate dateFromString:startTravelDateStr];
+//            
+//            int toStartTraveDays=[NSDate getDayNumbertoDay:nowDate beforDay:startTravelDate]+1;
+//            //旅行结束时间
+//    //        NSString *endTravelDateStr=[self changStrToDateStr:oneModel.product.travelendTime];
+//    //        NSDate *endTravelDate=[NSDate dateFromString:endTravelDateStr];
+//    //        int toEndTraveDays=[NSDate getDayNumbertoDay:nowDate beforDay:endTravelDate]+1;
+//            if (leftDays==0&&toStartTraveDays>0) {
+//                _zcInfoView.hidden=YES;
+//                oneModel.zcStateType=ZCStateTypeChoosePartner;
+//                [_button01 setTitle:@"选择同游" forState:UIControlStateNormal];
+//                _button01.hidden=NO;
+//            }
+//            else if (leftDays==0&&toStartTraveDays<=0)
+//            {
+//                _zcInfoView.hidden=YES;
+//                oneModel.zcStateType=ZCStateTypeTypeTraveling;
+//                [_button01 setTitle:@"上传游记" forState:UIControlStateNormal];
+//                _button01.hidden=NO;
+//                [_button02 setTitle:@"执行回报" forState:UIControlStateNormal];
+//                _button02.hidden=NO;
+//            }
+//        }
+//    }
+}
+
+-(void)getDetailData
+{
+    
+}
+
+#pragma mark --- button点击时间
+-(void)clickBtn:(UIButton *)button
+{
     
 }
 
@@ -291,18 +413,64 @@
     return lab;
 }
 
-#pragma mark --- 将2016-1-1格式转成2016-01－01
+-(UILabel *)createTextLab
+{
+    UILabel *lab=[[UILabel alloc]init];
+    lab.textColor=[UIColor ZYZC_TextGrayColor];
+    lab.font=[UIFont systemFontOfSize:13];
+    lab.textAlignment=NSTextAlignmentCenter;
+    lab.layer.borderWidth=1;
+    lab.layer.borderColor=[UIColor ZYZC_MainColor].CGColor;
+    return lab;
+}
+
+
+#pragma mark --- 创建btn
+-(UIButton *)createBtnWithFrame:(CGRect )frame andBorderColor:(UIColor *)color
+{
+    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame=frame;
+    btn.layer.cornerRadius=KCORNERRADIUS;
+    btn.layer.masksToBounds=YES;
+    btn.layer.borderWidth=2;
+    [btn setTitleColor:[UIColor ZYZC_TextBlackColor] forState:UIControlStateNormal];
+    btn.layer.borderColor=color.CGColor;
+    [btn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
+    btn.titleLabel.textColor=[UIColor ZYZC_TextBlackColor];
+    btn.titleLabel.font=[UIFont systemFontOfSize:15];
+    btn.hidden=YES;
+    return btn;
+}
+
+#pragma mark --- 将2016-1-1或20160101格式转成2016-01－01
 -(NSString *)changStrToDateStr:(NSString *)string
 {
-    NSMutableArray *subArr=[NSMutableArray arrayWithArray:[string componentsSeparatedByString:@"-"]];
-    for (int i=0;i<subArr.count;i++) {
-        NSString *str=subArr[i];
-        if (str.length<2) {
-            NSString *newStr=[NSString stringWithFormat:@"0%@",str];
-            [subArr replaceObjectAtIndex:i withObject:newStr];
+    //此处可能存在两种类型的数据需要转换：2016-1-1，20160101
+    //判断是哪一种
+    NSRange range=[string rangeOfString:@"-"];
+    //第一种情况  2016-1-1
+    if (range.length) {
+        NSMutableArray *subArr=[NSMutableArray arrayWithArray:[string componentsSeparatedByString:@"-"]];
+        for (int i=0;i<subArr.count;i++) {
+            NSString *str=subArr[i];
+            if (str.length<2) {
+                NSString *newStr=[NSString stringWithFormat:@"0%@",str];
+                [subArr replaceObjectAtIndex:i withObject:newStr];
+            }
         }
+        return [subArr componentsJoinedByString:@"-"];
     }
-    return [subArr componentsJoinedByString:@"-"];
+    //第二种情况  20160101
+    else
+    {
+        if (string.length==8) {
+            NSMutableString *newStr=[NSMutableString stringWithString:string];
+            [newStr insertString:@"-" atIndex:4];
+            [newStr insertString:@"-" atIndex:string.length-2];
+            return newStr;
+        }
+        return nil;
+    }
 }
 
 

@@ -9,13 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "ZCInfoView.h"
 #import "ZCListModel.h"
+
 #define PRODUCT_CELL_HEIGHT 195+135*KCOFFICIEMNT
+
+#define PRODUCT_DETAIL_CELL_HEIGHT 210
+
+#define MY_ZC_CELL_HEIGHT   220+135*KCOFFICIEMNT
+
 @interface ZCOneProductCell : UITableViewCell
 @property (nonatomic, strong) UILabel      *titleLab;
 @property (nonatomic, strong) UILabel      *recommendLab;
 @property (nonatomic, strong) UIImageView  *headImage;
+@property (nonatomic, strong) UIImageView *planeImg;
 @property (nonatomic, strong) UILabel      *destLab;
 @property (nonatomic, strong) UIImageView  *destLayerImg;
+@property (nonatomic, strong) UIView       *iconBgView;
 @property (nonatomic, strong) UIImageView  *iconImage;
 @property (nonatomic, strong) UILabel      *nameLab;
 @property (nonatomic, strong) UIImageView  *sexImg;
@@ -28,6 +36,9 @@
 @property (nonatomic, strong) UIImageView  *emptyProgress;
 @property (nonatomic, strong) UIImageView  *fillProgress;
 @property (nonatomic, weak  ) ZCInfoView   *zcInfoView;
+@property (nonatomic, strong) UIScrollView *interstView;
+
+@property (nonatomic, strong) UIView       *lineView;
 
 @property (nonatomic, strong) ZCOneModel *oneModel;
 

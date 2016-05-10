@@ -95,6 +95,8 @@
     else if (indexPath.row == 2)
     {
         ZCMainController *myTravelVC=[[ZCMainController alloc]init];
+        myTravelVC.zcType=Mylist;
+        myTravelVC.hidesBottomBarWhenPushed=YES;
         [self.viewController.navigationController pushViewController:myTravelVC animated:YES];
     }
 }

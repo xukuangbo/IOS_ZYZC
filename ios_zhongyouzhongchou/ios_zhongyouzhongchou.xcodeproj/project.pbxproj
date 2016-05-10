@@ -1133,6 +1133,10 @@
 				2CF7EAFE1CC7852A007074FE /* ZCDetailReturnShowTableCell */,
 				2CF7EAFD1CC78507007074FE /* ZCDetailArrangeShowTableCell */,
 				2CF7EAFB1CC784A8007074FE /* ZCDetailIntroShowTableCell */,
+				2C4EEFC21CC6316900AA99F6 /* ZCDetailFirstCell.h */,
+				2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */,
+				2CCB52EB1CC70F1800F99CD3 /* ZCDetailTableHeadView.h */,
+				2CCB52EC1CC70F1800F99CD3 /* ZCDetailTableHeadView.m */,
 				2CDCE4951CCA29EB00873915 /* ZYZCCusomMovieImage.h */,
 				2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */,
 				04A99C7D1CBF848D00C6F5F0 /* ZCFilterTableViewCell.h */,
@@ -1145,10 +1149,6 @@
 				2CAF7BB51CE0363600CB0885 /* ZCInfoView.h */,
 				2CAF7BB61CE0363600CB0885 /* ZCInfoView.m */,
 				2CAF7BBA1CE0390D00CB0885 /* ZCInfoView.xib */,
-				2C4EEFC21CC6316900AA99F6 /* ZCDetailFirstCell.h */,
-				2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */,
-				2CCB52EB1CC70F1800F99CD3 /* ZCDetailTableHeadView.h */,
-				2CCB52EC1CC70F1800F99CD3 /* ZCDetailTableHeadView.m */,
 			);
 			path = ZCView;
 			sourceTree = "<group>";
