@@ -32,23 +32,24 @@
         self.titleLabel = titleLabel;
         
         //打卡
-        UIButton *playCardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        playCardBtn.size = CGSizeMake(80, 30);
-//        playCardBtn.top = KEDGE_DISTANCE;
-        playCardBtn.centerY = centerCellRowHeight * 0.5;
-        playCardBtn.right = KSCREEN_W - KEDGE_DISTANCE * 3;
-        [playCardBtn setBackgroundImage:[UIImage imageNamed:@"bg_daka"] forState:UIControlStateNormal];
-        playCardBtn.hidden = YES;
-        [playCardBtn setTitle:@"打卡" forState:UIControlStateNormal];
-        [self.contentView addSubview:playCardBtn];
-        self.playCardBtn = playCardBtn;
+//        UIButton *playCardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        playCardBtn.size = CGSizeMake(80, 30);
+////        playCardBtn.top = KEDGE_DISTANCE;
+//        playCardBtn.centerY = centerCellRowHeight * 0.5;
+//        playCardBtn.right = KSCREEN_W - KEDGE_DISTANCE * 3;
+//        [playCardBtn setBackgroundImage:[UIImage imageNamed:@"bg_daka"] forState:UIControlStateNormal];
+//        playCardBtn.hidden = YES;
+//        [playCardBtn setTitle:@"打卡" forState:UIControlStateNormal];
+//        [self.contentView addSubview:playCardBtn];
+//        self.playCardBtn = playCardBtn;
 //        btn_rightin
         UIImageView *rightTin = [[UIImageView alloc] init];
         rightTin.size = CGSizeMake(10, 20);
         rightTin.centerY = centerCellRowHeight * 0.5;
         rightTin.right = KSCREEN_W - KEDGE_DISTANCE * 3;
         rightTin.image = [UIImage imageNamed:@"btn_rightin"];
-        [self.contentView insertSubview:rightTin belowSubview:playCardBtn];
+//        [self.contentView insertSubview:rightTin belowSubview:playCardBtn];
+        [self.contentView addSubview:rightTin];
         self.rightTin = rightTin;
         
         //红色点点

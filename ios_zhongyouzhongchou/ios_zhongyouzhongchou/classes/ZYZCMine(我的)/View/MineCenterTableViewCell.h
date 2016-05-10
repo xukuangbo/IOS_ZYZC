@@ -11,7 +11,7 @@
 @interface MineCenterTableViewCell : UITableViewCell
 @property (nonatomic, weak) UIImageView *iconView;
 @property (nonatomic, weak) UILabel *titleLabel;
-@property (nonatomic, weak) UIButton *playCardBtn;
+//@property (nonatomic, weak) UIButton *playCardBtn;
 @property (nonatomic, weak) UIImageView *rightTin;
 @property (nonatomic, weak) UIView *redPointView;
 @end
