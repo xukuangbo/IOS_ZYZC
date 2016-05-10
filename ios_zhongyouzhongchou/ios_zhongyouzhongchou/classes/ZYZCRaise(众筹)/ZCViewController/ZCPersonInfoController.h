@@ -14,6 +14,9 @@ typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
     SupportType,
     ShareType
 };
+
 @interface ZCPersonInfoController : ZYZCBaseViewController
+
+@property (nonatomic, copy  ) NSNumber *productId;
 
 @end

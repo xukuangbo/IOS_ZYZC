@@ -77,7 +77,7 @@
                             </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.23300107758620689" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.19625538793103448" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="LHY-WU-BKT" firstAttribute="top" secondItem="RrG-M3-Ib8" secondAttribute="top" constant="4" id="5sV-QR-bkp"/>
                             <constraint firstAttribute="width" constant="82" id="7C6-d7-hNY"/>

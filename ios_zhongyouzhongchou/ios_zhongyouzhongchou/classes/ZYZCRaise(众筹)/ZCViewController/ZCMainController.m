@@ -9,7 +9,7 @@
 #define GET_ALL_LIST(pageNo) [NSString stringWithFormat:@"cache=false&orderType=1&pageNo=%d&pageSize=10",pageNo]
 
 #import "ZCMainController.h"
-#import "ZCMainTableViewCell.h"
+#import "ZCOneProductCell.h"
 #import "ZCFilterTableViewCell.h"
 #import "ZCPersonInfoController.h"
 #import "ZCListModel.h"
@@ -34,7 +34,6 @@
 //    [self setNavBar];
     _listArr=[NSMutableArray array];
     _pageNo=1;
-    self.title=@"众筹列表";
     [self getHttpData];
     [self configUI];
 }
@@ -95,6 +94,9 @@
 {
     [ZYZCHTTPTool getHttpDataByURL:[NSString stringWithFormat:@"%@%@",LISTALLPRODUCTS,GET_ALL_LIST(_pageNo)] withSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
+            if (_pageNo==1) {
+                [_listArr removeAllObjects];
+            }
             _listModel=[[ZCListModel alloc]mj_setKeyValues:result];
             for(ZCOneModel *oneModel in _listModel.data)
             {
@@ -131,14 +133,11 @@
     _table.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
     _table.backgroundColor=[UIColor ZYZC_BgGrayColor];
     [self.view addSubview:_table];
-    UINib *nib=[UINib nibWithNibName:@"ZCMainTableViewCell" bundle:nil];
-    [_table registerNib:nib forCellReuseIdentifier:@"ZCMainTableViewCell"];
     _table.separatorStyle=UITableViewCellSeparatorStyleNone;
     
     //添加下拉刷新动画效果
     MJRefreshGifHeader *gifHeader=[MJRefreshGifHeader headerWithRefreshingBlock:^{
         _pageNo=1;
-        [_listArr removeAllObjects];
         [self getHttpData];
     }];
     UIImage *img01=[UIImage imageNamed:@"btn_dy_pre"];
@@ -146,8 +145,10 @@
     UIImage *img03=[UIImage imageNamed:@"btn_ht_pre"];
     UIImage *img04=[UIImage imageNamed:@"btn_lxxj_pre"];
     
-    [gifHeader setImages:@[img01,img02,img03,img04] duration:0.4 forState:MJRefreshStatePulling];
-     gifHeader.lastUpdatedTimeLabel.hidden= YES;
+    [gifHeader setImages:@[img01,img02,img03,img04]  forState:MJRefreshStatePulling];
+     gifHeader.lastUpdatedTimeLabel.hidden=YES;
+//    gifHeader.gifView.contentMode=
+     gifHeader.stateLabel.textColor=[UIColor ZYZC_TextGrayColor04];
     _table.mj_header=gifHeader;
     
     //添加上拉刷新
@@ -208,9 +209,13 @@
 {
     //tableView为主视图的table
     if (tableView==_table) {
-        ZCMainTableViewCell *mainCell=[tableView dequeueReusableCellWithIdentifier:@"ZCMainTableViewCell"];
-        mainCell.oneModel=_listArr[indexPath.row];
-        return mainCell;
+        NSString *cellId=@"productCell";
+        ZCOneProductCell *productCell=[tableView dequeueReusableCellWithIdentifier:cellId];
+        if (!productCell) {
+            productCell=[[ZCOneProductCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        }
+        productCell.oneModel=_listArr[indexPath.section];
+        return productCell;
     }
     //tableView为过滤视图中的table
     NSArray *titleArr=@[@"看成功",@"看全部"];
@@ -227,7 +232,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView==_table) {
-        return 186.5+150*KCOFFICIEMNT;
+        return PRODUCT_CELL_HEIGHT;
     }
     return 39.5;
 }
@@ -259,6 +264,8 @@
         //推出信息详情页
         ZCPersonInfoController *personInfoVC=[[ZCPersonInfoController alloc]init];
         personInfoVC.hidesBottomBarWhenPushed=YES;
+        ZCOneModel *oneModel=_listArr[indexPath.section];
+        personInfoVC.productId=oneModel.product.productId;
         [self.navigationController pushViewController:personInfoVC animated:YES];
     }
     else

@@ -11,6 +11,7 @@
 #import "MineHeadView.h"
 #import "MineCenterTableViewCell.h"
 #import "MineMessageController.h"
+#import "ZCMainController.h"
 @interface MineCenterTableView()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSArray *titleArray;
@@ -65,7 +66,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // 向下拽了多少距离
-    MineViewController *VC = (MineViewController *)[self getVC];
+    MineViewController *VC = (MineViewController *)self.viewController;
     CGFloat down = -(MineTopViewH * KCOFFICIEMNT) - scrollView.contentOffset.y;
     if (down < 0){
         VC.topView.top = down;
@@ -79,21 +80,6 @@
     }
 }
 
--(UIViewController *)getVC
-{
-    UIResponder *next = self.nextResponder;
-    while (next != nil) {
-        if ([next isKindOfClass:[UIViewController class]]) {
-            
-            return (UIViewController *)next;
-        }
-        
-        next = next.nextResponder;
-    }
-    
-    return nil;
-}
-
 /**
  *  点击时候调用
  */
@@ -104,7 +90,12 @@
         
 //        这里弹到消息界面
         MineMessageController *messageVC = [[MineMessageController alloc] init];
-        [[self getVC].navigationController pushViewController:messageVC animated:YES];
+        [self.viewController.navigationController pushViewController:messageVC animated:YES];
+    }
+    else if (indexPath.row == 2)
+    {
+        ZCMainController *myTravelVC=[[ZCMainController alloc]init];
+        [self.viewController.navigationController pushViewController:myTravelVC animated:YES];
     }
 }
 

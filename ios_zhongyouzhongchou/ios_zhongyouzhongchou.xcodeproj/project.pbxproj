@@ -103,7 +103,6 @@
 		04A99CCF1CBF848D00C6F5F0 /* MineHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C731CBF848D00C6F5F0 /* MineHeadView.m */; };
 		04A99CD01CBF848D00C6F5F0 /* ZCDetailInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C771CBF848D00C6F5F0 /* ZCDetailInfoModel.m */; };
 		04A99CD11CBF848D00C6F5F0 /* ZCFilterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C791CBF848D00C6F5F0 /* ZCFilterModel.m */; };
-		04A99CD21CBF848D00C6F5F0 /* ZCMainModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C7B1CBF848D00C6F5F0 /* ZCMainModel.m */; };
 		04A99CD31CBF848D00C6F5F0 /* ZCFilterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C7E1CBF848D00C6F5F0 /* ZCFilterTableViewCell.m */; };
 		04A99CD41CBF848D00C6F5F0 /* ZCMainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C801CBF848D00C6F5F0 /* ZCMainTableViewCell.m */; };
 		04A99CD51CBF848D00C6F5F0 /* ZCMainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A99C811CBF848D00C6F5F0 /* ZCMainTableViewCell.xib */; };
@@ -396,8 +395,6 @@
 		04A99C771CBF848D00C6F5F0 /* ZCDetailInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailInfoModel.m; sourceTree = "<group>"; };
 		04A99C781CBF848D00C6F5F0 /* ZCFilterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCFilterModel.h; sourceTree = "<group>"; };
 		04A99C791CBF848D00C6F5F0 /* ZCFilterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCFilterModel.m; sourceTree = "<group>"; };
-		04A99C7A1CBF848D00C6F5F0 /* ZCMainModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCMainModel.h; sourceTree = "<group>"; };
-		04A99C7B1CBF848D00C6F5F0 /* ZCMainModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCMainModel.m; sourceTree = "<group>"; };
 		04A99C7D1CBF848D00C6F5F0 /* ZCFilterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCFilterTableViewCell.h; sourceTree = "<group>"; };
 		04A99C7E1CBF848D00C6F5F0 /* ZCFilterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCFilterTableViewCell.m; sourceTree = "<group>"; };
 		04A99C7F1CBF848D00C6F5F0 /* ZCMainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCMainTableViewCell.h; sourceTree = "<group>"; };
@@ -1122,8 +1119,6 @@
 				04A99C771CBF848D00C6F5F0 /* ZCDetailInfoModel.m */,
 				04A99C781CBF848D00C6F5F0 /* ZCFilterModel.h */,
 				04A99C791CBF848D00C6F5F0 /* ZCFilterModel.m */,
-				04A99C7A1CBF848D00C6F5F0 /* ZCMainModel.h */,
-				04A99C7B1CBF848D00C6F5F0 /* ZCMainModel.m */,
 				2C4615A81CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.h */,
 				2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */,
 				2CD4B4441CCDA8A0006A7CE8 /* ZCDetailReturnFirstCellModel.h */,
@@ -1809,7 +1804,6 @@
 				2C4EEFC01CC60D8600AA99F6 /* WeekDayView.m in Sources */,
 				04A99C8F1CBF848D00C6F5F0 /* UIView+ViewController.m in Sources */,
 				04F8362D1CD7225200140980 /* TacticSingleLongPicture.m in Sources */,
-				04A99CD21CBF848D00C6F5F0 /* ZCMainModel.m in Sources */,
 				04A99CAD1CBF848D00C6F5F0 /* MoreFZCRaiseMoneyFirstCell.m in Sources */,
 				04A99CB21CBF848D00C6F5F0 /* ReturnCellBaseBGView.m in Sources */,
 				04A99CEE1CBF851500C6F5F0 /* UIView+CustomFrame.m in Sources */,
