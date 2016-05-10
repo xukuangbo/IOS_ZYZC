@@ -53,6 +53,7 @@
      *  创建Scrollview
      */
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49)];
+    scrollView.bounces = YES;
     scrollView.backgroundColor = [UIColor clearColor];
     scrollView.delegate = self;
     [self.view addSubview:scrollView];
@@ -73,8 +74,6 @@
      *  创建文字
      */
     UILabel *labelView = [[UILabel alloc] init];
-//    labelView.lineBreakMode = NSLineBreakByCharWrapping;
-//    labelView.textAl  ignment = NSTextAlignmentCenter;
     labelView.layer.cornerRadius = 5;
     labelView.layer.masksToBounds = YES;
     labelView.font = labelViewFont;
@@ -98,6 +97,11 @@
     CGFloat labelViewW = KSCREEN_W - KEDGE_DISTANCE * 2;
     CGFloat labelViewH = 0;
     if (tacticSingleTipsModel.tipsText) {
+//        NSString *str = [NSString string];
+//        NSLog(@"%@",tacticSingleTipsModel.tipsText);
+//        NSArray *tempArray = [tacticSingleTipsModel.tipsText componentsSeparatedByString:@"\r\n"];
+//        NSLog(@"%@",tempArray);
+        
         CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticSingleTipsModel.tipsText andFont:labelViewFont andMaxWidth:labelViewW];
         labelViewH = textSize.height;
     }else{

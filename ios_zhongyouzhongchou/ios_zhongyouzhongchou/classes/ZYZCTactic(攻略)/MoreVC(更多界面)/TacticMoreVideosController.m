@@ -15,7 +15,7 @@
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
 #define naviHeight 64
 @interface TacticMoreVideosController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
-//@property (nonatomic, assign) PushVCType pushType;
+@property (nonatomic, weak) UICollectionView *collectionView;
 @end
 static NSString *const ID = @"MoreCollectioncell";
 @implementation TacticMoreVideosController
@@ -41,6 +41,7 @@ static NSString *const ID = @"MoreCollectioncell";
     collectionView.dataSource = self;
     collectionView.delegate = self;
     [self.view addSubview:collectionView];
+    self.collectionView = collectionView;
 }
 
 #pragma mark - UICollectionViewDataSource

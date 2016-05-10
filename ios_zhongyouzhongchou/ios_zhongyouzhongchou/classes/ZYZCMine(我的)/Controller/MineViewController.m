@@ -4,7 +4,6 @@
 //
 //  Created by mac on 16/4/5.
 //  Copyright © 2016年 liuliang. All rights reserved.
-//
 
 #import "MineViewController.h"
 #import "MineHeadView.h"
@@ -107,7 +106,6 @@
     /**
      *  创建centertableView
      */
-//    UITableView *centerTableView = [[UITableView alloc] initWithFrame:CGRectMake(KEDGE_DISTANCE, 0, KSCREEN_W - KEDGE_DISTANCE * 2, KSCREEN_H - KTABBAR_HEIGHT - KEDGE_DISTANCE) style:UITableViewStylePlain];
     MineCenterTableView *centerTableView = [[MineCenterTableView alloc] initWithFrame:CGRectMake(KEDGE_DISTANCE, 0, KSCREEN_W - KEDGE_DISTANCE * 2, KSCREEN_H - KTABBAR_HEIGHT - KEDGE_DISTANCE) style:UITableViewStylePlain];
     [self.view addSubview:centerTableView];
     self.centerTableView = centerTableView;
@@ -139,24 +137,24 @@
     return cell;
 }
 
-/**
- *  暂时不做下拉放大
- */
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    // 向下拽了多少距离
-    CGFloat down = -(MineTopViewH * KCOFFICIEMNT) - scrollView.contentOffset.y;
-    if (down < 0){
-        self.topView.top = down;
-        return;
-    }else{
-        self.topView.top = 0;
-        CGRect frame = self.topView.frame;
-        // 5决定图片变大的速度,值越大,速度越快
-        frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 1;
-        self.topView.frame = frame;
-    }
-}
+///**
+// *  暂时不做下拉放大
+// */
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    // 向下拽了多少距离
+//    CGFloat down = -(MineTopViewH * KCOFFICIEMNT) - scrollView.contentOffset.y;
+//    if (down < 0){
+//        self.topView.top = down;
+//        return;
+//    }else{
+//        self.topView.top = 0;
+//        CGRect frame = self.topView.frame;
+//        // 5决定图片变大的速度,值越大,速度越快
+//        frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 1;
+//        self.topView.frame = frame;
+//    }
+//}
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 //{

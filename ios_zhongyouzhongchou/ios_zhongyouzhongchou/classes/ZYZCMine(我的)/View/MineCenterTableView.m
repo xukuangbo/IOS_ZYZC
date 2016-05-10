@@ -59,25 +59,25 @@
     return cell;
 }
 
-/**
- *  暂时不做下拉放大
- */
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    // 向下拽了多少距离
-    MineViewController *VC = (MineViewController *)[self getVC];
-    CGFloat down = -(MineTopViewH * KCOFFICIEMNT) - scrollView.contentOffset.y;
-    if (down < 0){
-        VC.topView.top = down;
-        return;
-    }else{
-        VC.topView.top = 0;
-        CGRect frame = VC.topView.frame;
-        // 5决定图片变大的速度,值越大,速度越快
-        frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 1;
-        VC.topView.frame = frame;
-    }
-}
+///**
+// *  暂时不做下拉放大
+// */
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    // 向下拽了多少距离
+//    MineViewController *VC = (MineViewController *)[self getVC];
+//    CGFloat down = -(MineTopViewH * KCOFFICIEMNT) - scrollView.contentOffset.y;
+//    if (down < 0){
+//        VC.topView.top = down;
+//        return;
+//    }else{
+//        VC.topView.top = 0;
+//        CGRect frame = VC.topView.frame;
+//        // 5决定图片变大的速度,值越大,速度越快
+//        frame.size.height = MineTopViewH * KCOFFICIEMNT + down * 1;
+//        VC.topView.frame = frame;
+//    }
+//}
 
 -(UIViewController *)getVC
 {
