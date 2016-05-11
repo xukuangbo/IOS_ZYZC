@@ -14,7 +14,7 @@
 #import "ZCOneProductCell.h"
 #import "ZCFilterTableViewCell.h"
 #import "ZCPersonInfoController.h"
-
+#import "ZCNoneDataView.h"
 @interface ZCMainController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UISegmentedControl *segmentedView;
@@ -25,6 +25,7 @@
 @property (nonatomic, assign) int pageNo;
 @property (nonatomic, strong) ZCListModel *listModel;
 @property (nonatomic, strong) NSMutableArray *listArr;
+@property (nonatomic, weak  ) ZCNoneDataView *noneDataView;
 
 @end
 
@@ -34,6 +35,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 //    [self setNavBar];
+    self.automaticallyAdjustsScrollViewInsets=YES;
     _listArr=[NSMutableArray array];
     _pageNo=1;
     _myZCType=MyPublish;
@@ -65,8 +67,6 @@
     _segmentedView.layer.masksToBounds=YES;
     [_segmentedView addTarget:self action:@selector(changeSegmented:) forControlEvents:UIControlEventValueChanged];
     [headView addSubview:_segmentedView];
-
-    
 }
 
 #pragma mark --- 创建所有众筹列表的NavBar
@@ -148,7 +148,9 @@
         NSLog(@"%@",result);
         if (isSuccess) {
             if (_pageNo==1) {
-                [_listArr removeAllObjects];
+                if (_listArr.count) {
+                    [_listArr removeAllObjects];
+                }
             }
             _listModel=[[ZCListModel alloc]mj_setKeyValues:result];
             for(ZCOneModel *oneModel in _listModel.data)
@@ -156,6 +158,29 @@
                 oneModel.zcType=_zcType;
                 [_listArr addObject:oneModel];
             }
+            
+            if (_zcType==Mylist&&!_listArr.count) {
+                NSArray *iconArr=@[@"icon_mxc_cy",@"icon_mxc_fq",@"icon_mxc_tj"];
+                NSArray *title01Arr=@[ZYLocalizedString(@"none_my_publish_01"),
+                                      ZYLocalizedString(@"none_my_join_01"),
+                                      ZYLocalizedString(@"none_my_recommend_01")];
+                NSArray *title02Arr=@[ZYLocalizedString(@"none_my_publish_02"),
+                                      ZYLocalizedString(@"none_my_join_02"),
+                                      ZYLocalizedString(@"none_my_recommend_02")];
+                _noneDataView.hidden=NO;
+                _table.hidden=YES;
+                
+                _noneDataView.iconView.image=[UIImage imageNamed:iconArr[_myZCType-1]];
+                _noneDataView.lab01.text=title01Arr[_myZCType-1];
+                _noneDataView.lab02.text=title02Arr[_myZCType-1];
+
+            }
+            else
+            {
+                _noneDataView.hidden=YES;
+                _table.hidden=NO;
+            }
+            
             [_table reloadData];
         }
         //停止下拉刷新
@@ -177,6 +202,16 @@
 {
     [self createTableView];
     [self createFitersView];
+    if (_zcType==Mylist) {
+        //添加我的行程中没数据状态的视图
+        NSArray* nibView =  [[NSBundle mainBundle] loadNibNamed:@"ZCNoneDataView" owner:nil options:nil];
+        _noneDataView=[nibView objectAtIndex:0];
+        _noneDataView.frame=CGRectMake(KEDGE_DISTANCE, 108+KEDGE_DISTANCE, KSCREEN_W-2*KEDGE_DISTANCE, KSCREEN_H-108-2*KEDGE_DISTANCE);
+        _noneDataView.layer.cornerRadius=KCORNERRADIUS;
+        _noneDataView.layer.masksToBounds=YES;
+        [self.view addSubview:_noneDataView];
+        _noneDataView.hidden=YES;
+    }
 }
 #pragma mark --- 创建tableView
 -(void)createTableView

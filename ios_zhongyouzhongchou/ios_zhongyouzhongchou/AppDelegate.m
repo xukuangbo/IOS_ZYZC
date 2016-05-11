@@ -49,7 +49,8 @@
      初始化微信
      */
     [self initWithWechat];
-    
+    [self getAppVersion];
+    [self deleteFailDataInOss];
 //    [self getFileToTmp];
     return YES;
 }
@@ -69,6 +70,19 @@
      UIStatusBarStyleLightContent];
 }
 
+#pragma mark --- 存储app版本号，判断app是否是下载或更新后第一次进入
+-(void)getAppVersion
+{
+    NSString *version=[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *myVersion=[user objectForKey:KAPP_VERSION];
+    //下载或更新后第一次进入
+    if (!myVersion||![myVersion isEqualToString:version]) {
+        [user setObject:version forKey:KAPP_VERSION];
+        [user synchronize];
+    }
+}
+
 /**
  初始化微信
  */
@@ -84,27 +98,6 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
-}
-
-#pragma mark --- 保存地名库
--(void)saveLocalDesct
-{
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    NSString *str=[user objectForKey:KFIRST_ENTER];
-    if (str) {
-        [ZYZCHTTPTool getHttpDataByURL:GETCOUNTRYINFO withSuccessGetBlock:^(id result, BOOL isSuccess) {
-            if (isSuccess) {
-                [user setObject:@"yes" forKey:KFIRST_ENTER];
-                [user synchronize];
-                
-            }
-            
-            NSLog(@"%@",result);
-            NSLog(@"%d",isSuccess);
-        } andFailBlock:^(id failResult) {
-            
-        }];
-    }
 }
 
 #pragma mark --- 在Documents中创建资源文件存放视屏、语音、图片
@@ -149,6 +142,24 @@
                        {
                            [manager removeItemAtPath:filePath error:nil];
                        });
+    }
+}
+
+#pragma mark --- 删除oss上上传失败的文件
+-(void)deleteFailDataInOss
+{
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *failDataFile=[user objectForKey:KFAIL_UPLOAD_OSS];
+    if (failDataFile) {
+        ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+        [ossManager deleteObjectsByPrefix:failDataFile SuccessUpload:^
+         {
+             [user setObject:nil forKey:KFAIL_UPLOAD_OSS];
+             [user synchronize];
+         }
+        andFailUpload:^
+         {
+         }];
     }
 }
 

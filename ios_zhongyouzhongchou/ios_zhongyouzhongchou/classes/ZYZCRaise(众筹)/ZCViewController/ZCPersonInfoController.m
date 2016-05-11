@@ -106,7 +106,7 @@
 #pragma mark --- 获取数据
 -(void)getHttpData
 {
-    _productId=@14;
+    _productId=@154;
     NSLog(@"%@,%@",[ZYZCTool getUserId],_productId);
     NSString *urlStr=KGET_DETAIL_PRODUCT([ZYZCTool getUserId],_productId);
     NSLog(@"%@",urlStr);

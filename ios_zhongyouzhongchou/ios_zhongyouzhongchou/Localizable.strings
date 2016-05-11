@@ -14,6 +14,17 @@
 "default_location"="杭州";
 
 /**
+ *  myZC_noneData
+ */
+"none_my_publish_01"  = "目前没有我发起的行程";
+"none_my_publish_02"  = "赶快发起一个吧~";
+"none_my_join_01"     = "目前没有我参与的行程";
+"none_my_join_02"     = "赶快参与一个吧~";
+"none_my_recommend_01"= "目前没有我推荐的行程";
+"none_my_recommend_02"= "赶快推荐一个吧~";
+
+
+/**
  * Error
  */
 "error_no_dest"="请添加旅行目的地";

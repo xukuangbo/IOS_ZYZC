@@ -158,7 +158,7 @@ OSSClient * client;
 
 
 #pragma mark --- 异步上传对象
-- (void )uploadObjectAsyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath withSuccessUpload:(SuccessUploadBlock )successUpload andFailUpload:(FailUploadBlock )failUpload{
+- (void )uploadObjectAsyncByFileName:(NSString *)fileName andFilePath:(NSString *)filePath withSuccessUpload:(GetSuccessBlock )successUpload andFailUpload:(GetFailBlock )failUpload{
       //获取文件名
     NSString *openId=[ZYZCTool getUserId];
     NSLog(@"openId:%@",openId);
@@ -243,7 +243,7 @@ OSSClient * client;
 }
 
 #pragma mark --- 删除某文件下的所有子文件
--(void)deleteObjectsByPrefix:(NSString *)prefix
+-(void)deleteObjectsByPrefix:(NSString *)prefix SuccessUpload:(GetSuccessBlock )successUpload andFailUpload:(GetFailBlock )failUpload
 {
     OSSGetBucketRequest * getBucket = [OSSGetBucketRequest new];
     getBucket.bucketName = _bucketName;
@@ -260,9 +260,15 @@ OSSClient * client;
                 NSString *objectKey=objectInfo[@"Key"];
                 [self deleteObjectByFileName:objectKey];
             }
+            if (successUpload) {
+                successUpload();
+            }
         }
         else{
             NSLog(@"get bucket failed, error: %@", task.error);
+            if (failUpload) {
+                failUpload();
+            }
         }
         return nil;
     }];
