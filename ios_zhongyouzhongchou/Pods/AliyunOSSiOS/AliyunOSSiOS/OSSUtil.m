@@ -12,7 +12,7 @@
 #import "CommonCrypto/CommonHMAC.h"
 #import "OSSModel.h"
 #import "OSSLog.h"
-#import "OSSHTTPDNSMini.h"
+#import "OSSHttpdns.h"
 
 NSString * const ALIYUN_HOST_SUFFIX = @".aliyuncs.com";
 NSString * const ALIYUN_OSS_TEST_ENDPOINT = @".aliyun-inc.com";
@@ -105,12 +105,47 @@ int32_t const CHUNK_SIZE = 8 * 1024;
     return [body dataUsingEncoding:NSUTF8StringEncoding];
 }
 
++ (BOOL)validateBucketName:(NSString *)bucketName {
+    if (bucketName == nil) {
+        return false;
+    }
+
+    static NSRegularExpression *regEx;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        regEx = [[NSRegularExpression alloc] initWithPattern:@"^[a-z0-9][a-z0-9_\\-]{2,62}$" options:NSRegularExpressionCaseInsensitive error:nil];
+    });
+    NSUInteger regExMatches = [regEx numberOfMatchesInString:bucketName options:0 range:NSMakeRange(0, [bucketName length])];
+    return regExMatches != 0;
+}
+
++ (BOOL)validateObjectKey:(NSString *)objectKey {
+    if (objectKey == nil) {
+        return false;
+    }
+
+    if (objectKey.length <= 0 || objectKey.length > 1023) {
+        return false;
+    }
+
+    if (![objectKey canBeConvertedToEncoding:NSUTF8StringEncoding]) {
+        return false;
+    }
+
+    unichar firstChar = [objectKey characterAtIndex:0];
+    if (firstChar == '/' || firstChar == '\\') {
+        return false;
+    }
+
+    return true;
+}
+
 + (NSString *)getIpByHost:(NSString *)host {
     if ([self isNetworkDelegateState]) {
         OSSLogDebug(@"current network is delegate state");
         return host;
     }
-    NSString * ip = [[OSSHTTPDNSMini sharedInstanceManage] getIpByHostAsync:host];
+    NSString * ip = [[OSSHttpdns sharedInstance] asynGetIpByHost:host];
     OSSLogDebug(@"resolved host %@ and get ip: %@", host, ip);
 
     return ip ? ip : host;
@@ -141,18 +176,20 @@ int32_t const CHUNK_SIZE = 8 * 1024;
 }
 
 + (NSString *)base64Md5ForData:(NSData *)data {
-    return [self base64ForData:[self dataMD5:data] length:CC_MD5_DIGEST_LENGTH];
+    uint8_t * bytes = (uint8_t *)[[self dataMD5:data] bytes];
+    return [self base64ForData:bytes length:CC_MD5_DIGEST_LENGTH];
 }
 
 + (NSString *)base64Md5ForFilePath:(NSString *)filePath {
-    return [self base64ForData:[self fileMD5:filePath] length:CC_MD5_DIGEST_LENGTH];
+    uint8_t * bytes = (uint8_t *)[[self fileMD5:filePath] bytes];
+    return [self base64ForData:bytes length:CC_MD5_DIGEST_LENGTH];
 }
 
 + (NSString *)base64Md5ForFileURL:(NSURL *)fileURL {
     return [self base64Md5ForFilePath:[fileURL path]];
 }
 
-+ (unsigned char *)dataMD5:(NSData *)data {
++ (NSData *)dataMD5:(NSData *)data {
     if(data == nil) {
         return nil;
     }
@@ -168,12 +205,12 @@ int32_t const CHUNK_SIZE = 8 * 1024;
             CC_MD5_Update(&md5, [subdata bytes], (CC_LONG)[subdata length]);
         }
     }
-    unsigned char * digestResult = (unsigned char *)malloc(CC_MD5_DIGEST_LENGTH * sizeof(unsigned char));
+    unsigned char digestResult[CC_MD5_DIGEST_LENGTH * sizeof(unsigned char)];
     CC_MD5_Final(digestResult, &md5);
-    return digestResult;
+    return [NSData dataWithBytes:(const void *)digestResult length:CC_MD5_DIGEST_LENGTH * sizeof(unsigned char)];
 }
 
-+ (unsigned char *)fileMD5:(NSString*)path {
++ (NSData *)fileMD5:(NSString*)path {
     NSFileHandle *handle = [NSFileHandle fileHandleForReadingAtPath:path];
     if(handle == nil) {
         return nil;
@@ -188,9 +225,9 @@ int32_t const CHUNK_SIZE = 8 * 1024;
             done = YES;
         }
     }
-    unsigned char * digestResult = (unsigned char *)malloc(CC_MD5_DIGEST_LENGTH * sizeof(unsigned char));
+    unsigned char digestResult[CC_MD5_DIGEST_LENGTH * sizeof(unsigned char)];
     CC_MD5_Final(digestResult, &md5);
-    return digestResult;
+    return [NSData dataWithBytes:(const void *)digestResult length:CC_MD5_DIGEST_LENGTH * sizeof(unsigned char)];
 }
 
 + (NSString *)convertMd5Bytes2String:(unsigned char *)md5Bytes {
@@ -204,11 +241,13 @@ int32_t const CHUNK_SIZE = 8 * 1024;
 }
 
 + (NSString *)dataMD5String:(NSData *)data {
-    return [self convertMd5Bytes2String:[self dataMD5:data]];
+    unsigned char * md5Bytes = (unsigned char *)[[self dataMD5:data] bytes];
+    return [self convertMd5Bytes2String:md5Bytes];
 }
 
 + (NSString *)fileMD5String:(NSString *)path {
-    return [self convertMd5Bytes2String:[self fileMD5:path]];
+    unsigned char * md5Bytes = (unsigned char *)[[self fileMD5:path] bytes];
+    return [self convertMd5Bytes2String:md5Bytes];
 }
 
 + (NSString*)base64ForData:(uint8_t *)input length:(int32_t)length {
@@ -803,6 +842,7 @@ int32_t const CHUNK_SIZE = 8 * 1024;
             @"gif": @"image/gif",
             @"ief": @"image/ief",
             @"jpeg": @"image/jpeg",
+            @"jpg" : @"image/jpeg",
             @"ktx": @"image/ktx",
             @"png": @"image/png",
             @"btif": @"image/prs.btif",

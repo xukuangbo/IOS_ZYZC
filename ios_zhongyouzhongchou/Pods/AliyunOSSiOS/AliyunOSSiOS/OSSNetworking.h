@@ -75,6 +75,7 @@ typedef NS_ENUM(NSInteger, OSSNetworkingRetryType) {
 @property (nonatomic, assign) int64_t payloadTotalBytesWritten;
 
 @property (nonatomic, assign) BOOL isBackgroundUploadFileTask;
+@property (nonatomic, assign) BOOL isHttpdnsEnable;
 
 @property (nonatomic, strong) OSSURLRequestRetryHandler * retryHandler;
 @property (nonatomic, assign) uint32_t currentRetryCount;
@@ -133,7 +134,6 @@ typedef NS_ENUM(NSInteger, OSSNetworkingRetryType) {
 @property (nonatomic, strong) OSSSyncMutableDictionary * sessionDelagateManager;
 @property (nonatomic, strong) OSSNetworkingConfiguration * configuration;
 @property (nonatomic, strong) OSSExecutor * taskExecutor;
-@property (atomic, copy) void (^backgroundSessionCompletionHandler)();
 
 - (instancetype)initWithConfiguration:(OSSNetworkingConfiguration *)configuration;
 - (OSSTask *)sendRequest:(OSSNetworkingRequestDelegate *)request;

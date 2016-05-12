@@ -36,10 +36,10 @@ $ cd Products && ls
 如果工程是通过pod管理依赖，那么在Podfile中加入以下依赖即可，不需要再导入framework：
 
 ```
-pod 'AliyunOSSiOS', '~> 2.1.4'
+pod 'AliyunOSSiOS', '~> 2.4.1'
 ```
 
-Cocoapods是一个非常优秀的依赖管理工具，推荐参考官方文档: [CocoaPods安装和使用教程](http://code4app.com/article/cocoapods-install-usage)。
+CocoaPods是一个非常优秀的依赖管理工具，推荐参考官方文档: [CocoaPods安装和使用教程](http://code4app.com/article/cocoapods-install-usage)。
 
 直接引入Framework和Pod依赖，两种方式选其一即可。
 

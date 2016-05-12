@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "ZYZCTabBarController.h"
 #import "ZYZCOSSManager.h"
-
+#import <RongIMKit/RongIMKit.h>
 #import "WXApi.h"
 #import "WXApiManager.h"
 @interface AppDelegate ()
@@ -49,10 +49,16 @@
      初始化微信
      */
     [self initWithWechat];
+    [self initRCloud];
     [self getAppVersion];
     [self deleteFailDataInOss];
 //    [self getFileToTmp];
     return YES;
+}
+
+-(void)initRCloud
+{
+    [[RCIM sharedRCIM] initWithAppKey:@"sfci50a7c25fi"];
 }
 
 #pragma mark --- 设置根控制器

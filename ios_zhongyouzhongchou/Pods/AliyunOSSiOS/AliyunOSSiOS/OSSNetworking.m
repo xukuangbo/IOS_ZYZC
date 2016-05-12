@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OSSDefine.h"
 #import "OSSNetworking.h"
 #import "OSSBolts.h"
 #import "OSSModel.h"
@@ -69,7 +70,7 @@
 
 + (instancetype)defaultRetryHandler {
     OSSURLRequestRetryHandler * retryHandler = [OSSURLRequestRetryHandler new];
-    retryHandler.maxRetryCount = 3;
+    retryHandler.maxRetryCount = OSSDefaultRetryCount;
     return retryHandler;
 }
 
@@ -84,6 +85,7 @@
     if (self = [super init]) {
         self.retryHandler = [OSSURLRequestRetryHandler defaultRetryHandler];
         self.interceptors = [[NSMutableArray alloc] init];
+        self.isHttpdnsEnable = YES;
     }
     return self;
 }
@@ -135,20 +137,18 @@
 #define URLENCODE(a) [OSSUtil encodeURL:(a)]
     OSSLogDebug(@"start to build request");
     // build base url string
-    NSString * urlString = nil; // self.allNeededMessage.endpoint;
+    NSString * urlString = self.allNeededMessage.endpoint;
 
     NSURL * endPointURL = [NSURL URLWithString:self.allNeededMessage.endpoint];
-    if ([OSSUtil isOssOriginBucketHost:endPointURL.host]) {
-        if (self.allNeededMessage.bucketName) {
-            urlString = [NSString stringWithFormat:@"%@://%@.%@", endPointURL.scheme, self.allNeededMessage.bucketName, endPointURL.host];
-        }
+    if ([OSSUtil isOssOriginBucketHost:endPointURL.host] && self.allNeededMessage.bucketName) {
+        urlString = [NSString stringWithFormat:@"%@://%@.%@", endPointURL.scheme, self.allNeededMessage.bucketName, endPointURL.host];
     }
 
-    NSURL * tempURL = (urlString == nil ? endPointURL : [NSURL URLWithString:urlString]);
-    NSString * originHost = tempURL.host;
-    if (!self.isAccessViaProxy) {
+    endPointURL = [NSURL URLWithString:urlString];
+    NSString * originHost = endPointURL.host;
+    if (!self.isAccessViaProxy && [OSSUtil isOssOriginBucketHost:endPointURL.host] && self.isHttpdnsEnable) {
         NSString * httpdnsResolvedResult = [OSSUtil getIpByHost:originHost];
-        urlString = [NSString stringWithFormat:@"%@://%@", tempURL.scheme, httpdnsResolvedResult];
+        urlString = [NSString stringWithFormat:@"%@://%@", endPointURL.scheme, httpdnsResolvedResult];
     }
 
     if (self.allNeededMessage.objectKey) {
@@ -254,11 +254,19 @@
         errorMessage = @"Bucket name should not be nil";
     }
 
+    if (self.bucketName && ![OSSUtil validateBucketName:self.bucketName]) {
+        errorMessage = @"Bucket name invalid";
+    }
+
     if (!self.objectKey &&
         (operType != OSSOperationTypeGetBucket && operType != OSSOperationTypeCreateBucket
          && operType != OSSOperationTypeDeleteBucket && operType != OSSOperationTypeGetService
          && operType != OSSOperationTypeGetBucketACL)) {
         errorMessage = @"Object key should not be nil";
+    }
+
+    if (self.objectKey && ![OSSUtil validateObjectKey:self.objectKey]) {
+        errorMessage = @"Object key invalid";
     }
 
     if (errorMessage) {
@@ -549,32 +557,6 @@
     completionHandler(NSURLSessionResponseAllow);
 }
 
-/* do not verify host domain */
-- (BOOL)evaluateServerTrustAcceptAllDomain:(SecTrustRef)serverTrust {
-    NSMutableArray *policies = [NSMutableArray array];
-    [policies addObject:(__bridge_transfer id)SecPolicyCreateBasicX509()];
-
-    SecTrustSetPolicies(serverTrust, (__bridge CFArrayRef)policies);
-
-    SecTrustResultType result;
-    SecTrustEvaluate(serverTrust, &result);
-
-    return (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed);
-}
-
-- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler {
-    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-        if ([self evaluateServerTrustAcceptAllDomain:challenge.protectionSpace.serverTrust]) {
-            NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
-            completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
-        } else {
-            completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
-        }
-    } else {
-        [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
-    }
-}
-
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     OSSNetworkingRequestDelegate * delegate = [self.sessionDelagateManager objectForKey:@(dataTask.taskIdentifier)];
 
@@ -604,14 +586,64 @@
     }
 }
 
-- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    OSSLogVerbose(@"%s - ", __PRETTY_FUNCTION__);
-    if (self.backgroundSessionCompletionHandler) {
-        void (^completeHandler)() = self.backgroundSessionCompletionHandler;
-        self.backgroundSessionCompletionHandler = nil;
-        OSSLogDebug(@"%s - call the complete handler.", __PRETTY_FUNCTION__);
-        completeHandler();
+- (BOOL)evaluateServerTrust:(SecTrustRef)serverTrust forDomain:(NSString *)domain {
+    /*
+     * 创建证书校验策略
+     */
+    NSMutableArray *policies = [NSMutableArray array];
+    if (domain) {
+        [policies addObject:(__bridge_transfer id)SecPolicyCreateSSL(true, (__bridge CFStringRef)domain)];
+    } else {
+        [policies addObject:(__bridge_transfer id)SecPolicyCreateBasicX509()];
     }
+
+    /*
+     * 绑定校验策略到服务端的证书上
+     */
+    SecTrustSetPolicies(serverTrust, (__bridge CFArrayRef)policies);
+
+
+    /*
+     * 评估当前serverTrust是否可信任，
+     * 官方建议在result = kSecTrustResultUnspecified 或 kSecTrustResultProceed
+     * 的情况下serverTrust可以被验证通过，https://developer.apple.com/library/ios/technotes/tn2232/_index.html
+     * 关于SecTrustResultType的详细信息请参考SecTrust.h
+     */
+    SecTrustResultType result;
+    SecTrustEvaluate(serverTrust, &result);
+
+    return (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed);
 }
 
+/*
+ * NSURLSession
+ */
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * __nullable credential))completionHandler {
+    if (!challenge) {
+        return;
+    }
+
+    NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+    NSURLCredential *credential = nil;
+
+    /*
+     * 获取原始域名信息。
+     */
+
+    NSString * host = [[task.currentRequest allHTTPHeaderFields] objectForKey:@"Host"];
+    if (!host) {
+        host = task.currentRequest.URL.host;
+    }
+
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        if ([self evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:host]) {
+            disposition = NSURLSessionAuthChallengeUseCredential;
+            credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+        }
+    } else {
+        disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+    }
+    // 对于其他的challenges直接使用默认的验证方案
+    completionHandler(disposition,credential);
+}
 @end
