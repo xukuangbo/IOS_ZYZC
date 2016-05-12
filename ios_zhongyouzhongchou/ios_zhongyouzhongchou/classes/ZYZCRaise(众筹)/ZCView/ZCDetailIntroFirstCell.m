@@ -50,12 +50,12 @@
 -(void)setCellModel:(ZCDetailProductModel *)cellModel
 {
     _cellModel=cellModel;
-    if (cellModel.voice) {
+//    if (cellModel.voice) {
         self.hasMovie=YES;
-    }
-    if (cellModel.voice) {
+//    }
+//    if (cellModel.voice) {
         self.hasVoice=YES;
-    }
+//    }
     if (cellModel.desc) {
        self.hasWord =YES;
     }
@@ -80,7 +80,10 @@
     //有视屏
     else
     {
-        [self.movieImg sd_setImageWithURL:[NSURL URLWithString:_cellModel.videoImg]];
+//        self.movieImg.playUrl=_cellModel.video;
+        self.movieImg.playUrl=@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvldivtdyH01mEvBmkoX-xC0/20160507190655/20160507190526.mp4";
+//        [self.movieImg sd_setImageWithURL:[NSURL URLWithString:_cellModel.videoImg]];
+         [self.movieImg sd_setImageWithURL:[NSURL URLWithString:@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvldivtdyH01mEvBmkoX-xC0/20160507190655/20160507190526.png"]];
         
     }
     //是否有语音
@@ -90,6 +93,9 @@
     else
     {
         self.voiceShow.voiceTime=50;
+//        self.voiceShow.voiceUrl=_cellModel.voice;
+        self.voiceShow.voiceUrl=@"tp://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160512105904/20160512105843.caf";
+        [self.voiceShow.iconImg sd_setImageWithURL:[NSURL URLWithString:_cellModel.user.faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"]];
     }
     //是否有文字
     if (!self.hasWord) {

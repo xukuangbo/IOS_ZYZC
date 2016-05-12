@@ -47,6 +47,9 @@
 
 @implementation ReportModel
 
-
++ (NSDictionary *)mj_objectClassInArray{
+    
+    return @{@"users":@"UserModel"};
+}
 
 @end

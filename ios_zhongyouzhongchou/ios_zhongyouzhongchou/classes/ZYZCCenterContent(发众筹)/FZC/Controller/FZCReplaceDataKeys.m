@@ -55,7 +55,7 @@ MJCodingImplementation
     self.title=manager.goal_travelTheme;
     self.spell_buy_price=(NSNumber *)manager.raiseMoney_totalMoney;
     if (manager.goal_goals.count>=2) {
-        NSMutableArray *arr=[NSMutableArray arrayWithObject:manager.goal_goals];
+        NSMutableArray *arr=[NSMutableArray arrayWithArray:manager.goal_goals];
         [arr removeObjectAtIndex:0];
         self.dest=arr;
     }

@@ -7,6 +7,11 @@
 //
 
 #import "ZCDetailIntroFirstCellVoiceShowView.h"
+#import <AVFoundation/AVFoundation.h>
+
+@interface ZCDetailIntroFirstCellVoiceShowView ()<AVAudioPlayerDelegate>
+@property (nonatomic, strong ) AVAudioPlayer *audioPlayer;
+@end
 
 @implementation ZCDetailIntroFirstCellVoiceShowView
 
@@ -42,11 +47,13 @@
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(listenVoice:)];
     [_voiceView addGestureRecognizer:tap];
     
-    _timeLab=[[UILabel alloc]initWithFrame:CGRectMake(_voiceView.right+KEDGE_DISTANCE, self.height-38, self.width-_voiceView.right-KEDGE_DISTANCE, 38)];
-    _timeLab.font=[UIFont systemFontOfSize:20];
-    _timeLab.textColor=[UIColor ZYZC_TextGrayColor04];
-    [self addSubview:_timeLab];
+//    _timeLab=[[UILabel alloc]initWithFrame:CGRectMake(_voiceView.right+KEDGE_DISTANCE, self.height-38, self.width-_voiceView.right-KEDGE_DISTANCE, 38)];
+//    _timeLab.font=[UIFont systemFontOfSize:20];
+//    _timeLab.textColor=[UIColor ZYZC_TextGrayColor04];
+//    [self addSubview:_timeLab];
 }
+
+
 
 -(void)setVoiceTime:(NSInteger )voiceTime
 {
@@ -61,6 +68,30 @@
 {
     //播放语音
     NSLog(@"播放语音");
+    _audioPlayer=nil;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    if (!_audioPlayer) {
+       
+        NSError *error=nil;
+        
+        _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:self.voiceUrl ] error:&error];
+        _audioPlayer.delegate=self;
+        _audioPlayer.numberOfLoops=0;
+        [_audioPlayer prepareToPlay];
+        if (error) {
+            NSLog(@"创建播放器过程中发生错误，错误信息：%@",error.localizedDescription);
+        }
+    }
+    if([_audioPlayer isPlaying])
+    {
+        [_audioPlayer pause];
+    }
+    else
+    {
+        [_audioPlayer play];
+    }
+
+    
 }
 
 @end
