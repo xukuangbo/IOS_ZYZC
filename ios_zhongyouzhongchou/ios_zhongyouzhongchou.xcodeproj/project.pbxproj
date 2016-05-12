@@ -153,6 +153,7 @@
 		2C0A0A641CDF1293007A8B70 /* ZCListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0A0A631CDF1293007A8B70 /* ZCListModel.m */; };
 		2C2C2A281CCE395E0068A883 /* ZCDetailReturnCusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */; };
 		2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */; };
+		2C39CD561CE32A7E001586A3 /* ZCDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C39CD551CE32A7E001586A3 /* ZCDetailModel.m */; };
 		2C4615AA1CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */; };
 		2C4EEFB91CC6087D00AA99F6 /* outboundCity.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C4EEFB81CC6087D00AA99F6 /* outboundCity.plist */; };
 		2C4EEFC01CC60D8600AA99F6 /* WeekDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4EEFBE1CC60D8600AA99F6 /* WeekDayView.m */; };
@@ -495,6 +496,8 @@
 		2C2C2A271CCE395E0068A883 /* ZCDetailReturnCusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnCusView.m; sourceTree = "<group>"; };
 		2C2DEF131CCB4D3100111459 /* ZCDetailArrangeFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailArrangeFirstCell.h; sourceTree = "<group>"; };
 		2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailArrangeFirstCell.m; sourceTree = "<group>"; };
+		2C39CD541CE32A7E001586A3 /* ZCDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailModel.h; sourceTree = "<group>"; };
+		2C39CD551CE32A7E001586A3 /* ZCDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailModel.m; sourceTree = "<group>"; };
 		2C4615A81CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailIntroFirstCellModel.h; sourceTree = "<group>"; };
 		2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailIntroFirstCellModel.m; sourceTree = "<group>"; };
 		2C4EEFB81CC6087D00AA99F6 /* outboundCity.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = outboundCity.plist; sourceTree = "<group>"; };
@@ -1146,12 +1149,14 @@
 			children = (
 				2C0A0A621CDF1293007A8B70 /* ZCListModel.h */,
 				2C0A0A631CDF1293007A8B70 /* ZCListModel.m */,
+				2C39CD541CE32A7E001586A3 /* ZCDetailModel.h */,
+				2C39CD551CE32A7E001586A3 /* ZCDetailModel.m */,
+				2C4615A81CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.h */,
+				2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */,
 				04A99C761CBF848D00C6F5F0 /* ZCDetailInfoModel.h */,
 				04A99C771CBF848D00C6F5F0 /* ZCDetailInfoModel.m */,
 				04A99C781CBF848D00C6F5F0 /* ZCFilterModel.h */,
 				04A99C791CBF848D00C6F5F0 /* ZCFilterModel.m */,
-				2C4615A81CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.h */,
-				2C4615A91CC8CA3F0053FF43 /* ZCDetailIntroFirstCellModel.m */,
 				2CD4B4441CCDA8A0006A7CE8 /* ZCDetailReturnFirstCellModel.h */,
 				2CD4B4451CCDA8A0006A7CE8 /* ZCDetailReturnFirstCellModel.m */,
 			);
@@ -1865,6 +1870,7 @@
 				2C2C2A281CCE395E0068A883 /* ZCDetailReturnCusView.m in Sources */,
 				04A99CB41CBF848D00C6F5F0 /* ReturnFourthCell.m in Sources */,
 				2C901DC01C89788C004B844B /* AppDelegate.m in Sources */,
+				2C39CD561CE32A7E001586A3 /* ZCDetailModel.m in Sources */,
 				2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */,
 				04A99CC71CBF848D00C6F5F0 /* MineViewController.m in Sources */,
 				2CD4B4541CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m in Sources */,

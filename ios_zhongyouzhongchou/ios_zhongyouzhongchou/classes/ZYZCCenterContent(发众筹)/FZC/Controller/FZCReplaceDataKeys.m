@@ -9,6 +9,10 @@
 #import "FZCReplaceDataKeys.h"
 #import "MoreFZCDataManager.h"
 #import "NSDate+RMCalendarLogic.h"
+@interface FZCReplaceDataKeys()
+@property (nonatomic, strong) NSString *myZhouChouMarkName;
+@end
+
 @implementation FZCReplaceDataKeys
 
 MJCodingImplementation
@@ -42,23 +46,28 @@ MJCodingImplementation
     return nil;
 }
 
--(void)replaceDataKeys
+-(void)replaceDataKeysBySubFileName:(NSString *)myZhouChouMarkName
 {
+    _myZhouChouMarkName=myZhouChouMarkName;
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
     self.openid=[ZYZCTool getUserId];
     self.status=@1;
     self.title=manager.goal_travelTheme;
     self.spell_buy_price=(NSNumber *)manager.raiseMoney_totalMoney;
-    self.dest=manager.goal_goals;
+    if (manager.goal_goals.count>=2) {
+        NSMutableArray *arr=[NSMutableArray arrayWithObject:manager.goal_goals];
+        [arr removeObjectAtIndex:0];
+        self.dest=arr;
+    }
     self.start_time=manager.goal_startDate;
     self.end_time=manager.goal_backDate;
     NSDate *date=[[NSDate dateFromString:self.start_time] dayInTheFollowingDay:-15];
     self.spell_end_time=[NSDate stringFromDate:date];
-    self.cover=manager.goal_travelThemeImgUrl;
+    self.cover=[self changeFileName:manager.goal_travelThemeImgUrl];
     self.desc=manager.raiseMoney_wordDes;
-    self.voice=manager.raiseMoney_voiceUrl;
-    self.video=manager.raiseMoney_movieUrl;
-    self.videoImg=manager.raiseMoney_movieImg;
+    self.voice=[self changeFileName:manager.raiseMoney_voiceUrl];
+    self.video=[self changeFileName:manager.raiseMoney_movieUrl];
+    self.videoImg=[self changeFileName:manager.raiseMoney_movieImg];
     
     //行程安排
     NSMutableArray *mutArr=[NSMutableArray array];
@@ -72,9 +81,9 @@ MJCodingImplementation
         oneSchedule.live=model.liveDes;
         oneSchedule.food=model.foodDes;
         oneSchedule.desc=model.wordDes;
-        oneSchedule.voice=model.voiceUrl;
-        oneSchedule.video=model.movieUrl;
-        oneSchedule.videoImg=model.movieImg;
+        oneSchedule.voice=[self changeFileName:model.voiceUrl];
+        oneSchedule.video=[self changeFileName:model.movieUrl];
+        oneSchedule.videoImg=[self changeFileName:model.movieImg];
         [mutArr addObject:oneSchedule];
     }
     self.schedule=mutArr;
@@ -96,9 +105,9 @@ MJCodingImplementation
         report03.price=(NSNumber *)manager.return_returnPeopleMoney;
         report03.people=(NSNumber *)manager.return_returnPeopleNumber;
         report03.desc=manager.return_wordDes;
-        report03.voice=manager.return_voiceUrl;
-        report03.video=manager.return_movieUrl;
-        report03.videoImg=manager.return_movieImg;
+        report03.voice=[self changeFileName:manager.return_voiceUrl];
+        report03.video=[self changeFileName:manager.return_movieUrl];
+        report03.videoImg=[self changeFileName:manager.return_movieImg];
         [_report addObject:report03];
     }
     //一起游
@@ -115,9 +124,9 @@ MJCodingImplementation
         report05.price=(NSNumber *)manager.return_returnPeopleMoney01;
         report05.people=(NSNumber *)manager.return_returnPeopleNumber01;
         report05.desc=manager.return_wordDes01;
-        report05.voice=manager.return_voiceUrl01;
-        report05.video=manager.return_movieUrl01;
-        report05.videoImg=manager.return_movieImg01;
+        report05.voice=[self changeFileName:manager.return_voiceUrl01];
+        report05.video=[self changeFileName:manager.return_voiceUrl01];
+        report05.videoImg=[self changeFileName:manager.return_movieImg01];
         [_report addObject:report05];
     }
     if (manager.raiseMoney_sightMoney.floatValue>0) {
@@ -149,6 +158,23 @@ MJCodingImplementation
         report09.style=@9;
         report09.price=(NSNumber *)manager.raiseMoney_eatMoney;
         [_report addObject:report09];
+    }
+}
+
+#pragma mark --- 本地路径名改成网络数据链接名
+-(NSString *)changeFileName:(NSString *)fileName
+{
+    NSString *subFileName=nil;
+    NSRange strRange=[fileName rangeOfString:KMY_ZHONGCHOU_TMP];
+    if (strRange.length) {
+        subFileName=[fileName substringFromIndex:(strRange.location+strRange.length+1)];
+    }
+    if (subFileName) {
+        return [NSString stringWithFormat:@"%@/%@/%@/%@",KHTTP_FILE_HEAD,[ZYZCTool getUserId],_myZhouChouMarkName,subFileName];
+    }
+    else
+    {
+        return nil;
     }
 }
 

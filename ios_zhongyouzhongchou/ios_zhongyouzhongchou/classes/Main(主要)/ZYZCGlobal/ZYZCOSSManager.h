@@ -39,11 +39,11 @@ typedef void(^GetFailBlock)();
 /**
  *  删除文件
  */
-- (void)deleteObjectByFileName:(NSString *)fileName;
+- (BOOL )deleteObjectByFileName:(NSString *)fileName;
 
 /**
  *  删除某文件下的所有子文件
  */
--(void)deleteObjectsByPrefix:(NSString *)prefix SuccessUpload:(GetSuccessBlock )successUpload andFailUpload:(GetFailBlock )failUpload;
+-(void)deleteObjectsByPrefix:(NSString *)prefix andSuccessUpload:(GetSuccessBlock )successDelete andFailUpload:(GetFailBlock )failDelete;
 
 @end

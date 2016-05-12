@@ -151,15 +151,17 @@
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     NSString *failDataFile=[user objectForKey:KFAIL_UPLOAD_OSS];
     if (failDataFile) {
-        ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-        [ossManager deleteObjectsByPrefix:failDataFile SuccessUpload:^
-         {
-             [user setObject:nil forKey:KFAIL_UPLOAD_OSS];
-             [user synchronize];
-         }
-        andFailUpload:^
-         {
-         }];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+            [ossManager deleteObjectsByPrefix:failDataFile andSuccessUpload:^
+             {
+                 [user setObject:nil forKey:KFAIL_UPLOAD_OSS];
+                 [user synchronize];
+             }
+                                andFailUpload:^
+             {
+             }];
+        });
     }
 }
 

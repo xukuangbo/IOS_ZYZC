@@ -226,24 +226,38 @@ OSSClient * client;
 }
 
 #pragma mark --- 删除文件
-- (void)deleteObjectByFileName:(NSString *)fileName {
+- (BOOL )deleteObjectByFileName:(NSString *)fileName {
     OSSDeleteObjectRequest * delete = [OSSDeleteObjectRequest new];
     delete.bucketName = _bucketName;
     delete.objectKey = fileName;
     OSSTask * deleteTask = [client deleteObject:delete];
     
-    [deleteTask continueWithBlock:^id(OSSTask *task) {
-        if (!task.error) {
-            NSLog(@"delete success !");
-        } else {
-            NSLog(@"delete erorr, error: %@", task.error);
-        }
-        return nil;
-    }];
+//    [deleteTask continueWithBlock:^id(OSSTask *task) {
+//        if (!task.error) {
+//            if (successDeleteOne) {
+//                successDeleteOne();
+//            }
+//        } else {
+//            if (failDeleteOne) {
+//                failDeleteOne();
+//            }
+//        }
+//        return nil;
+//    }];
+    [deleteTask waitUntilFinished];
+    if (!deleteTask.error) {
+        NSLog(@"delete object success!");
+        return YES;
+        
+    } else {
+        NSLog(@"delete object failed, error: %@" , deleteTask.error);
+        return NO;
+        
+    }
 }
 
 #pragma mark --- 删除某文件下的所有子文件
--(void)deleteObjectsByPrefix:(NSString *)prefix SuccessUpload:(GetSuccessBlock )successUpload andFailUpload:(GetFailBlock )failUpload
+-(void)deleteObjectsByPrefix:(NSString *)prefix andSuccessUpload:(GetSuccessBlock )successDelete andFailUpload:(GetFailBlock )failDelete
 {
     OSSGetBucketRequest * getBucket = [OSSGetBucketRequest new];
     getBucket.bucketName = _bucketName;
@@ -255,19 +269,28 @@ OSSClient * client;
     [getBucketTask continueWithBlock:^id(OSSTask *task) {
         if (!task.error) {
             OSSGetBucketResult * result = task.result;
-//            NSLog(@"get bucket success!");
+            NSLog(@"get bucket success!");
             for (NSDictionary * objectInfo in result.contents) {
                 NSString *objectKey=objectInfo[@"Key"];
-                [self deleteObjectByFileName:objectKey];
+                BOOL deleteSuccess=[self deleteObjectByFileName:objectKey];
+                if (!deleteSuccess) {
+                    
+                    if (failDelete)
+                    {
+                        failDelete();
+                    }
+                    break;
+                }
             }
-            if (successUpload) {
-                successUpload();
+            if (successDelete) {
+                
+                successDelete();
             }
         }
         else{
             NSLog(@"get bucket failed, error: %@", task.error);
-            if (failUpload) {
-                failUpload();
+            if (failDelete) {
+                failDelete();
             }
         }
         return nil;

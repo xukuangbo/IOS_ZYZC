@@ -12,9 +12,9 @@
 
 typedef NS_ENUM(NSInteger, ZCDetailContentType)
 {
-    IntroType=KZCDETAIL_CONTENTTYPE,
-    ArrangeType,
-    ReturnType
+    IntroType=KZCDETAIL_CONTENTTYPE,//介绍
+    ArrangeType,                    //行程
+    ReturnType                      //回报
 };
 
 typedef void(^ClickChangeContent)(ZCDetailContentType contentType);

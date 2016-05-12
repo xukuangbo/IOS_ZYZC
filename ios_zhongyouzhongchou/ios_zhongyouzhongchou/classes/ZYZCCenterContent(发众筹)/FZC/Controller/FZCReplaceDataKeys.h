@@ -32,7 +32,7 @@
 /**
  *  重新定义参数名
  */
--(void)replaceDataKeys;
+-(void)replaceDataKeysBySubFileName:(NSString *)myZhouChouMarkName;
 
 @end
 

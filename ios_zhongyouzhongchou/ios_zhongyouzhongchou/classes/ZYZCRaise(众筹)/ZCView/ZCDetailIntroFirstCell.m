@@ -47,19 +47,25 @@
     
 }
 
--(void)setCellModel:(ZCDetailIntroFirstCellModel *)cellModel
+-(void)setCellModel:(ZCDetailProductModel *)cellModel
 {
     _cellModel=cellModel;
-    self.hasMovie=YES;
-    self.hasVoice=YES;
-    self.hasWord =YES;
+    if (cellModel.voice) {
+        self.hasMovie=YES;
+    }
+    if (cellModel.voice) {
+        self.hasVoice=YES;
+    }
+    if (cellModel.desc) {
+       self.hasWord =YES;
+    }
     [self reloadDataByModel];
-    _cellModel.cellHeight= self.bgImg.height;
+    _cellModel.introFirstCellHeight= self.bgImg.height;
 }
 
 -(void)reloadDataByModel
 {
-    NSString *text=@"        打发时间的开得舒服的方式氮磷钾肥的时间发建设代理反馈圣诞节发生地方尖端放电繁华的风景快点恢复健康是否会电视大会精神上的咖啡开始的风景是否卢卡申科发生大量开发建设的繁花似锦粉红色看见繁花似锦匡扶汉室开发";
+    NSString *text = _cellModel.desc;
     
     CGFloat movieImgTop=self.topLineView.bottom +KEDGE_DISTANCE;
     self.movieImg.top=movieImgTop;
@@ -71,9 +77,10 @@
     if (!self.hasMovie) {
         [self.movieImg removeFromSuperview];
     }
+    //有视屏
     else
     {
-        
+        [self.movieImg sd_setImageWithURL:[NSURL URLWithString:_cellModel.videoImg]];
         
     }
     //是否有语音

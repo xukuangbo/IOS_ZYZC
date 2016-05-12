@@ -42,7 +42,8 @@
             [MBProgressHUD showError:ZYLocalizedString(@"error_no_spell_buy_price")];
             return YES;
         }
-        if (!manager.raiseMoney_wordDes&&!manager.raiseMoney_voiceUrl&&!manager.raiseMoney_movieUrl) {
+//        !manager.raiseMoney_wordDes&&!manager.raiseMoney_voiceUrl&&!manager.raiseMoney_movieUrl
+        if (!manager.raiseMoney_wordDes) {
             [MBProgressHUD showError:ZYLocalizedString(@"error_no_travelDesc")];
             return YES;
         }
