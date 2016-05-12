@@ -13,6 +13,7 @@
 @interface TacticSingleTipsController ()<UIScrollViewDelegate>
 @property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, weak) UILabel *labelView;
+@property (nonatomic, weak) UIImageView *mapView;
 @property (nonatomic, weak) UIScrollView *scrollView;
 @end
 
@@ -59,6 +60,13 @@
     [self.view addSubview:scrollView];
     self.scrollView = scrollView;
     /**
+     创建白色背景
+     */
+    UIImageView *mapView = [[UIImageView alloc] init];
+    mapView.userInteractionEnabled = YES;
+    [self.scrollView addSubview:mapView];
+    self.mapView = mapView;
+    /**
      *  创建图片
      */
     CGFloat imageViewX = 0;
@@ -66,7 +74,7 @@
     CGFloat imageViewW = KSCREEN_W;
     CGFloat imageViewH = imageViewHeight;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH)];
-    [scrollView addSubview:imageView];
+    [self.scrollView addSubview:imageView];
     imageView.backgroundColor = [UIColor redColor];
     self.imageView = imageView;
     
@@ -77,10 +85,9 @@
     labelView.layer.cornerRadius = 5;
     labelView.layer.masksToBounds = YES;
     labelView.font = labelViewFont;
-    labelView.backgroundColor = [UIColor whiteColor];
     labelView.textColor = [UIColor ZYZC_TextGrayColor];
     labelView.numberOfLines = 0;
-    [scrollView addSubview:labelView];
+    [mapView addSubview:labelView];
     self.labelView = labelView;
     
 }
@@ -91,10 +98,13 @@
     
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     //肯定有图片
+    CGFloat mapViewX = KEDGE_DISTANCE;
+    CGFloat mapViewY = imageViewHeight + KEDGE_DISTANCE;
+    CGFloat mapViewW = KSCREEN_W - mapViewX * 2;
     //先计算文字高度
     CGFloat labelViewX = KEDGE_DISTANCE;
-    CGFloat labelViewY = self.imageView.height + KEDGE_DISTANCE;
-    CGFloat labelViewW = KSCREEN_W - KEDGE_DISTANCE * 2;
+    CGFloat labelViewY = KEDGE_DISTANCE;
+    CGFloat labelViewW = mapViewW - KEDGE_DISTANCE * 2;
     CGFloat labelViewH = 0;
     if (tacticSingleTipsModel.tipsText) {
 //        NSString *str = [NSString string];
@@ -108,16 +118,17 @@
         labelViewH = 0;
     }
     
-    
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleTipsModel.tipsImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     
     self.labelView.frame = CGRectMake(labelViewX, labelViewY, labelViewW, labelViewH);
     self.labelView.text = tacticSingleTipsModel.tipsText;
     
-    CGFloat scrollViewH = self.imageView.height + labelViewH + KEDGE_DISTANCE * 2;
+    CGFloat mapViewH = labelViewH + KEDGE_DISTANCE * 2;
+    self.mapView.frame = CGRectMake(mapViewX, mapViewY, mapViewW, mapViewH);
+    self.mapView.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
+    
+    CGFloat scrollViewH = self.imageView.height + mapViewH + KEDGE_DISTANCE * 2;
     self.scrollView.contentSize = CGSizeMake(self.scrollView.width, scrollViewH);
-    
-    
 }
 
 
