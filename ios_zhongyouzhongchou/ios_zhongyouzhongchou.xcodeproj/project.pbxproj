@@ -181,6 +181,8 @@
 		2CD4B4541CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4B4511CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m */; };
 		2CD4B4551CCDE807006A7CE8 /* ZCDetailReturnThridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4B4531CCDE807006A7CE8 /* ZCDetailReturnThridCell.m */; };
 		2CDCE4971CCA29EB00873915 /* ZYZCCusomMovieImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */; };
+		2CDDCE5E1CE2BB54006D372C /* ZCNoneDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDCE5D1CE2BB54006D372C /* ZCNoneDataView.m */; };
+		2CDDCE601CE2BBA7006D372C /* ZCNoneDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDCE5F1CE2BBA7006D372C /* ZCNoneDataView.xib */; };
 		2CE074BB1CCF487B006D312D /* ZCDetailCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE074BA1CCF487B006D312D /* ZCDetailCustomButton.m */; };
 		2CE074C11CCF4EB8006D312D /* ZCTotalPeopleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE074C01CCF4EB8006D312D /* ZCTotalPeopleView.m */; };
 		2CE074C31CCF7ECC006D312D /* ZYZCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE074C21CCF7ECC006D312D /* ZYZCTabBarController.m */; };
@@ -549,6 +551,9 @@
 		2CD4B4531CCDE807006A7CE8 /* ZCDetailReturnThridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnThridCell.m; sourceTree = "<group>"; };
 		2CDCE4951CCA29EB00873915 /* ZYZCCusomMovieImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCCusomMovieImage.h; sourceTree = "<group>"; };
 		2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCCusomMovieImage.m; sourceTree = "<group>"; };
+		2CDDCE5C1CE2BB54006D372C /* ZCNoneDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCNoneDataView.h; sourceTree = "<group>"; };
+		2CDDCE5D1CE2BB54006D372C /* ZCNoneDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCNoneDataView.m; sourceTree = "<group>"; };
+		2CDDCE5F1CE2BBA7006D372C /* ZCNoneDataView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCNoneDataView.xib; sourceTree = "<group>"; };
 		2CE074B91CCF487B006D312D /* ZCDetailCustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailCustomButton.h; sourceTree = "<group>"; };
 		2CE074BA1CCF487B006D312D /* ZCDetailCustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailCustomButton.m; sourceTree = "<group>"; };
 		2CE074BF1CCF4EB8006D312D /* ZCTotalPeopleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCTotalPeopleView.h; sourceTree = "<group>"; };
@@ -1159,6 +1164,10 @@
 				2CF7EAFE1CC7852A007074FE /* ZCDetailReturnShowTableCell */,
 				2CF7EAFD1CC78507007074FE /* ZCDetailArrangeShowTableCell */,
 				2CF7EAFB1CC784A8007074FE /* ZCDetailIntroShowTableCell */,
+				2C4EEFC21CC6316900AA99F6 /* ZCDetailFirstCell.h */,
+				2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */,
+				2CCB52EB1CC70F1800F99CD3 /* ZCDetailTableHeadView.h */,
+				2CCB52EC1CC70F1800F99CD3 /* ZCDetailTableHeadView.m */,
 				2CDCE4951CCA29EB00873915 /* ZYZCCusomMovieImage.h */,
 				2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */,
 				04A99C7D1CBF848D00C6F5F0 /* ZCFilterTableViewCell.h */,
@@ -1171,10 +1180,9 @@
 				2CAF7BB51CE0363600CB0885 /* ZCInfoView.h */,
 				2CAF7BB61CE0363600CB0885 /* ZCInfoView.m */,
 				2CAF7BBA1CE0390D00CB0885 /* ZCInfoView.xib */,
-				2C4EEFC21CC6316900AA99F6 /* ZCDetailFirstCell.h */,
-				2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */,
-				2CCB52EB1CC70F1800F99CD3 /* ZCDetailTableHeadView.h */,
-				2CCB52EC1CC70F1800F99CD3 /* ZCDetailTableHeadView.m */,
+				2CDDCE5C1CE2BB54006D372C /* ZCNoneDataView.h */,
+				2CDDCE5D1CE2BB54006D372C /* ZCNoneDataView.m */,
+				2CDDCE5F1CE2BBA7006D372C /* ZCNoneDataView.xib */,
 			);
 			path = ZCView;
 			sourceTree = "<group>";
@@ -1656,6 +1664,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C901DCB1C89788C004B844B /* LaunchScreen.storyboard in Resources */,
+				2CDDCE601CE2BBA7006D372C /* ZCNoneDataView.xib in Resources */,
 				041D06F81CD3321D002B8329 /* RYNumberKeyboard.xib in Resources */,
 				04A99CD51CBF848D00C6F5F0 /* ZCMainTableViewCell.xib in Resources */,
 				2C901DC61C89788C004B844B /* Main.storyboard in Resources */,
@@ -1772,6 +1781,7 @@
 				040651301CC635A9003FD539 /* TacticTableView.m in Sources */,
 				04A99CA11CBF848D00C6F5F0 /* GoalFirstCell.m in Sources */,
 				0490D15C1CC9FAA80064844C /* TacticSingleHeadView.m in Sources */,
+				2CDDCE5E1CE2BB54006D372C /* ZCNoneDataView.m in Sources */,
 				040651241CC62FC7003FD539 /* TAPageControl.m in Sources */,
 				04A99C9F1CBF848D00C6F5F0 /* SelectImageViewController.m in Sources */,
 				0406512D1CC6356C003FD539 /* TacticMainViewController.m in Sources */,

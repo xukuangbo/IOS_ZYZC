@@ -8,6 +8,32 @@
 
 #import <Foundation/Foundation.h>
 
+//所有众筹列表／我的众筹列表／众筹详情
+typedef NS_ENUM(NSInteger, ZC_TYPE)
+{
+    AllList,
+    Mylist,
+    DetailType
+};
+
+//我的众筹列表中区分我发布，我参与，我推荐
+typedef NS_ENUM(NSInteger, MY_ZC_TYPE)
+{
+    MyPublish=1,
+    MyJoin,
+    MyRecommend
+};
+
+//我的众筹列表中项目出现的状态
+typedef NS_ENUM(NSInteger, ZCStateType) {
+    ZCStateTypeDraft,             //众筹草稿
+    ZCStateTypeGoing,             //众筹正在进行
+    ZCStateTypeChoosePartner,     //选择同游(众筹达到100%，并且众筹时间已截止)
+    ZCStateTypeTypeTraveling,     //上传游记(正在进行旅行中)
+    ZCStateTypeEndTravel,         //申请提现(旅游结束)
+    ZCStateTypeFail,              //众筹失败(众筹未达到100%，并且众筹时间已截止)
+};
+
 @class ZCOneModel,ZCProductModel,ZCSpellbuyproductModel,ZCUserModel;
 
 @interface ZCListModel : NSObject
@@ -24,6 +50,10 @@
 @property (nonatomic, strong) ZCProductModel  *product;
 @property (nonatomic, strong) ZCSpellbuyproductModel *spellbuyproduct;
 @property (nonatomic, strong) ZCUserModel     *user;
+
+@property (nonatomic, assign) ZC_TYPE         zcType;
+@property (nonatomic, assign) MY_ZC_TYPE      myZCtype;
+@property (nonatomic, assign) ZCStateType     zcStateType;
 
 @end
 

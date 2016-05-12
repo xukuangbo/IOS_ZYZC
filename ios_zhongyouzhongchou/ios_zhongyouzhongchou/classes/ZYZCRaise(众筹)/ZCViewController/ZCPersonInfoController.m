@@ -12,8 +12,8 @@
 #define BLURHEIGHT     44
 
 #import "ZCPersonInfoController.h"
-#import "ZCMainTableViewCell.h"
-#import "ZCOneProductCell.h"
+//#import "ZCMainTableViewCell.h"
+
 #import "ZCDetailFirstCell.h"
 #import "ZCDetailTableHeadView.h"
 //介绍部分cells
@@ -64,12 +64,19 @@
     _navColor=[UIColor ZYZC_NavColor];
      [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    self.oneModel.zcType=DetailType;
     [self initData];
     [self getHttpData];
     [self setBackItem];
     [self configUI];
     [self createBottomView];
 
+}
+
+-(void)pressBack
+{
+    [super pressBack];
+    self.oneModel.zcType=AllList;
 }
 
 #pragma mark --- 初始化数据
@@ -99,7 +106,7 @@
 #pragma mark --- 获取数据
 -(void)getHttpData
 {
-    _productId=@14;
+    _productId=@154;
     NSLog(@"%@,%@",[ZYZCTool getUserId],_productId);
     NSString *urlStr=KGET_DETAIL_PRODUCT([ZYZCTool getUserId],_productId);
     NSLog(@"%@",urlStr);
@@ -122,8 +129,6 @@
     _table.backgroundColor=[UIColor ZYZC_BgGrayColor];
     _table.separatorStyle=UITableViewCellSeparatorStyleNone;
     
-    UINib *nib=[UINib nibWithNibName:@"ZCMainTableViewCell" bundle:nil];
-    [_table registerNib:nib forCellReuseIdentifier:@"ZCMainTableViewCell"];
     [self.view addSubview:_table];
     
     _topImgView=[[UIImageView alloc]initWithFrame:CGRectMake(0, -BGIMAGEHEIGHT,KSCREEN_W, BGIMAGEHEIGHT)];
@@ -182,11 +187,10 @@
         
         if(indexPath.row==1)
         {
-           NSString *cellId01=@"ZCMainTableViewCell";
-            ZCMainTableViewCell *mainCell=[tableView dequeueReusableCellWithIdentifier:cellId01];
-            ZCDetailInfoModel *model=[[ZCDetailInfoModel alloc]init];
-            mainCell.detailInfoModel=model;
-            return mainCell;
+           NSString *cellId01=@"cellId01";
+             ZCOneProductCell *productCell=(ZCOneProductCell *)[self customTableView:tableView cellWithIdentifier:cellId01 andCellClass:[ZCOneProductCell class]];
+            productCell.oneModel=_oneModel;
+            return productCell;
         }
         else if (indexPath.row == 1+_hasCosponsor*2&&indexPath.row!=1)
         {
@@ -309,7 +313,7 @@
     
         if (indexPath.row ==1)
         {
-         return 210;
+         return PRODUCT_DETAIL_CELL_HEIGHT;
         }
         else if (indexPath.row==1+_hasCosponsor*2&&indexPath.row!=1)
         {

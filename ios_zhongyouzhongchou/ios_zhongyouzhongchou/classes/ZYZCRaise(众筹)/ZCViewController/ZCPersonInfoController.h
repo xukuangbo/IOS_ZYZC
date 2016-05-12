@@ -8,6 +8,8 @@
 
 #import "ZYZCBaseViewController.h"
 
+#import "ZCOneProductCell.h"
+
 typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
 {
     WantToType=KZCDETAIL_ATTITUDETYPE,
@@ -18,5 +20,7 @@ typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
 @interface ZCPersonInfoController : ZYZCBaseViewController
 
 @property (nonatomic, copy  ) NSNumber *productId;
+
+@property (nonatomic, strong) ZCOneModel *oneModel;
 
 @end
