@@ -104,7 +104,7 @@
         //我推荐
         self.myZCType=MyRecommend;
     }
-    
+    _pageNo=1;
     [self getHttpData];
 }
 
@@ -138,8 +138,9 @@
     //获取我的众筹详情
     else if (self.zcType==Mylist)
     {
+//        @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"
         httpUrl=[NSString stringWithFormat:@"%@%@",LISTMYPRODUCTS,
-        GET_MY_LIST(@"o6_bmjrPTlm6_2sgVt7hMZOPfL2M",_myZCType,_pageNo)];
+        GET_MY_LIST([ZYZCTool getUserId],_myZCType,_pageNo)];
     }
     
     NSLog(@"httpUrl:%@",httpUrl);

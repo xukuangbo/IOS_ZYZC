@@ -37,6 +37,8 @@
 @property (nonatomic, assign) NSInteger uploadDataNumber;
 @property (nonatomic, assign) BOOL hasPulish;
 @property (nonatomic, assign) BOOL hasUpload;
+@property (nonatomic, strong) NSDictionary *dataDic;
+@property (nonatomic, assign) BOOL getFirstPublish;
 @end
 
 @implementation MoreFZCViewController
@@ -224,25 +226,6 @@
         if (buttonIndex ==1) {
             [self uploadDataToOSS];
         }
-        //点击取消，删除oss上已上传的数据
-        else if (buttonIndex ==0)
-        {
-            //主动删除oss上上传的失败文件
-            NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-            NSString *failDataFile=[user objectForKey:KFAIL_UPLOAD_OSS];
-            if (failDataFile) {
-                ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-                
-                [ossManager deleteObjectsByPrefix:failDataFile SuccessUpload:^
-                 {
-                     [user setObject:nil forKey:KFAIL_UPLOAD_OSS];
-                     [user synchronize];
-                 }
-                andFailUpload:^
-                {
-                }];
-            }
-        }
     }
     //发布网络出错
     else if (alertView.tag ==ALERT_PUBLISH_TAG)
@@ -266,9 +249,9 @@
     for (NSString *fileName in fileArr) {
         NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
         dispatch_async(dispatch_get_global_queue(0, 0), ^
-                       {
-                           [manager removeItemAtPath:filePath error:nil];
-                       });
+        {
+            [manager removeItemAtPath:filePath error:nil];
+        });
     }
 }
 
@@ -341,6 +324,7 @@
 //上传数据到oss
 -(void)uploadDataToOSS
 {
+    
     if (_hasUpload) {
         [self publishMyZhongchou];
         return;
@@ -350,6 +334,8 @@
         return;
     }
     
+    [MBProgressHUD showMessage:@"正在发布..."];
+    
     if (_uploadDataState.count) {
         [_uploadDataState removeAllObjects];
     }
@@ -358,17 +344,27 @@
     NSString *failDataFile=[user objectForKey:KFAIL_UPLOAD_OSS];
     //如果上次标记的失败文件没有删除，先删除掉
     if (failDataFile) {
-         ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
-        [ossManager deleteObjectsByPrefix:failDataFile SuccessUpload:^
-        {
-            [user setObject:nil forKey:KFAIL_UPLOAD_OSS];
-            [self continueUploadDataToOss];
-        }
-        andFailUpload:^
-        {
-            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"网络发生异常" message:nil delegate:self cancelButtonTitle:@"确定"otherButtonTitles:nil, nil];
-            [alertView show];
-        }];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
+            [ossManager deleteObjectsByPrefix:failDataFile andSuccessUpload:^
+             {
+                 [user setObject:nil forKey:KFAIL_UPLOAD_OSS];
+                 [user synchronize];
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                      [self continueUploadDataToOss];
+                 });
+             }
+            andFailUpload:^
+             {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [MBProgressHUD hideHUD];
+                     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"网络发生异常" message:nil delegate:self cancelButtonTitle:@"确定"otherButtonTitles:nil, nil];
+                     [alertView show];
+
+                 });
+            }];
+
+        });
     }
     else
     {
@@ -379,8 +375,6 @@
 #pragma mark --- 上传新数据到oss
 -(void)continueUploadDataToOss
 {
-    [MBProgressHUD showMessage:@"正在发布..."];
-    
     _myZhouChouMarkName=[ZYZCTool getLocalTime];
     
     //上传数据到oss,首先将远程文件标记为上传失败的文件，以免上传过程中意外退出导致部分文件留在oss上，文件上传成功将标记移除
@@ -429,8 +423,6 @@
                               }
                               //数据上传成功，发布众筹
                               if (_hasUpload) {
-                                  //将标记的失败文件置空，取消标记
-                                  [user setObject:nil forKey:KFAIL_UPLOAD_OSS];
                                   [self publishMyZhongchou];
                               }
                               //上传失败，提示重新上传
@@ -449,23 +441,39 @@
 #pragma mark --- 发布我的众筹
 -(void)publishMyZhongchou
 {
-    //将oss的链接保存到manager中
-    [self changeManagerFileName];
+    if (_getFirstPublish) {
+        [self publishHttpData];
+    }
     
     //将数据转化成上传数据对应的类型
     FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
-    [replaceKeys replaceDataKeys];
+    [replaceKeys replaceDataKeysBySubFileName:_myZhouChouMarkName];
     // 模型转字典
     NSDictionary *dataDict = replaceKeys.mj_keyValues;
-    NSLog(@"%@",dataDict);
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:dataDict];
     [newParameters addEntriesFromDictionary:@{@"productCountryId":@1}];
-    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:dataDict andSuccessGetBlock:^(id result, BOOL isSuccess) {
+    NSLog(@"%@",newParameters);
+    _dataDic=newParameters;
+    
+    _getFirstPublish=YES;
+    
+    [self publishHttpData];
+}
+
+#pragma mark --- 发布请求
+-(void)publishHttpData
+{
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:_dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
             //发送成功，删除本地数据
             [self cleanTmpFile];
             [MBProgressHUD hideHUD];
             [MBProgressHUD showSuccess:@"发布成功!"];
+             //将标记的失败文件置空，取消标记
+            NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+            [user setObject:nil forKey:KFAIL_UPLOAD_OSS];
+            [user synchronize];
+            
             [self.navigationController popViewControllerAnimated:YES];
             MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
             [manager initAllProperties];
@@ -478,54 +486,15 @@
             [MBProgressHUD showError:@"数据丢失，发布失败"];
         }
     } andFailBlock:^(id failResult) {
+        NSLog(@"_dataDic:%@",_dataDic);
+        NSLog(@"failResult:%@",failResult);
         [MBProgressHUD hideHUD];
         //提示发布失败
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"网络异常,发布失败" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"网络异常,发布失败" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         alert.tag=ALERT_PUBLISH_TAG;
         [alert show];
     }];
 }
-
-
-#pragma mark --- 存储数据上传到oss后的链接
--(void)changeManagerFileName
-{
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    manager.goal_travelThemeImgUrl=[self changeFileName:manager.goal_travelThemeImgUrl];
-    manager.raiseMoney_voiceUrl=[self changeFileName:manager.raiseMoney_voiceUrl];
-    manager.raiseMoney_movieUrl=[self changeFileName:manager.raiseMoney_movieUrl];
-    manager.raiseMoney_movieImg=[self changeFileName:manager.raiseMoney_movieImg];
-    for (MoreFZCTravelOneDayDetailMdel *model in manager.travelDetailDays) {
-        model.voiceUrl=[self changeFileName:model.voiceUrl];
-        model.movieUrl=[self changeFileName:model.movieUrl];
-        model.movieImg=[self changeFileName:model.movieImg];
-    }
-    
-    manager.return_voiceUrl=[self changeFileName:manager.return_voiceUrl];
-    manager.return_movieUrl=[self changeFileName:manager.return_movieUrl];
-    manager.return_movieImg=[self changeFileName:manager.return_movieImg];
-    manager.return_voiceUrl01=[self changeFileName:manager.return_voiceUrl01];
-    manager.return_movieUrl01=[self changeFileName:manager.return_movieUrl01];
-    manager.return_movieImg01=[self changeFileName:manager.return_movieImg01];
-}
-
-#pragma mark --- 本地路径名改成网络数据链接名
--(NSString *)changeFileName:(NSString *)fileName
-{
-    NSString *subFileName=nil;
-    NSRange strRange=[fileName rangeOfString:KMY_ZHONGCHOU_TMP];
-    if (strRange.length) {
-       subFileName=[fileName substringFromIndex:(strRange.location+strRange.length+1)];
-    }
-    if (subFileName) {
-        return [NSString stringWithFormat:@"%@/%@/%@/%@",KHTTP_FILE_HEAD,[ZYZCTool getUserId],_myZhouChouMarkName,subFileName];
-    }
-    else
-    {
-        return nil;
-    }
-}
-
 
 #pragma mark --- 保存数据
 -(void)saveData
@@ -551,7 +520,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             //将数据转化成上传数据对应的类型
             FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
-            [replaceKeys replaceDataKeys];
+//            [replaceKeys replaceDataKeys];
             // 模型转字典
             NSDictionary *dataDict = replaceKeys.mj_keyValues;
             NSLog(@"dataDict:%@",dataDict);

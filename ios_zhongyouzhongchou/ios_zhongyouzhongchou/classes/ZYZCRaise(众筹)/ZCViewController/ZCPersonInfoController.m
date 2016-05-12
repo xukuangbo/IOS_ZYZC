@@ -30,6 +30,8 @@
 
 #import "FXBlurView.h"
 
+#import "ZCDetailModel.h"
+
 @interface ZCPersonInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView           *table;
 @property (nonatomic, strong) UIImageView           *topImgView;
@@ -40,7 +42,9 @@
 
 @property (nonatomic, assign) ZCDetailContentType   contentType;
 
-@property (nonatomic, strong) ZCDetailIntroFirstCellModel * introFirstCellMdel;
+@property (nonatomic, strong) ZCDetailModel         *detailModel;
+
+@property (nonatomic, strong) ZCDetailProductModel * introFirstCellMdel;
 @property (nonatomic, strong) NSMutableArray *detailDays;//行程安排数组
 
 @property (nonatomic, strong) ZCDetailReturnFirstCellModel *returnFirstCellModel;
@@ -82,7 +86,6 @@
 #pragma mark --- 初始化数据
 -(void)initData
 {
-    _introFirstCellMdel  = [[ZCDetailIntroFirstCellModel alloc]init];
     _returnFirstCellModel= [[ZCDetailReturnFirstCellModel alloc]init];
     _detailDays=[NSMutableArray array];
     _favoriteTravel=[NSMutableArray array];
@@ -95,10 +98,10 @@
     
     self.contentType= IntroType;//展示介绍部分
     _hasCosponsor   = NO;//添加联和发起人项
-    _hasIntroGoal   = YES;//添加众筹目的
-    _hasIntroGeneral=YES;//添加目的地介绍
-    _hasIntroMovie  =YES;//添加动画攻略
-    _hasHotComment  =NO;//添加热门评论
+    _hasIntroGoal   = NO;//添加众筹目的
+    _hasIntroGeneral= NO;//添加目的地介绍
+    _hasIntroMovie  = NO;//添加动画攻略
+    _hasHotComment  = NO;//添加热门评论
     _hasInterestTravel=YES;//添加兴趣标签匹配的旅游
 
 }
@@ -112,6 +115,12 @@
     NSLog(@"%@",urlStr);
     [ZYZCHTTPTool getHttpDataByURL:KGET_DETAIL_PRODUCT([ZYZCTool getUserId], _productId) withSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"%@",result);
+        if (isSuccess) {
+            _detailModel=[[ZCDetailModel alloc]mj_setKeyValues:result];
+            _introFirstCellMdel=_detailModel.detailProductModel;
+            _hasIntroGoal=YES;
+            [_table reloadData];
+        }
     } andFailBlock:^(id failResult) {
         NSLog(@"%@",failResult);
     }];
@@ -133,7 +142,7 @@
     
     _topImgView=[[UIImageView alloc]initWithFrame:CGRectMake(0, -BGIMAGEHEIGHT,KSCREEN_W, BGIMAGEHEIGHT)];
     _topImgView.contentMode=UIViewContentModeScaleAspectFill;
-    _topImgView.image=[UIImage imageNamed:@"abc"];
+    [_topImgView sd_setImageWithURL:[NSURL URLWithString:_oneModel.product.headImage ] placeholderImage:[UIImage imageNamed:@"abc"]];
     [_table addSubview:_topImgView];
     
     //创建毛玻璃添加到顶部图片上
@@ -149,7 +158,7 @@
     //创建旅行主题标签
     _travelThemeLab=[[UILabel alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 5, KSCREEN_W, 30)];
     _travelThemeLab.font=[UIFont boldSystemFontOfSize:20];
-    _travelThemeLab.text=@"暖冬海岛 遇见烂漫";
+    _travelThemeLab.text=_oneModel.product.productName;
     _travelThemeLab.shadowOffset=CGSizeMake(1 , 1);
     _travelThemeLab.shadowColor=[UIColor ZYZC_TextBlackColor];
     _travelThemeLab.textColor=[UIColor whiteColor];
@@ -184,7 +193,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        
+        //个人信息展示
         if(indexPath.row==1)
         {
            NSString *cellId01=@"cellId01";
@@ -192,6 +201,7 @@
             productCell.oneModel=_oneModel;
             return productCell;
         }
+        //联和发起人
         else if (indexPath.row == 1+_hasCosponsor*2&&indexPath.row!=1)
         {
             NSString *cellId02=@"detailFirstCell";
@@ -329,7 +339,7 @@
         //介绍部分cells高度
         if (self.contentType == IntroType) {
             if (indexPath.row==0 && _hasIntroGoal) {
-                return _introFirstCellMdel.cellHeight;
+                return _introFirstCellMdel.introFirstCellHeight;
             }
             else if (indexPath.row == 0+2*_hasIntroGoal && _hasIntroGeneral)
             {

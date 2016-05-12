@@ -27,7 +27,7 @@
 {
     self.layer.cornerRadius=KCORNERRADIUS;
     self.layer.masksToBounds=YES;
-    self.backgroundColor=[UIColor orangeColor];
+    self.backgroundColor=[UIColor ZYZC_BgGrayColor];
     
     UIImageView *startImg=[[UIImageView alloc]init];
     startImg.bounds=CGRectMake(0, 0, 60, 60);
