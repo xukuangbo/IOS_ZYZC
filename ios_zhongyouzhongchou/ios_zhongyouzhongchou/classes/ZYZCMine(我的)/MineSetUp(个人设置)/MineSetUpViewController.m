@@ -1,0 +1,80 @@
+//
+//  MineSetUpViewController.m
+//  ios_zhongyouzhongchou
+//
+//  Created by mac on 16/5/11.
+//  Copyright © 2016年 liuliang. All rights reserved.
+//
+
+#import "MineSetUpViewController.h"
+#import "MinePersonSetUpController.h"
+@interface MineSetUpViewController ()<UITableViewDataSource,UITableViewDelegate>
+
+@end
+
+@implementation MineSetUpViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_back_new"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(pressBack)];
+    self.title = @"设置";
+}
+-(void)pressBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Table view data source
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //当选中的时候就会调用
+    //    NSLog(@"%ld   %ld",indexPath.section,indexPath.row);
+    //在这里实现各种方法
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0://个人信息
+                NSLog(@"个人信息");
+                [self.navigationController pushViewController:[[MinePersonSetUpController alloc] init] animated:YES];
+                break;
+            case 1://旅行标签
+                NSLog(@"旅行标签");
+                
+                break;
+            case 2://收货地址
+                NSLog(@"收货地址");
+                
+                break;
+            default:
+                break;
+        }
+    }else if(indexPath.section == 1){
+        switch (indexPath.row) {
+            case 0://清空缓存
+                //这个是清空缓存的方法，弹出一个alert
+                NSLog(@"清空缓存");
+                break;
+            case 1:
+                //打开众游链接
+                NSLog(@"众游链接");
+                
+                break;
+            case 2://帮助反馈
+                NSLog(@"帮助反馈");
+                
+                break;
+            default:
+                break;
+        }
+        
+        
+    }else{
+        
+    }
+}
+@end

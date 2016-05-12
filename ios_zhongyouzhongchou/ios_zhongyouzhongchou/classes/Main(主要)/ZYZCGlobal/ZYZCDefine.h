@@ -82,7 +82,7 @@
 #define kWechatAuthOpenID  @"0c806938e2413ce73eef92cc3"
 #define kWechatAuthState   @"xxx"
 
-#define kAppOpenid @"wx4f5dad0f41bb5a7d"
+#define kAppOpenid @"wx4f5dad0f41bb5a7d"//微信的
 #define kAppSercet @"cbb6bf01c64e64aa869d497f600b1270"
 
 #endif /* ZYZCDefine_h */

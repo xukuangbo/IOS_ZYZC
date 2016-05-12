@@ -28,7 +28,6 @@
         imageView.backgroundColor = [UIColor colorWithRed:arc4random_uniform(256) / 256.0 green:arc4random_uniform(256) / 256.0 blue:arc4random_uniform(256) / 256.0 alpha:1];
         [self addSubview:imageView];
         self.imageView = imageView;
-        NSLog(@"%@",self.imageView);
     }
     return self;
 }

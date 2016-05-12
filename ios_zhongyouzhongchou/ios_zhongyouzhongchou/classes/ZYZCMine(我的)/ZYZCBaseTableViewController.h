@@ -1,0 +1,34 @@
+//
+//  ZYZCBaseTableViewController.h
+//  ios_zhongyouzhongchou
+//
+//  Created by mac on 16/5/12.
+//  Copyright © 2016年 liuliang. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "UINavigationBar+Background.h"
+
+@interface ZYZCBaseTableViewController : UITableViewController
+
+/**
+ *  封面图高度
+ */
+@property (nonatomic, assign) CGFloat imageViewHeight;
+/**
+ *  标题
+ */
+@property (nonatomic, copy) NSString *titleName;
+
+/**
+ *  只有返回键
+ */
+-(void)setBackItem;
+/**
+ *  自定义反回键返回操作
+ */
+-(void)pressBack;
+
+
+-(void)customNavWithLeftBtnImgName:(NSString *)leftName andRightImgName:(NSString *)rightName  andLeftAction:(SEL)leftAction andRightAction:(SEL)rightAction;
+@end

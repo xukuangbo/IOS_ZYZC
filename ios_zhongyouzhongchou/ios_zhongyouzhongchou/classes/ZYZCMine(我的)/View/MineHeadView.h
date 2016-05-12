@@ -22,6 +22,10 @@ typedef void (^HeadOpenWeChatBlock)();
  */
 @property (nonatomic, weak) UIButton *loginButton;
 /**
+ *  设置头像
+ */
+@property (nonatomic, weak) UIButton *setUpButton;
+/**
  *  头像
  */
 @property (nonatomic, weak) UIButton *iconButton;

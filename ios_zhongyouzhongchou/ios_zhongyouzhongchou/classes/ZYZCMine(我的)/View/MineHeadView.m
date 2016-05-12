@@ -12,7 +12,7 @@
 #import "ZYZCAccountTool.h"
 #import "WXApiManager.h"
 #import "WXApiObject.h"
-
+#import "MineSetUpViewController.h"
 
 #import "MBProgressHUD+MJ.h"
 #define mineCornerRadius 5
@@ -62,6 +62,15 @@
         [loginButton addTarget:self action:@selector(loginButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:loginButton];
         self.loginButton = loginButton;
+        //5.1创建一个设置按钮
+        UIButton *setUpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        setUpButton.size = CGSizeMake(shadowIconViewWH * 0.5, shadowIconViewWH * 0.5);
+        
+        [setUpButton setImage:[UIImage imageNamed:@"btn_set"] forState:UIControlStateNormal];
+        setUpButton.origin = CGPointMake(30, 30);
+        [setUpButton addTarget:self action:@selector(setUpButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:setUpButton];
+        self.setUpButton = setUpButton;
         
         //1.头像
         UIButton *iconButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -185,14 +194,26 @@
         //icon头像
         SDWebImageOptions sdWebImageOptions = SDWebImageRetryFailed | SDWebImageLowPriority;
         [self.iconButton sd_setBackgroundImageWithURL:[NSURL URLWithString:userModel.faceImg] forState:UIControlStateNormal placeholderImage:nil options:sdWebImageOptions];
-        
-        
-        
+         
     }
 }
+/**
+ *  设置按钮
+ *
+ */
+- (void)setUpButtonAction:(UIButton *)button
+{
+    //成功应该跳转到个人设置的界面
+    
+    UIStoryboard *board = [UIStoryboard storyboardWithName:@"MineSetUpVC" bundle:nil];
+    MineSetUpViewController *mineSetUpViewController = [board instantiateViewControllerWithIdentifier:@"MineSetUpViewController"];
+    [self.viewController.navigationController pushViewController:mineSetUpViewController animated:YES];
+}
 
-
-
+/**
+ *  登陆按钮
+ *
+ */
 - (void)loginButtonAction:(UIButton *)button
 {
     
@@ -249,9 +270,25 @@
 #pragma mark - 注册个人资料
 - (void)regisPersonalMessageWith:(ZYZCAccountModel *)weakAccount
 {
-    
+//    {
+//        "openid": "o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
+//        "nickname": "Band",
+//        "sex": 1,
+//        "language": "zh_CN",
+//        "city": "广州",
+//        "province": "广东",
+//        "country": "中国",
+//        "headimgurl":    "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0"
+//    }
     NSDictionary *parameter = @{
-                                 @"openid":[ZYZCTool getUserId],
+                                @"openid": weakAccount.openid,
+                                @"nickname": weakAccount.nickname,
+                                @"sex": weakAccount.sex,
+                                @"language": weakAccount.language,
+                                @"city": weakAccount.city,
+                                @"province": weakAccount.province,
+                                @"country": weakAccount.country,
+                                @"headimgurl": weakAccount.headimgurl
                                 };
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:@"http://121.40.225.119:8080/register/saveWeixinInfo.action" andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {
@@ -263,14 +300,17 @@
             //展示数据
             weakSelf.nameLabel.text = weakAccount.nickname;
             [weakSelf.iconButton sd_setImageWithURL:[NSURL URLWithString:weakAccount.headimgurl] forState:UIControlStateNormal];
+            
+            //成功应该跳转到个人设置的界面
+//            [weakSelf.viewController.navigationController pushViewController:[[MineSetUpViewController alloc] init] animated:YES];
         }else{
             [MBProgressHUD hideHUD];
             [NSThread sleepForTimeInterval:2];
             [MBProgressHUD showError:@"注册失败"];
             
             //展示数据
-            weakSelf.nameLabel.text = weakAccount.nickname;
-            [weakSelf.iconButton sd_setImageWithURL:[NSURL URLWithString:weakAccount.headimgurl] forState:UIControlStateNormal];
+//            weakSelf.nameLabel.text = weakAccount.nickname;
+//            [weakSelf.iconButton sd_setImageWithURL:[NSURL URLWithString:weakAccount.headimgurl] forState:UIControlStateNormal];
         }
     } andFailBlock:^(id failResult) {
         NSLog(@"__________%@",failResult);
