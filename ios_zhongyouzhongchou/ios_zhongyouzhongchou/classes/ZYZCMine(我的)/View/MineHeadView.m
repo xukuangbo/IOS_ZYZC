@@ -301,16 +301,12 @@
             weakSelf.nameLabel.text = weakAccount.nickname;
             [weakSelf.iconButton sd_setImageWithURL:[NSURL URLWithString:weakAccount.headimgurl] forState:UIControlStateNormal];
             
-            //成功应该跳转到个人设置的界面
-//            [weakSelf.viewController.navigationController pushViewController:[[MineSetUpViewController alloc] init] animated:YES];
         }else{
             [MBProgressHUD hideHUD];
             [NSThread sleepForTimeInterval:2];
             [MBProgressHUD showError:@"注册失败"];
             
-            //展示数据
-//            weakSelf.nameLabel.text = weakAccount.nickname;
-//            [weakSelf.iconButton sd_setImageWithURL:[NSURL URLWithString:weakAccount.headimgurl] forState:UIControlStateNormal];
+            
         }
     } andFailBlock:^(id failResult) {
         NSLog(@"__________%@",failResult);
@@ -362,10 +358,9 @@
  */
 - (void)managerDidRecvAuthResponse:(SendAuthResp *)response
 {
-//    NSLog(@"%@",response.code);
     NSString *url = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",kAppOpenid,kAppSercet,response.code];
 //    NSURL *zoneUrl = [NSURL URLWithString:url];
-//    NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+    
     AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
     mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * responseObject) {
@@ -375,15 +370,11 @@
         [ZYZCAccountTool saveAccount:accountModel];
         
         
-        
-        
-        
         //这里可以让headview刷新一下数据
         [self reloadAccountData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }];
-    
     
 }
 
