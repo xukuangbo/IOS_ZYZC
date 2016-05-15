@@ -12,7 +12,6 @@
 #define BLURHEIGHT     44
 
 #import "ZCPersonInfoController.h"
-//#import "ZCMainTableViewCell.h"
 
 #import "ZCDetailFirstCell.h"
 #import "ZCDetailTableHeadView.h"
@@ -31,12 +30,17 @@
 #import "FXBlurView.h"
 
 #import "ZCDetailModel.h"
+#import "WordEditViewController.h"
+#import "MBProgressHUD+MJ.h"
+#import "WXApiShare.h"
 
 @interface ZCPersonInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView           *table;
 @property (nonatomic, strong) UIImageView           *topImgView;
 @property (nonatomic, strong) UIColor               *navColor;
 @property (nonatomic, strong) FXBlurView            *blurView;
+@property (nonatomic, strong) UIButton              *shareBtn;
+@property (nonatomic, strong) UIButton              *collectionBtn;
 @property (nonatomic, strong) UILabel               *travelThemeLab;
 @property (nonatomic, strong) ZCDetailTableHeadView *headView;
 
@@ -57,8 +61,8 @@
 @property (nonatomic, assign) BOOL hasIntroMovie;//动画攻略
 @property (nonatomic, assign) BOOL hasHotComment;//热门评论
 @property (nonatomic, assign) BOOL hasInterestTravel;//兴趣标签匹配的旅游
-
 @end
+
 @implementation ZCPersonInfoController
 
 - (void)viewDidLoad {
@@ -68,6 +72,10 @@
     _navColor=[UIColor ZYZC_NavColor];
      [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    self.navigationController.navigationBar.titleTextAttributes=
+    @{NSForegroundColorAttributeName:[UIColor whiteColor],
+      NSFontAttributeName:[UIFont boldSystemFontOfSize:17]};
+
     self.oneModel.zcType=DetailType;
     [self initData];
     [self getHttpData];
@@ -77,10 +85,16 @@
 
 }
 
+#pragma mark --- 返回控制器
 -(void)pressBack
 {
     [super pressBack];
     self.oneModel.zcType=AllList;
+    [_shareBtn removeFromSuperview];
+    [_collectionBtn removeFromSuperview];
+    self.navigationController.navigationBar.titleTextAttributes=
+    @{NSForegroundColorAttributeName:[UIColor whiteColor],
+      NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
 }
 
 #pragma mark --- 初始化数据
@@ -89,13 +103,6 @@
     _returnFirstCellModel= [[ZCDetailReturnFirstCellModel alloc]init];
     _detailDays=[NSMutableArray array];
     _favoriteTravel=[NSMutableArray array];
-    
-    for (int i=0; i<3; i++) {
-        MoreFZCTravelOneDayDetailMdel *oneDetailModel=[[MoreFZCTravelOneDayDetailMdel alloc]init];
-        oneDetailModel.date=[NSString stringWithFormat:@"第%d天",i+1];
-        [_detailDays addObject:oneDetailModel];
-    }
-    
     self.contentType= IntroType;//展示介绍部分
     _hasCosponsor   = NO;//添加联和发起人项
     _hasIntroGoal   = NO;//添加众筹目的
@@ -118,6 +125,12 @@
         if (isSuccess) {
             _detailModel=[[ZCDetailModel alloc]mj_setKeyValues:result];
             _introFirstCellMdel=_detailModel.detailProductModel;
+            NSArray *detailDays=_detailModel.detailProductModel.schedule;
+            for (NSString *jsonStr in detailDays) {
+                NSDictionary *dict=[ZYZCTool turnJsonStrToDictionary:jsonStr];
+                MoreFZCTravelOneDayDetailMdel *oneSchedule=[MoreFZCTravelOneDayDetailMdel mj_objectWithKeyValues:dict];
+                [_detailDays addObject:oneSchedule];
+            }
             _hasIntroGoal=YES;
             [_table reloadData];
         }
@@ -163,6 +176,19 @@
     _travelThemeLab.shadowColor=[UIColor ZYZC_TextBlackColor];
     _travelThemeLab.textColor=[UIColor whiteColor];
     [_blurView addSubview:_travelThemeLab];
+    
+    //导航栏添加分享
+    _shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    _shareBtn.frame=CGRectMake(KSCREEN_W-40, 0, 40, 44);
+    [_shareBtn setImage:[UIImage imageNamed:@"icon_share"] forState:UIControlStateNormal];
+    [_shareBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventAllEvents];
+    [self.navigationController.navigationBar addSubview:_shareBtn];
+    //导航栏添加收藏
+    _collectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    _collectionBtn.frame=CGRectMake(_shareBtn.left-40, 0, 40, 44);
+    [_collectionBtn setImage:[UIImage imageNamed:@"icon_collection"] forState:UIControlStateNormal];
+    [_collectionBtn addTarget:self  action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.navigationBar addSubview:_collectionBtn];
 }
 
 
@@ -253,6 +279,7 @@
             if (indexPath.row%2==0) {
                 NSString *arrangeCellId=[NSString stringWithFormat:@"arrangeCell%zd",indexPath.row/2];
                 ZCDetailArrangeFirstCell *arrangeCell=(ZCDetailArrangeFirstCell *)[self customTableView:tableView cellWithIdentifier:arrangeCellId andCellClass:[ZCDetailArrangeFirstCell class]];
+                arrangeCell.faceImg=_oneModel.user.faceImg;
                 arrangeCell.oneDaydetailModel=_detailDays[indexPath.row/2];
                 return arrangeCell;
             }
@@ -457,7 +484,10 @@
         //设置导航栏title
         if ((height + offsetY)/height>=1) {
             scrollView.contentInset=UIEdgeInsetsMake(64, 0, 0, 0);
-            self.title= _travelThemeLab.text;
+             self.title= _travelThemeLab.text;
+            if (_travelThemeLab.text.length>8) {
+                self.title=[NSString stringWithFormat:@"%@...",[_travelThemeLab.text substringToIndex:7]];
+            }
         }
         else
         {
@@ -476,7 +506,7 @@
     
     [bottomView addSubview:[UIView lineViewWithFrame:CGRectMake(0, 0, KSCREEN_W, 0.5) andColor:[UIColor lightGrayColor]]];
     
-    NSArray *titleArr=@[@"分享",@"支持",@"想去"];
+    NSArray *titleArr=@[@"评论",@"支持",@"推荐"];
     CGFloat btn_width=KSCREEN_W/3;
     for (int i=0; i<3; i++) {
         UIButton *sureBtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -499,19 +529,57 @@
 -(void)clickBtn:(UIButton *)sender
 {
     switch (sender.tag) {
-        case WantToType:
-            //想去
+        case CommentType:
+            [self commont];
+            //评论
             break;
         case SupportType:
             //支持
             break;
-        case ShareType:
-            //分享
+        case RecommendType:
+            //推荐
             break;
         default:
             break;
     }
+    
+    if (sender==_shareBtn) {
+        //分享
+        [self share];
+    }
+    if (sender==_collectionBtn) {
+        //收藏
+        [self collection];
+    }
 }
+
+#pragma mark --- 分享
+-(void)share
+{
+    [WXApiShare shareWebPageWithTitle:@"测试" andDesc:@"text01" andThumbImage:nil andWebUrl:nil];
+}
+
+#pragma mark --- 收藏
+-(void)collection
+{
+    NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],@"friendsId":@1,@"productId":_productId};
+    NSLog(@"%@",parameters);
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:FOLLOWPRODUCT andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+        [MBProgressHUD showSuccess:@"收藏成功"];
+        [_collectionBtn setImage:[UIImage imageNamed:@"icon_collection_pre"] forState:UIControlStateNormal];
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
+#pragma mark --- 评论
+-(void)commont
+{
+    
+}
+
 
 -(void)viewWillDisappear:(BOOL)animated
 {

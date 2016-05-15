@@ -34,44 +34,56 @@
 -(void)setOneDaydetailModel:(MoreFZCTravelOneDayDetailMdel *)oneDaydetailModel
 {
     _oneDaydetailModel=oneDaydetailModel;
-    self.hasMovie=YES;
-    self.hasVoice=YES;
-    self.hasWord =YES;
-    self.hasSight=YES;
-    self.hasTrans=YES;
-    self.hasLive =YES;
-    self.hasFood =YES;
+    if (oneDaydetailModel.movieUrl) {
+        self.hasMovie=YES;
+    }
+    if (oneDaydetailModel.voiceUrl) {
+        self.hasVoice=YES;
+    }
+    if (oneDaydetailModel.wordDes) {
+        self.hasWord =YES;
+    }
+    if (oneDaydetailModel.siteDes) {
+        self.hasSight=YES;
+    }
+    if (oneDaydetailModel.trafficDes) {
+        self.hasTrans=YES;
+    }
+    if (oneDaydetailModel.liveDes) {
+         self.hasLive =YES;
+    }
+    if (oneDaydetailModel.foodDes) {
+        self.hasFood =YES;
+    }
     [self reloadDataByModel];
     CGFloat cellHeight=self.bgImg.height;
-    
-    self.titleLab.text=oneDaydetailModel.date;
+    self.titleLab.text=[NSString stringWithFormat:@"第%@天",oneDaydetailModel.day];
     //添加景点、交通、住宿、餐饮描述
-    
-    //是否有对应适度的判断数组
+    //是否有对应高度的判断数组
     NSArray *hasViews=@[[NSNumber numberWithBool:self.hasSight],[NSNumber numberWithBool:self.hasTrans],[NSNumber numberWithBool:self.hasLive],[NSNumber numberWithBool:self.hasFood] ];
 
     
     //对应视图标题名数组
     NSArray *titleArr=@[@"景点:",@"交通:",@"住宿:",@"餐饮:"];
     
-    NSString *sightText=@"        山东省的雷锋精神独立开发技术开发速度减肥开始放声大哭来说都是离开都是发生地方是亮的是发生地方就是";
-    NSString *transText=@"        圣诞节啊空间受到法律开始的肌肤立刻圣诞节愤世嫉俗的离开方式及独领风骚的距离开始减肥了啊快放假放假啊啊季后赛大哥大姐哈哥啊撒上了扩大华师大大家哈空间大";
-    NSString *liveText=@"        圣诞节啊空是德弗里斯的飞机失联开发建设路口发生的间啊快放假放假啊啊季后赛大哥大姐哈哥啊撒了扩大华师大大家哈空间大";
-    NSString *foodText=@"        圣诞节啊空事都发生地方看间啊快放假放假啊啊季后赛大哥大姐哈哥啊撒上了扩大华师大大家哈空间大";
+    NSString *sightText=oneDaydetailModel.siteDes.length>0?oneDaydetailModel.siteDes:@"";
+    NSString *transText=oneDaydetailModel.trafficDes.length>0?oneDaydetailModel.trafficDes:@"";
+    NSString *liveText=oneDaydetailModel.liveDes>0?oneDaydetailModel.liveDes:@"";
+    NSString *foodText=oneDaydetailModel.foodDes>0?oneDaydetailModel.foodDes:@"";
     //对应视图文字描述数组
     NSArray *textsArr=@[sightText,transText,liveText,foodText];
     
-    NSMutableArray *sightImgs=[NSMutableArray arrayWithArray:@[@"",@"",@"",@""]];
-    NSMutableArray *transImgs=[NSMutableArray array];
-    NSMutableArray *liveImgs= [NSMutableArray array];
-    NSMutableArray *foodImgs= [NSMutableArray array];
-    //对应视图图片数组
-    NSArray *imgsArr =@[sightImgs,transImgs,liveImgs,foodImgs];
+//    NSMutableArray *sightImgs=[NSMutableArray arrayWithArray:@[@"",@"",@"",@""]];
+//    NSMutableArray *transImgs=[NSMutableArray array];
+//    NSMutableArray *liveImgs= [NSMutableArray array];
+//    NSMutableArray *foodImgs= [NSMutableArray array];
+//    对应视图图片数组
+//    NSArray *imgsArr =@[sightImgs,transImgs,liveImgs,foodImgs];
     
     if (_isFirstConfigView) {
         for (int i=0; i<4; i++) {
             if ([hasViews[i] boolValue]) {
-                UIView *contentView=[self configViewByViewTop:self.bgImg.height+KEDGE_DISTANCE andtitle:titleArr[i] andText:textsArr[i] andImages:imgsArr[i]];
+                UIView *contentView=[self configViewByViewTop:self.bgImg.height+KEDGE_DISTANCE andtitle:titleArr[i] andText:textsArr[i] andImages:nil];
                 [self addSubview:contentView];
                 [_viewHeights replaceObjectAtIndex:i withObject:[NSNumber numberWithFloat:contentView.height]];
             }
@@ -86,6 +98,56 @@
     self.hasFood *([_viewHeights[3] floatValue]+KEDGE_DISTANCE)+KEDGE_DISTANCE;
     
     self.oneDaydetailModel.cellHeight=self.bgImg.height;
+}
+
+-(void)reloadDataByModel
+{
+    NSString *text = _oneDaydetailModel.wordDes;
+    
+    CGFloat movieImgTop=self.topLineView.bottom +KEDGE_DISTANCE;
+    self.movieImg.top=movieImgTop;
+    CGFloat voiceShowTop=movieImgTop+(CGFloat)self.hasMovie*(self.movieImg.height+KEDGE_DISTANCE);
+    self.voiceShow.top=voiceShowTop;
+    CGFloat textLabTop=voiceShowTop+(CGFloat)self.hasVoice*(self.voiceShow.height+KEDGE_DISTANCE);
+    self.textLab.top=textLabTop;
+    //是否有视屏
+    if (!self.hasMovie) {
+        [self.movieImg removeFromSuperview];
+    }
+    //有视屏
+    else
+    {
+//                self.movieImg.playUrl=_oneDaydetailModel.movieUrl;
+        self.movieImg.playUrl=@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvldivtdyH01mEvBmkoX-xC0/20160507190655/20160507190526.mp4";
+//                [self.movieImg sd_setImageWithURL:[NSURL URLWithString:_oneDaydetailModel.movieImg]];
+        [self.movieImg sd_setImageWithURL:[NSURL URLWithString:@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvldivtdyH01mEvBmkoX-xC0/20160507190655/20160507190526.png"]];
+        
+    }
+    //是否有语音
+    if (!self.hasVoice) {
+        [self.voiceShow removeFromSuperview];
+    }
+    else
+    {
+        self.voiceShow.voiceTime=50;
+//                self.voiceShow.voiceUrl=_oneDaydetailModel.voiceUrl;
+        self.voiceShow.voiceUrl=@"tp://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160512105904/20160512105843.caf";
+        [self.voiceShow.iconImg sd_setImageWithURL:[NSURL URLWithString:_faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"]];
+    }
+    //是否有文字
+    if (!self.hasWord) {
+        [self.textLab removeFromSuperview];
+    }
+    else
+    {
+        CGFloat textHeight=[ZYZCTool calculateStrByLineSpace:10.0 andString:text andFont:self.textLab.font  andMaxWidth:self.textLab.width].height;
+        self.textLab.height=textHeight;
+        self.textLab.attributedText=[ZYZCTool setLineDistenceInText:text];
+    }
+    
+    //计算cell的高度
+    CGFloat cellHeight=textLabTop+(CGFloat)self.hasWord*(self.textLab.height+KEDGE_DISTANCE);
+    self.bgImg.height=cellHeight;
 }
 
 -(UIView *)configViewByViewTop:(CGFloat)top  andtitle:(NSString *)title andText:(NSString *)text andImages:(NSArray *)images

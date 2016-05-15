@@ -12,9 +12,9 @@
 
 typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
 {
-    WantToType=KZCDETAIL_ATTITUDETYPE,
+    CommentType=KZCDETAIL_ATTITUDETYPE,
     SupportType,
-    ShareType
+    RecommendType
 };
 
 @interface ZCPersonInfoController : ZYZCBaseViewController

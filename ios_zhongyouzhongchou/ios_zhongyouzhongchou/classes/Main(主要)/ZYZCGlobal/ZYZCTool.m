@@ -117,6 +117,17 @@
     return array;
 }
 
+#pragma mark --- 将jsonStr转dict
++ (NSDictionary *)turnJsonStrToDictionary:(NSString *)jsonStr
+{
+    NSError  *error=nil;
+    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dict = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments
+        error:&error];
+    return dict;
+}
+
+
 
 
 @end

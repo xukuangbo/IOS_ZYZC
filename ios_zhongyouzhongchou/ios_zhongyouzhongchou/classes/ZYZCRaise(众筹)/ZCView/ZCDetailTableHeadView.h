@@ -25,4 +25,7 @@ typedef void(^ClickChangeContent)(ZCDetailContentType contentType);
 
 @property (nonatomic, copy ) ClickChangeContent clickChangeContent;
 
+//btn点击事件
+-(void)getContent:(UIButton *)button;
+
 @end

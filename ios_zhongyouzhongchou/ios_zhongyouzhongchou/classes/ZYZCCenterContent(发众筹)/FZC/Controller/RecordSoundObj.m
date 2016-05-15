@@ -7,6 +7,7 @@
 //
 #import "ZYZCOSSManager.h"
 #import "RecordSoundObj.h"
+#import "lame.h"
 @implementation RecordSoundObj
 
 - (instancetype)init
@@ -40,8 +41,8 @@
     [dicM setObject:@(kAudioFormatLinearPCM) forKey:AVFormatIDKey];
     //设置录音采样率，8000是电话采样率，对于一般录音已经够了
     [dicM setObject:@(44100) forKey:AVSampleRateKey];
-    //设置通道,这里采用单声道
-    [dicM setObject:@(1) forKey:AVNumberOfChannelsKey];
+    //设置通道,这里采用双声道
+    [dicM setObject:@(2) forKey:AVNumberOfChannelsKey];
     //每个采样点位数,分为8、16、24、32
     [dicM setObject:@(16) forKey:AVLinearPCMBitDepthKey];
     //是否使用浮点数采样
@@ -88,8 +89,7 @@
 -(void)stopRecordSound
 {
     [self.audioRecorder stop];
-//    ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSbbb bbbbb b b  b bManager];
-    
+//    [self turnSoundToMP3AndPlay];
 }
 
 #pragma mark --- 语音播放
@@ -154,7 +154,7 @@
 }
 
 
-/*
+
 #pragma mark --- 存储MP3格式文件路径
 -(NSString *)saveMP3Path
 {
@@ -164,6 +164,7 @@
     return path;
 }
 
+
 #pragma mark --- 将音频转换为MP3格式并播放
 -(void)turnSoundToMP3AndPlay
 {
@@ -171,8 +172,8 @@
     NSString *mp3AudioPath=[self saveMP3Path];
     NSLog(@"mp3AudioPath:%@",mp3AudioPath);
     //原文件路径
-    NSString *WAVFilePath= [self getSavePath];
-    NSLog(@"WAVFilePath:%@",WAVFilePath);
+    NSString *cafFilePath=KMY_ZHONGCHOU_DOCUMENT_PATH(self.soundFileName);;
+    NSLog(@"cafFilePath:%@",cafFilePath);
     //进入转换
     NSFileManager* fileManager=[NSFileManager defaultManager];
     if([fileManager removeItemAtPath:mp3AudioPath error:nil])
@@ -182,7 +183,7 @@
     @try {
         int read, write;
         
-        FILE *pcm = fopen([WAVFilePath cStringUsingEncoding:1], "rb");  //source 被转换的音频文件位置
+        FILE *pcm = fopen([cafFilePath cStringUsingEncoding:1], "rb");  //source 被转换的音频文件位置
         fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
         FILE *mp3 = fopen([mp3AudioPath cStringUsingEncoding:1], "wb");  //output 输出生成的Mp3文件位置
         
@@ -192,8 +193,8 @@
         unsigned char mp3_buffer[MP3_SIZE];
         
         lame_t lame = lame_init();
-        lame_set_in_samplerate(lame, 22050.0);
-        lame_set_VBR(lame, vbr_default);
+        lame_set_in_samplerate(lame, 11025.0);
+        lame_set_VBR(lame, vbr_default);     
         lame_init_params(lame);
         
         do {
@@ -216,20 +217,18 @@
     }
     @finally {
         NSError *playerError;
-        AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSURL alloc] initFileURLWithPath:mp3AudioPath]error:&playerError];
-        _audioPlayer = audioPlayer;
-        _audioPlayer.volume = 1.0f;
-        if (_audioPlayer == nil)
+        if(!_audioPlayer)
         {
-            NSLog(@"ERror creating player: %@", [playerError description]);
+            _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSURL alloc] initFileURLWithPath:mp3AudioPath]error:&playerError];
+            _audioPlayer.volume = 1.0f;
+            if (_audioPlayer == nil)
+            {
+                NSLog(@"ERror creating player: %@", [playerError description]);
+            }
+            [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategorySoloAmbient error: nil];
+            _audioPlayer.delegate = self;
         }
-        [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategorySoloAmbient error: nil];
-        _audioPlayer.delegate = self;
-        
-    }
-    if (mp3AudioPath != nil) {
-        NSLog(@"转换mp3格式");
-         [self playing];
+        [self playing];
     }
 }
 - (void)playing
@@ -247,6 +246,6 @@
     }
     
 }
- */
+
 
 @end

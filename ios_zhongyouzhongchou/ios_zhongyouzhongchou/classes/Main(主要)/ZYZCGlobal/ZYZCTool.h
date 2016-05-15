@@ -57,5 +57,7 @@
 
 +(NSArray *)turnJsonStrToArray:(NSString *)jsonStr;
 
++ (NSDictionary *)turnJsonStrToDictionary:(NSString *)jsonStr;
+
 
 @end

@@ -21,4 +21,5 @@ typedef void(^TextBlock)(NSString *textStr);
 @property (nonatomic, copy   )NSString     *myTitle;
 @property (nonatomic, copy   )TextBlock    textBlock;
 @property (nonatomic, copy   )NSString     *preText;
+
 @end

@@ -7,10 +7,13 @@
 //
 
 #import "ZCDetailIntroFirstCellVoiceShowView.h"
-#import <AVFoundation/AVFoundation.h>
+#import "FSAudioStream.h"
 
-@interface ZCDetailIntroFirstCellVoiceShowView ()<AVAudioPlayerDelegate>
-@property (nonatomic, strong ) AVAudioPlayer *audioPlayer;
+@interface ZCDetailIntroFirstCellVoiceShowView ()
+
+@property (nonatomic, strong) FSAudioStream *audioStream;
+@property (nonatomic, assign) BOOL getStop;
+
 @end
 
 @implementation ZCDetailIntroFirstCellVoiceShowView
@@ -68,30 +71,27 @@
 {
     //播放语音
     NSLog(@"播放语音");
-    _audioPlayer=nil;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    if (!_audioPlayer) {
-       
-        NSError *error=nil;
-        
-        _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:self.voiceUrl ] error:&error];
-        _audioPlayer.delegate=self;
-        _audioPlayer.numberOfLoops=0;
-        [_audioPlayer prepareToPlay];
-        if (error) {
-            NSLog(@"创建播放器过程中发生错误，错误信息：%@",error.localizedDescription);
-        }
+    if (!_audioStream) {
+        NSURL *url=[NSURL URLWithString:self.voiceUrl];
+        //创建FSAudioStream对象
+        _audioStream=[[FSAudioStream alloc]initWithUrl:url];
+        _audioStream.onFailure=^(FSAudioStreamError error,NSString *description){
+            NSLog(@"播放过程中发生错误，错误信息：%@",description);
+        };
+        _audioStream.onCompletion=^(){
+            NSLog(@"播放完成!");
+        };
+        [_audioStream setVolume:0.5];//设置声音
     }
-    if([_audioPlayer isPlaying])
-    {
-        [_audioPlayer pause];
+    
+    if (!_getStop) {
+        [_audioStream play];
     }
     else
     {
-        [_audioPlayer play];
+        [_audioStream stop];
     }
-
-    
+    _getStop=!_getStop;
 }
 
 @end

@@ -92,6 +92,8 @@
 #define UPDATEPRODUCT      HTTPURL(@"product/updateproduct")
 //获取众筹内容
 #define GETPRODUCTDETAIL   HTTPURL(@"productInfo/getProductDetail")
+//评论
+#define COMMENT_PRODUCT    HTTPURL(@"comment/addZhongchouComment")
 
 //获取prepay_id
 
@@ -103,7 +105,7 @@
 #define LISTCOUNTRY       HTTPURL(@"user/listCountry")
 //获取国家-省份-城市信息
 #define GETCOUNTRYINFO    HTTPURL(@"user/getCountryInfo")
-
+//获取我的行程安排时间表
 #define GET_MY_OCCUPY_TIME  HTTPURL(@"list/listMyProductsTime")
 
 
