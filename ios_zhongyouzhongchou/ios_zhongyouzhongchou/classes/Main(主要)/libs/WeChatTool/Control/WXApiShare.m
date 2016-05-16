@@ -17,12 +17,12 @@
     //图片不能大于10k
     [message setThumbImage:[UIImage imageNamed:@"btn_fzc_pre"]];
     WXWebpageObject *webpageObject=[WXWebpageObject object];
-    webpageObject.webpageUrl=@"http://itunes.apple.com/cn/app/id533655318?mt=8";message.mediaObject=webpageObject;
+    webpageObject.webpageUrl=@"http://www.sosona.com/pay/crowdfundingDetail?pid=188";message.mediaObject=webpageObject;
     
     SendMessageToWXReq *req=[[SendMessageToWXReq alloc]init];
     req.bText=NO;
     req.message=message;
-    req.scene=WXSceneTimeline;
+    req.scene=WXSceneSession;
     
     [WXApi sendReq:req];
 }

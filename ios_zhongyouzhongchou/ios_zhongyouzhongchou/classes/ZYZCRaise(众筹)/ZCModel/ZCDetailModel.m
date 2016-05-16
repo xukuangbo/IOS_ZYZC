@@ -39,12 +39,6 @@
 
 @end
 
-@implementation UserModel
-
-
-
-@end
-
 @implementation ReportModel
 
 + (NSDictionary *)mj_objectClassInArray{

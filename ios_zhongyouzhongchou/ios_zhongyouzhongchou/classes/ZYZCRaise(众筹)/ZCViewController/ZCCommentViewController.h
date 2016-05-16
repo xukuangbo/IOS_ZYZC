@@ -8,6 +8,6 @@
 
 #import "ZYZCBaseViewController.h"
 
-@interface ZCCommitViewController : ZYZCBaseViewController
+@interface ZCCommentViewController : ZYZCBaseViewController
 
 @end

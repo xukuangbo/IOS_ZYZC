@@ -94,6 +94,8 @@
 #define GETPRODUCTDETAIL   HTTPURL(@"productInfo/getProductDetail")
 //评论
 #define COMMENT_PRODUCT    HTTPURL(@"comment/addZhongchouComment")
+//获取评论列表
+#define GET_COMMENT        HTTPURL(@"comment/listZhongchouComment")
 
 //获取prepay_id
 

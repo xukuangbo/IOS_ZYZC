@@ -125,7 +125,7 @@ MJCodingImplementation
         report05.people=(NSNumber *)manager.return_returnPeopleNumber01;
         report05.desc=manager.return_wordDes01;
         report05.voice=[self changeFileName:manager.return_voiceUrl01];
-        report05.video=[self changeFileName:manager.return_voiceUrl01];
+        report05.video=[self changeFileName:manager.return_movieUrl01];
         report05.videoImg=[self changeFileName:manager.return_movieImg01];
         [_report addObject:report05];
     }

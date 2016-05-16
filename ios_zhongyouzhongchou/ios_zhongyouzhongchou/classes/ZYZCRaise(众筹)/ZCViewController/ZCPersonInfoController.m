@@ -30,7 +30,7 @@
 #import "FXBlurView.h"
 
 #import "ZCDetailModel.h"
-#import "WordEditViewController.h"
+#import "ZCCommentViewController.h"
 #import "MBProgressHUD+MJ.h"
 #import "WXApiShare.h"
 
@@ -74,7 +74,7 @@
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.navigationController.navigationBar.titleTextAttributes=
     @{NSForegroundColorAttributeName:[UIColor whiteColor],
-      NSFontAttributeName:[UIFont boldSystemFontOfSize:17]};
+      NSFontAttributeName:[UIFont boldSystemFontOfSize:18]};
 
     self.oneModel.zcType=DetailType;
     [self initData];
@@ -161,11 +161,12 @@
     //创建毛玻璃添加到顶部图片上
     _blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, BGIMAGEHEIGHT-BLURHEIGHT, KSCREEN_W, BLURHEIGHT)];
     [_blurView setDynamic:YES];
+    _blurView.alpha=0.9;
     [_topImgView addSubview:_blurView];
     //给毛玻璃润色
     UIView *blackView=[[UIView alloc]initWithFrame:_blurView.bounds];
     blackView.backgroundColor=[UIColor blackColor];
-    blackView.alpha=0.1;
+    blackView.alpha=0.3;
     [_blurView addSubview:blackView];
     
     //创建旅行主题标签
@@ -530,10 +531,11 @@
 {
     switch (sender.tag) {
         case CommentType:
-            [self commont];
+            [self comment];
             //评论
             break;
         case SupportType:
+            [self support];
             //支持
             break;
         case RecommendType:
@@ -575,8 +577,20 @@
 }
 
 #pragma mark --- 评论
--(void)commont
+-(void)comment
 {
+    
+    ZCCommentViewController *commentVC=[[ZCCommentViewController alloc]init];
+    commentVC.title=@"评论";
+    [self.navigationController pushViewController:commentVC animated:YES];
+    
+}
+#pragma mark --- 支持
+-(void)support
+{
+    UIButton *supportBtn=(UIButton *)[_headView viewWithTag:ReturnType];
+    [_headView getContent:supportBtn];
+    [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     
 }
 

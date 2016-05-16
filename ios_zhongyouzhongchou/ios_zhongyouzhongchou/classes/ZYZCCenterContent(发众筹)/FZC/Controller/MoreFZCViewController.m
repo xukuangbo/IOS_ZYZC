@@ -449,7 +449,8 @@
     FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
     [replaceKeys replaceDataKeysBySubFileName:_myZhouChouMarkName];
     // 模型转字典
-    NSDictionary *dataDict = replaceKeys.mj_keyValues;
+    NSDictionary *dataDict = [replaceKeys mj_keyValuesWithIgnoredKeys:@[@"myZhouChouMarkName"]];
+    
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:dataDict];
     [newParameters addEntriesFromDictionary:@{@"productCountryId":@1}];
     NSLog(@"%@",newParameters);
@@ -637,18 +638,18 @@
                             @"spell_end_time":@"2016-7-28",
                             @"cover":@"http://....",
                             @"desc":@"筹旅费文字描述",
-//                            @"voice":@"http://....",
+                            @"voice":@"http://....",
                             @"video":@"http://....",
                             @"videoImg":@"http://...",
                             @"schedule":@[
                                     @{
                                         @"day": @1,
-//                                        @"spot": @"景点描述",
+                                        @"spot": @"景点描述",
 //                                        @"spots":@[@"url1",@"url2"],
-//                                        @"trans":@"交通描述",
-//                                        @"live":@"住宿描述",
-//                                        @"food":@"饮食描述",
-//                                        @"desc":@"第一天描述",
+                                        @"trans":@"交通描述",
+                                        @"live":@"住宿描述",
+                                        @"food":@"饮食描述",
+                                        @"desc":@"第一天描述",
                                         @"voice":@"http://...",
                                         @"video":@"http://...",
                                         @"videoImg":@"http://..."
@@ -664,9 +665,13 @@
                                         @"price": @0
                                         },
                                     @{
-                                        @"style": @5,
-                                        @"people":@8,
-                                        @"price": @100
+                                        @"style": @3,
+                                        @"price": @200,
+                                        @"people": @5,
+                                        @"desc": @"回报目的1",
+                                        @"voice":@"http://",
+                                        @"vodeo":@"http://",
+                                        @"vodeoUrl":@"http://"
                                         },
                                     @{
                                         @"style": @6,
