@@ -43,4 +43,14 @@
 "error_no_startChoose_time"="时间有冲突！请重新选择开始日期";
 "error_no_endChoose_time"="时间有冲突！请重新选择返回日期";
 
+/**
+ *  评论结果
+ */
+"comment_fail"="评论失败!";
+"comment_success" ="评论成功!";
 
+/**
+ *  收藏
+ */
+"collection_success"="收藏成功";
+"collection_fail"="取消收藏";

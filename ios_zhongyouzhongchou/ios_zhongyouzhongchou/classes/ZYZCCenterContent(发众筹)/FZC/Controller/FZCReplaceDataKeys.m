@@ -55,7 +55,7 @@ MJCodingImplementation
     self.title=manager.goal_travelTheme;
     self.spell_buy_price=(NSNumber *)manager.raiseMoney_totalMoney;
     if (manager.goal_goals.count>=2) {
-        NSMutableArray *arr=[NSMutableArray arrayWithObject:manager.goal_goals];
+        NSMutableArray *arr=[NSMutableArray arrayWithArray:manager.goal_goals];
         [arr removeObjectAtIndex:0];
         self.dest=arr;
     }
@@ -125,7 +125,7 @@ MJCodingImplementation
         report05.people=(NSNumber *)manager.return_returnPeopleNumber01;
         report05.desc=manager.return_wordDes01;
         report05.voice=[self changeFileName:manager.return_voiceUrl01];
-        report05.video=[self changeFileName:manager.return_voiceUrl01];
+        report05.video=[self changeFileName:manager.return_movieUrl01];
         report05.videoImg=[self changeFileName:manager.return_movieImg01];
         [_report addObject:report05];
     }

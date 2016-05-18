@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UserModel.h"
 
 //所有众筹列表／我的众筹列表／众筹详情
 typedef NS_ENUM(NSInteger, ZC_TYPE)
@@ -34,7 +35,7 @@ typedef NS_ENUM(NSInteger, ZCStateType) {
     ZCStateTypeFail,              //众筹失败(众筹未达到100%，并且众筹时间已截止)
 };
 
-@class ZCOneModel,ZCProductModel,ZCSpellbuyproductModel,ZCUserModel;
+@class ZCOneModel,ZCProductModel,ZCSpellbuyproductModel;
 
 @interface ZCListModel : NSObject
 
@@ -49,7 +50,7 @@ typedef NS_ENUM(NSInteger, ZCStateType) {
 @property (nonatomic, strong) NSDictionary    *country;
 @property (nonatomic, strong) ZCProductModel  *product;
 @property (nonatomic, strong) ZCSpellbuyproductModel *spellbuyproduct;
-@property (nonatomic, strong) ZCUserModel     *user;
+@property (nonatomic, strong) UserModel       *user;
 
 @property (nonatomic, assign) ZC_TYPE         zcType;
 @property (nonatomic, assign) MY_ZC_TYPE      myZCtype;
@@ -84,31 +85,6 @@ typedef NS_ENUM(NSInteger, ZCStateType) {
 @property (nonatomic, strong) NSNumber *lotteryable;
 @property (nonatomic, strong) NSNumber *annable;
 @property (nonatomic, strong) NSNumber *spellRealBuyPrice;
-
-@end
-
-@interface ZCUserModel : NSObject
-
-@property (nonatomic, strong) NSNumber *usedPoints;
-@property (nonatomic, copy  ) NSString *school;
-@property (nonatomic, copy  ) NSString *sex;//0未知，1.女，2.男
-@property (nonatomic, strong) NSNumber *usedBalance;
-@property (nonatomic, copy  ) NSString *tags;//兴趣标签
-@property (nonatomic, copy  ) NSString *company;
-@property (nonatomic, strong) NSNumber *maritalStatus;//0:单身, 1:已婚, 2:离异
-@property (nonatomic, copy  ) NSString *title;//职位
-@property (nonatomic, strong) NSNumber *userId;
-@property (nonatomic, copy  ) NSString *birthday;
-@property (nonatomic, copy  ) NSString *userName;
-@property (nonatomic, copy  ) NSString *department;
-@property (nonatomic, copy  ) NSString *faceImg;
-@property (nonatomic, copy  ) NSString *province;
-@property (nonatomic, copy  ) NSString *city;
-@property (nonatomic, copy  ) NSString *district;
-@property (nonatomic, copy  ) NSString *constellation;//星座
-@property (nonatomic, copy  ) NSString *phone;
-@property (nonatomic, strong) NSNumber *weight;
-@property (nonatomic, strong) NSNumber *height;
 
 @end
 

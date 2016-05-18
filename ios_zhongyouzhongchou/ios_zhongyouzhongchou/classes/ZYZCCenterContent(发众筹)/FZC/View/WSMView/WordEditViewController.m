@@ -9,7 +9,9 @@
 #import "WordEditViewController.h"
 
 @interface WordEditViewController ()<UITextViewDelegate>
-
+{
+    UIView *navView;
+}
 @end
 
 @implementation WordEditViewController
@@ -23,7 +25,7 @@
 
 -(void)configUI
 {
-    UIView *navView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
+    navView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
     navView.backgroundColor=[UIColor ZYZC_MainColor];
     [self.view addSubview:navView];
     UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(0, 20, KSCREEN_W, 44)];
@@ -41,6 +43,7 @@
     _textView.contentSize=CGSizeMake(0, _textView.height);
     _textView.inputAccessoryView=[self createAccessoryView];
     [self.view addSubview:_textView];
+    
 }
 
 #pragma mark --- 创建键盘上的附属视图
@@ -69,6 +72,23 @@
         _textBlock(_textView.text);
     }
     
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark --- 添加取消按钮
+-(void)addMoreViews
+{
+    UIButton *cancelBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    cancelBtn.frame=CGRectMake(0, 27, 60, 30) ;
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
+    [navView addSubview:cancelBtn];
+}
+
+-(void)cancel
+{
+    [_textView resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

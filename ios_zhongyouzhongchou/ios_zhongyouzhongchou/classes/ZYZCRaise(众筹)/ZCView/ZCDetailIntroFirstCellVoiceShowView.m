@@ -7,6 +7,14 @@
 //
 
 #import "ZCDetailIntroFirstCellVoiceShowView.h"
+#import "FSAudioStream.h"
+
+@interface ZCDetailIntroFirstCellVoiceShowView ()
+
+@property (nonatomic, strong) FSAudioStream *audioStream;
+@property (nonatomic, assign) BOOL getStop;
+
+@end
 
 @implementation ZCDetailIntroFirstCellVoiceShowView
 
@@ -42,11 +50,13 @@
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(listenVoice:)];
     [_voiceView addGestureRecognizer:tap];
     
-    _timeLab=[[UILabel alloc]initWithFrame:CGRectMake(_voiceView.right+KEDGE_DISTANCE, self.height-38, self.width-_voiceView.right-KEDGE_DISTANCE, 38)];
-    _timeLab.font=[UIFont systemFontOfSize:20];
-    _timeLab.textColor=[UIColor ZYZC_TextGrayColor04];
-    [self addSubview:_timeLab];
+//    _timeLab=[[UILabel alloc]initWithFrame:CGRectMake(_voiceView.right+KEDGE_DISTANCE, self.height-38, self.width-_voiceView.right-KEDGE_DISTANCE, 38)];
+//    _timeLab.font=[UIFont systemFontOfSize:20];
+//    _timeLab.textColor=[UIColor ZYZC_TextGrayColor04];
+//    [self addSubview:_timeLab];
 }
+
+
 
 -(void)setVoiceTime:(NSInteger )voiceTime
 {
@@ -61,6 +71,27 @@
 {
     //播放语音
     NSLog(@"播放语音");
+    if (!_audioStream) {
+        NSURL *url=[NSURL URLWithString:self.voiceUrl];
+        //创建FSAudioStream对象
+        _audioStream=[[FSAudioStream alloc]initWithUrl:url];
+        _audioStream.onFailure=^(FSAudioStreamError error,NSString *description){
+            NSLog(@"播放过程中发生错误，错误信息：%@",description);
+        };
+        _audioStream.onCompletion=^(){
+            NSLog(@"播放完成!");
+        };
+        [_audioStream setVolume:0.5];//设置声音
+    }
+    
+    if (!_getStop) {
+        [_audioStream play];
+    }
+    else
+    {
+        [_audioStream stop];
+    }
+    _getStop=!_getStop;
 }
 
 @end

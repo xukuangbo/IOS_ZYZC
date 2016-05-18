@@ -20,4 +20,6 @@
 
 @property (nonatomic, assign) BOOL hasFood; //饮食
 
+@property (nonatomic, copy  ) NSString *faceImg;
+
 @end

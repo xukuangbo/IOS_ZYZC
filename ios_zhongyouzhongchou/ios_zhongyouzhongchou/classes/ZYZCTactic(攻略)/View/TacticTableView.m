@@ -109,6 +109,10 @@
     // 网络加载 --- 创建带标题的图片轮播器
 //    NSArray *titles = @[@"柳亮机器人一号",@"柳亮机器人二号",@"柳亮机器人三号",@"柳亮机器人四号",@"柳亮机器人五号"];
     SDCycleScrollView *headView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 280, KSCREEN_W, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    //添加渐变条
+    UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
+    bgImg.image=[UIImage imageNamed:@"Background"];
+    [headView addSubview:bgImg];
     
     headView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     headView.currentPageDotColor = [UIColor ZYZC_MainColor]; // 自定义分页控件小圆标颜色

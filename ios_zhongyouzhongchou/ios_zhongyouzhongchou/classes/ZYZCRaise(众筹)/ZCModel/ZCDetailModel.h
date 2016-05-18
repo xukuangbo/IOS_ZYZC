@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class ZCDetailProductModel,UserModel,ReportModel;
+#import "UserModel.h"
+@class ZCDetailProductModel,ReportModel;
 
 @interface ZCDetailModel : NSObject
 
@@ -21,12 +21,12 @@
 
 @property (nonatomic, copy  ) NSString *cover;
 @property (nonatomic, copy  ) NSString *desc;
-@property (nonatomic, copy  ) NSString *voice;
-@property (nonatomic, copy  ) NSString *video;
-@property (nonatomic, copy  ) NSString *videoImg;
+@property (nonatomic, copy  ) NSString *productVoice;
+@property (nonatomic, copy  ) NSString *productVideo;
+@property (nonatomic, copy  ) NSString *productVideoImg;
 @property (nonatomic, copy  ) NSString *dest;
 @property (nonatomic, strong) NSNumber *Friend;
-@property (nonatomic, strong) NSNumber *friendsCount;
+@property (nonatomic, strong) NSNumber *friendsCount;//收藏／推荐个数
 @property (nonatomic, strong) NSNumber *mySelf;
 @property (nonatomic, strong) NSNumber *productId;
 @property (nonatomic, copy  ) NSString *spell_buy_price;
@@ -42,21 +42,14 @@
 
 @property (nonatomic, assign) CGFloat introFirstCellHeight;
 
-
-@end
-
-@interface UserModel : NSObject
-
-@property (nonatomic, copy  ) NSString *faceImg;
-@property (nonatomic, copy  ) NSString *sex;
-@property (nonatomic, strong) NSNumber *userId;
-@property (nonatomic, copy  ) NSString *userName;
-
 @end
 
 @interface ReportModel : NSObject
 
 @property (nonatomic, copy  ) NSString *desc;
+@property (nonatomic, copy  ) NSString *spellVoice;
+@property (nonatomic, copy  ) NSString *spellVideo;
+@property (nonatomic, copy  ) NSString *spellVideoImg;
 @property (nonatomic, strong) NSNumber *people;
 @property (nonatomic, strong) NSNumber *price;
 @property (nonatomic, strong) NSNumber *reportId;

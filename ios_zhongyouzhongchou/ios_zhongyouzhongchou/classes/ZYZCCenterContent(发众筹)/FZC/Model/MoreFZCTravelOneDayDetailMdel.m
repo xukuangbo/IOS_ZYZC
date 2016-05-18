@@ -21,5 +21,19 @@ MJCodingImplementation
     return self;
 }
 
++(NSDictionary *)mj_replacedKeyFromPropertyName
+{
+    return @{@"siteDes"   :  @"spot",
+             @"sites"     :  @"spots",
+             @"trafficDes":  @"trans",
+             @"liveDes"   :  @"live",
+             @"foodDes"   :  @"food",
+             @"wordDes"   :  @"desc",
+             @"voiceUrl"  :  @"voice",
+             @"movieUrl"  :  @"video",
+             @"movieImg"  :  @"videoImg",
+             };
+}
+
 
 @end

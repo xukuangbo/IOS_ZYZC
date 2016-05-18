@@ -7,3 +7,4 @@ pod 'Masonry'
 pod 'FXBlurView'
 pod 'AliyunOSSiOS'
 pod 'RongCloudIMKit’
+pod 'FreeStreamer'

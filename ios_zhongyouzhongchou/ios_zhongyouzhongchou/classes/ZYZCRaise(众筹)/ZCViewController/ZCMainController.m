@@ -161,20 +161,18 @@
             }
             
             if (_zcType==Mylist&&!_listArr.count) {
-                NSArray *iconArr=@[@"icon_mxc_cy",@"icon_mxc_fq",@"icon_mxc_tj"];
-                NSArray *title01Arr=@[ZYLocalizedString(@"none_my_publish_01"),
-                                      ZYLocalizedString(@"none_my_join_01"),
-                                      ZYLocalizedString(@"none_my_recommend_01")];
-                NSArray *title02Arr=@[ZYLocalizedString(@"none_my_publish_02"),
-                                      ZYLocalizedString(@"none_my_join_02"),
-                                      ZYLocalizedString(@"none_my_recommend_02")];
+            NSArray *iconArr=@[@"icon_mxc_cy",@"icon_mxc_fq",@"icon_mxc_tj"];
+            NSArray *title01Arr=@[ZYLocalizedString(@"none_my_publish_01"),
+                                  ZYLocalizedString(@"none_my_join_01"),
+                                  ZYLocalizedString(@"none_my_recommend_01")];
+            NSArray *title02Arr=@[ZYLocalizedString(@"none_my_publish_02"),
+                                  ZYLocalizedString(@"none_my_join_02"),
+                                  ZYLocalizedString(@"none_my_recommend_02")];
                 _noneDataView.hidden=NO;
                 _table.hidden=YES;
-                
                 _noneDataView.iconView.image=[UIImage imageNamed:iconArr[_myZCType-1]];
                 _noneDataView.lab01.text=title01Arr[_myZCType-1];
                 _noneDataView.lab02.text=title02Arr[_myZCType-1];
-
             }
             else
             {

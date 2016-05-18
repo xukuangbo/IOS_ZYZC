@@ -107,6 +107,7 @@ static NSString *DayCell = @"DayCell";
     [self createShowTimeView];
     [self createCollectionView];
     [self createBottomView];
+    [self getMyOccupyDays];
 }
 -(void)createChooseView
 {
@@ -198,6 +199,7 @@ static NSString *DayCell = @"DayCell";
     NSDate *date = [NSDate date];
     
     NSDate *selectdate  = [NSDate date];
+    
     //返回数据模型数组
     return [self.calendarLogic reloadCalendarView:date selectDate:selectdate occupyDates:_occupyDays needDays:days showType:type isEnable:isEnable priceModelArr:arr];
 }
@@ -207,39 +209,39 @@ static NSString *DayCell = @"DayCell";
 {
     NSString *url=[NSString stringWithFormat:@"%@cache=false&orderType=1&pageNo=1&pageSize=20&openid=%@",GET_MY_OCCUPY_TIME,[ZYZCTool getUserId]];
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
-//        if (isSuccess) {
-//            NSDictionary *dateDic=result[@"data"];
-//            NSMutableArray *datesArr=[NSMutableArray array];
-//            for (int i=0; i<dateDic.count/2; i++) {
-//                NSString *startStr=[self changStrToDateStr:
-//                dateDic[[NSString stringWithFormat:@"startTime%d",i]]];
-//                
-//                NSString *endStr=[self changStrToDateStr:
-//                dateDic[[NSString stringWithFormat:@"EndTime%d",i]]];
-//                
-//                NSDate *startDate= [NSDate dateFromString:startStr];
-//                NSDate *endDate  = [NSDate dateFromString:endStr];
-//                NSArray *dateArr=[NSDate getDatesBetweenDate:startDate toDate:endDate];
-//                for (NSDate *date in dateArr) {
-//                    BOOL hasExit=NO;
-//                    for (NSDate *obj in datesArr) {
-//                        if ([date isEqual:obj]) {
-//                            hasExit=YES;
-//                        }
-//                    }
-//                    if (!hasExit) {
-//                        [datesArr addObject:date];
-//                    }
-//                }
-//            }
-//            _occupyDays=datesArr;
-            [self createCollectionView];
-//          }
-//        else
-//        {
-//            NSLog(@"%@",result);
-//        }
-      }
+//        NSLog(@"%@",result);
+        if (isSuccess) {
+            NSDictionary *dateDic=result[@"data"];
+            NSMutableArray *datesArr=[NSMutableArray array];
+            for (int i=0; i<dateDic.count/2; i++) {
+                NSString *startStr=[self changStrToDateStr:
+                dateDic[[NSString stringWithFormat:@"startTime%d",i]]];
+                
+                NSString *endStr=[self changStrToDateStr:
+                dateDic[[NSString stringWithFormat:@"EndTime%d",i]]];
+                
+                NSDate *startDate= [NSDate dateFromString:startStr];
+                NSDate *endDate  = [NSDate dateFromString:endStr];
+                NSArray *dateArr=[NSDate getDatesBetweenDate:startDate toDate:endDate];
+                for (NSDate *date in dateArr) {
+                    BOOL hasExit=NO;
+                    for (NSDate *obj in datesArr) {
+                        if ([date isEqual:obj]) {
+                            hasExit=YES;
+                        }
+                    }
+                    if (!hasExit) {
+                        [datesArr addObject:date];
+                    }
+                }
+                [datesArr addObject:endDate];
+                
+            }
+            _occupyDays=datesArr;
+            self.calendarMonth = [self getMonthArrayOfDays:self.days showType:self.type isEnable:self.isEnable modelArr:self.modelArr];
+            [_collectionView reloadData];
+          }
+    }
     andFailBlock:^(id failResult){
         NSLog(@"failResult:%@",failResult);
     }];

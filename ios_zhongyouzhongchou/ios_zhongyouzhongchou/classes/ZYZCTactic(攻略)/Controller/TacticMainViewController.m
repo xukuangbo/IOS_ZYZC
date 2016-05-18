@@ -68,7 +68,6 @@
     
     [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(0)];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-    
     UIButton *cityChoseButton = [UIButton buttonWithType:UIButtonTypeCustom];
     cityChoseButton.titleLabel.font = [UIFont systemFontOfSize:15];
     cityChoseButton.size = CGSizeMake(40, 25);

@@ -55,7 +55,27 @@
  */
 +(NSString *)getUserId;
 
+/**
+ *  json字符串转数组
+ */
 +(NSArray *)turnJsonStrToArray:(NSString *)jsonStr;
+
+/**
+ *  json字符串转数组
+ */
++ (NSDictionary *)turnJsonStrToDictionary:(NSString *)jsonStr;
+
+/**
+ *  获取时间戳
+ *
+ *  @return 时间戳字符串
+ */
++(NSString *)getTimeStamp;
+
+/**
+ *  时间戳转时间
+ */
++(NSString *)turnTimeStampToDate:(NSString *)timeStamp;
 
 
 @end
