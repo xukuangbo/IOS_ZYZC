@@ -7,7 +7,8 @@
 //
 
 #import "ZYZCBaseViewController.h"
-
+#import "UserModel.h"
 @interface ZCCommentViewController : ZYZCBaseViewController
-
+@property (nonatomic, strong)NSNumber *productId;
+@property (nonatomic, strong)UserModel *user;
 @end

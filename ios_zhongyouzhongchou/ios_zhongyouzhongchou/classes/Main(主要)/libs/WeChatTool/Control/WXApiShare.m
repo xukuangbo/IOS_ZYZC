@@ -9,7 +9,8 @@
 #import "WXApiShare.h"
 
 @implementation WXApiShare
-+ (void) shareWebPageWithTitle:(NSString *)title andDesc:(NSString *)description andThumbImage:(NSString *)thumbImage andWebUrl:(NSString *)webUrl
+
++(void)shareScene:(BOOL )zoneScene  withTitle:(NSString *)title andDesc:(NSString *)description andThumbImage:(NSString *)thumbImage andWebUrl:(NSString *)webUrl
 {
     WXMediaMessage *message=[WXMediaMessage message];
     message.title=title;
@@ -17,15 +18,15 @@
     //图片不能大于10k
     [message setThumbImage:[UIImage imageNamed:@"btn_fzc_pre"]];
     WXWebpageObject *webpageObject=[WXWebpageObject object];
-    webpageObject.webpageUrl=@"http://www.sosona.com/pay/crowdfundingDetail?pid=188";message.mediaObject=webpageObject;
-    
+    webpageObject.webpageUrl=webUrl;
+    message.mediaObject=webpageObject;
     SendMessageToWXReq *req=[[SendMessageToWXReq alloc]init];
     req.bText=NO;
     req.message=message;
-    req.scene=WXSceneSession;
-    
+    req.scene=zoneScene?WXSceneTimeline:WXSceneSession;
     [WXApi sendReq:req];
 }
+
 @end
 
 

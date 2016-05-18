@@ -61,6 +61,7 @@
 @property (nonatomic, assign) BOOL hasIntroMovie;//动画攻略
 @property (nonatomic, assign) BOOL hasHotComment;//热门评论
 @property (nonatomic, assign) BOOL hasInterestTravel;//兴趣标签匹配的旅游
+@property (nonatomic, assign) BOOL getCollection;
 @end
 
 @implementation ZCPersonInfoController
@@ -132,6 +133,8 @@
                 [_detailDays addObject:oneSchedule];
             }
             _hasIntroGoal=YES;
+             _getCollection=[_detailModel.detailProductModel.Friend isEqual:@0];
+            [_collectionBtn setImage: _getCollection?[UIImage imageNamed:@"icon_collection"]:[UIImage imageNamed:@"icon_collection_pre"] forState:UIControlStateNormal];
             [_table reloadData];
         }
     } andFailBlock:^(id failResult) {
@@ -155,6 +158,7 @@
     
     _topImgView=[[UIImageView alloc]initWithFrame:CGRectMake(0, -BGIMAGEHEIGHT,KSCREEN_W, BGIMAGEHEIGHT)];
     _topImgView.contentMode=UIViewContentModeScaleAspectFill;
+    _topImgView.layer.masksToBounds=YES;
     [_topImgView sd_setImageWithURL:[NSURL URLWithString:_oneModel.product.headImage ] placeholderImage:[UIImage imageNamed:@"abc"]];
     [_table addSubview:_topImgView];
     
@@ -168,6 +172,11 @@
     blackView.backgroundColor=[UIColor blackColor];
     blackView.alpha=0.3;
     [_blurView addSubview:blackView];
+    
+    //添加渐变条
+    UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
+    bgImg.image=[UIImage imageNamed:@"Background"];
+    [_topImgView addSubview:bgImg];
     
     //创建旅行主题标签
     _travelThemeLab=[[UILabel alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, 5, KSCREEN_W, 30)];
@@ -558,18 +567,41 @@
 #pragma mark --- 分享
 -(void)share
 {
-    [WXApiShare shareWebPageWithTitle:@"测试" andDesc:@"text01" andThumbImage:nil andWebUrl:nil];
+    __weak typeof (&*self)weakSelf=self;
+    __block NSString *url=[NSString stringWithFormat:@"http://www.sosona.com/pay/crowdfundingDetail?pid=%@",_productId];
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    alertController.view.tintColor=[UIColor ZYZC_MainColor];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *shareToZoneAction = [UIAlertAction actionWithTitle:@"分享到微信朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    {
+        NSLog(@"%@",weakSelf.oneModel.product.productName);
+        [WXApiShare shareScene:YES withTitle:@"众游" andDesc:weakSelf.oneModel.product.productName andThumbImage:nil andWebUrl:url];
+    }];
+    
+    UIAlertAction *shareToFriendAction = [UIAlertAction actionWithTitle:@"分享到微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    {
+        [WXApiShare shareScene:NO withTitle:@"众游" andDesc:weakSelf.oneModel.product.productName andThumbImage:nil andWebUrl:url];
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:shareToZoneAction];
+    [alertController addAction:shareToFriendAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark --- 收藏
+#pragma mark --- 收藏/取消收藏
 -(void)collection
 {
-    NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],@"friendsId":@1,@"productId":_productId};
-    NSLog(@"%@",parameters);
-    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:FOLLOWPRODUCT andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
-        NSLog(@"%@",result);
-        [MBProgressHUD showSuccess:@"收藏成功"];
-        [_collectionBtn setImage:[UIImage imageNamed:@"icon_collection_pre"] forState:UIControlStateNormal];
+    
+    NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],@"friendsId":_productId};
+    NSString *url=_getCollection?FOLLOWPRODUCT:UNFOLLOWPRODUCT;
+    
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:url andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        _getCollection?[MBProgressHUD showSuccess:ZYLocalizedString(@"collection_success")]:[MBProgressHUD showSuccess:ZYLocalizedString(@"collection_fail")];
+        [_collectionBtn setImage:_getCollection?[UIImage imageNamed:@"icon_collection_pre"]:[UIImage imageNamed:@"icon_collection"] forState:UIControlStateNormal];
+        _getCollection=!_getCollection;
         
     } andFailBlock:^(id failResult) {
         NSLog(@"%@",failResult);
@@ -579,8 +611,9 @@
 #pragma mark --- 评论
 -(void)comment
 {
-    
     ZCCommentViewController *commentVC=[[ZCCommentViewController alloc]init];
+    commentVC.productId=_oneModel.product.productId;
+    commentVC.user=_oneModel.user;
     commentVC.title=@"评论";
     [self.navigationController pushViewController:commentVC animated:YES];
     
@@ -599,7 +632,6 @@
 {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
-    [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:1]];
 }
 
 - (void)didReceiveMemoryWarning {

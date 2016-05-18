@@ -39,6 +39,7 @@
 @property (nonatomic, assign) BOOL hasUpload;
 @property (nonatomic, strong) NSDictionary *dataDic;
 @property (nonatomic, assign) BOOL getFirstPublish;
+@property (nonatomic, strong) MBProgressHUD *mbProgress;
 @end
 
 @implementation MoreFZCViewController
@@ -52,6 +53,7 @@
     [user synchronize];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     _uploadDataState=[NSMutableArray array];
+//    [self getHttpData];
     [self setBackItem];
     [self createToolBar];
     [self createClearMapView];
@@ -334,7 +336,7 @@
         return;
     }
     
-    [MBProgressHUD showMessage:@"正在发布..."];
+     _mbProgress=[MBProgressHUD showMessage:@"正在发布..."];
     
     if (_uploadDataState.count) {
         [_uploadDataState removeAllObjects];
@@ -403,11 +405,9 @@
                {
                    //在主线程更行进度条
                    dispatch_async(dispatch_get_main_queue(), ^{
-                       [MBProgressHUD hideHUD];
                        NSInteger successNumber=_uploadDataState.count;
                        NSLog(@"successNumber:%ld,%ld",successNumber,_uploadDataNumber);
-                       
-                       [MBProgressHUD showMessage:[NSString stringWithFormat:@"正在发布,已完成%.f％",(float)successNumber/(float)_uploadDataNumber*100.0]];
+                       _mbProgress.labelText=[NSString stringWithFormat:@"正在发布,已完成%.f％",(float)successNumber/(float)_uploadDataNumber*100.0];
                    });
                }
            }
@@ -453,9 +453,8 @@
     
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:dataDict];
     [newParameters addEntriesFromDictionary:@{@"productCountryId":@1}];
-    NSLog(@"%@",newParameters);
     _dataDic=newParameters;
-    
+     NSLog(@"_dataDic:%@",_dataDic);
     _getFirstPublish=YES;
     
     [self publishHttpData];
@@ -627,32 +626,42 @@
     NSLog(@"%@",dest);
     
     NSDictionary *dataDic=@{
-                            @"openid": @"oulbuvtpzxiOe6t9hVBh2mNRgiaI",
+                            @"openid": @"oulbuvolvV8uHEyZwU7gAn8icJFw",
                             @"status":@1,
                             @"title":@"海岛游",
-                            @"productCountryId":@"2",
+                            @"productCountryId":@"1",
                             @"dest":@[@"普吉岛"],
                             @"spell_buy_price":@5000,
-                            @"start_time":@"2016-4-28",
-                            @"end_time":@"2016-5-10",
-                            @"spell_end_time":@"2016-7-28",
-                            @"cover":@"http://....",
+                            @"start_time":@"2016-09-18",
+                            @"end_time":@"2016-09-21",
+                            @"spell_end_time":@"2016-09-03",
+                            @"cover":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181124.png",
                             @"desc":@"筹旅费文字描述",
-                            @"voice":@"http://....",
-                            @"video":@"http://....",
-                            @"videoImg":@"http://...",
+                            @"voice":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181148.caf",
+                            @"video":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181157.mp4",
+                            @"videoImg":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181157.png",
                             @"schedule":@[
                                     @{
                                         @"day": @1,
-                                        @"spot": @"景点描述",
-//                                        @"spots":@[@"url1",@"url2"],
-                                        @"trans":@"交通描述",
-                                        @"live":@"住宿描述",
-                                        @"food":@"饮食描述",
+//                                        @"spot": @"景点描述",
+////                                        @"spots":@[@"url1",@"url2"],
+//                                        @"trans":@"交通描述",
+//                                        @"live":@"住宿描述",
+//                                        @"food":@"饮食描述",
                                         @"desc":@"第一天描述",
-                                        @"voice":@"http://...",
-                                        @"video":@"http://...",
-                                        @"videoImg":@"http://..."
+                                        @"voice":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181206.caf",
+                                        @"video":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181216.mp4",
+                                        @"videoImg":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181216.png"
+                                        },
+                                    @{
+                                        @"day": @2,
+                                        @"desc":@"第二天描述",
+                                        @"voice":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181206.caf"
+                                    },
+                                    @{
+                                        @"day": @2,
+                                        @"desc":@"第二天描述",
+                                        @"voice":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181206.caf"
                                         }
                                     ],
                             @"report": @[

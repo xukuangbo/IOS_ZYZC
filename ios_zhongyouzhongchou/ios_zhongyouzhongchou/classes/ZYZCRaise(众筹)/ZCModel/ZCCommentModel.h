@@ -18,6 +18,7 @@
 @interface ZCCommentModel : NSObject
 @property (nonatomic, strong) ZCCommentInfoModel *comment;
 @property (nonatomic, strong) UserModel          *user;
+@property (nonatomic, assign) CGFloat            cellHeight;
 @end
 
 @interface ZCCommentInfoModel : NSObject

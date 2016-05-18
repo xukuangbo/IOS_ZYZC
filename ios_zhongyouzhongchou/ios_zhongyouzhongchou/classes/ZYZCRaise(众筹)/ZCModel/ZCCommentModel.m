@@ -23,6 +23,15 @@
 
 @implementation ZCCommentModel
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _cellHeight=70;
+    }
+    return self;
+}
+
 @end
 
 @implementation ZCCommentInfoModel

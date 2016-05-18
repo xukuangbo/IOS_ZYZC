@@ -26,7 +26,7 @@
 @property (nonatomic, copy  ) NSString *productVideoImg;
 @property (nonatomic, copy  ) NSString *dest;
 @property (nonatomic, strong) NSNumber *Friend;
-@property (nonatomic, strong) NSNumber *friendsCount;
+@property (nonatomic, strong) NSNumber *friendsCount;//收藏／推荐个数
 @property (nonatomic, strong) NSNumber *mySelf;
 @property (nonatomic, strong) NSNumber *productId;
 @property (nonatomic, copy  ) NSString *spell_buy_price;

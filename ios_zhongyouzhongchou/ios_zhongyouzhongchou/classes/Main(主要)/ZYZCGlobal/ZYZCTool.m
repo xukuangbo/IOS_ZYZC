@@ -127,7 +127,41 @@
     return dict;
 }
 
+#pragma mark --- 获取时间戳
++(NSString *)getTimeStamp
+{
+    NSDate *date = [NSDate date];
+    NSTimeInterval time=[date timeIntervalSince1970]*1000;//(13位)
+    NSString *timeStamp = [NSString stringWithFormat:@"%.f", time];
+    return timeStamp;
+}
 
+
+#pragma mark --- 时间戳转时间
++(NSString *)turnTimeStampToDate:(NSString *)timeStamp
+{
+    if(timeStamp.length>10)
+    {
+        timeStamp=[timeStamp substringToIndex:10];
+    }
+    NSString*str=timeStamp;//时间戳  @"1368082020"(十位)
+    
+    NSTimeInterval time=[str doubleValue];
+    
+    NSDate*detaildate=[NSDate dateWithTimeIntervalSince1970:time];
+    
+    //实例化一个NSDateFormatter对象
+    
+    NSDateFormatter*dateFormatter = [[NSDateFormatter alloc]init];
+    
+    //设定时间格式,这里可以设置成自己需要的格式
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
+    
+    return currentDateStr;
+}
 
 
 @end

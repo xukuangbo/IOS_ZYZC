@@ -17,5 +17,27 @@
     // Drawing code
 }
 */
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self configUI];
+    }
+    return self;
+}
+
+-(void)configUI
+{
+    self.layer.cornerRadius=KEDGE_DISTANCE;
+    self.layer.masksToBounds=YES;
+    [self setBackgroundImage:[UIImage imageNamed:@"icon_placeholder"] forState:UIControlStateNormal];
+    [self addTarget:self action:@selector(personZone) forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark --- 访问个人空间
+-(void)personZone
+{
+    
+}
 
 @end
