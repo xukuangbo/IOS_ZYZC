@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "UINavigationBar+Background.h"
 
-@interface ZYZCBaseTableViewController : UITableViewController
-
+@interface ZYZCBaseTableViewController : UIViewController
+/**
+ *  tableView
+ */
+@property (nonatomic, weak) UITableView *tableView;
 /**
  *  封面图高度
  */
@@ -19,6 +22,11 @@
  *  标题
  */
 @property (nonatomic, copy) NSString *titleName;
+
+/**
+ *  改变颜色
+ */
+- (void)changeNaviColorWithScroll:(UIScrollView *)scrollView;
 
 /**
  *  只有返回键

@@ -13,10 +13,19 @@
 @end
 
 @implementation ZYZCBaseTableViewController
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        [self.view addSubview:tableView];
+        self.tableView = tableView;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor ZYZC_BgGrayColor];
@@ -65,23 +74,19 @@
 }
 
 
-#pragma mark - Table view data source
+//#pragma mark - Table view data source
+//
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//#warning Incomplete implementation, return the number of sections
+//    return 0;
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//#warning Incomplete implementation, return the number of rows
+//    return 0;
+//}
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
-}
-
-#pragma mark - UIScrollViewDelegate
-/**
- *  navi背景色渐变的效果
- */
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)changeNaviColorWithScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
     
