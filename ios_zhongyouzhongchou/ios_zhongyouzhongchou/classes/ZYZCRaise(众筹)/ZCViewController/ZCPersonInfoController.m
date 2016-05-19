@@ -33,7 +33,7 @@
 #import "ZCCommentViewController.h"
 #import "MBProgressHUD+MJ.h"
 #import "WXApiShare.h"
-
+#import "WXApiPay.h"
 @interface ZCPersonInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView           *table;
 @property (nonatomic, strong) UIImageView           *topImgView;
@@ -594,7 +594,10 @@
 #pragma mark --- 收藏/取消收藏
 -(void)collection
 {
-    
+    WXApiPay *pay=[[WXApiPay alloc]init];
+    [pay payForWeChat];
+    return;
+//
     NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],@"friendsId":_productId};
     NSString *url=_getCollection?FOLLOWPRODUCT:UNFOLLOWPRODUCT;
     
@@ -626,7 +629,6 @@
     [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     
 }
-
 
 -(void)viewWillDisappear:(BOOL)animated
 {

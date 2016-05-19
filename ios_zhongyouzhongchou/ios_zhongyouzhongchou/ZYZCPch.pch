@@ -96,6 +96,8 @@
 #define COMMENT_PRODUCT    HTTPURL(@"comment/addZhongchouComment")
 //获取评论列表
 #define GET_COMMENT        HTTPURL(@"comment/listZhongchouComment")
+//获取我的钱包
+#define GET_MYWALLET       HTTPURL(@"wallet/getMyWallet")
 
 //获取prepay_id
 

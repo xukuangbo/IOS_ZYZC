@@ -47,10 +47,11 @@
     NSString *text02=@"斯大林时代卡上打斯大林时代啦可是大对空射击阿莱克斯就啊索朗多吉啊索朗多吉阿斯利康打击打击了大声哭了的哈结束多哈的哈大哭大叫啊打卡机打了卡多久啊圣诞节啊了多大酒店啦睡觉啊说";
     NSString *text03=@"斯大林时代啦可是大对空射击阿莱克斯就啊索朗多吉啊";
     NSString *text04=@"等待就是克里斯朵夫塑料袋看风景的苏里科夫说斯大林时代卡上打斯大林时代啦可是大对空射击阿莱克斯就啊索朗多吉啊索朗多吉阿斯利康打击打击了大声哭了的哈结束多哈的哈大哭大叫啊打卡机打了卡多久啊圣诞节啊了多大酒店啦睡觉啊说";
+    
    _supportOneYuanView =[[ZCDetailReturnCusView alloc]initSupportViewByTop:0 andTitle:@"支持1元" andText:text01 andSupportType:SuppurtOneYuan];
     [self.contentView addSubview:_supportOneYuanView];
     
-    _supportAnyYuanView =[[ZCDetailReturnCusView alloc]initSupportViewByTop:_supportOneYuanView.bottom andTitle:@"支持任意金额：" andText:text02 andSupportType:SuppurtAnyYuan];
+    _supportAnyYuanView =[[ZCDetailReturnCusView alloc]initSupportViewByTop:_supportOneYuanView.bottom andTitle:@"支持任意金额:" andText:text02 andSupportType:SuppurtAnyYuan];
     [self.contentView addSubview:_supportAnyYuanView];
     
     _returnSupportView =[[ZCDetailReturnCusView alloc]initSupportViewByTop:_supportAnyYuanView.bottom andTitle:RETURNSUPPORT(0) andText:text03 andSupportType:SuppurtReturnMoney];
@@ -58,9 +59,24 @@
     
     _togetherView =[[ZCDetailReturnCusView alloc]initSupportViewByTop:_returnSupportView.bottom andTitle:TOGETHERSUPPORT(0) andText:text04 andSupportType:SuppurtTogetherMoney];
     [self.contentView addSubview:_togetherView];
-
-
+    
+    
+    for (int i=0; i<4; i++) {
+//        UIButton *button=[self createBtnByFrame:<#(CGRect)#> andSupportType:<#(SupportMoneyType)#>]
+    }
 }
+
+#pragma mark --- 创建支持按钮
+-(UIButton *)createBtnByFrame:(CGRect )frame andSupportType:(SupportMoneyType )supportMoneyType
+{
+    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame=frame;
+    btn.tag=(NSInteger)supportMoneyType;
+    [btn setImage:[UIImage imageNamed:@"Butttn_support"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(supportMoney:) forControlEvents:UIControlEventTouchUpInside];
+    return  btn;
+}
+
 
 -(void)setCellModel:(ZCDetailReturnFirstCellModel *)cellModel
 {

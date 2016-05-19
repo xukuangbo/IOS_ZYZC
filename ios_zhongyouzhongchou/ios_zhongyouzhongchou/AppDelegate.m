@@ -94,7 +94,7 @@
  */
 - (void)initWithWechat
 {
-    [WXApi registerApp:@"wx4f5dad0f41bb5a7d" withDescription:@"ZYZC"];
+    [WXApi registerApp:kAppOpenid withDescription:@"ZYZC"];
 }
 
 #pragma mark - 打开微信，回调微信
@@ -104,6 +104,27 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+}
+
+#pragma mark --- 微信支付方法回调(添加通知)
+-(void) onResp:(BaseResp*)resp
+{
+    if ([resp isKindOfClass:[PayResp class]])
+    {
+        PayResp *response = (PayResp *)resp;
+        switch (response.errCode) {
+            case WXSuccess: {
+                NSNotification *notification = [NSNotification notificationWithName:KORDER_PAY_NOTIFICATION object:@"success"];
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+                break;
+            }
+            default: {
+                NSNotification *notification = [NSNotification notificationWithName:KORDER_PAY_NOTIFICATION object:@"fail"];
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+                break;
+            }
+        }
+    }
 }
 
 #pragma mark --- 在Documents中创建资源文件存放视屏、语音、图片

@@ -181,6 +181,11 @@
 		2CD4B4491CCDAA2B006A7CE8 /* ZCDetailReturnSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4B4481CCDAA2B006A7CE8 /* ZCDetailReturnSecondCell.m */; };
 		2CD4B4541CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4B4511CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m */; };
 		2CD4B4551CCDE807006A7CE8 /* ZCDetailReturnThridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4B4531CCDE807006A7CE8 /* ZCDetailReturnThridCell.m */; };
+		2CDAB2451CEBFEDB00E3E0F5 /* ZYZCMyWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2441CEBFEDB00E3E0F5 /* ZYZCMyWallet.m */; };
+		2CDAB2481CEC0AD900E3E0F5 /* WXApiPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */; };
+		2CDAB2531CEC549800E3E0F5 /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB24E1CEC549800E3E0F5 /* ApiXml.mm */; };
+		2CDAB2541CEC549800E3E0F5 /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2501CEC549800E3E0F5 /* payRequsestHandler.mm */; };
+		2CDAB2551CEC549800E3E0F5 /* WXUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2521CEC549800E3E0F5 /* WXUtil.mm */; };
 		2CDCE4971CCA29EB00873915 /* ZYZCCusomMovieImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */; };
 		2CDDCE5E1CE2BB54006D372C /* ZCNoneDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDCE5D1CE2BB54006D372C /* ZCNoneDataView.m */; };
 		2CDDCE601CE2BBA7006D372C /* ZCNoneDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDCE5F1CE2BBA7006D372C /* ZCNoneDataView.xib */; };
@@ -557,6 +562,16 @@
 		2CD4B4511CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnFourthCell.m; sourceTree = "<group>"; };
 		2CD4B4521CCDE807006A7CE8 /* ZCDetailReturnThridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailReturnThridCell.h; sourceTree = "<group>"; };
 		2CD4B4531CCDE807006A7CE8 /* ZCDetailReturnThridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnThridCell.m; sourceTree = "<group>"; };
+		2CDAB2431CEBFEDB00E3E0F5 /* ZYZCMyWallet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCMyWallet.h; sourceTree = "<group>"; };
+		2CDAB2441CEBFEDB00E3E0F5 /* ZYZCMyWallet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCMyWallet.m; sourceTree = "<group>"; };
+		2CDAB2461CEC0AD900E3E0F5 /* WXApiPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiPay.h; sourceTree = "<group>"; };
+		2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiPay.m; sourceTree = "<group>"; };
+		2CDAB24D1CEC549800E3E0F5 /* ApiXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiXml.h; sourceTree = "<group>"; };
+		2CDAB24E1CEC549800E3E0F5 /* ApiXml.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApiXml.mm; sourceTree = "<group>"; };
+		2CDAB24F1CEC549800E3E0F5 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
+		2CDAB2501CEC549800E3E0F5 /* payRequsestHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = payRequsestHandler.mm; sourceTree = "<group>"; };
+		2CDAB2511CEC549800E3E0F5 /* WXUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXUtil.h; sourceTree = "<group>"; };
+		2CDAB2521CEC549800E3E0F5 /* WXUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WXUtil.mm; sourceTree = "<group>"; };
 		2CDCE4951CCA29EB00873915 /* ZYZCCusomMovieImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCCusomMovieImage.h; sourceTree = "<group>"; };
 		2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCCusomMovieImage.m; sourceTree = "<group>"; };
 		2CDDCE5C1CE2BB54006D372C /* ZCNoneDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCNoneDataView.h; sourceTree = "<group>"; };
@@ -799,6 +814,7 @@
 			isa = PBXGroup;
 			children = (
 				04A99D0A1CC0777700C6F5F0 /* WeChatTool */,
+				2CDAB24C1CEC549800E3E0F5 /* WXPaylib */,
 				04A99BCE1CBF848C00C6F5F0 /* libs */,
 				04A99BD81CBF848C00C6F5F0 /* ZYZCGlobal */,
 				041D06EE1CD331CB002B8329 /* Category */,
@@ -851,6 +867,8 @@
 				2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */,
 				041D06EB1CD322AB002B8329 /* ZYZCAVPlayer.h */,
 				041D06EC1CD322AB002B8329 /* ZYZCAVPlayer.m */,
+				2CDAB2431CEBFEDB00E3E0F5 /* ZYZCMyWallet.h */,
+				2CDAB2441CEBFEDB00E3E0F5 /* ZYZCMyWallet.m */,
 			);
 			path = ZYZCGlobal;
 			sourceTree = "<group>";
@@ -1333,6 +1351,8 @@
 				04A99D141CC07E1800C6F5F0 /* WXApiResponseHandler.m */,
 				2C8B916F1CE71552004FDCB7 /* WXApiShare.h */,
 				2C8B91701CE71552004FDCB7 /* WXApiShare.m */,
+				2CDAB2461CEC0AD900E3E0F5 /* WXApiPay.h */,
+				2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -1505,6 +1525,19 @@
 				2C901DE21C89788C004B844B /* Info.plist */,
 			);
 			path = ios_zhongyouzhongchouUITests;
+			sourceTree = "<group>";
+		};
+		2CDAB24C1CEC549800E3E0F5 /* WXPaylib */ = {
+			isa = PBXGroup;
+			children = (
+				2CDAB24D1CEC549800E3E0F5 /* ApiXml.h */,
+				2CDAB24E1CEC549800E3E0F5 /* ApiXml.mm */,
+				2CDAB24F1CEC549800E3E0F5 /* payRequsestHandler.h */,
+				2CDAB2501CEC549800E3E0F5 /* payRequsestHandler.mm */,
+				2CDAB2511CEC549800E3E0F5 /* WXUtil.h */,
+				2CDAB2521CEC549800E3E0F5 /* WXUtil.mm */,
+			);
+			path = WXPaylib;
 			sourceTree = "<group>";
 		};
 		2CE21A781CC076AD00C7A797 /* Model */ = {
@@ -1786,6 +1819,7 @@
 				040651351CC71A99003FD539 /* TacticModel.m in Sources */,
 				2CE5DD9A1CE9552400895A94 /* ZCCommentCell.m in Sources */,
 				04A99D201CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */,
+				2CDAB2541CEC549800E3E0F5 /* payRequsestHandler.mm in Sources */,
 				04A99D1D1CC07E1800C6F5F0 /* WXApiManager.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
 				2C4EEFC41CC6316900AA99F6 /* ZCDetailFirstCell.m in Sources */,
@@ -1808,6 +1842,7 @@
 				040651301CC635A9003FD539 /* TacticTableView.m in Sources */,
 				04A99CA11CBF848D00C6F5F0 /* GoalFirstCell.m in Sources */,
 				0490D15C1CC9FAA80064844C /* TacticSingleHeadView.m in Sources */,
+				2CDAB2551CEC549800E3E0F5 /* WXUtil.mm in Sources */,
 				2CDDCE5E1CE2BB54006D372C /* ZCNoneDataView.m in Sources */,
 				040651241CC62FC7003FD539 /* TAPageControl.m in Sources */,
 				04A99C9F1CBF848D00C6F5F0 /* SelectImageViewController.m in Sources */,
@@ -1819,6 +1854,7 @@
 				04F8362A1CD7102200140980 /* ZYZCPlayViewController.m in Sources */,
 				2C901DC31C89788C004B844B /* ViewController.m in Sources */,
 				2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */,
+				2CDAB2481CEC0AD900E3E0F5 /* WXApiPay.m in Sources */,
 				04A99C9B1CBF848D00C6F5F0 /* MoreFZCChooseSceneController.m in Sources */,
 				2C82882F1CD83E0A004873B6 /* NecessaryView.m in Sources */,
 				04A99CEF1CBF851500C6F5F0 /* RMCalendarLogic.m in Sources */,
@@ -1831,6 +1867,7 @@
 				0490D1591CC9BFB60064844C /* TacticSingleModelFrame.m in Sources */,
 				2CD4B4551CCDE807006A7CE8 /* ZCDetailReturnThridCell.m in Sources */,
 				04A99CB51CBF848D00C6F5F0 /* ReturnSecondCell.m in Sources */,
+				2CDAB2451CEBFEDB00E3E0F5 /* ZYZCMyWallet.m in Sources */,
 				0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */,
 				041D06F71CD3321D002B8329 /* RYNumberKeyboard.m in Sources */,
 				04A99CF21CBF851500C6F5F0 /* RMCalendarMonthHeaderView.m in Sources */,
@@ -1859,6 +1896,7 @@
 				048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */,
 				04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */,
 				04F836411CD72C3300140980 /* SDBallProgressView.m in Sources */,
+				2CDAB2531CEC549800E3E0F5 /* ApiXml.mm in Sources */,
 				04518B4C1CE419F0001921D0 /* MineSetUpViewController.m in Sources */,
 				040651251CC62FC7003FD539 /* SDCollectionViewCell.m in Sources */,
 				04A99CCC1CBF848D00C6F5F0 /* MineCenterTableView.m in Sources */,
