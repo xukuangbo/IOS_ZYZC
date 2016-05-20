@@ -18,13 +18,8 @@
 @property (nonatomic, copy  ) NSString *title;
 @property (nonatomic, copy  ) NSString *text;
 @property (nonatomic, assign) SupportMoneyType supportType;
-@property (nonatomic, assign) BOOL supportOneYuan;
-@property (nonatomic, assign) BOOL supportAnyYuan;
-@property (nonatomic, assign) BOOL supportReturn01;
-@property (nonatomic, assign) BOOL supportReturn02;
-@property (nonatomic, assign) BOOL supportTogether;
-
 @end
+
 @implementation ZCDetailReturnCusView
 
 /*
@@ -60,8 +55,8 @@
         lineView.hidden=YES;
     }
     //支持按钮
-    UIButton *supportBtn=[self createBtnByFrame:CGRectMake(self.width-40, lineView.bottom, 40, 40) andSupportType:_supportType];
-    [self addSubview:supportBtn];
+//    UIButton *supportBtn=[self createBtnByFrame:CGRectMake(self.width-40, lineView.bottom, 40, 40) andSupportType:_supportType];
+//    [self addSubview:supportBtn];
     //标题
     CGFloat titleWidth=[ZYZCTool calculateStrLengthByText:_title andFont:[UIFont systemFontOfSize:15] andMaxWidth:self.width].width;
     _titleLab=[[UILabel alloc]initWithFrame:CGRectMake(0, lineView.bottom+KEDGE_DISTANCE, titleWidth, 20)];
@@ -141,16 +136,16 @@
     
 }
 
-#pragma mark --- 创建支持按钮
--(UIButton *)createBtnByFrame:(CGRect )frame andSupportType:(SupportMoneyType )supportMoneyType
-{
-    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame=frame;
-    btn.tag=(NSInteger)supportMoneyType;
-    [btn setImage:[UIImage imageNamed:@"Butttn_support"] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(supportMoney:) forControlEvents:UIControlEventTouchUpInside];
-    return  btn;
-}
+//#pragma mark --- 创建支持按钮
+//-(UIButton *)createBtnByFrame:(CGRect )frame andSupportType:(SupportMoneyType )supportMoneyType
+//{
+//    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+//    btn.frame=frame;
+//    btn.tag=(NSInteger)supportMoneyType;
+//    [btn setImage:[UIImage imageNamed:@"Butttn_support"] forState:UIControlStateNormal];
+//    [btn addTarget:self action:@selector(supportMoney:) forControlEvents:UIControlEventTouchUpInside];
+//    return  btn;
+//}
 
 #pragma mark --- 展开更多内容
 -(void)openMoreText:(UIButton *)sender
@@ -181,28 +176,11 @@
 }
 
 
-#pragma mark --- 支持金额
--(void)supportMoney:(UIButton *)sender
-{
-    BOOL state=YES;
-    if (sender.tag==SuppurtOneYuan) {
-        _supportOneYuan=!_supportOneYuan;
-        state=_supportOneYuan;
-    }
-    if (sender.tag==SuppurtAnyYuan) {
-        _supportAnyYuan=!_supportAnyYuan;
-        state=_supportAnyYuan;
-    }
-    if (sender.tag==SuppurtReturnMoney) {
-        _supportReturn01=!_supportReturn01;
-        state=_supportReturn01;
-    }
-    if (sender.tag==SuppurtTogetherMoney) {
-        _supportTogether=!_supportTogether;
-        state=_supportTogether;
-    }
-    [sender setImage:state?[UIImage imageNamed:@"Butttn_support_pre"]:[UIImage imageNamed:@"Butttn_support"] forState:UIControlStateNormal];
-}
+//#pragma mark --- 支持金额
+//-(void)supportMoney:(UIButton *)sender
+//{
+//    [sender setImage:[UIImage imageNamed:@"Butttn_support_pre"] forState:UIControlStateNormal];
+//}
 
 #pragma mark --- 限额人数
 -(void)setLimitNumber:(NSInteger)limitNumber

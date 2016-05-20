@@ -131,7 +131,7 @@
 +(NSString *)getTimeStamp
 {
     NSDate *date = [NSDate date];
-    NSTimeInterval time=[date timeIntervalSince1970]*1000;//(13位)
+    NSTimeInterval time=[date timeIntervalSince1970];//(10位)
     NSString *timeStamp = [NSString stringWithFormat:@"%.f", time];
     return timeStamp;
 }

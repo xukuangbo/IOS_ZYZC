@@ -71,27 +71,6 @@
 {
     //播放语音
     NSLog(@"播放语音");
-    if (!_audioStream) {
-        NSURL *url=[NSURL URLWithString:self.voiceUrl];
-        //创建FSAudioStream对象
-        _audioStream=[[FSAudioStream alloc]initWithUrl:url];
-        _audioStream.onFailure=^(FSAudioStreamError error,NSString *description){
-            NSLog(@"播放过程中发生错误，错误信息：%@",description);
-        };
-        _audioStream.onCompletion=^(){
-            NSLog(@"播放完成!");
-        };
-        [_audioStream setVolume:0.5];//设置声音
-    }
-    
-    if (!_getStop) {
-        [_audioStream play];
-    }
-    else
-    {
-        [_audioStream stop];
-    }
-    _getStop=!_getStop;
 }
 
 @end

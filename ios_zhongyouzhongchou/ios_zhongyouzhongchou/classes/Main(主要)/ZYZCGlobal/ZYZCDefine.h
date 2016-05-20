@@ -84,5 +84,8 @@
 
 #define kAppOpenid @"wx4f5dad0f41bb5a7d"//微信的
 #define kAppSercet @"cbb6bf01c64e64aa869d497f600b1270"
+#define KORDER_PAY_NOTIFICATION @"orderPay"
+
+
 
 #endif /* ZYZCDefine_h */
