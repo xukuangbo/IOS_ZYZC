@@ -36,6 +36,8 @@
 		04518B4C1CE419F0001921D0 /* MineSetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */; };
 		04518B4F1CE42905001921D0 /* ZYZCBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B4E1CE42905001921D0 /* ZYZCBaseTableViewController.m */; };
 		04518B551CE42D56001921D0 /* MinePersonSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B541CE42D56001921D0 /* MinePersonSetUpController.m */; };
+		04518B581CEC7037001921D0 /* MinePersonSetUpHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B571CEC7037001921D0 /* MinePersonSetUpHeadView.m */; };
+		04518B5B1CEEEC8C001921D0 /* MinePersonSetUpFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B5A1CEEEC8C001921D0 /* MinePersonSetUpFirstCell.m */; };
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
 		0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */; };
 		0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */; };
@@ -269,6 +271,10 @@
 		04518B4E1CE42905001921D0 /* ZYZCBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCBaseTableViewController.m; sourceTree = "<group>"; };
 		04518B531CE42D56001921D0 /* MinePersonSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpController.h; sourceTree = "<group>"; };
 		04518B541CE42D56001921D0 /* MinePersonSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpController.m; sourceTree = "<group>"; };
+		04518B561CEC7037001921D0 /* MinePersonSetUpHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpHeadView.h; sourceTree = "<group>"; };
+		04518B571CEC7037001921D0 /* MinePersonSetUpHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpHeadView.m; sourceTree = "<group>"; };
+		04518B591CEEEC8C001921D0 /* MinePersonSetUpFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpFirstCell.h; sourceTree = "<group>"; };
+		04518B5A1CEEEC8C001921D0 /* MinePersonSetUpFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpFirstCell.m; sourceTree = "<group>"; };
 		048DDE9A1CC229F600136C7A /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
 		048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
 		0490D14E1CC92B350064844C /* TacticSingleFoodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleFoodModel.h; sourceTree = "<group>"; };
@@ -769,6 +775,10 @@
 				04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */,
 				04518B531CE42D56001921D0 /* MinePersonSetUpController.h */,
 				04518B541CE42D56001921D0 /* MinePersonSetUpController.m */,
+				04518B561CEC7037001921D0 /* MinePersonSetUpHeadView.h */,
+				04518B571CEC7037001921D0 /* MinePersonSetUpHeadView.m */,
+				04518B591CEEEC8C001921D0 /* MinePersonSetUpFirstCell.h */,
+				04518B5A1CEEEC8C001921D0 /* MinePersonSetUpFirstCell.m */,
 			);
 			path = "MineSetUp(个人设置)";
 			sourceTree = "<group>";
@@ -1653,7 +1663,7 @@
 				TargetAttributes = {
 					2C901DB71C89788C004B844B = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 72D23PBGTA;
+						DevelopmentTeam = 29SK9NNETD;
 					};
 					2C901DD01C89788C004B844B = {
 						CreatedOnToolsVersion = 7.1;
@@ -1788,6 +1798,7 @@
 				04A99D201CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */,
 				04A99D1D1CC07E1800C6F5F0 /* WXApiManager.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
+				04518B5B1CEEEC8C001921D0 /* MinePersonSetUpFirstCell.m in Sources */,
 				2C4EEFC41CC6316900AA99F6 /* ZCDetailFirstCell.m in Sources */,
 				04F8364D1CD734CD00140980 /* TacticSingleTipsController.m in Sources */,
 				0406514D1CC87A89003FD539 /* TacticSingleViewController.m in Sources */,
@@ -1855,6 +1866,7 @@
 				04A99CBD1CBF848D00C6F5F0 /* SoundView.m in Sources */,
 				04A99CC81CBF848D00C6F5F0 /* MineMessageController.m in Sources */,
 				2CC2D1211CC87CD40044BD2A /* ZCDetailIntroFirstCellVoiceShowView.m in Sources */,
+				04518B581CEC7037001921D0 /* MinePersonSetUpHeadView.m in Sources */,
 				04A99CA51CBF848D00C6F5F0 /* MoreFZCBaseTableView.m in Sources */,
 				048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */,
 				04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */,

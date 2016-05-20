@@ -217,7 +217,6 @@
 - (void)loginButtonAction:(UIButton *)button
 {
     
-    
     UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"众游众筹登录" message:@"众游众筹使用微信登陆" preferredStyle:UIAlertControllerStyleAlert];
     [loginAlert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [loginAlert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -305,8 +304,7 @@
             [MBProgressHUD hideHUD];
             [NSThread sleepForTimeInterval:2];
             [MBProgressHUD showError:@"注册失败"];
-            
-            
+           
         }
     } andFailBlock:^(id failResult) {
         NSLog(@"__________%@",failResult);
@@ -368,7 +366,6 @@
         //这里还需要去请求个人信息，然后保存到本地
         ZYZCAccountModel *accountModel = [ZYZCAccountModel accountWithDict:responseObject];
         [ZYZCAccountTool saveAccount:accountModel];
-        
         
         //这里可以让headview刷新一下数据
         [self reloadAccountData];

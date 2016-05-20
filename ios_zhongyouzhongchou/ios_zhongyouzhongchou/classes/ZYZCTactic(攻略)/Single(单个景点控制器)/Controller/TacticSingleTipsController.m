@@ -78,6 +78,11 @@
     imageView.backgroundColor = [UIColor redColor];
     self.imageView = imageView;
     
+    //添加渐变条
+    UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
+    bgImg.image=[UIImage imageNamed:@"Background"];
+    [imageView addSubview:bgImg];
+    
     /**
      *  创建文字
      */

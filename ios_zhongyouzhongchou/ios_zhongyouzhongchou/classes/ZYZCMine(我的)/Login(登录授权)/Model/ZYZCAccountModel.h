@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSObject+MJCoding.h"
 
-@interface ZYZCAccountModel : NSObject
+@interface ZYZCAccountModel : NSObject<MJCoding>
 /**　string	用于调用access_token，接口获取授权后的access token。*/
 @property (nonatomic, copy) NSString *access_token;
 
@@ -25,8 +26,6 @@
 
 /**	access token的创建时间 */
 @property (nonatomic, strong) NSDate *created_time;
-
-
 
 //注册用的信息
 /**
