@@ -17,6 +17,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.contentMode=UIViewContentModeScaleAspectFill;
+        self.layer.masksToBounds=YES;
         self.userInteractionEnabled=YES;
         [self configUI];
     }

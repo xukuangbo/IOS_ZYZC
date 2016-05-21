@@ -100,6 +100,7 @@
 #define GET_MYWALLET       HTTPURL(@"wallet/getMyWallet")
 
 //获取prepay_id
+#define GET_ORDER          HTTPURL(@"weixinpay/generateOrder")
 
 //获取所有众筹列表
 #define LISTALLPRODUCTS   HTTPURL(@"list/listAllProducts")

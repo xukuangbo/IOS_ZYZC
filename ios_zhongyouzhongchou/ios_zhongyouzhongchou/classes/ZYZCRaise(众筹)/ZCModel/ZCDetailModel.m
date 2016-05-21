@@ -22,6 +22,7 @@
     self = [super init];
     if (self) {
         _introFirstCellHeight=1.0;
+        _returnFirtCellHeight=1.0;
     }
     return self;
 }

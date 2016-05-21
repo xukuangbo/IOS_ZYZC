@@ -7,19 +7,9 @@
 //
 
 #import "MoreFZCBaseTableViewCell.h"
-#import "ZCDetailIntroFirstCellVoiceShowView.h"
-#import "ZCDetailIntroFirstCellModel.h"
+#import "ZCWSMView.h"
 #import "ZCDetailModel.h"
-#import "ZYZCCusomMovieImage.h"
 @interface ZCDetailIntroFirstCell : MoreFZCBaseTableViewCell
-
-@property (nonatomic, strong) ZYZCCusomMovieImage *movieImg;
-@property (nonatomic, strong) UILabel             *textLab;
-@property (nonatomic, strong) ZCDetailIntroFirstCellVoiceShowView *voiceShow;
+@property (nonatomic, strong) ZCWSMView *wsmView;
 @property (nonatomic, strong) ZCDetailProductModel *cellModel;
-@property (nonatomic, assign) BOOL hasMovie;
-@property (nonatomic, assign) BOOL hasVoice;
-@property (nonatomic, assign) BOOL hasWord;
--(void)configUI;
--(void)reloadDataByModel;
 @end

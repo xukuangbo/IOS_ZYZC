@@ -84,6 +84,7 @@
     NSDictionary *parameters= @{@"openid":[ZYZCTool getUserId],@"productId":_productId,@"content":_editFieldView.text};
     if (_editFieldView.text.length) {
         [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:COMMENT_PRODUCT andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
+            NSLog(@"%@",result);
             if (isSuccess) {
                 [MBProgressHUD showSuccess:ZYLocalizedString(@"comment_success")];
                 if (!_editFieldView.resignFirstResponder) {
@@ -124,12 +125,6 @@
 }
 
 
-- (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    
-    
-    return YES;
-}
 
 #pragma mark --- 文字发生改变
 -(void)textChange
