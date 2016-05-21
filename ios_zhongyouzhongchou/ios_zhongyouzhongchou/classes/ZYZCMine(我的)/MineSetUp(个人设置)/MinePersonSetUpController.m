@@ -7,6 +7,11 @@
 //
 
 #import "MinePersonSetUpController.h"
+#import "MinePersonSetUpHeadView.h"
+#import "ZYZCAccountTool.h"
+#import "ZYZCAccountModel.h"
+#import "FXBlurView.h"
+#import "MinePersonSetUpFirstCell.h"
 #define imageHeadHeight (KSCREEN_W / 16 * 9)
 static NSString *const ID = @"MinePersonSetUpCell";
 @interface MinePersonSetUpController ()<UITableViewDataSource,UITableViewDelegate>
@@ -14,21 +19,29 @@ static NSString *const ID = @"MinePersonSetUpCell";
 @end
 
 @implementation MinePersonSetUpController
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self scrollViewDidScroll:self.tableView];
+    
     [self setBackItem];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self setClearNavi];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self setNavi];
 }
 
 #pragma mark - Table view data source
@@ -39,7 +52,7 @@ static NSString *const ID = @"MinePersonSetUpCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 4;
+    return 40;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -48,7 +61,9 @@ static NSString *const ID = @"MinePersonSetUpCell";
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
+    
     cell.contentView.backgroundColor = [UIColor colorWithRed:arc4random_uniform(256) / 256.0 green:arc4random_uniform(256) / 256.0 blue:arc4random_uniform(256) / 256.0 alpha:1];
+    
     return cell;
 }
 
@@ -58,7 +73,17 @@ static NSString *const ID = @"MinePersonSetUpCell";
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return [[UIImageView alloc] init];
+    MinePersonSetUpHeadView *headView = [[MinePersonSetUpHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, imageHeadHeight)];
+    SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
+    ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
+    if (accountModel) {
+        [headView.iconView sd_setImageWithURL:[NSURL URLWithString:accountModel.headimgurl] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:options];
+        headView.nameLabel.text = accountModel.nickname;
+    }else{
+        headView.nameLabel.text = @"暂无";
+        headView.iconView.image = [UIImage imageNamed:@"icon_placeholder"];
+    }
+    return headView;
 }
 
 #pragma mark - UIScrollViewDelegate

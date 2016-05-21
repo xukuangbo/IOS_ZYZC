@@ -25,6 +25,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_back_new"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(pressBack)];
     self.title = @"设置";
 }
+
 -(void)pressBack
 {
     [self.navigationController popViewControllerAnimated:YES];

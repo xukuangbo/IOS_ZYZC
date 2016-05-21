@@ -17,9 +17,6 @@
 {
     self = [super init];
     if (self) {
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        [self.view addSubview:tableView];
-        self.tableView = tableView;
     }
     return self;
 }
@@ -27,12 +24,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor ZYZC_BgGrayColor];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
+    
+}
+
+- (void)setNavi
+{
     [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
     self.navigationController.navigationBar.titleTextAttributes=
     @{NSForegroundColorAttributeName:[UIColor whiteColor],
       NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
+    
+}
+
+- (void)setClearNavi
+{
+    [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(0)];
+    
+    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
 
 -(void)setBackItem
@@ -74,17 +86,6 @@
 }
 
 
-//#pragma mark - Table view data source
-//
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//#warning Incomplete implementation, return the number of sections
-//    return 0;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//#warning Incomplete implementation, return the number of rows
-//    return 0;
-//}
 
 - (void)changeNaviColorWithScroll:(UIScrollView *)scrollView
 {

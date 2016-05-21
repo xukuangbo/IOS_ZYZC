@@ -36,7 +36,14 @@
  *  自定义反回键返回操作
  */
 -(void)pressBack;
-
+/**
+ *  设置导航栏背景颜色
+ */
+- (void)setNavi;
+/**
+ *  设置为空白的导航栏背景色
+ */
+- (void)setClearNavi;
 
 -(void)customNavWithLeftBtnImgName:(NSString *)leftName andRightImgName:(NSString *)rightName  andLeftAction:(SEL)leftAction andRightAction:(SEL)rightAction;
 @end
