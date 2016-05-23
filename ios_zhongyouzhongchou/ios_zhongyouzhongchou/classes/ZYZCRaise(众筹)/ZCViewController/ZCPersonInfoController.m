@@ -30,10 +30,13 @@
 #import "FXBlurView.h"
 
 #import "ZCDetailModel.h"
+#import "ZCCommentModel.h"
 #import "ZCCommentViewController.h"
 #import "MBProgressHUD+MJ.h"
+
 #import "WXApiShare.h"
 #import "WXApiPay.h"
+
 @interface ZCPersonInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView           *table;
 @property (nonatomic, strong) UIImageView           *topImgView;
@@ -48,8 +51,11 @@
 
 @property (nonatomic, strong) ZCDetailModel         *detailModel;
 
-@property (nonatomic, strong) NSMutableArray *detailDays;//行程安排数组
+@property (nonatomic, strong) ZCCommentList         *commentList;
 
+@property (nonatomic, strong) NSMutableArray *commentArr;//评论信息
+
+@property (nonatomic, strong) NSMutableArray *detailDays;//行程安排数组
 
 @property (nonatomic, strong) NSMutableArray *favoriteTravel;//猜你喜欢的旅游
 
@@ -77,11 +83,10 @@
 
     self.oneModel.zcType=DetailType;
     [self initData];
-    [self getHttpData];
-    [self setBackItem];
     [self configUI];
+    [self setBackItem];
     [self createBottomView];
-
+    [self getHttpData];
 }
 
 #pragma mark --- 返回控制器
@@ -100,6 +105,7 @@
 -(void)initData
 {
     _detailDays=[NSMutableArray array];
+    _commentArr=[NSMutableArray array];
     _favoriteTravel=[NSMutableArray array];
     self.contentType= IntroType;//展示介绍部分
     _hasCosponsor   = NO;//添加联和发起人项
@@ -107,7 +113,7 @@
     _hasIntroGeneral= NO;//添加目的地介绍
     _hasIntroMovie  = NO;//添加动画攻略
     _hasHotComment  = NO;//添加热门评论
-    _hasInterestTravel=YES;//添加兴趣标签匹配的旅游
+    _hasInterestTravel=NO;//添加兴趣标签匹配的旅游
 
 }
 
@@ -132,6 +138,30 @@
             
             [_table reloadData];
         }
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
+#pragma mark --- 获取热门评论
+-(void)getHotComment
+{
+    NSDictionary  *parameters=@{@"openid":[ZYZCTool getUserId],@"productId":_productId};
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_COMMENT andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+        [_commentArr removeAllObjects];
+        if (isSuccess) {
+            _commentList=[[ZCCommentList alloc]mj_setKeyValues:result];
+            for(ZCCommentModel *commentModel in _commentList.commentList)
+            {
+                [_commentArr addObject:commentModel];
+            }
+            if (_commentArr.count) {
+                _hasHotComment=YES;
+                [_table reloadData];
+            }
+            
+       }
     } andFailBlock:^(id failResult) {
         NSLog(@"%@",failResult);
     }];
@@ -209,7 +239,7 @@
     NSInteger secondSectionCellNumber=
     (2*_hasIntroGoal+2*_hasIntroGeneral+2*_hasIntroMovie)*(self.contentType==IntroType?1:0)
     +2*days*(self.contentType==ArrangeType?1:0)
-    +(2*_hasHotComment+2*_hasInterestTravel*(1+4))*(self.contentType==ReturnType?1:0);
+    +(2+2*_hasHotComment+2*_hasInterestTravel*(1+4))*(self.contentType==ReturnType?1:0);
     
     if (section==0) {
         return 2 + 2*_hasCosponsor;
@@ -306,23 +336,23 @@
             {
                 NSString *returnSecondCellId=@"returnSecondCell";
                 ZCDetailReturnSecondCell *returnSecondCell=(ZCDetailReturnSecondCell *)[self customTableView:tableView cellWithIdentifier:returnSecondCellId andCellClass:[ZCDetailReturnSecondCell class]];
-                returnSecondCell.contentView.backgroundColor=[UIColor greenColor];
+                returnSecondCell.commentModel=_commentArr.lastObject;
                 return returnSecondCell;
             }
-            else if (indexPath.row ==2*_hasHotComment+2*_hasInterestTravel &&indexPath.row!=0)
-            {
-                NSString *returnThirdCellId=@"returnThirdCell";
-                ZCDetailReturnThridCell *returnThirdCell=(ZCDetailReturnThridCell *)[self customTableView:tableView cellWithIdentifier:returnThirdCellId andCellClass:[ZCDetailReturnThridCell class]];
-                 returnThirdCell.contentView.backgroundColor=[UIColor greenColor];
-                return returnThirdCell;
-            }
-            else if (indexPath.row ==2*_hasHotComment +2*(1+(indexPath.row-2)/2)*_hasInterestTravel &&indexPath.row!=0)
-            {
-                NSString *returnFourthCellId=@"returnFourthCell";
-                ZCDetailReturnFourthCell *returnFourthCell=(ZCDetailReturnFourthCell *)[self customTableView:tableView cellWithIdentifier:returnFourthCellId andCellClass:[ZCDetailReturnFourthCell class]];
-                 returnFourthCell.contentView.backgroundColor=[UIColor yellowColor];
-                return returnFourthCell;
-            }
+//            else if (indexPath.row ==2*_hasHotComment+2*_hasInterestTravel &&indexPath.row!=0)
+//            {
+//                NSString *returnThirdCellId=@"returnThirdCell";
+//                ZCDetailReturnThridCell *returnThirdCell=(ZCDetailReturnThridCell *)[self customTableView:tableView cellWithIdentifier:returnThirdCellId andCellClass:[ZCDetailReturnThridCell class]];
+//                 returnThirdCell.contentView.backgroundColor=[UIColor greenColor];
+//                return returnThirdCell;
+//            }
+//            else if (indexPath.row ==2*_hasHotComment +2*(1+(indexPath.row-2)/2)*_hasInterestTravel &&indexPath.row!=0)
+//            {
+//                NSString *returnFourthCellId=@"returnFourthCell";
+//                ZCDetailReturnFourthCell *returnFourthCell=(ZCDetailReturnFourthCell *)[self customTableView:tableView cellWithIdentifier:returnFourthCellId andCellClass:[ZCDetailReturnFourthCell class]];
+//                 returnFourthCell.contentView.backgroundColor=[UIColor yellowColor];
+//                return returnFourthCell;
+//            }
             
             UITableViewCell *cell=[self createNormalCell];
             return cell;
@@ -405,7 +435,8 @@
             }
             else if (indexPath.row==2*_hasHotComment &&indexPath.row !=0)
             {
-                return 100;
+                ZCCommentModel *commentModel=_commentArr.lastObject;
+                return commentModel.cellHeight;
             }
             else if (indexPath.row ==2*_hasHotComment+2*_hasInterestTravel &&indexPath.row!=0)
             {
@@ -445,6 +476,10 @@
                 {
                     weakSelf.table.contentOffset=offSet;
                 }
+                
+                if (contentType==ReturnType) {
+                    [weakSelf getHotComment];
+                }
             }
         };
         
@@ -461,7 +496,16 @@
     return 0.0;
 }
 
-#pragma mark --- tableView的滑动效果
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section==1&&self.contentType==ReturnType) {
+        if (indexPath.row==2) {
+            [self comment:NO];
+        }
+    }
+}
+
+#pragma mark --- tableView的滑动
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
@@ -523,9 +567,6 @@
         sureBtn.layer.masksToBounds=YES;
         [sureBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         sureBtn.tag=KZCDETAIL_ATTITUDETYPE+i;
-//        if (sureBtn.tag!=KZCDETAIL_ATTITUDETYPE) {
-//             [sureBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, 7, 1, sureBtn.height-2*7) andColor:[UIColor ZYZC_TextGrayColor]]];
-//        }
         [bottomView addSubview:sureBtn];
     }
 }
@@ -535,7 +576,7 @@
 {
     switch (sender.tag) {
         case CommentType:
-            [self comment];
+            [self comment:YES];
             //评论
             break;
         case SupportType:
@@ -608,12 +649,16 @@
 }
 
 #pragma mark --- 评论
--(void)comment
+-(void)comment:(BOOL )needGetData
 {
     ZCCommentViewController *commentVC=[[ZCCommentViewController alloc]init];
     commentVC.productId=_oneModel.product.productId;
     commentVC.user=_oneModel.user;
     commentVC.title=@"评论";
+    commentVC.needGetData=needGetData;
+    if (!needGetData) {
+        commentVC.comments=_commentArr;
+    }
     [self.navigationController pushViewController:commentVC animated:YES];
     
 }

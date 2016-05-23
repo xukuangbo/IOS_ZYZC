@@ -8,7 +8,10 @@
 
 #import "ZYZCBaseViewController.h"
 #import "UserModel.h"
+
 @interface ZCCommentViewController : ZYZCBaseViewController
-@property (nonatomic, strong)NSNumber *productId;
-@property (nonatomic, strong)UserModel *user;
+@property (nonatomic, strong) NSNumber  *productId;
+@property (nonatomic, strong) UserModel *user;
+@property (nonatomic, assign) BOOL      needGetData;
+@property (nonatomic, strong) NSArray   *comments;
 @end

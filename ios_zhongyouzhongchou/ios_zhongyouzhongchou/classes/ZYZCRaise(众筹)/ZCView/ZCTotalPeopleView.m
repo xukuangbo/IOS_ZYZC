@@ -33,8 +33,6 @@
     return self;
 }
 
-
-
 -(void)configUI
 {
     _bgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H)];

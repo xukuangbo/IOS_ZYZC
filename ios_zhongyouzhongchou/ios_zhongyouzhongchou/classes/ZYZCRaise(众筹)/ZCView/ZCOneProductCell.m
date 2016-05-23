@@ -100,12 +100,14 @@
     _vipImg=[[UIImageView alloc]initWithFrame:CGRectMake(_sexImg.right+3, _nameLab.top+2, 16, 16)];
     _vipImg.image=[UIImage imageNamed:@"icon_id"];
     [bgImg addSubview:_vipImg];
+    _vipImg.hidden=YES;
     
     //添加距离
     _destenceLab=[self createLabWithFrame:CGRectMake(bgImg.width-80-KEDGE_DISTANCE, _nameLab.top, 80, 20) andFont:[UIFont systemFontOfSize:13] andTitleColor:[UIColor ZYZC_TextGrayColor]];
     _destenceLab.textAlignment=NSTextAlignmentRight;
     _destenceLab.text=@"距离1.2km";
     [bgImg addSubview:_destenceLab];
+    _destenceLab.hidden=YES;
     
     //添加职业
     _jobLab=[self createLabWithFrame:CGRectMake(_nameLab.left, _nameLab.bottom+3, bgImg.width-_nameLab.left-KEDGE_DISTANCE, 15) andFont:[UIFont systemFontOfSize:13] andTitleColor:[UIColor ZYZC_TextGrayColor]];
@@ -213,8 +215,8 @@
     }
     
     NSDate *nowDate=[NSDate date];
-    _vipImg.hidden=NO;
-    _destenceLab.hidden=NO;
+//    _vipImg.hidden=NO; 
+//    _destenceLab.hidden=NO;
     //标题
     _titleLab.text=oneModel.product.productName;
     //风景图
