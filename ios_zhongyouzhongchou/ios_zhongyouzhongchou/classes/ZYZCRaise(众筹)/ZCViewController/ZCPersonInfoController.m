@@ -48,10 +48,8 @@
 
 @property (nonatomic, strong) ZCDetailModel         *detailModel;
 
-@property (nonatomic, strong) ZCDetailProductModel * introFirstCellMdel;
 @property (nonatomic, strong) NSMutableArray *detailDays;//行程安排数组
 
-@property (nonatomic, strong) ZCDetailReturnFirstCellModel *returnFirstCellModel;
 
 @property (nonatomic, strong) NSMutableArray *favoriteTravel;//猜你喜欢的旅游
 
@@ -101,7 +99,6 @@
 #pragma mark --- 初始化数据
 -(void)initData
 {
-    _returnFirstCellModel= [[ZCDetailReturnFirstCellModel alloc]init];
     _detailDays=[NSMutableArray array];
     _favoriteTravel=[NSMutableArray array];
     self.contentType= IntroType;//展示介绍部分
@@ -117,15 +114,12 @@
 #pragma mark --- 获取数据
 -(void)getHttpData
 {
-//    _productId=@154;
-    NSLog(@"%@,%@",[ZYZCTool getUserId],_productId);
     NSString *urlStr=KGET_DETAIL_PRODUCT([ZYZCTool getUserId],_productId);
     NSLog(@"%@",urlStr);
     [ZYZCHTTPTool getHttpDataByURL:KGET_DETAIL_PRODUCT([ZYZCTool getUserId], _productId) withSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"%@",result);
         if (isSuccess) {
             _detailModel=[[ZCDetailModel alloc]mj_setKeyValues:result];
-            _introFirstCellMdel=_detailModel.detailProductModel;
             NSArray *detailDays=_detailModel.detailProductModel.schedule;
             for (NSString *jsonStr in detailDays) {
                 NSDictionary *dict=[ZYZCTool turnJsonStrToDictionary:jsonStr];
@@ -135,6 +129,7 @@
             _hasIntroGoal=YES;
              _getCollection=[_detailModel.detailProductModel.Friend isEqual:@0];
             [_collectionBtn setImage: _getCollection?[UIImage imageNamed:@"icon_collection"]:[UIImage imageNamed:@"icon_collection_pre"] forState:UIControlStateNormal];
+            
             [_table reloadData];
         }
     } andFailBlock:^(id failResult) {
@@ -260,7 +255,7 @@
                 NSString *introFirstCellId=@"introFirstCell";
                 ZCDetailIntroFirstCell *introFirstCell=(ZCDetailIntroFirstCell *)[self customTableView:tableView cellWithIdentifier:introFirstCellId andCellClass:[ZCDetailIntroFirstCell class]];
                 introFirstCell.layer.cornerRadius=KCORNERRADIUS;
-                introFirstCell.cellModel=_introFirstCellMdel;
+                introFirstCell.cellModel=_detailModel.detailProductModel;
                 return introFirstCell;
             }
             else if (indexPath.row == 0+2*_hasIntroGoal && _hasIntroGeneral)
@@ -304,7 +299,7 @@
             if (indexPath.row==0) {
                 NSString *returnFirstCellId=@"returnFirstCell";
                 ZCDetailReturnFirstCell *returnFirstCell=(ZCDetailReturnFirstCell *)[self customTableView:tableView cellWithIdentifier:returnFirstCellId andCellClass:[ZCDetailReturnFirstCell class]];
-                returnFirstCell.cellModel=_returnFirstCellModel;
+                returnFirstCell.cellModel=_detailModel.detailProductModel;
                 return returnFirstCell;
             }
             else if (indexPath.row==2*_hasHotComment &&indexPath.row !=0)
@@ -376,7 +371,7 @@
         //介绍部分cells高度
         if (self.contentType == IntroType) {
             if (indexPath.row==0 && _hasIntroGoal) {
-                return _introFirstCellMdel.introFirstCellHeight;
+                return _detailModel.detailProductModel.introFirstCellHeight;
             }
             else if (indexPath.row == 0+2*_hasIntroGoal && _hasIntroGeneral)
             {
@@ -406,7 +401,7 @@
         else
         {
             if (indexPath.row ==0) {
-                return _returnFirstCellModel.cellHeight;
+                return _detailModel.detailProductModel.returnFirtCellHeight;
             }
             else if (indexPath.row==2*_hasHotComment &&indexPath.row !=0)
             {
@@ -528,9 +523,9 @@
         sureBtn.layer.masksToBounds=YES;
         [sureBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         sureBtn.tag=KZCDETAIL_ATTITUDETYPE+i;
-        if (sureBtn.tag!=KZCDETAIL_ATTITUDETYPE) {
-             [sureBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, 7, 1, sureBtn.height-2*7) andColor:[UIColor ZYZC_TextGrayColor]]];
-        }
+//        if (sureBtn.tag!=KZCDETAIL_ATTITUDETYPE) {
+//             [sureBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, 7, 1, sureBtn.height-2*7) andColor:[UIColor ZYZC_TextGrayColor]]];
+//        }
         [bottomView addSubview:sureBtn];
     }
 }
@@ -567,6 +562,11 @@
 #pragma mark --- 分享
 -(void)share
 {
+    WXApiPay *pay=[[WXApiPay alloc]init];
+    [pay payForWeChat];
+    
+    return;
+    
     __weak typeof (&*self)weakSelf=self;
     __block NSString *url=[NSString stringWithFormat:@"http://www.sosona.com/pay/crowdfundingDetail?pid=%@",_productId];
 
@@ -594,10 +594,6 @@
 #pragma mark --- 收藏/取消收藏
 -(void)collection
 {
-    WXApiPay *pay=[[WXApiPay alloc]init];
-    [pay payForWeChat];
-    return;
-//
     NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],@"friendsId":_productId};
     NSString *url=_getCollection?FOLLOWPRODUCT:UNFOLLOWPRODUCT;
     
@@ -624,10 +620,15 @@
 #pragma mark --- 支持
 -(void)support
 {
+    if(_paySupportMoney)
+    {
+        NSLog(@"支付");
+        return;
+    }
+    
     UIButton *supportBtn=(UIButton *)[_headView viewWithTag:ReturnType];
     [_headView getContent:supportBtn];
     [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated

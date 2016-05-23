@@ -23,4 +23,6 @@ typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
 
 @property (nonatomic, strong) ZCOneModel *oneModel;
 
+@property (nonatomic, assign) BOOL  paySupportMoney;
+
 @end

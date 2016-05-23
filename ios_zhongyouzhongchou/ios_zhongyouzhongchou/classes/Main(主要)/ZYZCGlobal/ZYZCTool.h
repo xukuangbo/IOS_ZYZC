@@ -77,5 +77,10 @@
  */
 +(NSString *)turnTimeStampToDate:(NSString *)timeStamp;
 
+/**
+ *  获取ip
+ */
++ (NSString *)getDeviceIp;
+
 
 @end

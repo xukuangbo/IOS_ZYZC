@@ -35,13 +35,14 @@
 @property (nonatomic, copy  ) NSString *end_time;
 @property (nonatomic, strong) NSNumber *status;
 @property (nonatomic, copy  ) NSString *title;
-@property (nonatomic, strong) NSNumber *isMyself;
 @property (nonatomic, strong) UserModel *user;
 @property (nonatomic, strong) NSArray  *schedule;
 
 @property (nonatomic, strong) NSArray  *report;
 
 @property (nonatomic, assign) CGFloat introFirstCellHeight;
+@property (nonatomic, assign) CGFloat returnFirtCellHeight;
+
 
 @end
 

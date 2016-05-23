@@ -27,6 +27,9 @@
 {
     [super configUI];
     _isFirstConfigView=YES;
+    _wsmView=[[ZCWSMView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, self.topLineView.bottom+KEDGE_DISTANCE, self.bgImg.width-2*KEDGE_DISTANCE, 0)];
+    [self.bgImg addSubview:_wsmView];
+    
     //景点、交通、住宿、餐饮视图初始化高度数组
     _viewHeights=[NSMutableArray arrayWithArray:@[@0.0,@0.0,@0.0,@0.0]];
 }
@@ -34,15 +37,9 @@
 -(void)setOneDaydetailModel:(MoreFZCTravelOneDayDetailMdel *)oneDaydetailModel
 {
     _oneDaydetailModel=oneDaydetailModel;
-    if (oneDaydetailModel.movieUrl) {
-        self.hasMovie=YES;
-    }
-    if (oneDaydetailModel.voiceUrl) {
-        self.hasVoice=YES;
-    }
-    if (oneDaydetailModel.wordDes) {
-        self.hasWord =YES;
-    }
+    
+    [_wsmView reloadDataByVideoImgUrl:oneDaydetailModel.movieImg andPlayUrl:oneDaydetailModel.movieUrl andVoiceUrl:oneDaydetailModel.voiceUrl andFaceImg:_faceImg andDesc:oneDaydetailModel.wordDes];
+
     if (oneDaydetailModel.siteDes) {
         self.hasSight=YES;
     }
@@ -55,14 +52,13 @@
     if (oneDaydetailModel.foodDes) {
         self.hasFood =YES;
     }
-    [self reloadDataByModel];
+    self.bgImg.height=_wsmView.bottom+KEDGE_DISTANCE;
     CGFloat cellHeight=self.bgImg.height;
     self.titleLab.text=[NSString stringWithFormat:@"第%@天",oneDaydetailModel.day];
     //添加景点、交通、住宿、餐饮描述
     //是否有对应高度的判断数组
     NSArray *hasViews=@[[NSNumber numberWithBool:self.hasSight],[NSNumber numberWithBool:self.hasTrans],[NSNumber numberWithBool:self.hasLive],[NSNumber numberWithBool:self.hasFood] ];
 
-    
     //对应视图标题名数组
     NSArray *titleArr=@[@"景点:",@"交通:",@"住宿:",@"餐饮:"];
     
@@ -96,58 +92,7 @@
     self.hasTrans*([_viewHeights[1] floatValue]+KEDGE_DISTANCE)+
     self.hasLive *([_viewHeights[2] floatValue]+KEDGE_DISTANCE)+
     self.hasFood *([_viewHeights[3] floatValue]+KEDGE_DISTANCE)+KEDGE_DISTANCE;
-    
     self.oneDaydetailModel.cellHeight=self.bgImg.height;
-}
-
--(void)reloadDataByModel
-{
-    NSString *text = _oneDaydetailModel.wordDes;
-    
-    CGFloat movieImgTop=self.topLineView.bottom +KEDGE_DISTANCE;
-    self.movieImg.top=movieImgTop;
-    CGFloat voiceShowTop=movieImgTop+(CGFloat)self.hasMovie*(self.movieImg.height+KEDGE_DISTANCE);
-    self.voiceShow.top=voiceShowTop;
-    CGFloat textLabTop=voiceShowTop+(CGFloat)self.hasVoice*(self.voiceShow.height+KEDGE_DISTANCE);
-    self.textLab.top=textLabTop;
-    //是否有视屏
-    if (!self.hasMovie) {
-        [self.movieImg removeFromSuperview];
-    }
-    //有视屏
-    else
-    {
-//                self.movieImg.playUrl=_oneDaydetailModel.movieUrl;
-        self.movieImg.playUrl=@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvldivtdyH01mEvBmkoX-xC0/20160507190655/20160507190526.mp4";
-//                [self.movieImg sd_setImageWithURL:[NSURL URLWithString:_oneDaydetailModel.movieImg]];
-        [self.movieImg sd_setImageWithURL:[NSURL URLWithString:@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvldivtdyH01mEvBmkoX-xC0/20160507190655/20160507190526.png"]];
-        
-    }
-    //是否有语音
-    if (!self.hasVoice) {
-        [self.voiceShow removeFromSuperview];
-    }
-    else
-    {
-        self.voiceShow.voiceTime=50;
-//                self.voiceShow.voiceUrl=_oneDaydetailModel.voiceUrl;
-        self.voiceShow.voiceUrl=@"tp://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160512105904/20160512105843.caf";
-        [self.voiceShow.iconImg sd_setImageWithURL:[NSURL URLWithString:_faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"]];
-    }
-    //是否有文字
-    if (!self.hasWord) {
-        [self.textLab removeFromSuperview];
-    }
-    else
-    {
-        CGFloat textHeight=[ZYZCTool calculateStrByLineSpace:10.0 andString:text andFont:self.textLab.font  andMaxWidth:self.textLab.width].height;
-        self.textLab.height=textHeight;
-        self.textLab.attributedText=[ZYZCTool setLineDistenceInText:text];
-    }
-    
-    //计算cell的高度
-    CGFloat cellHeight=textLabTop+(CGFloat)self.hasWord*(self.textLab.height+KEDGE_DISTANCE);
-    self.bgImg.height=cellHeight;
 }
 
 -(UIView *)configViewByViewTop:(CGFloat)top  andtitle:(NSString *)title andText:(NSString *)text andImages:(NSArray *)images

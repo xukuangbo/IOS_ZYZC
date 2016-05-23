@@ -7,6 +7,8 @@
 //
 
 #import "ZYZCTool.h"
+#import <ifaddrs.h>
+#import <arpa/inet.h>
 
 @implementation ZYZCTool
 #pragma mark --- 文字长度计算
@@ -51,6 +53,7 @@
     UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
     btn.titleLabel.font=[UIFont systemFontOfSize:15];
     [btn setTitle:title forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
     [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     btn.imageEdgeInsets = UIEdgeInsetsMake(0, labelWidth, 0, -labelWidth);
     CGFloat imageWith = btn.currentImage.size.width + 2;
@@ -161,6 +164,38 @@
     NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
     
     return currentDateStr;
+}
+
+#pragma mark --- 获取手机ip
++ (NSString *)getDeviceIp
+{
+    NSString *address = @"error";
+    struct ifaddrs *interfaces = NULL;
+    struct ifaddrs *temp_addr = NULL;
+    int success = 0;
+    
+    // retrieve the current interfaces - returns 0 on success
+    success = getifaddrs(&interfaces);
+    if (success == 0) {
+        // Loop through linked list of interfaces
+        temp_addr = interfaces;
+        while (temp_addr != NULL) {
+            if( temp_addr->ifa_addr->sa_family == AF_INET) {
+                // Check if interface is en0 which is the wifi connection on the iPhone
+                if ([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
+                    // Get NSString from C String
+                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
+                }
+            }
+            
+            temp_addr = temp_addr->ifa_next;
+        }
+    }
+    
+    // Free memory
+    freeifaddrs(interfaces);
+    
+    return address;
 }
 
 

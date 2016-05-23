@@ -8,9 +8,5 @@
 
 #import <UIKit/UIKit.h>
 @interface ZYZCCusomMovieImage : UIImageView
-
 @property (nonatomic, copy ) NSString *playUrl;
-
-
-
 @end

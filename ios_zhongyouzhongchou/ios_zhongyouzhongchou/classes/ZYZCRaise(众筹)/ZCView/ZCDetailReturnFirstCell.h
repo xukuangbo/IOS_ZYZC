@@ -7,19 +7,24 @@
 //
 
 #import "MoreFZCBaseTableViewCell.h"
-#import "ZCDetailReturnFirstCellModel.h"
-#import "ZCDetailReturnCusView.h"
+#import "ZCDetailModel.h"
+#import "ZCSupportOneYuanView.h"
+#import "ZCSupportAnyYuanView.h"
+#import "ZCSupportReturnView.h"
+#import "ZCSupportTogetherView.h"
 
 @interface ZCDetailReturnFirstCell : MoreFZCBaseTableViewCell
 
-@property (nonatomic, strong) ZCDetailReturnFirstCellModel *cellModel;
+@property (nonatomic, strong) ZCDetailProductModel *cellModel;
 
-@property (nonatomic, strong) ZCDetailReturnCusView *supportOneYuanView;
+@property (nonatomic, strong) ZCSupportOneYuanView *supportOneYuanView;
 
-@property (nonatomic, strong) ZCDetailReturnCusView *supportAnyYuanView;
+@property (nonatomic, strong) ZCSupportAnyYuanView *supportAnyYuanView;
 
-@property (nonatomic, strong) ZCDetailReturnCusView *returnSupportView;
+@property (nonatomic, strong) ZCSupportReturnView *returnSupportView01;
 
-@property (nonatomic, strong) ZCDetailReturnCusView *togetherView;
+@property (nonatomic, strong) ZCSupportReturnView *returnSupportView02;
+
+@property (nonatomic, strong) ZCSupportTogetherView *togetherView;
 
 @end

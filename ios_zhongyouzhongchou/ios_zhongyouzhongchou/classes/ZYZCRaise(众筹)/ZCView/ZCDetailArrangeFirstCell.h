@@ -7,10 +7,12 @@
 //
 
 #import "ZCDetailIntroFirstCell.h"
+#import "ZCWSMView.h"
 #import "MoreFZCTravelOneDayDetailMdel.h"
-@interface ZCDetailArrangeFirstCell : ZCDetailIntroFirstCell
+@interface ZCDetailArrangeFirstCell : MoreFZCBaseTableViewCell
 
 @property (nonatomic, strong) MoreFZCTravelOneDayDetailMdel *oneDaydetailModel;
+@property (nonatomic, strong) ZCWSMView *wsmView;
 
 @property (nonatomic, assign) BOOL hasSight;//景点
 

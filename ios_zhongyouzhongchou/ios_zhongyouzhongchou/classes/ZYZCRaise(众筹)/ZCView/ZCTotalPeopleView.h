@@ -7,20 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef NS_ENUM(NSInteger, SupportMoneyType)
-{
-    SuppurtOneYuan=KSUPPORTMONEY_TYPE,
-    SuppurtAnyYuan,
-    SuppurtReturnMoney,
-    SuppurtTogetherMoney
-    
-};
-typedef void (^BackToView)();
-
 @interface ZCTotalPeopleView : UIView
-@property (nonatomic, assign) SupportMoneyType supportType;
-@property (nonatomic, copy  ) BackToView backToView;
-- (instancetype)initWithFrame:(CGRect)frame andSupportType:(SupportMoneyType )supportType;
-
-
+@property (nonatomic, strong) NSArray *users;
 @end
