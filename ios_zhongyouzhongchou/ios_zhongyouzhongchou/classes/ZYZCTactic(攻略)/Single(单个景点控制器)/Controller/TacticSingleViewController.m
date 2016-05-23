@@ -157,6 +157,13 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     TacticSingleHeadView *headView = [[TacticSingleHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, 50)];
+    
+    
+    //添加渐变条
+    UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
+    bgImg.image=[UIImage imageNamed:@"Background"];
+    [headView addSubview:bgImg];
+    
     headView.nameLabel.text = self.tacticSingleModelFrame.tacticSingleModel.name;
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     

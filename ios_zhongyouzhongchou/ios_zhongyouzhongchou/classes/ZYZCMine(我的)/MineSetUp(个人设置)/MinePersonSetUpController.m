@@ -12,8 +12,7 @@
 #import "ZYZCAccountModel.h"
 #import "FXBlurView.h"
 #import "MinePersonSetUpFirstCell.h"
-#define imageHeadHeight (KSCREEN_W / 16 * 9)
-static NSString *const ID = @"MinePersonSetUpCell";
+static NSString *const ID = @"MinePersonSetUpFirstCell";
 @interface MinePersonSetUpController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -24,6 +23,7 @@ static NSString *const ID = @"MinePersonSetUpCell";
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.rowHeight = 80;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self scrollViewDidScroll:self.tableView];
     
@@ -57,12 +57,10 @@ static NSString *const ID = @"MinePersonSetUpCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    MinePersonSetUpFirstCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        cell = [[MinePersonSetUpFirstCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    
-    cell.contentView.backgroundColor = [UIColor colorWithRed:arc4random_uniform(256) / 256.0 green:arc4random_uniform(256) / 256.0 blue:arc4random_uniform(256) / 256.0 alpha:1];
     
     return cell;
 }
@@ -73,7 +71,7 @@ static NSString *const ID = @"MinePersonSetUpCell";
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    MinePersonSetUpHeadView *headView = [[MinePersonSetUpHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, imageHeadHeight)];
+    MinePersonSetUpHeadView *headView = [[MinePersonSetUpHeadView alloc] init];
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
     if (accountModel) {
