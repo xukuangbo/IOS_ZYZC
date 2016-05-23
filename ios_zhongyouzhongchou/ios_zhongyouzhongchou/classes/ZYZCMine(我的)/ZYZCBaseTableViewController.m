@@ -25,7 +25,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor=[UIColor ZYZC_BgGrayColor];
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#define imageHeadHeight (KSCREEN_W / 16 * 9)
 @interface MinePersonSetUpHeadView : UIImageView
 @property (nonatomic, weak) UIImageView *iconView;
 @property (nonatomic, weak) UILabel *nameLabel;

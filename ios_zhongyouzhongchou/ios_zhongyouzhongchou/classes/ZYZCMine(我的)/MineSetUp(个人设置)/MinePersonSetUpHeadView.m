@@ -9,11 +9,11 @@
 #import "MinePersonSetUpHeadView.h"
 @implementation MinePersonSetUpHeadView
 
-- (instancetype)initWithFrame:(CGRect)frame
+
+- (instancetype)init
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
-        
         UIView *mapView = [[UIView alloc] init];
         [self addSubview:mapView];
         //背后阴影
@@ -47,8 +47,7 @@
         self.nameLabel = nameLabel;
         //最后设置容器的大小和位置
         mapView.size = CGSizeMake(shadowViewWH, nameLabel.bottom);
-        mapView.center = self.center;
-    
+        mapView.center = CGPointMake(KSCREEN_W * 0.5, imageHeadHeight * 0.5);
     }
     return self;
 }
