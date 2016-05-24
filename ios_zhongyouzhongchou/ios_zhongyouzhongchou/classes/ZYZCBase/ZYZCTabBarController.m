@@ -67,7 +67,7 @@
 #pragma mark --- 创建半框
 -(void)clickBtn
 {
-    CGFloat viewHeight=250;
+    CGFloat viewHeight=220;
     //创建毛玻璃
     blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, KSCREEN_H-viewHeight, KSCREEN_W, viewHeight)];
     [blurView setDynamic:YES];

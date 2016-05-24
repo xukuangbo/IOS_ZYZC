@@ -51,6 +51,11 @@
     
 }
 
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
+}
+
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     for (NSString *obj in self.mySceneArr) {
