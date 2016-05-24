@@ -15,6 +15,7 @@
 
 #import "ZCDetailFirstCell.h"
 #import "ZCDetailTableHeadView.h"
+#import "ZCDetailBottomView.h"
 //介绍部分cells
 #import "ZCDetailIntroFirstCell.h"
 #import "ZCDetailIntroSecondCell.h"
@@ -85,7 +86,6 @@
     [self initData];
     [self configUI];
     [self setBackItem];
-    [self createBottomView];
     [self getHttpData];
 }
 
@@ -218,12 +218,29 @@
     [_shareBtn setImage:[UIImage imageNamed:@"icon_share"] forState:UIControlStateNormal];
     [_shareBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventAllEvents];
     [self.navigationController.navigationBar addSubview:_shareBtn];
-    //导航栏添加收藏
-    _collectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    _collectionBtn.frame=CGRectMake(_shareBtn.left-40, 0, 40, 44);
-    [_collectionBtn setImage:[UIImage imageNamed:@"icon_collection"] forState:UIControlStateNormal];
-    [_collectionBtn addTarget:self  action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationController.navigationBar addSubview:_collectionBtn];
+    
+    if (_zcType==AllList) {
+        //导航栏添加收藏
+        _collectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+        _collectionBtn.frame=CGRectMake(_shareBtn.left-40, 0, 40, 44);
+        [_collectionBtn setImage:[UIImage imageNamed:@"icon_collection"] forState:UIControlStateNormal];
+        [_collectionBtn addTarget:self  action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationController.navigationBar addSubview:_collectionBtn];
+    }
+    
+    //添加底部按钮
+    __weak typeof (&*self)weakSelf=self;
+    ZCDetailBottomView *bottomView=[[ZCDetailBottomView alloc]init];
+    bottomView.zcType=_zcType;
+    bottomView.commentBlock=^()
+    {
+        [weakSelf comment:YES];
+    };
+    bottomView.supportBlock=^()
+    {
+        [weakSelf support];
+    };
+    [self.view addSubview:bottomView];
 }
 
 
@@ -339,6 +356,7 @@
                 returnSecondCell.commentModel=_commentArr.lastObject;
                 return returnSecondCell;
             }
+//            //猜你喜欢
 //            else if (indexPath.row ==2*_hasHotComment+2*_hasInterestTravel &&indexPath.row!=0)
 //            {
 //                NSString *returnThirdCellId=@"returnThirdCell";
@@ -346,6 +364,7 @@
 //                 returnThirdCell.contentView.backgroundColor=[UIColor greenColor];
 //                return returnThirdCell;
 //            }
+//            //旅行推荐
 //            else if (indexPath.row ==2*_hasHotComment +2*(1+(indexPath.row-2)/2)*_hasInterestTravel &&indexPath.row!=0)
 //            {
 //                NSString *returnFourthCellId=@"returnFourthCell";
@@ -508,7 +527,6 @@
 #pragma mark --- tableView的滑动
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     //图片拉伸效果
     if (scrollView==self.table) {
         CGFloat offsetY = scrollView.contentOffset.y;
@@ -546,50 +564,9 @@
     }
 }
 
-#pragma mark --- 创建底部点击按钮
--(void)createBottomView
-{
-    UIView *bottomView=[[UIView alloc]initWithFrame:CGRectMake(0, KSCREEN_H-KTABBAR_HEIGHT , KSCREEN_W, KTABBAR_HEIGHT)];
-    bottomView.backgroundColor=[UIColor ZYZC_TabBarGrayColor];
-    [self.view addSubview:bottomView];
-    
-    [bottomView addSubview:[UIView lineViewWithFrame:CGRectMake(0, 0, KSCREEN_W, 0.5) andColor:[UIColor lightGrayColor]]];
-    
-    NSArray *titleArr=@[@"评论",@"支持",@"推荐"];
-    CGFloat btn_width=KSCREEN_W/3;
-    for (int i=0; i<3; i++) {
-        UIButton *sureBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        sureBtn.frame=CGRectMake(btn_width*i, KTABBAR_HEIGHT/2-20, btn_width, 40);
-        [sureBtn setTitle:titleArr[i] forState:UIControlStateNormal];
-        [sureBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
-        sureBtn.titleLabel.font=[UIFont systemFontOfSize:20];
-        sureBtn.layer.cornerRadius=KCORNERRADIUS;
-        sureBtn.layer.masksToBounds=YES;
-        [sureBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
-        sureBtn.tag=KZCDETAIL_ATTITUDETYPE+i;
-        [bottomView addSubview:sureBtn];
-    }
-}
-
-#pragma mark --- 底部按钮点击事件
+#pragma mark --- 按钮点击事件
 -(void)clickBtn:(UIButton *)sender
 {
-    switch (sender.tag) {
-        case CommentType:
-            [self comment:YES];
-            //评论
-            break;
-        case SupportType:
-            [self support];
-            //支持
-            break;
-        case RecommendType:
-            //推荐
-            break;
-        default:
-            break;
-    }
-    
     if (sender==_shareBtn) {
         //分享
         [self share];
@@ -603,11 +580,6 @@
 #pragma mark --- 分享
 -(void)share
 {
-    WXApiPay *pay=[[WXApiPay alloc]init];
-    [pay payForWeChat];
-    
-    return;
-    
     __weak typeof (&*self)weakSelf=self;
     __block NSString *url=[NSString stringWithFormat:@"http://www.sosona.com/pay/crowdfundingDetail?pid=%@",_productId];
 

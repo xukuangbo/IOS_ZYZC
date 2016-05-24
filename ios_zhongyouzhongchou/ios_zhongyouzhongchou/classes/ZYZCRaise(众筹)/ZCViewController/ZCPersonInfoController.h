@@ -10,19 +10,13 @@
 
 #import "ZCOneProductCell.h"
 
-typedef NS_ENUM(NSInteger, ZCDetailAttitudeType)
-{
-    CommentType=KZCDETAIL_ATTITUDETYPE,
-    SupportType,
-    RecommendType
-};
-
 @interface ZCPersonInfoController : ZYZCBaseViewController
 
 @property (nonatomic, copy  ) NSNumber *productId;
 
 @property (nonatomic, strong) ZCOneModel *oneModel;
 
-@property (nonatomic, assign) BOOL  paySupportMoney;
+@property (nonatomic, assign) ZC_TYPE zcType;       //标记：区分访客版和个人版
 
+@property (nonatomic, assign) BOOL  paySupportMoney;//标记：跳转到支持／付款
 @end

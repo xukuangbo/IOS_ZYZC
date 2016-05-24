@@ -6,8 +6,10 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
+//所有众筹列表
 #define GET_ALL_LIST(pageNo) [NSString stringWithFormat:@"cache=false&orderType=1&pageNo=%d&pageSize=10",pageNo]
 
+//我的众筹列表
 #define GET_MY_LIST(openid,type,pageNo) [NSString stringWithFormat:@"cache=false&openid=%@&self=%ld&pageNo=%d&pageSize=10",openid,type,pageNo]
 
 #import "ZCMainController.h"
@@ -212,6 +214,7 @@
         _noneDataView.hidden=YES;
     }
 }
+
 #pragma mark --- 创建tableView
 -(void)createTableView
 {
@@ -228,8 +231,6 @@
         _table.contentInset=UIEdgeInsetsMake(44, 0, 0, 0) ;
         _table.frame=CGRectMake(0, 0, KSCREEN_W, KSCREEN_H);
     }
-
-    
     //添加下拉刷新动画效果
     MJRefreshGifHeader *gifHeader=[MJRefreshGifHeader headerWithRefreshingBlock:^{
         _pageNo=1;
@@ -354,8 +355,6 @@
     return 0;
 }
 
-
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView==_table) {
@@ -365,14 +364,10 @@
         ZCOneModel *oneModel=_listArr[indexPath.section];
         personInfoVC.oneModel=oneModel;
         personInfoVC.productId=oneModel.product.productId;
+        personInfoVC.zcType=self.zcType;
         [self.navigationController pushViewController:personInfoVC animated:YES];
     }
-    else
-    {
-        
-    }
 }
-
 
 -(void)viewWillDisappear:(BOOL)animated
 {

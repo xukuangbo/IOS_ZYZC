@@ -187,6 +187,7 @@
 		2CD4B4551CCDE807006A7CE8 /* ZCDetailReturnThridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4B4531CCDE807006A7CE8 /* ZCDetailReturnThridCell.m */; };
 		2CDAB2451CEBFEDB00E3E0F5 /* ZYZCMyWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2441CEBFEDB00E3E0F5 /* ZYZCMyWallet.m */; };
 		2CDAB2481CEC0AD900E3E0F5 /* WXApiPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */; };
+		2CDCBC201CF2DC6900ECDA60 /* ZCDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCBC1F1CF2DC6900ECDA60 /* ZCDetailBottomView.m */; };
 		2CDCE4971CCA29EB00873915 /* ZYZCCusomMovieImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */; };
 		2CDDCE5E1CE2BB54006D372C /* ZCNoneDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDCE5D1CE2BB54006D372C /* ZCNoneDataView.m */; };
 		2CDDCE601CE2BBA7006D372C /* ZCNoneDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDCE5F1CE2BBA7006D372C /* ZCNoneDataView.xib */; };
@@ -575,6 +576,8 @@
 		2CDAB2441CEBFEDB00E3E0F5 /* ZYZCMyWallet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCMyWallet.m; sourceTree = "<group>"; };
 		2CDAB2461CEC0AD900E3E0F5 /* WXApiPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiPay.h; sourceTree = "<group>"; };
 		2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiPay.m; sourceTree = "<group>"; };
+		2CDCBC1E1CF2DC6900ECDA60 /* ZCDetailBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailBottomView.h; sourceTree = "<group>"; };
+		2CDCBC1F1CF2DC6900ECDA60 /* ZCDetailBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailBottomView.m; sourceTree = "<group>"; };
 		2CDCE4951CCA29EB00873915 /* ZYZCCusomMovieImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCCusomMovieImage.h; sourceTree = "<group>"; };
 		2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCCusomMovieImage.m; sourceTree = "<group>"; };
 		2CDDCE5C1CE2BB54006D372C /* ZCNoneDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCNoneDataView.h; sourceTree = "<group>"; };
@@ -1210,14 +1213,12 @@
 				2C4AD9A11CEDAA44005FC29E /* ZYZCCustomVoiceView.m */,
 				2C4AD99D1CEDA98E005FC29E /* ZCWSMView.h */,
 				2C4AD99E1CEDA98E005FC29E /* ZCWSMView.m */,
-				2CE5DDA11CE9CF5900895A94 /* AddCommentView.h */,
-				2CE5DDA21CE9CF5900895A94 /* AddCommentView.m */,
-				2CE5DD981CE9552400895A94 /* ZCCommentCell.h */,
-				2CE5DD991CE9552400895A94 /* ZCCommentCell.m */,
-				2C4EEFC21CC6316900AA99F6 /* ZCDetailFirstCell.h */,
-				2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */,
 				2CCB52EB1CC70F1800F99CD3 /* ZCDetailTableHeadView.h */,
 				2CCB52EC1CC70F1800F99CD3 /* ZCDetailTableHeadView.m */,
+				2CDCBC1E1CF2DC6900ECDA60 /* ZCDetailBottomView.h */,
+				2CDCBC1F1CF2DC6900ECDA60 /* ZCDetailBottomView.m */,
+				2C4EEFC21CC6316900AA99F6 /* ZCDetailFirstCell.h */,
+				2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */,
 				04A99C7D1CBF848D00C6F5F0 /* ZCFilterTableViewCell.h */,
 				04A99C7E1CBF848D00C6F5F0 /* ZCFilterTableViewCell.m */,
 				2CAF7BB21CE02B6600CB0885 /* ZCOneProductCell.h */,
@@ -1228,6 +1229,10 @@
 				2CDDCE5C1CE2BB54006D372C /* ZCNoneDataView.h */,
 				2CDDCE5D1CE2BB54006D372C /* ZCNoneDataView.m */,
 				2CDDCE5F1CE2BBA7006D372C /* ZCNoneDataView.xib */,
+				2CE5DDA11CE9CF5900895A94 /* AddCommentView.h */,
+				2CE5DDA21CE9CF5900895A94 /* AddCommentView.m */,
+				2CE5DD981CE9552400895A94 /* ZCCommentCell.h */,
+				2CE5DD991CE9552400895A94 /* ZCCommentCell.m */,
 			);
 			path = ZCView;
 			sourceTree = "<group>";
@@ -1850,6 +1855,7 @@
 				0406513B1CC7597A003FD539 /* TacticVideoModel.m in Sources */,
 				04F8362A1CD7102200140980 /* ZYZCPlayViewController.m in Sources */,
 				2C901DC31C89788C004B844B /* ViewController.m in Sources */,
+				2CDCBC201CF2DC6900ECDA60 /* ZCDetailBottomView.m in Sources */,
 				2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */,
 				2CDAB2481CEC0AD900E3E0F5 /* WXApiPay.m in Sources */,
 				04A99C9B1CBF848D00C6F5F0 /* MoreFZCChooseSceneController.m in Sources */,

@@ -65,7 +65,7 @@
     _timeLab.textAlignment=NSTextAlignmentRight;
     [self.bgImg addSubview:_timeLab];
     
-    _contentLab= [self createLabWithFrame:CGRectMake(_iconBtn.right+KEDGE_DISTANCE, _nameLab.bottom+KEDGE_DISTANCE, self.bgImg.width-_iconBtn.right-2*KEDGE_DISTANCE, 20) andFont:[UIFont systemFontOfSize:16] andTitleColor:[UIColor ZYZC_TextBlackColor]];
+    _contentLab= [self createLabWithFrame:CGRectMake(_iconBtn.right+KEDGE_DISTANCE, _nameLab.bottom+KEDGE_DISTANCE, self.bgImg.width-_iconBtn.right-2*KEDGE_DISTANCE, 20) andFont:[UIFont systemFontOfSize:15] andTitleColor:[UIColor ZYZC_TextBlackColor]];
     _contentLab.numberOfLines=0;
     [self.bgImg addSubview:_contentLab];
 }

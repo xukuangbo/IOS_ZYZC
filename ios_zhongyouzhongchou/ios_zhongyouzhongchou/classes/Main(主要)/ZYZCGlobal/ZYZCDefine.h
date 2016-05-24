@@ -56,7 +56,7 @@
 #define KFZC_COURSE_TYPE            60//tag取值范围60～63
 #define KFZC_CONTENTCOURSE_TYPE     70//tag取值范围70～72
 #define KFZC_MOVIERECORDSAVE_TAG    80
-#define KZCDETAIL_ATTITUDETYPE      90//tag取值范围90～92
+#define KZC_DETAIL_BOTTOM_TYPE      90//tag取值范围90～92
 #define KMineHeadViewChangeType     100//tag取值范围100～101
 #define KZCDETAIL_CONTENTTYPE       110//tag取值范围110～102
 #define KFZC_INPUTCONTENT_TYPE      120//tag取值范围120～122

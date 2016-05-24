@@ -85,6 +85,9 @@
     NSString *myVersion=[user objectForKey:KAPP_VERSION];
     //下载或更新后第一次进入
     if (!myVersion||![myVersion isEqualToString:version]) {
+        
+        
+        
         [user setObject:version forKey:KAPP_VERSION];
         [user synchronize];
     }
