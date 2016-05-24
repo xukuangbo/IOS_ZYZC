@@ -12,6 +12,7 @@
 #import <RongIMKit/RongIMKit.h>
 #import "WXApi.h"
 #import "WXApiManager.h"
+#import "ZYZCDataBase.h"
 @interface AppDelegate ()
 
 @end
@@ -52,8 +53,6 @@
     [self initRCloud];
     [self getAppVersion];
     [self deleteFailDataInOss];
-//    [ZYZCTool saveUserIdById:@"oulbuvtpzxiOe6t9hVBh2mNRgiaI"];
-//    [self getFileToTmp];
     return YES;
 }
 
