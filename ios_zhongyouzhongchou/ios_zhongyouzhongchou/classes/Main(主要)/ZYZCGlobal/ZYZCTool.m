@@ -198,5 +198,35 @@
     return address;
 }
 
+#pragma mark --- 判断文件是否已存在,存在就清楚
++(void)removeExistfile:(NSString *)filePath
+{
+    NSFileManager *manager=[NSFileManager defaultManager];
+    BOOL exist=[manager fileExistsAtPath:filePath];
+    if (exist) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [manager removeItemAtPath:filePath error:nil];
+        });
+    }
+}
+
+#pragma mark --- 清空documents下zcDraft中的文件
++ (void)cleanZCDraftFile
+{
+    NSString *zcDraftPath=[NSString stringWithFormat:@"%@/%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0],KMY_ZHONGCHOU_FILE];
+    
+    NSFileManager *manager=[NSFileManager defaultManager];
+    BOOL exist=[manager fileExistsAtPath:zcDraftPath];
+    if (exist) {
+        NSArray *fileArr=[manager subpathsAtPath:zcDraftPath];
+        for (NSString *fileName in fileArr) {
+            NSString *filePath = [zcDraftPath stringByAppendingPathComponent:fileName];
+            dispatch_async(dispatch_get_global_queue(0, 0), ^
+            {
+                [manager removeItemAtPath:filePath error:nil];
+            });
+        }
+    }
+}
 
 @end

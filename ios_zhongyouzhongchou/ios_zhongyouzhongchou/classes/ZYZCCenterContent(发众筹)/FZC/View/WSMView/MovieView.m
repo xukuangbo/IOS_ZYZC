@@ -164,6 +164,7 @@
 #pragma mark --- imagePickerController 选择后方法回调
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    self.movieFileName= [NSString stringWithFormat:@"%@.mp4",KMY_ZC_FILE_PATH(self.contentBelong)];;
         //获取媒体类型
         NSString* mediaType = [info objectForKey:UIImagePickerControllerMediaType];
         //判断是不是视频
@@ -183,7 +184,6 @@
                 //选择器消失
                 __weak typeof (&*self)weakSelf=self;
                 [picker dismissViewControllerAnimated:YES completion:^{
-//                    [MBProgressHUD hideHUDForView:picker.view animated:YES];
                     if (weakSelf.preMovImg) {
                         weakSelf.movieImg.image=weakSelf.preMovImg;
                     }
@@ -193,36 +193,20 @@
             }
             else
             {
+                //如果此处已存在文件删除已保存的文件
+                [ZYZCTool removeExistfile:self.movieFileName];
+                [ZYZCTool removeExistfile:self.movieImgFileName];
                 //赋值图片数据
-                self.movieImg.image=_preMovImg;
-                _turnImageView.hidden=NO;
+                self.movieImg.image=self.preMovImg;
+                self.turnImageView.hidden=NO;
                 //保存图片到本地
                 [self saveMovieImg];
-                
-                
-                //如果此处已存在文件删除已保存的文件
-                if (self.movieFileName) {
-                    //开启线程删除
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        NSError *error03=nil;
-                        //移除mp4视屏文件
-                        NSFileManager *manager=[NSFileManager defaultManager];
-                        [manager removeItemAtURL:[NSURL fileURLWithPath:KMY_ZHONGCHOU_DOCUMENT_PATH(self.movieFileName)]  error:&error03];
-                        
-                        //同时移除视屏图片文件
-                        [manager removeItemAtURL:[NSURL fileURLWithPath:KMY_ZHONGCHOU_DOCUMENT_PATH(self.movieImgFileName)]  error:nil];
-                        
-                    });
-                }
+
                 //开启线程将文件转换成MP4格式
                  __weak typeof (&*self)weakSelf=self;
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    
                     NSURL  *inputURL  = mediaURL;
-                    
-                    NSString *outPutFileName=[NSString stringWithFormat:@"%@/%@/%@.mp4",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
-                    NSString *outPutURLStr=KMY_ZHONGCHOU_DOCUMENT_PATH(outPutFileName);
-                    NSURL  *outputURL = [NSURL fileURLWithPath:outPutURLStr];
+                    NSURL  *outputURL = [NSURL fileURLWithPath:weakSelf.movieFileName];
                     
                     [weakSelf turntoMP4WithInputURL:inputURL
                                       outputURL:outputURL
@@ -240,23 +224,21 @@
                                                NSLog(@"mov文件未移出");
                                            }
                                        });
-                                       //记录mp4文件名
-                                       weakSelf.movieFileName=outPutFileName;
                                        
                                        //将MP4文件和第一帧图片路径保存到单例中
                                        MoreFZCDataManager *dataManager=[MoreFZCDataManager sharedMoreFZCDataManager];
                                        if ([weakSelf.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
-                                           dataManager.raiseMoney_movieUrl=outPutFileName;
+                                           dataManager.raiseMoney_movieUrl=weakSelf.movieFileName;
                                            dataManager.raiseMoney_movieImg=weakSelf.movieImgFileName;
                                        }
                                        else if ([weakSelf.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
                                        {
-                                            dataManager.return_movieUrl=outPutFileName;
+                                            dataManager.return_movieUrl=weakSelf.movieFileName;
                                            dataManager.return_movieImg=weakSelf.movieImgFileName;
                                        }
                                        else if ([weakSelf.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
                                        {
-                                           dataManager.return_movieUrl01=outPutFileName;
+                                           dataManager.return_movieUrl01=weakSelf.movieFileName;
                                            dataManager.return_movieImg01=weakSelf.movieImgFileName;
                                        }
                                    }];
@@ -369,7 +351,6 @@
 //#pragma mark --- alertView方法回调
 //-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 //{
-//    
 //    if (alertView.tag==KFZC_MOVIERECORDSAVE_TAG||buttonIndex==1) {
 //        //保存视频至相册（异步线程）
 //        NSString *urlStr = [self.movieFilePath path];
@@ -524,35 +505,12 @@
 
 -(void)saveMovieImg{
     
-    self.movieImgFileName=[NSString stringWithFormat:@"%@/%@/%@.png",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
+    self.movieImgFileName=[NSString stringWithFormat:@"%@.png",KMY_ZC_FILE_PATH(self.contentBelong)];
     //将图片数据转换成png格式文件并存储
     if (self.movieImg.image){
-        [UIImagePNGRepresentation(self.movieImg.image) writeToFile:KMY_ZHONGCHOU_DOCUMENT_PATH(self.movieImgFileName) atomically:YES];
+        [UIImagePNGRepresentation(self.movieImg.image) writeToFile:self.movieImgFileName atomically:YES];
     }
 
 }
-
-//#pragma mark --- 视屏文件转换为MP4格式后的存储路径
-
-//-(NSString *)pathForMP4File
-//{
-//
-//    NSString *documentsPath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0];
-//    NSString * filePath=[NSString stringWithFormat:@"%@/%@/%@/%@.mp4",documentsPath,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
-//    return filePath;
-//}
-
-//#pragma mark --- 获取图片存储在tmp的路径下
-//-(NSString *)getImagePath
-//{
-//    NSString *documentsPath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0];
-//    NSString * pngPath=[NSString stringWithFormat:@"%@/%@/%@/%@.png",documentsPath,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
-//    
-//    //将图片数据转换成png格式文件到tmp中
-//    if (self.movieImg.image){
-//        [UIImagePNGRepresentation(self.movieImg.image) writeToFile:pngPath atomically:YES];
-//    }
-//    return pngPath;
-//}
 
 @end

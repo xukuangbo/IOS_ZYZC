@@ -5,6 +5,9 @@
 //  Created by liuliang on 16/3/18.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
+
+#define ThemeImagePath  KMY_ZC_FILE_PATH(@"themeImage.png")
+
 #define TRAVELPLACEHOLDER @"编写旅行主题名"
 #define ALERTTEXT @"上传诱人的美景做封面"//添加风景图提示文字
 #import "GoalSecondCell.h"
@@ -73,9 +76,9 @@
     //给图片添加点击手势
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHappen:)];
     [frameImg addGestureRecognizer:tap];
-    
+    //初始化图片
     if (manager.goal_travelThemeImgUrl) {
-        frameImg.image =[UIImage imageWithContentsOfFile:KMY_ZHONGCHOU_DOCUMENT_PATH(manager.goal_travelThemeImgUrl)];
+        frameImg.image =[UIImage imageWithContentsOfFile:manager.goal_travelThemeImgUrl];
     }
 }
 
@@ -107,7 +110,6 @@
         [weakSelf.viewController presentViewController:weakSelf.imagePicker animated:YES completion:nil];
     }];
     [alertController addAction:cancelAction];
-//    [alertController addAction:collectionAction];
     [alertController addAction:draftsAction];
     [alertController addAction:giftCardAction];
     
@@ -124,16 +126,15 @@
             selectImgVC.selectImage=[info objectForKey:UIImagePickerControllerEditedImage];
             selectImgVC.imageBlock=^(UIImage *img)
             {
+               [ZYZCTool removeExistfile:ThemeImagePath];
                 weakSelf.frameImg.image=img;
                 // 将图片保存为png格式到documents中
-                NSString *fileName=[NSString stringWithFormat:@"%@/%@/%@.png",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
-                
-                NSString *filePath=KMY_ZHONGCHOU_DOCUMENT_PATH(fileName);
+                NSString *filePath=ThemeImagePath;
                 [UIImagePNGRepresentation(img)
                  writeToFile:filePath atomically:YES];
-                //将图片名保存到单例中
+                //将图片路径保存到单例中
                 MoreFZCDataManager  *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-                manager.goal_travelThemeImgUrl=fileName;
+                manager.goal_travelThemeImgUrl=ThemeImagePath;
             };
             [weakSelf.viewController.navigationController pushViewController:selectImgVC animated:YES];
         }];

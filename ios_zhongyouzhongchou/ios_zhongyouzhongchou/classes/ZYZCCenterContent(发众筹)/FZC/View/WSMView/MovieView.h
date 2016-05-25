@@ -10,7 +10,7 @@
 
 @interface MovieView : WSMBaseView<UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIAlertViewDelegate>
 @property (nonatomic, strong) UIImageView *movieImg;
-@property (nonatomic, copy  ) NSString *movieFileName;
-@property (nonatomic, copy  ) NSString *movieImgFileName;
+@property (nonatomic, copy  ) NSString    *movieFileName;
+@property (nonatomic, copy  ) NSString    *movieImgFileName;
 @property (nonatomic, strong) UIImageView *turnImageView;
 @end

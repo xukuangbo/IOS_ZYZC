@@ -60,7 +60,7 @@
     _audioRecorder=nil;
     if (!_audioRecorder) {
         //创建录音文件保存路径
-        NSURL *url=[NSURL fileURLWithPath:KMY_ZHONGCHOU_DOCUMENT_PATH(self.soundFileName)];
+        NSURL *url=[NSURL fileURLWithPath:self.soundFileName];
         //创建录音格式设置
         NSDictionary *setting=[self getAudioSetting];
         //创建录音机
@@ -98,7 +98,7 @@
     _audioPlayer=nil;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     if (!_audioPlayer) {
-        NSURL *url=[NSURL fileURLWithPath:KMY_ZHONGCHOU_DOCUMENT_PATH(self.soundFileName)];
+        NSURL *url=[NSURL fileURLWithPath:self.soundFileName];
         NSError *error=nil;
         _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
         _audioPlayer.delegate=self;
@@ -128,10 +128,9 @@
 {
     [_audioPlayer stop];
     
-    NSString *urlStr=KMY_ZHONGCHOU_DOCUMENT_PATH(self.soundFileName);
-    NSError *error=nil;
+    NSString *urlStr=self.soundFileName;
     if ([[NSFileManager defaultManager] fileExistsAtPath:urlStr]) {
-        [[NSFileManager defaultManager] removeItemAtPath:urlStr error:&error];
+        [[NSFileManager defaultManager] removeItemAtPath:urlStr error:nil];
     }
 }
 
@@ -172,7 +171,7 @@
     NSString *mp3AudioPath=[self saveMP3Path];
     NSLog(@"mp3AudioPath:%@",mp3AudioPath);
     //原文件路径
-    NSString *cafFilePath=KMY_ZHONGCHOU_DOCUMENT_PATH(self.soundFileName);;
+    NSString *cafFilePath=self.soundFileName;
     NSLog(@"cafFilePath:%@",cafFilePath);
     //进入转换
     NSFileManager* fileManager=[NSFileManager defaultManager];

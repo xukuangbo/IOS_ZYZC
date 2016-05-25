@@ -82,5 +82,15 @@
  */
 + (NSString *)getDeviceIp;
 
+/**
+ *  判断文件是否已存在,存在并清除
+ */
++(void)removeExistfile:(NSString *)filePath;
+
+/**
+ *  清空documents下zcDraft中的文件
+ */
++ (void)cleanZCDraftFile;
+
 
 @end

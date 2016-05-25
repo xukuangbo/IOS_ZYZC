@@ -60,7 +60,6 @@
 		04A99C9A1CBF848D00C6F5F0 /* ChooseSiteImgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BF91CBF848C00C6F5F0 /* ChooseSiteImgController.m */; };
 		04A99C9B1CBF848D00C6F5F0 /* MoreFZCChooseSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */; };
 		04A99C9D1CBF848D00C6F5F0 /* MoreFZCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BFF1CBF848C00C6F5F0 /* MoreFZCViewController.m */; };
-		04A99C9E1CBF848D00C6F5F0 /* RecordSoundObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C011CBF848C00C6F5F0 /* RecordSoundObj.m */; };
 		04A99C9F1CBF848D00C6F5F0 /* SelectImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C031CBF848C00C6F5F0 /* SelectImageViewController.m */; };
 		04A99CA01CBF848D00C6F5F0 /* FZCContentEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C061CBF848C00C6F5F0 /* FZCContentEntryView.m */; };
 		04A99CA11CBF848D00C6F5F0 /* GoalFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C091CBF848C00C6F5F0 /* GoalFirstCell.m */; };
@@ -155,6 +154,7 @@
 		2C2421D31CEEB22400F994FB /* ZCSupportTogetherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2421D21CEEB22400F994FB /* ZCSupportTogetherView.m */; };
 		2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */; };
 		2C33FE281CF3F88600D4AA38 /* ZYZCDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C33FE271CF3F88600D4AA38 /* ZYZCDataBase.m */; };
+		2C33FE2B1CF44B0400D4AA38 /* RecordSoundObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C33FE2A1CF44B0400D4AA38 /* RecordSoundObj.m */; };
 		2C39CD561CE32A7E001586A3 /* ZCDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C39CD551CE32A7E001586A3 /* ZCDetailModel.m */; };
 		2C4AD99F1CEDA98E005FC29E /* ZCWSMView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4AD99E1CEDA98E005FC29E /* ZCWSMView.m */; };
 		2C4AD9A21CEDAA44005FC29E /* ZYZCCustomVoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4AD9A11CEDAA44005FC29E /* ZYZCCustomVoiceView.m */; };
@@ -327,8 +327,6 @@
 		04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCChooseSceneController.m; sourceTree = "<group>"; };
 		04A99BFE1CBF848C00C6F5F0 /* MoreFZCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCViewController.h; sourceTree = "<group>"; };
 		04A99BFF1CBF848C00C6F5F0 /* MoreFZCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCViewController.m; sourceTree = "<group>"; };
-		04A99C001CBF848C00C6F5F0 /* RecordSoundObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordSoundObj.h; sourceTree = "<group>"; };
-		04A99C011CBF848C00C6F5F0 /* RecordSoundObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordSoundObj.m; sourceTree = "<group>"; };
 		04A99C021CBF848C00C6F5F0 /* SelectImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectImageViewController.h; sourceTree = "<group>"; };
 		04A99C031CBF848C00C6F5F0 /* SelectImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectImageViewController.m; sourceTree = "<group>"; };
 		04A99C051CBF848C00C6F5F0 /* FZCContentEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZCContentEntryView.h; sourceTree = "<group>"; };
@@ -513,6 +511,8 @@
 		2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailArrangeFirstCell.m; sourceTree = "<group>"; };
 		2C33FE261CF3F88600D4AA38 /* ZYZCDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCDataBase.h; sourceTree = "<group>"; };
 		2C33FE271CF3F88600D4AA38 /* ZYZCDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCDataBase.m; sourceTree = "<group>"; };
+		2C33FE291CF44B0400D4AA38 /* RecordSoundObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordSoundObj.h; sourceTree = "<group>"; };
+		2C33FE2A1CF44B0400D4AA38 /* RecordSoundObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordSoundObj.m; sourceTree = "<group>"; };
 		2C39CD541CE32A7E001586A3 /* ZCDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailModel.h; sourceTree = "<group>"; };
 		2C39CD551CE32A7E001586A3 /* ZCDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailModel.m; sourceTree = "<group>"; };
 		2C4AD99D1CEDA98E005FC29E /* ZCWSMView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCWSMView.h; sourceTree = "<group>"; };
@@ -936,8 +936,6 @@
 				04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */,
 				04A99C021CBF848C00C6F5F0 /* SelectImageViewController.h */,
 				04A99C031CBF848C00C6F5F0 /* SelectImageViewController.m */,
-				04A99C001CBF848C00C6F5F0 /* RecordSoundObj.h */,
-				04A99C011CBF848C00C6F5F0 /* RecordSoundObj.m */,
 				2CE21A751CC074CC00C7A797 /* MoreFZCDataManager.h */,
 				2CE21A761CC074CC00C7A797 /* MoreFZCDataManager.m */,
 				2CCB4DDB1CD1D86300ABA1DB /* FZCReplaceDataKeys.h */,
@@ -1047,6 +1045,8 @@
 		04A99C3F1CBF848D00C6F5F0 /* WSMView */ = {
 			isa = PBXGroup;
 			children = (
+				2C33FE291CF44B0400D4AA38 /* RecordSoundObj.h */,
+				2C33FE2A1CF44B0400D4AA38 /* RecordSoundObj.m */,
 				04A99C401CBF848D00C6F5F0 /* DrawCircleView.h */,
 				04A99C411CBF848D00C6F5F0 /* DrawCircleView.m */,
 				04A99C4A1CBF848D00C6F5F0 /* WSMBaseView.h */,
@@ -1842,7 +1842,6 @@
 				04A99CA41CBF848D00C6F5F0 /* GoalSecondCell.m in Sources */,
 				2CE074BB1CCF487B006D312D /* ZCDetailCustomButton.m in Sources */,
 				04A99CA71CBF848D00C6F5F0 /* MoreFZCGoalTableView.m in Sources */,
-				04A99C9E1CBF848D00C6F5F0 /* RecordSoundObj.m in Sources */,
 				04A99CC91CBF848D00C6F5F0 /* MineMessageModel.m in Sources */,
 				04A99D1F1CC07E1800C6F5F0 /* WXApiResponseHandler.m in Sources */,
 				040651411CC78877003FD539 /* TacticImageView.m in Sources */,
@@ -1967,6 +1966,7 @@
 				040651381CC728E9003FD539 /* TacticTableViewCell.m in Sources */,
 				2C901DBD1C89788C004B844B /* main.m in Sources */,
 				040651231CC62FC7003FD539 /* TADotView.m in Sources */,
+				2C33FE2B1CF44B0400D4AA38 /* RecordSoundObj.m in Sources */,
 				04A99CF11CBF851500C6F5F0 /* RMCalendarCollectionViewLayout.m in Sources */,
 				04A99CB11CBF848D00C6F5F0 /* ReturnAttributesLabel.m in Sources */,
 				04A99CED1CBF851500C6F5F0 /* NSDate+RMCalendarLogic.m in Sources */,
