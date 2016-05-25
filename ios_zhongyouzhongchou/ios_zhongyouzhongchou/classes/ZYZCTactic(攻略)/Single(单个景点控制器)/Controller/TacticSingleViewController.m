@@ -89,7 +89,7 @@
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
             //请求成功，转化为数组
-//            NSLog(@"%@",result);
+//          NSLog(@"%@",result);
             TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
             weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
             

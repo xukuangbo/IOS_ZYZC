@@ -91,7 +91,6 @@
 {
     CGFloat offsetY = scrollView.contentOffset.y;
     
-    
     if (offsetY <= self.imageViewHeight) {
         CGFloat alpha = MAX(0, offsetY/self.imageViewHeight);
         

@@ -12,6 +12,8 @@
 
 
 @interface TacticSingleFoodVC : ZYZCBaseViewController
+
+
 @property (nonatomic, strong) TacticSingleFoodModel *tacticSingleFoodModel;
 @property (nonatomic, strong) TacticVideoModel *tacticVideoModel;
 @end

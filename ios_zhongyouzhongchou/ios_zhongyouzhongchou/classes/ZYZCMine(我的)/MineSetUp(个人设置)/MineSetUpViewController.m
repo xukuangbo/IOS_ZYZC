@@ -8,6 +8,9 @@
 
 #import "MineSetUpViewController.h"
 #import "MinePersonSetUpController.h"
+#import "ZYZCAccountTool.h"
+#import "ZYZCAccountModel.h"
+#import "MBProgressHUD+MJ.h"
 @interface MineSetUpViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -35,7 +38,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //当选中的时候就会调用
-    //    NSLog(@"%ld   %ld",indexPath.section,indexPath.row);
+    ZYZCAccountModel *model = [ZYZCAccountTool account];
+    if (model) {//登录了
+        
+    }else//没登录
+    {
+        [MBProgressHUD setAnimationDuration:2];
+        [MBProgressHUD showError:@"请先登录后设置"];
+        
+        return;
+    }
+    
     //在这里实现各种方法
     if (indexPath.section == 0) {
         switch (indexPath.row) {
