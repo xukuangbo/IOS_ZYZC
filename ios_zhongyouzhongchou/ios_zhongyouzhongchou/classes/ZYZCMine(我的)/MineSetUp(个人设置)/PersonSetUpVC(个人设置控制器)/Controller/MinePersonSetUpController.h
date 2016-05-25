@@ -6,8 +6,11 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#import "ZYZCBaseTableViewController.h"
+//#import "ZYZCBaseTableViewController.h"
 
-@interface MinePersonSetUpController : ZYZCBaseTableViewController
+
+#import "ZYZCBaseViewController.h"
+
+@interface MinePersonSetUpController : ZYZCBaseViewController
 
 @end
