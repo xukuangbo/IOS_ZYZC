@@ -57,7 +57,6 @@
 		04A99C9A1CBF848D00C6F5F0 /* ChooseSiteImgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BF91CBF848C00C6F5F0 /* ChooseSiteImgController.m */; };
 		04A99C9B1CBF848D00C6F5F0 /* MoreFZCChooseSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */; };
 		04A99C9D1CBF848D00C6F5F0 /* MoreFZCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99BFF1CBF848C00C6F5F0 /* MoreFZCViewController.m */; };
-		04A99C9E1CBF848D00C6F5F0 /* RecordSoundObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C011CBF848C00C6F5F0 /* RecordSoundObj.m */; };
 		04A99C9F1CBF848D00C6F5F0 /* SelectImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C031CBF848C00C6F5F0 /* SelectImageViewController.m */; };
 		04A99CA01CBF848D00C6F5F0 /* FZCContentEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C061CBF848C00C6F5F0 /* FZCContentEntryView.m */; };
 		04A99CA11CBF848D00C6F5F0 /* GoalFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99C091CBF848C00C6F5F0 /* GoalFirstCell.m */; };
@@ -137,6 +136,8 @@
 		04F6854C1CF57C9F00E1A98E /* MinePersonSetUpScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685481CF57C9F00E1A98E /* MinePersonSetUpScrollView.m */; };
 		04F6854F1CF57CD900E1A98E /* MinePersonSetUpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F6854E1CF57CD900E1A98E /* MinePersonSetUpModel.m */; };
 		04F685521CF58B1B00E1A98E /* MinePersonAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685511CF58B1B00E1A98E /* MinePersonAddressModel.m */; };
+		04F685551CF5AD1C00E1A98E /* RecordSoundObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685541CF5AD1C00E1A98E /* RecordSoundObj.m */; };
+		04F685581CF5ADD000E1A98E /* ZCDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685571CF5ADD000E1A98E /* ZCDetailBottomView.m */; };
 		04F68C9F1CD6E3E3000CA70D /* ReturnThirdCellTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F68C9E1CD6E3E3000CA70D /* ReturnThirdCellTwo.m */; };
 		04F8362A1CD7102200140980 /* ZYZCPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F836291CD7102200140980 /* ZYZCPlayViewController.m */; };
 		04F8362D1CD7225200140980 /* TacticSingleLongPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F8362C1CD7225200140980 /* TacticSingleLongPicture.m */; };
@@ -166,7 +167,6 @@
 		2C4EEFC01CC60D8600AA99F6 /* WeekDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4EEFBE1CC60D8600AA99F6 /* WeekDayView.m */; };
 		2C4EEFC11CC60D8600AA99F6 /* WeekDayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4EEFBF1CC60D8600AA99F6 /* WeekDayView.xib */; };
 		2C4EEFC41CC6316900AA99F6 /* ZCDetailFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */; };
-		2C78068F1CEE074E0023C27C /* ZCDetailIntroFirstCellVoiceShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C78068E1CEE074E0023C27C /* ZCDetailIntroFirstCellVoiceShowView.m */; };
 		2C82882F1CD83E0A004873B6 /* NecessaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C82882E1CD83E0A004873B6 /* NecessaryView.m */; };
 		2C8288311CD87F7A004873B6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C8288301CD87F7A004873B6 /* Localizable.strings */; };
 		2C8288341CD886DE004873B6 /* NecessoryAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8288331CD886DE004873B6 /* NecessoryAlertManager.m */; };
@@ -323,8 +323,6 @@
 		04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCChooseSceneController.m; sourceTree = "<group>"; };
 		04A99BFE1CBF848C00C6F5F0 /* MoreFZCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreFZCViewController.h; sourceTree = "<group>"; };
 		04A99BFF1CBF848C00C6F5F0 /* MoreFZCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreFZCViewController.m; sourceTree = "<group>"; };
-		04A99C001CBF848C00C6F5F0 /* RecordSoundObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordSoundObj.h; sourceTree = "<group>"; };
-		04A99C011CBF848C00C6F5F0 /* RecordSoundObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordSoundObj.m; sourceTree = "<group>"; };
 		04A99C021CBF848C00C6F5F0 /* SelectImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectImageViewController.h; sourceTree = "<group>"; };
 		04A99C031CBF848C00C6F5F0 /* SelectImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectImageViewController.m; sourceTree = "<group>"; };
 		04A99C051CBF848C00C6F5F0 /* FZCContentEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZCContentEntryView.h; sourceTree = "<group>"; };
@@ -479,6 +477,10 @@
 		04F6854E1CF57CD900E1A98E /* MinePersonSetUpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpModel.m; sourceTree = "<group>"; };
 		04F685501CF58B1B00E1A98E /* MinePersonAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonAddressModel.h; sourceTree = "<group>"; };
 		04F685511CF58B1B00E1A98E /* MinePersonAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonAddressModel.m; sourceTree = "<group>"; };
+		04F685531CF5AD1C00E1A98E /* RecordSoundObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordSoundObj.h; sourceTree = "<group>"; };
+		04F685541CF5AD1C00E1A98E /* RecordSoundObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordSoundObj.m; sourceTree = "<group>"; };
+		04F685561CF5ADD000E1A98E /* ZCDetailBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailBottomView.h; sourceTree = "<group>"; };
+		04F685571CF5ADD000E1A98E /* ZCDetailBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailBottomView.m; sourceTree = "<group>"; };
 		04F68C9D1CD6E3E3000CA70D /* ReturnThirdCellTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnThirdCellTwo.h; sourceTree = "<group>"; };
 		04F68C9E1CD6E3E3000CA70D /* ReturnThirdCellTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnThirdCellTwo.m; sourceTree = "<group>"; };
 		04F836281CD7102200140980 /* ZYZCPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCPlayViewController.h; sourceTree = "<group>"; };
@@ -537,8 +539,6 @@
 		2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailFirstCell.m; sourceTree = "<group>"; };
 		2C72BCC21CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2C72BCC31CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		2C78068D1CEE074E0023C27C /* ZCDetailIntroFirstCellVoiceShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailIntroFirstCellVoiceShowView.h; sourceTree = "<group>"; };
-		2C78068E1CEE074E0023C27C /* ZCDetailIntroFirstCellVoiceShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailIntroFirstCellVoiceShowView.m; sourceTree = "<group>"; };
 		2C82882D1CD83E0A004873B6 /* NecessaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NecessaryView.h; sourceTree = "<group>"; };
 		2C82882E1CD83E0A004873B6 /* NecessaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NecessaryView.m; sourceTree = "<group>"; };
 		2C8288301CD87F7A004873B6 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -935,8 +935,6 @@
 				04A99BFB1CBF848C00C6F5F0 /* MoreFZCChooseSceneController.m */,
 				04A99C021CBF848C00C6F5F0 /* SelectImageViewController.h */,
 				04A99C031CBF848C00C6F5F0 /* SelectImageViewController.m */,
-				04A99C001CBF848C00C6F5F0 /* RecordSoundObj.h */,
-				04A99C011CBF848C00C6F5F0 /* RecordSoundObj.m */,
 				2CE21A751CC074CC00C7A797 /* MoreFZCDataManager.h */,
 				2CE21A761CC074CC00C7A797 /* MoreFZCDataManager.m */,
 				2CCB4DDB1CD1D86300ABA1DB /* FZCReplaceDataKeys.h */,
@@ -1046,6 +1044,8 @@
 		04A99C3F1CBF848D00C6F5F0 /* WSMView */ = {
 			isa = PBXGroup;
 			children = (
+				04F685531CF5AD1C00E1A98E /* RecordSoundObj.h */,
+				04F685541CF5AD1C00E1A98E /* RecordSoundObj.m */,
 				04A99C401CBF848D00C6F5F0 /* DrawCircleView.h */,
 				04A99C411CBF848D00C6F5F0 /* DrawCircleView.m */,
 				04A99C4A1CBF848D00C6F5F0 /* WSMBaseView.h */,
@@ -1213,8 +1213,6 @@
 				2CF7EAFB1CC784A8007074FE /* ZCDetailIntroShowTableCell */,
 				2CDCE4951CCA29EB00873915 /* ZYZCCusomMovieImage.h */,
 				2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */,
-				2C78068D1CEE074E0023C27C /* ZCDetailIntroFirstCellVoiceShowView.h */,
-				2C78068E1CEE074E0023C27C /* ZCDetailIntroFirstCellVoiceShowView.m */,
 				2C4AD9A01CEDAA44005FC29E /* ZYZCCustomVoiceView.h */,
 				2C4AD9A11CEDAA44005FC29E /* ZYZCCustomVoiceView.m */,
 				2C4AD99D1CEDA98E005FC29E /* ZCWSMView.h */,
@@ -1227,6 +1225,8 @@
 				2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */,
 				2CCB52EB1CC70F1800F99CD3 /* ZCDetailTableHeadView.h */,
 				2CCB52EC1CC70F1800F99CD3 /* ZCDetailTableHeadView.m */,
+				04F685561CF5ADD000E1A98E /* ZCDetailBottomView.h */,
+				04F685571CF5ADD000E1A98E /* ZCDetailBottomView.m */,
 				04A99C7D1CBF848D00C6F5F0 /* ZCFilterTableViewCell.h */,
 				04A99C7E1CBF848D00C6F5F0 /* ZCFilterTableViewCell.m */,
 				2CAF7BB21CE02B6600CB0885 /* ZCOneProductCell.h */,
@@ -1878,19 +1878,18 @@
 				04A99CBC1CBF848D00C6F5F0 /* MovieView.m in Sources */,
 				2CF7EB041CC78582007074FE /* ZCDetailIntroSecondCell.m in Sources */,
 				04A99CBA1CBF848D00C6F5F0 /* TravelSecondCell.m in Sources */,
-				2C78068F1CEE074E0023C27C /* ZCDetailIntroFirstCellVoiceShowView.m in Sources */,
 				04F685521CF58B1B00E1A98E /* MinePersonAddressModel.m in Sources */,
 				04A99CD31CBF848D00C6F5F0 /* ZCFilterTableViewCell.m in Sources */,
 				2CCB52ED1CC70F1800F99CD3 /* ZCDetailTableHeadView.m in Sources */,
 				04A99CA41CBF848D00C6F5F0 /* GoalSecondCell.m in Sources */,
 				2CE074BB1CCF487B006D312D /* ZCDetailCustomButton.m in Sources */,
 				04A99CA71CBF848D00C6F5F0 /* MoreFZCGoalTableView.m in Sources */,
-				04A99C9E1CBF848D00C6F5F0 /* RecordSoundObj.m in Sources */,
 				04A99CC91CBF848D00C6F5F0 /* MineMessageModel.m in Sources */,
 				04A99D1F1CC07E1800C6F5F0 /* WXApiResponseHandler.m in Sources */,
 				040651411CC78877003FD539 /* TacticImageView.m in Sources */,
 				04A99D221CC07E1800C6F5F0 /* WXMediaMessage+messageConstruct.m in Sources */,
 				040651301CC635A9003FD539 /* TacticTableView.m in Sources */,
+				04F685581CF5ADD000E1A98E /* ZCDetailBottomView.m in Sources */,
 				2C2421D01CEEAC9A00F994FB /* ZCSupportReturnView.m in Sources */,
 				04A99CA11CBF848D00C6F5F0 /* GoalFirstCell.m in Sources */,
 				0490D15C1CC9FAA80064844C /* TacticSingleHeadView.m in Sources */,
@@ -2011,6 +2010,7 @@
 				04A99D1E1CC07E1800C6F5F0 /* WXApiRequestHandler.m in Sources */,
 				040651381CC728E9003FD539 /* TacticTableViewCell.m in Sources */,
 				2C901DBD1C89788C004B844B /* main.m in Sources */,
+				04F685551CF5AD1C00E1A98E /* RecordSoundObj.m in Sources */,
 				040651231CC62FC7003FD539 /* TADotView.m in Sources */,
 				04A99CF11CBF851500C6F5F0 /* RMCalendarCollectionViewLayout.m in Sources */,
 				04A99CB11CBF848D00C6F5F0 /* ReturnAttributesLabel.m in Sources */,
