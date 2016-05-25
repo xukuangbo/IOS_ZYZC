@@ -221,28 +221,37 @@
     _titleLab.text=oneModel.product.productName;
     //风景图
     if (!_headImage.hidden) {
-         [_headImage sd_setImageWithURL:[NSURL URLWithString:oneModel.product.headImage]  placeholderImage:[UIImage imageNamed:@"abc"]];
-    }
-    //计算目的地的文字长度
-    NSMutableString *place=[NSMutableString string];
-    NSArray *dest=[ZYZCTool turnJsonStrToArray:oneModel.product.productDest];
-    NSInteger destNumber=dest.count;
-    for (NSInteger i=0; i<destNumber;i++) {
-        if (i==0) {
-            [place appendString:dest[i]];
-        }
-        else
-        {
-            [place appendString:[NSString stringWithFormat:@"—%@",dest[i]]];
+        if (oneModel.product.headImage.length) {
+            NSRange range=[oneModel.product.headImage rangeOfString:KMY_ZHONGCHOU_FILE];
+            if (range.length) {
+                _headImage.image=[UIImage imageWithContentsOfFile:oneModel.product.headImage];
+            }
+            else{
+                [_headImage sd_setImageWithURL:[NSURL URLWithString:oneModel.product.headImage]  placeholderImage:[UIImage imageNamed:@"abc"]];
+            }
         }
     }
-    CGFloat placeStrWidth=[ZYZCTool calculateStrLengthByText:place andFont:_destLab.font andMaxWidth:KSCREEN_W].width;
-    //改变目的地展示标签的长度
-    _destLab.width=placeStrWidth;
-    _destLab.text=place;
-    //改变目的地背景条长度
-    _destLayerImg.width=placeStrWidth+40;
-    
+    if (oneModel.product.productDest) {
+        //计算目的地的文字长度
+        NSMutableString *place=[NSMutableString string];
+        NSArray *dest=[ZYZCTool turnJsonStrToArray:oneModel.product.productDest];
+        NSInteger destNumber=dest.count;
+        for (NSInteger i=0; i<destNumber;i++) {
+            if (i==0) {
+                [place appendString:dest[i]];
+            }
+            else
+            {
+                [place appendString:[NSString stringWithFormat:@"—%@",dest[i]]];
+            }
+        }
+        CGFloat placeStrWidth=[ZYZCTool calculateStrLengthByText:place andFont:_destLab.font andMaxWidth:KSCREEN_W].width;
+        //改变目的地展示标签的长度
+        _destLab.width=placeStrWidth;
+        _destLab.text=place;
+        //改变目的地背景条长度
+        _destLayerImg.width=placeStrWidth+40;
+    }
     //用户图像
     [_iconImage sd_setImageWithURL:[NSURL URLWithString:oneModel.user.faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"]];
     
@@ -330,7 +339,10 @@
     _infoLab.text=userInfo;
     
     //预筹资金
-    CGFloat raiseMoney=[oneModel.product.productPrice floatValue]/100.0;
+    CGFloat raiseMoney=0.0;
+    if (oneModel.product.productPrice) {
+        raiseMoney=[oneModel.product.productPrice floatValue]/100.0;
+    }
     _moneyLab.attributedText=[self changeTextFontAndColorByString:KRAISE_MONEY(raiseMoney) andChangeRange:NSMakeRange(0, 2)];
     
     //出发日期
@@ -338,21 +350,33 @@
     _startLab.attributedText=[self changeTextFontAndColorByString:startStr andChangeRange:NSMakeRange(startStr.length-2, 2)];
     
     //已筹资金
-    _zcInfoView.moneyLab.text=[NSString stringWithFormat:@"¥%@",oneModel.spellbuyproduct.spellRealBuyPrice];
+    CGFloat spellRealBuyPrice=0.0;
+    if (oneModel.spellbuyproduct.spellRealBuyPrice) {
+        spellRealBuyPrice=[oneModel.spellbuyproduct.spellRealBuyPrice floatValue];
+    }
+    _zcInfoView.moneyLab.text=[NSString stringWithFormat:@"¥%.f",spellRealBuyPrice];
     //众筹进度
-    CGFloat rate=[oneModel.spellbuyproduct.spellRealBuyPrice floatValue]/raiseMoney;
+    CGFloat rate=0;
+    if (raiseMoney!=0) {
+         rate=[oneModel.spellbuyproduct.spellRealBuyPrice floatValue]/raiseMoney;
+    }
      _zcInfoView.rateLab.text=[NSString stringWithFormat:@"%.f％",rate];
     //进度条更新
     _fillProgress.width=_emptyProgress.width*rate;
     //剩余天数
-    NSString *productEndStr=[self changStrToDateStr:oneModel.product.productEndTime];
-    NSDate *productEndDate=[NSDate dateFromString:productEndStr];
-    int leftDays=[NSDate getDayNumbertoDay:nowDate beforDay:productEndDate]+1;
-    if (leftDays<0) {
-        leftDays=0;
+    if (oneModel.product.productEndTime) {
+        NSString *productEndStr=[self changStrToDateStr:oneModel.product.productEndTime];
+        NSDate *productEndDate=[NSDate dateFromString:productEndStr];
+        int leftDays=[NSDate getDayNumbertoDay:nowDate beforDay:productEndDate]+1;
+        if (leftDays<0) {
+            leftDays=0;
+        }
+        _zcInfoView.leftDayLab.text=[NSString stringWithFormat:@"%d",leftDays];
     }
-    _zcInfoView.leftDayLab.text=[NSString stringWithFormat:@"%d",leftDays];
-    
+    else
+    {
+        _zcInfoView.leftDayLab.text=@"0";
+    }
 //    if (oneModel.zcType==Mylist) {
 //        // 判断项目状态
 //        if ([oneModel.product.status integerValue]==1) {

@@ -30,7 +30,6 @@
 
 #import "FXBlurView.h"
 
-#import "ZCDetailModel.h"
 #import "ZCCommentModel.h"
 #import "ZCCommentViewController.h"
 #import "MBProgressHUD+MJ.h"
@@ -50,15 +49,15 @@
 
 @property (nonatomic, assign) ZCDetailContentType   contentType;
 
-@property (nonatomic, strong) ZCDetailModel         *detailModel;
-
 @property (nonatomic, strong) ZCCommentList         *commentList;
 
 @property (nonatomic, strong) NSMutableArray *commentArr;//评论信息
 
-@property (nonatomic, strong) NSMutableArray *detailDays;//行程安排数组
+@property (nonatomic, strong) NSMutableArray   *detailDays;//行程安排数组
 
 @property (nonatomic, strong) NSMutableArray *favoriteTravel;//猜你喜欢的旅游
+
+@property (nonatomic, assign) BOOL  paySupportMoney;//标记：跳转到支持／付款
 
 @property (nonatomic, assign) BOOL hasCosponsor;//联合发起人
 @property (nonatomic, assign) BOOL hasIntroGoal;//众筹目的
@@ -83,10 +82,12 @@
       NSFontAttributeName:[UIFont boldSystemFontOfSize:18]};
 
     self.oneModel.zcType=DetailType;
+    [self setBackItem];
     [self initData];
     [self configUI];
-    [self setBackItem];
-    [self getHttpData];
+    if (_zcType!=MyDraft) {
+       [self getHttpData];
+    }
 }
 
 #pragma mark --- 返回控制器
@@ -104,12 +105,12 @@
 #pragma mark --- 初始化数据
 -(void)initData
 {
-    _detailDays=[NSMutableArray array];
+    _detailDays=[NSMutableArray arrayWithArray:_schedule];
     _commentArr=[NSMutableArray array];
     _favoriteTravel=[NSMutableArray array];
     self.contentType= IntroType;//展示介绍部分
     _hasCosponsor   = NO;//添加联和发起人项
-    _hasIntroGoal   = NO;//添加众筹目的
+    _hasIntroGoal   =_zcType==MyDraft?YES:NO;//添加众筹目的
     _hasIntroGeneral= NO;//添加目的地介绍
     _hasIntroMovie  = NO;//添加动画攻略
     _hasHotComment  = NO;//添加热门评论
@@ -171,6 +172,7 @@
 -(void)configUI
 {
     _table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H-KTABBAR_HEIGHT) style:UITableViewStylePlain];
+    _table.height=_zcType==MyDraft?KSCREEN_H-KEDGE_DISTANCE:KSCREEN_H-KTABBAR_HEIGHT;
     _table.dataSource=self;
     _table.delegate=self;
     _table.showsVerticalScrollIndicator=NO;
@@ -184,7 +186,18 @@
     _topImgView=[[UIImageView alloc]initWithFrame:CGRectMake(0, -BGIMAGEHEIGHT,KSCREEN_W, BGIMAGEHEIGHT)];
     _topImgView.contentMode=UIViewContentModeScaleAspectFill;
     _topImgView.layer.masksToBounds=YES;
-    [_topImgView sd_setImageWithURL:[NSURL URLWithString:_oneModel.product.headImage ] placeholderImage:[UIImage imageNamed:@"abc"]];
+    if (_zcType==MyDraft) {
+        if (_oneModel.product.headImage.length) {
+             _topImgView.image=[UIImage imageWithContentsOfFile:_oneModel.product.headImage];
+        }
+        else
+        {
+            _topImgView.image=[UIImage imageNamed:@"abc"];
+        }
+    }
+    else{
+        [_topImgView sd_setImageWithURL:[NSURL URLWithString:_oneModel.product.headImage ] placeholderImage:[UIImage imageNamed:@"abc"]];
+    }
     [_table addSubview:_topImgView];
     
     //创建毛玻璃添加到顶部图片上
@@ -212,6 +225,8 @@
     _travelThemeLab.textColor=[UIColor whiteColor];
     [_blurView addSubview:_travelThemeLab];
     
+    if (_zcType!=MyDraft) {
+        
     //导航栏添加分享
     _shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _shareBtn.frame=CGRectMake(KSCREEN_W-40, 0, 40, 44);
@@ -227,20 +242,20 @@
         [_collectionBtn addTarget:self  action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self.navigationController.navigationBar addSubview:_collectionBtn];
     }
-    
-    //添加底部按钮
-    __weak typeof (&*self)weakSelf=self;
-    ZCDetailBottomView *bottomView=[[ZCDetailBottomView alloc]init];
-    bottomView.zcType=_zcType;
-    bottomView.commentBlock=^()
-    {
-        [weakSelf comment:YES];
-    };
-    bottomView.supportBlock=^()
-    {
-        [weakSelf support];
-    };
-    [self.view addSubview:bottomView];
+        //添加底部按钮
+        __weak typeof (&*self)weakSelf=self;
+        ZCDetailBottomView *bottomView=[[ZCDetailBottomView alloc]init];
+        bottomView.zcType=_zcType;
+        bottomView.commentBlock=^()
+        {
+            [weakSelf comment:YES];
+        };
+        bottomView.supportBlock=^()
+        {
+            [weakSelf support];
+        };
+        [self.view addSubview:bottomView];
+    }
 }
 
 
@@ -303,7 +318,7 @@
                 ZCDetailIntroFirstCell *introFirstCell=(ZCDetailIntroFirstCell *)[self customTableView:tableView cellWithIdentifier:introFirstCellId andCellClass:[ZCDetailIntroFirstCell class]];
                 introFirstCell.layer.cornerRadius=KCORNERRADIUS;
                 introFirstCell.cellModel=_detailModel.detailProductModel;
-                return introFirstCell;
+                return  introFirstCell;
             }
             else if (indexPath.row == 0+2*_hasIntroGoal && _hasIntroGeneral)
             {
@@ -497,7 +512,9 @@
                 }
                 
                 if (contentType==ReturnType) {
-                    [weakSelf getHotComment];
+                    if (_zcType!=MyDraft) {
+                        [weakSelf getHotComment];
+                    }
                 }
             }
         };
