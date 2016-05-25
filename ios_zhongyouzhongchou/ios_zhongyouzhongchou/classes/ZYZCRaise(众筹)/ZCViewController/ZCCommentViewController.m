@@ -31,6 +31,12 @@
 
 -(void)getHttpData
 {
+    if (!_needGetData) {
+        _commentArr=[NSMutableArray arrayWithArray:_comments];
+        [_table reloadData];
+        _needGetData=YES;
+        return;
+    }
     NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],@"productId":_productId};
     [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_COMMENT andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"%@",result);

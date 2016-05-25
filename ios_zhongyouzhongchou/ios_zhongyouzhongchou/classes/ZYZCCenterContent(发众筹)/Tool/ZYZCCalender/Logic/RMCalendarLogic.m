@@ -182,7 +182,6 @@
 {
     
     NSDateComponents *calendarToDay  = [self.today YMDComponents];//今天
-    NSDateComponents *calendarbefore = [self.before YMDComponents];//最后一天
     NSDateComponents *calendarSelect = [self.select YMDComponents];//默认选择的那一天
     model.isEnable = self.isEnable;
     
@@ -203,41 +202,54 @@
             model.style = CellDayTypePast;
             
             //之后的时间时间段
-        }else if (calendarbefore.year <= model.year &
-                  calendarbefore.month <= model.month &
-                  calendarbefore.day <= model.day) {
+        }else
+        {
+             model.style = CellDayTypeFutur;
             
-            model.style = CellDayTypeFutur;
-            
-            //已被安排的时间段
-        }else{
-            
-            //周末
-            if (model.week == 1 || model.week == 7){
-                model.style = CellDayTypeWeek;
-                
-                //工作日
-            }else{
-                model.style = CellDayTypeFutur;
-            }
-        }
-        //已占用时间
-        for (NSDate *obj in self.occupyDays) {
-            NSDateComponents *calendarObj= [obj YMDComponents];
-            if (calendarObj.year==model.year&
-                calendarObj.month==model.month&
-                calendarObj.day==model.day) {
-                if (calendarObj.year<=calendarToDay.year&
-                    calendarObj.month<=calendarToDay.month&
-                    calendarObj.day<calendarToDay.day) {
-                    model.style=CellDayTypePassOccupy;
-                }
-                else
-                {
+//            已占用时间
+            for (NSDate *obj in self.occupyDays) {
+                NSDateComponents *calendarObj= [obj YMDComponents];
+                if (calendarObj.year==model.year&&
+                    calendarObj.month==model.month&&
+                    calendarObj.day==model.day) {
                     model.style=CellDayTypeNoPassOccupy;
+                    if ([obj compare:[NSDate date]]==-1) {
+                        model.style=CellDayTypePassOccupy;
+                    }
                 }
             }
         }
+//            if (calendarbefore.year <= model.year &
+//                  calendarbefore.month <= model.month &
+//                  calendarbefore.day <= model.day) {
+        
+        
+//            //已被安排的时间段
+//        }else{
+//            
+//            //周末
+//            if (model.week == 1 || model.week == 7){
+//                model.style = CellDayTypeWeek;
+//                
+//                //工作日
+//            }else{
+//                model.style = CellDayTypeFutur;
+//            }
+//        }
+    
+//        //已占用时间
+//        for (NSDate *obj in self.occupyDays) {
+//            NSDateComponents *calendarObj= [obj YMDComponents];
+//            if (calendarObj.year==model.year&&
+//                calendarObj.month==model.month&&
+//                calendarObj.day==model.day) {
+//                model.style=CellDayTypeNoPassOccupy;
+////                if ([obj compare:[NSDate date]]==-1) {
+////                    model.style=CellDayTypePassOccupy;
+////                }
+//            }
+//            
+//        }
         
     //===================================
     //这里来判断节日

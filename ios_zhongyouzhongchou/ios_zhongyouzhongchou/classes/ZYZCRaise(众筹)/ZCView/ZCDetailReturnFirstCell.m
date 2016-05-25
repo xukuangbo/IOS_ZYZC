@@ -84,7 +84,9 @@
         //==============
         
         if ([reportModel.style intValue]==0) {
-            totalMoney=[reportModel.price floatValue];
+            if (reportModel.price) {
+                 totalMoney=[reportModel.price floatValue];
+            }
         }
         else if ([reportModel.style intValue]==1) {
             _supportOneYuanView.users=reportModel.users;
@@ -112,7 +114,10 @@
             _togetherView.limitNumber=[reportModel.sumPeople intValue];
             _togetherView.users=reportModel.users;
             CGFloat money=[reportModel.price floatValue]/100;
-            int  rate=(int)[reportModel.price floatValue]/totalMoney*100;
+            int  rate=0;
+            if (totalMoney) {
+                rate=(int)[reportModel.price floatValue]/totalMoney*100;
+            }
             _togetherView.titleLab.text=TOGETHERSUPPORT(rate,money);
              _togetherView.titleLab.width=[ZYZCTool calculateStrLengthByText:TOGETHERSUPPORT(rate,money) andFont:[UIFont systemFontOfSize:15] andMaxWidth:KSCREEN_W].width;
         }

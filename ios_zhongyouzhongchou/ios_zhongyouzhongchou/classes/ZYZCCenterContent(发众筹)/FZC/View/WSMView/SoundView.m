@@ -85,7 +85,7 @@
     _soundObj.soundPlayEnd=^()
     {
         //语音播放完成播放按钮切换成停止状态
-        [weakSelf.playerBtn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_pause"] forState:UIControlStateNormal];
+        [weakSelf.playerBtn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
         weakSelf.hasPlaySound=NO;
     };
     
@@ -111,7 +111,10 @@
 -(void)recordSound
 {
     //创建语音文件名
-    self.soundFileName=[NSString stringWithFormat:@"%@/%@/%@.caf",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP,[ZYZCTool getLocalTime]];
+    NSString *fileName=[NSString stringWithFormat:@"%@.caf",self.contentBelong];
+    self.soundFileName=KMY_ZC_FILE_PATH(fileName);
+    //删除已存在语音
+    [ZYZCTool removeExistfile:KMY_ZC_FILE_PATH(fileName)];
     //进度条加载
     if (!_timer) {
         _timer=[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(changeProgressValue) userInfo:nil repeats:YES];
@@ -156,12 +159,12 @@
 {
     if (!_hasPlaySound) {
         [_soundObj playSound];
-        [btn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_pause"] forState:UIControlStateNormal];
     }
     else
     {
         [_soundObj stopSound];
-        [btn setBackgroundImage:[UIImage imageNamed:@"btn_yylr_pause"] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:@"ico_sto"] forState:UIControlStateNormal];
     }
     _hasPlaySound=!_hasPlaySound;
 }

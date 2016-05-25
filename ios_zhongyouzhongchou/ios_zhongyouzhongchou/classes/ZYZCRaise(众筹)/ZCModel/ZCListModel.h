@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "UserModel.h"
 
-//所有众筹列表／我的众筹列表／众筹详情
+//所有众筹列表／我的众筹列表／众筹详情中个人信息栏/我的草稿
 typedef NS_ENUM(NSInteger, ZC_TYPE)
 {
     AllList,
     Mylist,
-    DetailType
+    DetailType,
+    MyDraft
 };
 
 //我的众筹列表中区分我发布，我参与，我推荐

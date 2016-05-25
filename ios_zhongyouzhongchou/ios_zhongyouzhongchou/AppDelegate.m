@@ -12,6 +12,7 @@
 #import <RongIMKit/RongIMKit.h>
 #import "WXApi.h"
 #import "WXApiManager.h"
+#import "ZYZCDataBase.h"
 @interface AppDelegate ()
 
 @end
@@ -30,21 +31,14 @@
     [self setStatusBarStyle];
     //设置根控制器
     [self getRootViewController];
-    //在documents中创建资源文件夹
+    //在documents中创建文件存储发众筹的数据
     [self createResoureFilefolderInDocuments];
-    //清除临时文件夹内容
-    [self cleanTmpFile];
+    //清除发众筹时没有保存下来的文件
+    [self cleanMyDraftFile];
     //更改appBadge
     [self changeAppBadge];
     //首次进入app获取地名库
 //    [self saveLocalDesct];
-    
-    NSFileManager *fileManager=[NSFileManager defaultManager];
-    NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-    NSString *tmpFile=KMY_ZHONGCHOU_DOCUMENT_PATH(tmpFileName);
-    NSArray *tmpFileArr=[fileManager subpathsAtPath:tmpFile];
-    NSLog(@"%@",tmpFileArr);
-    NSLog(@"%@",KMY_ZHONGCHOU_DOCUMENT_PATH(@""));
     /**
      初始化微信
      */
@@ -52,9 +46,17 @@
     [self initRCloud];
     [self getAppVersion];
     [self deleteFailDataInOss];
-//    [ZYZCTool saveUserIdById:@"oulbuvtpzxiOe6t9hVBh2mNRgiaI"];
-//    [self getFileToTmp];
+    [ZYZCTool saveUserIdById:@"oulbuvtpzxiOe6t9hVBh2mNRgiaI"];
     return YES;
+}
+
+#pragma mark 视频保存完毕的回调
+- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInf{
+    if (error) {
+        NSLog(@"保存视频过程中发生错误，错误信息:%@",error.localizedDescription);
+    }else{
+        NSLog(@"视频保存成功.");
+    }
 }
 
 -(void)initRCloud
@@ -85,6 +87,9 @@
     NSString *myVersion=[user objectForKey:KAPP_VERSION];
     //下载或更新后第一次进入
     if (!myVersion||![myVersion isEqualToString:version]) {
+        
+        
+        
         [user setObject:version forKey:KAPP_VERSION];
         [user synchronize];
     }
@@ -133,43 +138,23 @@
 {
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *createPath = [NSString stringWithFormat:@"%@/%@", pathDocuments,KDOCUMENT_FILE];
+    NSString *zcDraftPath = [NSString stringWithFormat:@"%@/%@", pathDocuments,KMY_ZHONGCHOU_FILE];
     // 判断文件夹是否存在，如果不存在，则创建
-    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath]) {
-        BOOL fileCreate=[fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
-        if (fileCreate==YES) {
-            
-            NSString *createTmpPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-            if (![[NSFileManager defaultManager] fileExistsAtPath:createTmpPath]) {
-                [fileManager createDirectoryAtPath:createTmpPath withIntermediateDirectories:YES attributes:nil error:nil];
-            }
-            
-            NSString *createDocPath = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_DOC];
-            if (![[NSFileManager defaultManager] fileExistsAtPath:createDocPath]) {
-                [fileManager createDirectoryAtPath:createDocPath withIntermediateDirectories:YES attributes:nil error:nil];
-            }
+    if (![[NSFileManager defaultManager] fileExistsAtPath:zcDraftPath]) {
+        BOOL fileCreate=[fileManager createDirectoryAtPath:zcDraftPath withIntermediateDirectories:YES attributes:nil error:nil];
+        //如果创建失败，重新创建
+        if (!fileCreate) {
+            [self createResoureFilefolderInDocuments];
         }
     }
 }
 
-#pragma mark --- 删除临时文件
-
-
--(void)cleanTmpFile
+#pragma mark --- 删除发众筹时没保存下来的文件
+-(void)cleanMyDraftFile
 {
-    NSString *fileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-    NSString *tmpDir=KMY_ZHONGCHOU_DOCUMENT_PATH(fileName);
-    
-    NSFileManager *manager=[NSFileManager defaultManager];
-    
-    NSArray *fileArr=[manager subpathsAtPath:tmpDir];
-    
-    for (NSString *fileName in fileArr) {
-        NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
-        dispatch_async(dispatch_get_global_queue(0, 0), ^
-                       {
-                           [manager removeItemAtPath:filePath error:nil];
-                       });
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    if (![user objectForKey:KMY_ZC_DRAFT_SAVE]) {
+        [ZYZCTool cleanZCDraftFile];
     }
 }
 
@@ -186,7 +171,7 @@
                  [user setObject:nil forKey:KFAIL_UPLOAD_OSS];
                  [user synchronize];
              }
-                                andFailUpload:^
+              andFailUpload:^
              {
              }];
         });
@@ -233,9 +218,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    //删除临时文件
-    [self cleanTmpFile];
-    
 }
 
 @end

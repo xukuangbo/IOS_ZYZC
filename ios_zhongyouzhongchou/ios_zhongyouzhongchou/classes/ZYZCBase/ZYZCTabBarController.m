@@ -67,9 +67,9 @@
 #pragma mark --- 创建半框
 -(void)clickBtn
 {
-    CGFloat origin_y=KSCREEN_H-302.5;
+    CGFloat viewHeight=220;
     //创建毛玻璃
-    blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, origin_y, KSCREEN_W, 302.5)];
+    blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, KSCREEN_H-viewHeight, KSCREEN_W, viewHeight)];
     [blurView setDynamic:YES];
 //    blurView.blurRadius=10;
     [self.view addSubview:blurView];
@@ -79,7 +79,7 @@
     blackView.alpha=0.35;
     [blurView addSubview:blackView];
     //毛玻璃以上添加黑色背景
-    bgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, origin_y)];
+    bgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H-viewHeight)];
     bgView.backgroundColor=[UIColor blackColor];
     bgView.alpha=0.3;
     [self.view addSubview:bgView];
@@ -87,7 +87,7 @@
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(delete)];
     [bgView addGestureRecognizer:tap];
     //将内容栏覆盖到毛玻璃上
-    contentView=[[ZYZCCenterContentView alloc]initWithFrame:CGRectMake(0, origin_y, KSCREEN_W, 302.5)];
+    contentView=[[ZYZCCenterContentView alloc]initWithFrame:CGRectMake(0, KSCREEN_H-viewHeight, KSCREEN_W, viewHeight)];
     __weak typeof (&*self)weakSelf=self;
     contentView.deleteBlock=^()
     {
@@ -110,7 +110,6 @@
     [blurView removeFromSuperview];
     [bgView removeFromSuperview];
     [contentView removeFromSuperview];
-    
 }
 
 - (void)didReceiveMemoryWarning {

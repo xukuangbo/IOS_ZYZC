@@ -88,7 +88,7 @@
 }
 
 
-#pragma mark --- 记录FZCContentEntryView的来源模块：（筹旅费，行程，回报）
+#pragma mark --- 记录FZCContentEntryView来源于行程
 -(void)setContentBelong:(NSString *)contentBelong
 {
     _contentBelong=contentBelong;
@@ -144,7 +144,7 @@
         soundView.soundProgress=0;
     }
     if (oneDetailModel.movieImg.length) {
-        movieView.movieImg.image=[UIImage imageWithContentsOfFile:KMY_ZHONGCHOU_DOCUMENT_PATH(oneDetailModel.movieImg)];
+        movieView.movieImg.image=[UIImage imageWithContentsOfFile:oneDetailModel.movieImg];
         movieView.movieImgFileName=oneDetailModel.movieImg;
         movieView.movieFileName=oneDetailModel.movieUrl;
         movieView.turnImageView.hidden=NO;
@@ -161,10 +161,10 @@
     if (sceneContentView.textView.text.length) {
         _oneDetailModel.siteDes=sceneContentView.textView.text;
     }
-    //保存景点图库标示符
-    if (sceneContentView.siteTagArr.count) {
-        _oneDetailModel.sites=sceneContentView.siteTagArr;
-    }
+//    //保存景点图库标示符
+//    if (sceneContentView.siteTagArr.count) {
+//        _oneDetailModel.sites=sceneContentView.siteTagArr;
+//    }
     
     AddSceneView *trafficContentView=[_addView viewWithTag:TrafficContentType];
     //保存交通描述文字
@@ -195,7 +195,6 @@
     _oneDetailModel.movieUrl=movieView.movieFileName;
     //保存当日旅行视屏第一帧
     _oneDetailModel.movieImg=movieView.movieImgFileName;
-    
 }
 
 @end

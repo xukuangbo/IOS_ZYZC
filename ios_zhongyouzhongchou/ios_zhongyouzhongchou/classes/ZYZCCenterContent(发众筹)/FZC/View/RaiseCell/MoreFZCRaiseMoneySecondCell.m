@@ -25,9 +25,6 @@
         bgImageView.image = KPULLIMG(@"tab_bg_boss0", 10, 0, 10, 0);
         //创建内容
         [self createContentView:bgImageView];
-        
-        
-        
     }
     return self;
 }
@@ -75,43 +72,12 @@
     
     MovieView *movieView=(MovieView *)[contentEntryView viewWithTag:MovieViewType];
     if (manager.raiseMoney_movieImg.length) {
-        movieView.movieImg.image=[UIImage imageWithContentsOfFile:KMY_ZHONGCHOU_DOCUMENT_PATH(manager.raiseMoney_movieImg)];
+        movieView.movieImg.image=[UIImage imageWithContentsOfFile:manager.raiseMoney_movieImg];
         movieView.movieImgFileName=manager.raiseMoney_movieImg;
         movieView.movieFileName=manager.raiseMoney_movieUrl;
         movieView.turnImageView.hidden=NO;
     }
 }
-//-(void)setContentBelong:(NSString *)contentBelong
-//{
-//    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-//
-//    if([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG])
-//    {
-//        if (manager.raiseMoney_wordDes.length) {
-//            _textView.text=manager.raiseMoney_wordDes;
-//            _placeHolderLab.hidden=YES;
-//        }
-//    }
-//    //回报1文字描述
-//    else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
-//    {
-//        if (manager.return_wordDes.length) {
-//            _textView.text=manager.return_wordDes;
-//            _placeHolderLab.hidden=YES;
-//        }
-//    }
-//    //回报2文字描述
-//    else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
-//    {
-//        if (manager.return_wordDes01.length) {
-//            _textView.text=manager.return_wordDes01;
-//            _placeHolderLab.hidden=YES;
-//        }
-//
-//    }
-//
-//}
-
 
 /**
  *  返回被选中的view

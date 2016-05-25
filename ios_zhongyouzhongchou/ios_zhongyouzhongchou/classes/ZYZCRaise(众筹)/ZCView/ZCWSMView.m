@@ -58,7 +58,14 @@
     
     if (videoImgUrl.length) {
         hasMovie=YES;
-        [_movieView sd_setImageWithURL:[NSURL URLWithString:videoImgUrl]];
+        //区分是不是本地数据
+        NSRange range=[videoImgUrl rangeOfString:KMY_ZHONGCHOU_FILE];
+        if (range.length) {
+            _movieView.image=[UIImage imageWithContentsOfFile:videoImgUrl];
+        }
+        else{
+            [_movieView sd_setImageWithURL:[NSURL URLWithString:videoImgUrl]];
+        }
         _movieView.playUrl=playUrl;
     }
     else

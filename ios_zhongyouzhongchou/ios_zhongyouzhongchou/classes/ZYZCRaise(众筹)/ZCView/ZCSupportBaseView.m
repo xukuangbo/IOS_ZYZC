@@ -59,6 +59,7 @@
     _supportBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _supportBtn.frame=CGRectMake(self.width-40, KEDGE_DISTANCE, 40, 40);
     [_supportBtn setImage:[UIImage imageNamed:@"Butttn_support"] forState:UIControlStateNormal];
+    [_supportBtn addTarget:self action:@selector(supportMoney) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_supportBtn];
     
     //文字部分
@@ -73,7 +74,6 @@
         //添加更多按钮
         _moreTextBtn=[UIButton buttonWithType:UIButtonTypeCustom];
         _moreTextBtn.frame=CGRectMake(self.width-30, 105, 15, 10);
-//        [_moreTextBtn setImage:[UIImage imageNamed:@"btn_xxd"] forState:UIControlStateNormal];
         [_moreTextBtn setTitle:@"..." forState:UIControlStateNormal];
         [_moreTextBtn setTitleColor:[UIColor ZYZC_TextBlackColor] forState:UIControlStateNormal];
         _moreTextBtn.imageEdgeInsets=UIEdgeInsetsMake(0, 26, 0, 0);
@@ -182,8 +182,6 @@
             UserModel *user=users[i];
             ZCDetailCustomButton *iconBtn=[[ZCDetailCustomButton alloc]initWithFrame:CGRectMake((btn_width+btn_edg)*i, 0, btn_width, btn_width)];
             [iconBtn sd_setImageWithURL:[NSURL URLWithString:user.faceImg] forState:UIControlStateNormal];
-           iconBtn.layer.cornerRadius=4;
-            iconBtn.layer.masksToBounds=YES;
             [_supportPeople addSubview:iconBtn];
         }
     }
@@ -198,6 +196,12 @@
 {
     ZCTotalPeopleView *totalView=[[ZCTotalPeopleView alloc]init];
     totalView.users=self.users;
+}
+
+#pragma mark --- 支持金额
+-(void)supportMoney
+{
+    [_supportBtn setImage:[UIImage imageNamed:@"Butttn_support_pre"] forState:UIControlStateNormal];
 }
 
 #pragma mark --- 改变文字样式

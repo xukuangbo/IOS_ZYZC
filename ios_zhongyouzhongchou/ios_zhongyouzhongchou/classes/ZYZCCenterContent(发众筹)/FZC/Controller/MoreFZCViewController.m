@@ -19,6 +19,11 @@
 #import "ZYZCOSSManager.h"
 #import "NecessoryAlertManager.h"
 
+#import "ZCListModel.h"
+#import "NSDate+RMCalendarLogic.h"
+#import "ZCPersonInfoController.h"
+#import "ZCDetailModel.h"
+
 #define kMoreFZCToolBar 20
 #define kNaviBar 64
 
@@ -27,19 +32,31 @@
 #define ALERT_PUBLISH_TAG 3
 
 @interface MoreFZCViewController ()<MoreFZCToolBarDelegate,UIAlertViewDelegate>
-@property (nonatomic, copy  ) NSString *oneResouceFile;
-@property (nonatomic, copy  ) NSString *archiveDataPath;
-@property (nonatomic, assign) BOOL isFirstTimeToSave;
+//@property (nonatomic, copy  ) NSString *oneResouceFile;
+//@property (nonatomic, copy  ) NSString *archiveDataPath;
+//@property (nonatomic, assign) BOOL isFirstTimeToSave;
 @property (nonatomic, assign) BOOL needPopVC;
-@property (nonatomic, strong) NSTimer *timer;
+                              //记录发布的数据在oss的位置
 @property (nonatomic, copy  ) NSString *myZhouChouMarkName;
+                              //记录发布的所有文件的状态
 @property (nonatomic, strong) NSMutableArray *uploadDataState;
+                              //要上传到oss上的文件个数
 @property (nonatomic, assign) NSInteger uploadDataNumber;
+                              //记录发布成功的状态
 @property (nonatomic, assign) BOOL hasPulish;
+                              //记录上传数据成功的状态
 @property (nonatomic, assign) BOOL hasUpload;
+
+                              //发布数据的参数
 @property (nonatomic, strong) NSDictionary *dataDic;
-@property (nonatomic, assign) BOOL getFirstPublish;
+
+@property (nonatomic, strong) ZCOneModel   *oneModel;
+
+@property (nonatomic, strong) ZCDetailProductModel  *detailProductModel;
+
 @property (nonatomic, strong) MBProgressHUD *mbProgress;
+
+
 @end
 
 @implementation MoreFZCViewController
@@ -53,7 +70,6 @@
     [user synchronize];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     _uploadDataState=[NSMutableArray array];
-//    [self getHttpData];
     [self setBackItem];
     [self createToolBar];
     [self createClearMapView];
@@ -107,7 +123,6 @@
     self.toolBar = toolBar;
 }
 
-
 /**
  *  返回被选中的view
  */
@@ -115,7 +130,6 @@
 {
     
     for (UIView *subView in self.clearMapView.subviews) {
-//        NSLog(@"%ld-----%ld",subView.tag , buttonTag);
             if (subView.tag == buttonTag) {
                 return subView;
             }
@@ -184,18 +198,17 @@
  */
 -(void)pressBack
 {
-    //  退出时，如果有填写发众筹内容，提示保存
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *myDraftState=[user objectForKey:KMY_ZC_DRAFT_SAVE];
+    //如果没有保存，则清空
+    if (!myDraftState) {
+        [ZYZCTool cleanZCDraftFile];
+    }
+    // 释放单例中存储的内容
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    NSDictionary *managerDict = manager.mj_keyValues;
-    if (managerDict.count>6||(managerDict.count==6&&manager.goal_goals.count>1)||(managerDict.count==6&&manager.travelDetailDays.count>0)) {
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否保存数据" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
-        alertView.tag=ALERT_BACK_TAG;
-        [alertView show];
-    }
-    else
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    [manager initAllProperties];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark --- alertView代理方法
@@ -205,21 +218,17 @@
         //保存数据
         if (buttonIndex ==1)
         {
-            [self cleanTmpFile];
             _needPopVC=YES;
-//            [self saveData];
         }
         //不保存
         else
         {
             //删除Documents中临时存储文件
-            [self cleanTmpFile];
+//            [self cleanTmpFile];
             
         }
         [self.navigationController popViewControllerAnimated:YES];
-        // 释放单例中存储的内容
-        MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-        [manager initAllProperties];
+       
     }
     //数据上传到oss失败，提示重新上传
     else if (alertView.tag ==ALERT_UPLOAD_TAG)
@@ -238,30 +247,13 @@
     }
 }
 
-#pragma mark --- 删除Documents中临时存储文件
--(void)cleanTmpFile
-{
-    NSString *fileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-    NSString *tmpDir=KMY_ZHONGCHOU_DOCUMENT_PATH(fileName);
-    
-    NSFileManager *manager=[NSFileManager defaultManager];
-    
-    NSArray *fileArr=[manager subpathsAtPath:tmpDir];
-    
-    for (NSString *fileName in fileArr) {
-        NSString *filePath = [tmpDir stringByAppendingPathComponent:fileName];
-        dispatch_async(dispatch_get_global_queue(0, 0), ^
-        {
-            [manager removeItemAtPath:filePath error:nil];
-        });
-    }
-}
 
 #pragma mark --- 点击底部按钮触发事件
 -(void)clickBtn:(UIButton *)sender
 {
     switch (sender.tag) {
         case SkimType:
+            [self skimZhongchou];
             break;
         case NextType:
             [self nextOneOrPublish:self.toolBar.preClickBtn];
@@ -272,6 +264,121 @@
 //            [self saveData];
             break;
     }
+}
+
+#pragma mark --- 浏览我的众筹
+-(void)skimZhongchou
+{
+    [self saveModelInManager];
+    
+    MoreFZCDataManager *dataManager= [MoreFZCDataManager sharedMoreFZCDataManager];
+    
+    _oneModel=[[ZCOneModel alloc]init];
+    _oneModel.zcType=DetailType;
+    ZCProductModel *productModel=[[ZCProductModel alloc]init];
+    productModel.productPrice= [NSNumber numberWithFloat:[dataManager.raiseMoney_totalMoney floatValue]*100.0] ;
+    productModel.travelstartTime=dataManager.goal_startDate;
+    productModel.productEndTime=dataManager.goal_backDate;
+    productModel.productName=dataManager.goal_travelTheme;
+    if (dataManager.goal_goals.count>=2) {
+        NSMutableArray *arr=[NSMutableArray arrayWithArray:dataManager.goal_goals];
+        [arr removeObjectAtIndex:0];
+        productModel.productDest=[self turnJson:arr];
+    }
+    NSDate *date=[[NSDate dateFromString:dataManager.goal_startDate] dayInTheFollowingDay:-15];
+    productModel.productEndTime=[NSDate stringFromDate:date];
+    productModel.headImage=dataManager.goal_travelThemeImgUrl;
+    _oneModel.product=productModel;
+    
+    
+    _detailProductModel=[[ZCDetailProductModel alloc]init];
+    _detailProductModel.cover=dataManager.goal_travelThemeImgUrl;
+    _detailProductModel.title=dataManager.goal_travelTheme;
+    _detailProductModel.desc=dataManager.raiseMoney_wordDes;
+    _detailProductModel.productVoice=dataManager.raiseMoney_voiceUrl;
+    _detailProductModel.productVideo=dataManager.raiseMoney_movieUrl;
+    _detailProductModel.productVideoImg=dataManager.raiseMoney_movieImg;
+    
+    
+    NSMutableArray *reportArr=[NSMutableArray array];
+    ReportModel *reportModel01=[[ReportModel alloc]init];
+    reportModel01.people = 0;
+    reportModel01.style = @1;
+    reportModel01.sumPeople = 0;
+    reportModel01.sumPrice = 0;
+    [reportArr addObject:reportModel01];
+    
+    ReportModel *reportModel02=[[ReportModel alloc]init];
+    reportModel02.people = 0;
+    reportModel02.style = @2;
+    reportModel02.sumPeople = 0;
+    reportModel02.sumPrice = 0;
+    [reportArr addObject:reportModel02];
+    
+    if (dataManager.return_returnPeopleStatus) {
+        ReportModel *reportModel03=[[ReportModel alloc]init];
+        reportModel03.desc = dataManager.return_wordDes;
+        reportModel03.spellVideo = dataManager.return_movieUrl;
+        reportModel03.spellVoice = dataManager.return_voiceUrl;
+        reportModel03.spellVideoImg=dataManager.return_movieImg;
+        reportModel03.people =(NSNumber *)dataManager.return_returnPeopleNumber;
+        reportModel03.price =[NSNumber numberWithFloat:[dataManager.return_returnPeopleMoney floatValue]*100.0] ;
+        reportModel03.style = @3;
+        reportModel03.sumPeople = 0;
+        reportModel03.sumPrice =0;
+        [reportArr addObject: reportModel03];
+    }
+    
+    ReportModel *reportModel04=[[ReportModel alloc]init];
+    reportModel04.people = (NSNumber *)dataManager.goal_numberPeople;
+    reportModel04.style = @4;
+    reportModel04.sumPeople = (NSNumber *)dataManager.goal_numberPeople;
+    reportModel04.sumPrice = 0;
+    reportModel04.price=(NSNumber *)dataManager.return_togetherRateMoney;
+    [reportArr addObject:reportModel04];
+    
+    if (dataManager.return_returnPeopleMoney01) {
+        ReportModel *reportModel05=[[ReportModel alloc]init];
+        reportModel05.desc = dataManager.return_wordDes;
+        reportModel05.spellVideo = dataManager.return_movieUrl01;
+        reportModel05.spellVoice = dataManager.return_voiceUrl01;
+        reportModel05.spellVideoImg=dataManager.return_movieImg01;
+        reportModel05.people =(NSNumber *)dataManager.return_returnPeopleNumber01;
+        reportModel05.price =[NSNumber numberWithFloat:[dataManager.return_returnPeopleMoney01 floatValue]*100.0] ;
+        reportModel05.style = @5;
+        reportModel05.sumPeople = 0;
+        reportModel05.sumPrice =0;
+        [reportArr addObject:reportModel05];
+    }
+    
+    _detailProductModel.report=reportArr;
+    
+    _detailProductModel.schedule=dataManager.travelDetailDays;
+    
+    [ZYZCHTTPTool getHttpDataByURL:[NSString stringWithFormat:@"%@openid=%@",GETUSERINFO,[ZYZCTool getUserId]] withSuccessGetBlock:^(id result, BOOL isSuccess)
+    {
+        UserModel *user=[[UserModel alloc]mj_setKeyValues:result[@"data"][@"user"]];
+        _oneModel.user=user;
+        _detailProductModel.user=user;
+        [self zcDraftDetail];
+    }
+    andFailBlock:^(id failResult)
+    {
+        
+    }];
+}
+
+-(void)zcDraftDetail
+{
+    ZCDetailModel *detailModel=[[ZCDetailModel alloc]init];
+    detailModel.detailProductModel=_detailProductModel;
+    
+    ZCPersonInfoController *personInfoVC=[[ZCPersonInfoController alloc]init];
+    personInfoVC.oneModel=_oneModel;
+    personInfoVC.detailModel=detailModel;
+    personInfoVC.schedule=_detailProductModel.schedule;
+    personInfoVC.zcType=MyDraft;
+    [self.navigationController pushViewController:personInfoVC animated:YES];
 }
 
 #pragma mark --- 下一步或发布
@@ -326,7 +433,6 @@
 //上传数据到oss
 -(void)uploadDataToOSS
 {
-    
     if (_hasUpload) {
         [self publishMyZhongchou];
         return;
@@ -385,8 +491,9 @@
     [user synchronize];
     
     NSFileManager *fileManager=[NSFileManager defaultManager];
-    NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-    NSString *tmpFile=KMY_ZHONGCHOU_DOCUMENT_PATH(tmpFileName);
+    
+    NSString *tmpFile=[NSString stringWithFormat:@"%@/%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0],KMY_ZHONGCHOU_FILE];
+    
     NSArray *tmpFileArr=[fileManager subpathsAtPath:tmpFile];
     _uploadDataNumber=tmpFileArr.count;
     dispatch_async(dispatch_get_global_queue(0, 0), ^
@@ -413,27 +520,27 @@
            }
            //回到主线程
            dispatch_async(dispatch_get_main_queue(), ^
-                          {
-                              _hasUpload=YES;
-                              for (NSNumber *obj in _uploadDataState) {
-                                  if (![obj boolValue]) {
-                                      _hasUpload=NO;
-                                      break;
-                                  }
-                              }
-                              //数据上传成功，发布众筹
-                              if (_hasUpload) {
-                                  [self publishMyZhongchou];
-                              }
-                              //上传失败，提示重新上传
-                              else
-                              {
-                                  [MBProgressHUD hideHUD];
-                                  UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-                                  alert.tag=ALERT_UPLOAD_TAG;
-                                  [alert show];
-                              }
-                          });
+          {
+              _hasUpload=YES;
+              for (NSNumber *obj in _uploadDataState) {
+                  if (![obj boolValue]) {
+                      _hasUpload=NO;
+                      break;
+                  }
+              }
+              //数据上传成功，发布众筹
+              if (_hasUpload) {
+                  [self publishMyZhongchou];
+              }
+              //上传失败，提示重新上传
+              else
+              {
+                  [MBProgressHUD hideHUD];
+                  UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                  alert.tag=ALERT_UPLOAD_TAG;
+                  [alert show];
+              }
+          });
        });
 
 }
@@ -441,10 +548,6 @@
 #pragma mark --- 发布我的众筹
 -(void)publishMyZhongchou
 {
-    if (_getFirstPublish) {
-        [self publishHttpData];
-    }
-    
     //将数据转化成上传数据对应的类型
     FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
     [replaceKeys replaceDataKeysBySubFileName:_myZhouChouMarkName];
@@ -455,8 +558,6 @@
     [newParameters addEntriesFromDictionary:@{@"productCountryId":@1}];
     _dataDic=newParameters;
      NSLog(@"_dataDic:%@",_dataDic);
-    _getFirstPublish=YES;
-    
     [self publishHttpData];
 }
 
@@ -466,7 +567,7 @@
     [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:_dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
             //发送成功，删除本地数据
-            [self cleanTmpFile];
+//            [self cleanTmpFile];
             [MBProgressHUD hideHUD];
             [MBProgressHUD showSuccess:@"发布成功!"];
              //将标记的失败文件置空，取消标记
@@ -477,7 +578,7 @@
             [self.navigationController popViewControllerAnimated:YES];
             MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
             [manager initAllProperties];
-            [self cleanTmpFile];
+//            [self cleanTmpFile];
             _hasPulish=YES;
         }
         else
@@ -496,6 +597,25 @@
     }];
 }
 
+#pragma mark --- 保存行程安排model到manager中
+-(void)saveModelInManager
+{
+//    保存每日行程安排到单例中
+    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    [manager.travelDetailDays removeAllObjects];
+    MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
+    for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
+        TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
+        [travelSecondCell saveTravelOneDayDetailData];
+        NSDictionary *modelDict = travelSecondCell.oneDetailModel.mj_keyValues;
+        if (modelDict.count>2) {
+            [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
+        }
+    }
+}
+
+
+/*
 #pragma mark --- 保存数据
 -(void)saveData
 {
@@ -539,22 +659,6 @@
     });
 }
 
-#pragma mark --- 保存行程安排model到manager中
--(void)saveModelInManager
-{
-    //保存每日行程安排到单例中
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    [manager.travelDetailDays removeAllObjects];
-    MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
-    for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
-        TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
-        [travelSecondCell saveTravelOneDayDetailData];
-        NSDictionary *modelDict = travelSecondCell.oneDetailModel.mj_keyValues;
-        if (modelDict.count>2) {
-            [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
-        }
-    }
-}
 
 #pragma mark --- 保存数据到plist文档中
 -(void)saveDataInMyZhongChouPlist
@@ -575,50 +679,7 @@
     [mutArr writeToFile:plistPath atomically:YES];
 }
 
-#pragma mark --- 将临时文件移到documents中
--(void)copyTmpFileToDoc
-{
-    NSFileManager*fileManager =[NSFileManager defaultManager];
-    
-    NSString *tmpFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-    NSString *tmpFile=KMY_ZHONGCHOU_DOCUMENT_PATH(tmpFileName);
-    
-    NSString *docFileName=[NSString stringWithFormat:@"%@/%@",KDOCUMENT_FILE,KMY_ZHONGCHOU_DOC];
-    NSString *docFile=KMY_ZHONGCHOU_DOCUMENT_PATH(docFileName);
-    
-    //清空doc中文件
-    NSArray *docFileArr=[fileManager subpathsAtPath:docFile];
-    for (NSString *fileName in docFileArr) {
-        NSString *filePath = [docFile stringByAppendingPathComponent:fileName];
-        [fileManager removeItemAtPath:filePath error:nil];
-    }
-    //将tmpFile中的文件移动到doc中
-    NSArray *tmpFileArr=[fileManager subpathsAtPath:tmpFile];
-    for (NSString *fileName in tmpFileArr) {
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            NSError *error;
-            NSString * tmpFilePath = [tmpFile stringByAppendingPathComponent:fileName];
-            NSString * docFilePath = [docFile stringByAppendingPathComponent:fileName];
-            [fileManager copyItemAtPath:tmpFilePath toPath:docFilePath error:&error];
-        });
-    }
-    
-//    if ([fileManager fileExistsAtPath:tmpFilePath]) {
-//        NSRange fileNameRange=[tmpFilePath rangeOfString:@"tmp/"];
-//        NSString *fileName= [tmpFilePath substringFromIndex:fileNameRange.location+fileNameRange.length];
-//        filePath=[NSString stringWithFormat:@"%@/%@",_oneResouceFile,fileName];
-//    if([fileManager fileExistsAtPath:filePath]==NO){
-//            NSError*error;
-//            BOOL hasCopy=[fileManager copyItemAtPath:tmpFilePath toPath:filePath error:&error];
-//           [_picesSaveState addObject:[NSNumber numberWithBool:hasCopy]];
-//        }
-//    }
-//    return filePath;
-}
-
-
-//    NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:dataDict];
-//    [mutDic addEntriesFromDictionary:@{@"openid": @"o6_bmjrPTlm6_2sgVt7hMZOPfL2M"}];
+*/
 
 -(void)getHttpData
 {
@@ -713,16 +774,8 @@
      }];
 }
 
--(void)getHttp
-{
-    [ZYZCHTTPTool getHttpDataByURL:@"http://121.40.225.119:8080/user/getCountryInfo.action?" withSuccessGetBlock:^(id result, BOOL isSuccess) {
-        NSLog(@"%@",result);
-    } andFailBlock:^(id failResult) {
-        
-    }];
-}
 
--(NSString *)turnJson:(NSDictionary *)dic
+-(NSString *)turnJson:(id )dic
 {
 //    转换成json
         NSData *data = [NSJSONSerialization dataWithJSONObject :dic options : NSJSONWritingPrettyPrinted error:NULL];
@@ -730,12 +783,6 @@
         NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
     
     return jsonStr;
-}
-
-#pragma mark --- 定时保存数据
--(void)timeRunToSaveData
-{
-    
 }
 
 @end

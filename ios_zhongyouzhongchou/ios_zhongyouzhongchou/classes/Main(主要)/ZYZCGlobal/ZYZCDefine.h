@@ -9,14 +9,12 @@
 #ifndef ZYZCDefine_h
 #define ZYZCDefine_h
 
-//在documents中创建 Resoures文件，
-//在Resoures文件下创建两个文件：一个是保存发众筹临时文件，一个是保存发众筹存储的草稿文件
-#define KDOCUMENT_FILE     @"Resoures"
-#define KMY_ZHONGCHOU_TMP  @"zhouchou_tmp"
-#define KMY_ZHONGCHOU_DOC  @"zhouchou_doc"
+//在documents中创建保存发众筹资源的文件
+#define KMY_ZHONGCHOU_FILE  @"zcDraft"
 
-#define KMY_ZHONGCHOU_DOCUMENT_PATH(fileName)  [NSString stringWithFormat:@"%@/%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0],fileName]
+//#define KMY_ZHONGCHOU_DOCUMENT_PATH(fileName) [NSString stringWithFormat:@"%@/%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0],fileName]
 
+#define KMY_ZC_FILE_PATH(fileName) [NSString stringWithFormat:@"%@/zcDraft/%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0],fileName]
 
 #define KHTTP_FILE_HEAD @"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com"
 
@@ -56,7 +54,7 @@
 #define KFZC_COURSE_TYPE            60//tag取值范围60～63
 #define KFZC_CONTENTCOURSE_TYPE     70//tag取值范围70～72
 #define KFZC_MOVIERECORDSAVE_TAG    80
-#define KZCDETAIL_ATTITUDETYPE      90//tag取值范围90～92
+#define KZC_DETAIL_BOTTOM_TYPE      90//tag取值范围90～92
 #define KMineHeadViewChangeType     100//tag取值范围100～101
 #define KZCDETAIL_CONTENTTYPE       110//tag取值范围110～102
 #define KFZC_INPUTCONTENT_TYPE      120//tag取值范围120～122
@@ -66,12 +64,14 @@
 #define KWebImage(urlImage) [[NSString stringWithFormat:@"http://zhongyou-hz.oss-cn-hangzhou.aliyuncs.com/%@",[urlImage stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] //网络访问阿里云的图片
 
 //NSUserDefaults-key使用
-#define KUSER_ID                     @"userId" //用于保存用户id
 #define KMOREFZC_RETURN_SUPPORTTYPE  @"return_supportType"
-#define KAPP_VERSION                 @"version"   //存储app的版本号
-#define KMY_LOCALTION                @"myLocation"//记录当地城市
-#define KFAIL_UPLOAD_OSS              @"failUpload"//记录上传资源到oss时失败没有删
-                                                   //除的文件
+#define KUSER_ID                     @"userId"        //用于保存用户id
+#define KAPP_VERSION                 @"version"       //存储app的版本号
+#define KMY_LOCALTION                @"myLocation"    //记录当地城市
+#define KMY_ZC_DRAFT_SAVE            @"myDraftSave"   //记录我的草稿的状态
+                                                      //@“yes”为保存
+#define KFAIL_UPLOAD_OSS             @"failUpload"    //记录上传资源到oss时失败没
+                                                      //有删除的文件
 
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]

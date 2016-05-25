@@ -33,20 +33,20 @@
     _textView.layer.masksToBounds=YES;
     _textView.contentInset = UIEdgeInsetsMake(-8, 0, 8, 0);
     _textView.textColor=[UIColor ZYZC_TextBlackColor];
-    if (_index==0) {
-        //添加addBtn
-        _addBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        _addBtn.frame=CGRectMake(5, self.height-SITEIMG_WIDTH-KEDGE_DISTANCE ,SITEIMG_WIDTH ,SITEIMG_WIDTH );
-        [_addBtn setBackgroundImage:[UIImage imageNamed:@"btn_jjd"] forState:UIControlStateNormal];
-        [_addBtn addTarget:self action:@selector(addSceneImg) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_addBtn];
-        
-        _textView.frame=CGRectMake(KEDGE_DISTANCE, 0, self.width-2*KEDGE_DISTANCE, TEXTMAXHEIGHT);
-    }
-    else
-    {
+//    if (_index==0) {
+//        //添加addBtn
+//        _addBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+//        _addBtn.frame=CGRectMake(5, self.height-SITEIMG_WIDTH-KEDGE_DISTANCE ,SITEIMG_WIDTH ,SITEIMG_WIDTH );
+//        [_addBtn setBackgroundImage:[UIImage imageNamed:@"btn_jjd"] forState:UIControlStateNormal];
+//        [_addBtn addTarget:self action:@selector(addSceneImg) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:_addBtn];
+//        
+//        _textView.frame=CGRectMake(KEDGE_DISTANCE, 0, self.width-2*KEDGE_DISTANCE, TEXTMAXHEIGHT);
+//    }
+//    else   
+//    {
         _textView.frame=CGRectMake(KEDGE_DISTANCE, 0, self.width-2*KEDGE_DISTANCE,self.height-KEDGE_DISTANCE);
-    }
+//    }
     [self addSubview:_textView];
     
     //添加_placeholdLab到_textView

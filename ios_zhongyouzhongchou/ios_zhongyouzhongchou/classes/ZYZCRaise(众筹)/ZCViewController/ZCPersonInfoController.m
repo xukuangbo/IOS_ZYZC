@@ -15,6 +15,7 @@
 
 #import "ZCDetailFirstCell.h"
 #import "ZCDetailTableHeadView.h"
+#import "ZCDetailBottomView.h"
 //介绍部分cells
 #import "ZCDetailIntroFirstCell.h"
 #import "ZCDetailIntroSecondCell.h"
@@ -29,11 +30,13 @@
 
 #import "FXBlurView.h"
 
-#import "ZCDetailModel.h"
+#import "ZCCommentModel.h"
 #import "ZCCommentViewController.h"
 #import "MBProgressHUD+MJ.h"
+
 #import "WXApiShare.h"
 #import "WXApiPay.h"
+
 @interface ZCPersonInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView           *table;
 @property (nonatomic, strong) UIImageView           *topImgView;
@@ -46,12 +49,15 @@
 
 @property (nonatomic, assign) ZCDetailContentType   contentType;
 
-@property (nonatomic, strong) ZCDetailModel         *detailModel;
+@property (nonatomic, strong) ZCCommentList         *commentList;
 
-@property (nonatomic, strong) NSMutableArray *detailDays;//行程安排数组
+@property (nonatomic, strong) NSMutableArray *commentArr;//评论信息
 
+@property (nonatomic, strong) NSMutableArray   *detailDays;//行程安排数组
 
 @property (nonatomic, strong) NSMutableArray *favoriteTravel;//猜你喜欢的旅游
+
+@property (nonatomic, assign) BOOL  paySupportMoney;//标记：跳转到支持／付款
 
 @property (nonatomic, assign) BOOL hasCosponsor;//联合发起人
 @property (nonatomic, assign) BOOL hasIntroGoal;//众筹目的
@@ -76,12 +82,12 @@
       NSFontAttributeName:[UIFont boldSystemFontOfSize:18]};
 
     self.oneModel.zcType=DetailType;
-    [self initData];
-    [self getHttpData];
     [self setBackItem];
+    [self initData];
     [self configUI];
-    [self createBottomView];
-
+    if (_zcType!=MyDraft) {
+       [self getHttpData];
+    }
 }
 
 #pragma mark --- 返回控制器
@@ -99,15 +105,16 @@
 #pragma mark --- 初始化数据
 -(void)initData
 {
-    _detailDays=[NSMutableArray array];
+    _detailDays=[NSMutableArray arrayWithArray:_schedule];
+    _commentArr=[NSMutableArray array];
     _favoriteTravel=[NSMutableArray array];
     self.contentType= IntroType;//展示介绍部分
     _hasCosponsor   = NO;//添加联和发起人项
-    _hasIntroGoal   = NO;//添加众筹目的
+    _hasIntroGoal   =_zcType==MyDraft?YES:NO;//添加众筹目的
     _hasIntroGeneral= NO;//添加目的地介绍
     _hasIntroMovie  = NO;//添加动画攻略
     _hasHotComment  = NO;//添加热门评论
-    _hasInterestTravel=YES;//添加兴趣标签匹配的旅游
+    _hasInterestTravel=NO;//添加兴趣标签匹配的旅游
 
 }
 
@@ -137,10 +144,35 @@
     }];
 }
 
+#pragma mark --- 获取热门评论
+-(void)getHotComment
+{
+    NSDictionary  *parameters=@{@"openid":[ZYZCTool getUserId],@"productId":_productId};
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_COMMENT andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+        [_commentArr removeAllObjects];
+        if (isSuccess) {
+            _commentList=[[ZCCommentList alloc]mj_setKeyValues:result];
+            for(ZCCommentModel *commentModel in _commentList.commentList)
+            {
+                [_commentArr addObject:commentModel];
+            }
+            if (_commentArr.count) {
+                _hasHotComment=YES;
+                [_table reloadData];
+            }
+            
+       }
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
 #pragma mark --- 创建控件
 -(void)configUI
 {
     _table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H-KTABBAR_HEIGHT) style:UITableViewStylePlain];
+    _table.height=_zcType==MyDraft?KSCREEN_H-KEDGE_DISTANCE:KSCREEN_H-KTABBAR_HEIGHT;
     _table.dataSource=self;
     _table.delegate=self;
     _table.showsVerticalScrollIndicator=NO;
@@ -154,7 +186,18 @@
     _topImgView=[[UIImageView alloc]initWithFrame:CGRectMake(0, -BGIMAGEHEIGHT,KSCREEN_W, BGIMAGEHEIGHT)];
     _topImgView.contentMode=UIViewContentModeScaleAspectFill;
     _topImgView.layer.masksToBounds=YES;
-    [_topImgView sd_setImageWithURL:[NSURL URLWithString:_oneModel.product.headImage ] placeholderImage:[UIImage imageNamed:@"abc"]];
+    if (_zcType==MyDraft) {
+        if (_oneModel.product.headImage.length) {
+             _topImgView.image=[UIImage imageWithContentsOfFile:_oneModel.product.headImage];
+        }
+        else
+        {
+            _topImgView.image=[UIImage imageNamed:@"abc"];
+        }
+    }
+    else{
+        [_topImgView sd_setImageWithURL:[NSURL URLWithString:_oneModel.product.headImage ] placeholderImage:[UIImage imageNamed:@"abc"]];
+    }
     [_table addSubview:_topImgView];
     
     //创建毛玻璃添加到顶部图片上
@@ -182,18 +225,37 @@
     _travelThemeLab.textColor=[UIColor whiteColor];
     [_blurView addSubview:_travelThemeLab];
     
+    if (_zcType!=MyDraft) {
+        
     //导航栏添加分享
     _shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _shareBtn.frame=CGRectMake(KSCREEN_W-40, 0, 40, 44);
     [_shareBtn setImage:[UIImage imageNamed:@"icon_share"] forState:UIControlStateNormal];
     [_shareBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventAllEvents];
     [self.navigationController.navigationBar addSubview:_shareBtn];
-    //导航栏添加收藏
-    _collectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    _collectionBtn.frame=CGRectMake(_shareBtn.left-40, 0, 40, 44);
-    [_collectionBtn setImage:[UIImage imageNamed:@"icon_collection"] forState:UIControlStateNormal];
-    [_collectionBtn addTarget:self  action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationController.navigationBar addSubview:_collectionBtn];
+    
+    if (_zcType==AllList) {
+        //导航栏添加收藏
+        _collectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+        _collectionBtn.frame=CGRectMake(_shareBtn.left-40, 0, 40, 44);
+        [_collectionBtn setImage:[UIImage imageNamed:@"icon_collection"] forState:UIControlStateNormal];
+        [_collectionBtn addTarget:self  action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationController.navigationBar addSubview:_collectionBtn];
+    }
+        //添加底部按钮
+        __weak typeof (&*self)weakSelf=self;
+        ZCDetailBottomView *bottomView=[[ZCDetailBottomView alloc]init];
+        bottomView.zcType=_zcType;
+        bottomView.commentBlock=^()
+        {
+            [weakSelf comment:YES];
+        };
+        bottomView.supportBlock=^()
+        {
+            [weakSelf support];
+        };
+        [self.view addSubview:bottomView];
+    }
 }
 
 
@@ -209,7 +271,7 @@
     NSInteger secondSectionCellNumber=
     (2*_hasIntroGoal+2*_hasIntroGeneral+2*_hasIntroMovie)*(self.contentType==IntroType?1:0)
     +2*days*(self.contentType==ArrangeType?1:0)
-    +(2*_hasHotComment+2*_hasInterestTravel*(1+4))*(self.contentType==ReturnType?1:0);
+    +(2+2*_hasHotComment+2*_hasInterestTravel*(1+4))*(self.contentType==ReturnType?1:0);
     
     if (section==0) {
         return 2 + 2*_hasCosponsor;
@@ -256,7 +318,7 @@
                 ZCDetailIntroFirstCell *introFirstCell=(ZCDetailIntroFirstCell *)[self customTableView:tableView cellWithIdentifier:introFirstCellId andCellClass:[ZCDetailIntroFirstCell class]];
                 introFirstCell.layer.cornerRadius=KCORNERRADIUS;
                 introFirstCell.cellModel=_detailModel.detailProductModel;
-                return introFirstCell;
+                return  introFirstCell;
             }
             else if (indexPath.row == 0+2*_hasIntroGoal && _hasIntroGeneral)
             {
@@ -306,23 +368,25 @@
             {
                 NSString *returnSecondCellId=@"returnSecondCell";
                 ZCDetailReturnSecondCell *returnSecondCell=(ZCDetailReturnSecondCell *)[self customTableView:tableView cellWithIdentifier:returnSecondCellId andCellClass:[ZCDetailReturnSecondCell class]];
-                returnSecondCell.contentView.backgroundColor=[UIColor greenColor];
+                returnSecondCell.commentModel=_commentArr.lastObject;
                 return returnSecondCell;
             }
-            else if (indexPath.row ==2*_hasHotComment+2*_hasInterestTravel &&indexPath.row!=0)
-            {
-                NSString *returnThirdCellId=@"returnThirdCell";
-                ZCDetailReturnThridCell *returnThirdCell=(ZCDetailReturnThridCell *)[self customTableView:tableView cellWithIdentifier:returnThirdCellId andCellClass:[ZCDetailReturnThridCell class]];
-                 returnThirdCell.contentView.backgroundColor=[UIColor greenColor];
-                return returnThirdCell;
-            }
-            else if (indexPath.row ==2*_hasHotComment +2*(1+(indexPath.row-2)/2)*_hasInterestTravel &&indexPath.row!=0)
-            {
-                NSString *returnFourthCellId=@"returnFourthCell";
-                ZCDetailReturnFourthCell *returnFourthCell=(ZCDetailReturnFourthCell *)[self customTableView:tableView cellWithIdentifier:returnFourthCellId andCellClass:[ZCDetailReturnFourthCell class]];
-                 returnFourthCell.contentView.backgroundColor=[UIColor yellowColor];
-                return returnFourthCell;
-            }
+//            //猜你喜欢
+//            else if (indexPath.row ==2*_hasHotComment+2*_hasInterestTravel &&indexPath.row!=0)
+//            {
+//                NSString *returnThirdCellId=@"returnThirdCell";
+//                ZCDetailReturnThridCell *returnThirdCell=(ZCDetailReturnThridCell *)[self customTableView:tableView cellWithIdentifier:returnThirdCellId andCellClass:[ZCDetailReturnThridCell class]];
+//                 returnThirdCell.contentView.backgroundColor=[UIColor greenColor];
+//                return returnThirdCell;
+//            }
+//            //旅行推荐
+//            else if (indexPath.row ==2*_hasHotComment +2*(1+(indexPath.row-2)/2)*_hasInterestTravel &&indexPath.row!=0)
+//            {
+//                NSString *returnFourthCellId=@"returnFourthCell";
+//                ZCDetailReturnFourthCell *returnFourthCell=(ZCDetailReturnFourthCell *)[self customTableView:tableView cellWithIdentifier:returnFourthCellId andCellClass:[ZCDetailReturnFourthCell class]];
+//                 returnFourthCell.contentView.backgroundColor=[UIColor yellowColor];
+//                return returnFourthCell;
+//            }
             
             UITableViewCell *cell=[self createNormalCell];
             return cell;
@@ -405,7 +469,8 @@
             }
             else if (indexPath.row==2*_hasHotComment &&indexPath.row !=0)
             {
-                return 100;
+                ZCCommentModel *commentModel=_commentArr.lastObject;
+                return commentModel.cellHeight;
             }
             else if (indexPath.row ==2*_hasHotComment+2*_hasInterestTravel &&indexPath.row!=0)
             {
@@ -445,6 +510,12 @@
                 {
                     weakSelf.table.contentOffset=offSet;
                 }
+                
+                if (contentType==ReturnType) {
+                    if (_zcType!=MyDraft) {
+                        [weakSelf getHotComment];
+                    }
+                }
             }
         };
         
@@ -461,10 +532,18 @@
     return 0.0;
 }
 
-#pragma mark --- tableView的滑动效果
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section==1&&self.contentType==ReturnType) {
+        if (indexPath.row==2) {
+            [self comment:NO];
+        }
+    }
+}
+
+#pragma mark --- tableView的滑动
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     //图片拉伸效果
     if (scrollView==self.table) {
         CGFloat offsetY = scrollView.contentOffset.y;
@@ -502,53 +581,9 @@
     }
 }
 
-#pragma mark --- 创建底部点击按钮
--(void)createBottomView
-{
-    UIView *bottomView=[[UIView alloc]initWithFrame:CGRectMake(0, KSCREEN_H-KTABBAR_HEIGHT , KSCREEN_W, KTABBAR_HEIGHT)];
-    bottomView.backgroundColor=[UIColor ZYZC_TabBarGrayColor];
-    [self.view addSubview:bottomView];
-    
-    [bottomView addSubview:[UIView lineViewWithFrame:CGRectMake(0, 0, KSCREEN_W, 0.5) andColor:[UIColor lightGrayColor]]];
-    
-    NSArray *titleArr=@[@"评论",@"支持",@"推荐"];
-    CGFloat btn_width=KSCREEN_W/3;
-    for (int i=0; i<3; i++) {
-        UIButton *sureBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        sureBtn.frame=CGRectMake(btn_width*i, KTABBAR_HEIGHT/2-20, btn_width, 40);
-        [sureBtn setTitle:titleArr[i] forState:UIControlStateNormal];
-        [sureBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
-        sureBtn.titleLabel.font=[UIFont systemFontOfSize:20];
-        sureBtn.layer.cornerRadius=KCORNERRADIUS;
-        sureBtn.layer.masksToBounds=YES;
-        [sureBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
-        sureBtn.tag=KZCDETAIL_ATTITUDETYPE+i;
-//        if (sureBtn.tag!=KZCDETAIL_ATTITUDETYPE) {
-//             [sureBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, 7, 1, sureBtn.height-2*7) andColor:[UIColor ZYZC_TextGrayColor]]];
-//        }
-        [bottomView addSubview:sureBtn];
-    }
-}
-
-#pragma mark --- 底部按钮点击事件
+#pragma mark --- 按钮点击事件
 -(void)clickBtn:(UIButton *)sender
 {
-    switch (sender.tag) {
-        case CommentType:
-            [self comment];
-            //评论
-            break;
-        case SupportType:
-            [self support];
-            //支持
-            break;
-        case RecommendType:
-            //推荐
-            break;
-        default:
-            break;
-    }
-    
     if (sender==_shareBtn) {
         //分享
         [self share];
@@ -562,11 +597,6 @@
 #pragma mark --- 分享
 -(void)share
 {
-    WXApiPay *pay=[[WXApiPay alloc]init];
-    [pay payForWeChat];
-    
-    return;
-    
     __weak typeof (&*self)weakSelf=self;
     __block NSString *url=[NSString stringWithFormat:@"http://www.sosona.com/pay/crowdfundingDetail?pid=%@",_productId];
 
@@ -608,12 +638,16 @@
 }
 
 #pragma mark --- 评论
--(void)comment
+-(void)comment:(BOOL )needGetData
 {
     ZCCommentViewController *commentVC=[[ZCCommentViewController alloc]init];
     commentVC.productId=_oneModel.product.productId;
     commentVC.user=_oneModel.user;
     commentVC.title=@"评论";
+    commentVC.needGetData=needGetData;
+    if (!needGetData) {
+        commentVC.comments=_commentArr;
+    }
     [self.navigationController pushViewController:commentVC animated:YES];
     
 }

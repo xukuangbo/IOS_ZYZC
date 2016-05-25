@@ -102,7 +102,6 @@
         travelSecondCell.titleLab.text=[NSString stringWithFormat:@"第%.2zd天:",indexPath.row/2];
         travelSecondCell.oneDetailModel.day=[NSNumber numberWithInteger:indexPath.row/2];
         travelSecondCell.contentBelong=TRAVEL_CONTENTBELONG(indexPath.row/2);
-        
         return travelSecondCell;
     }
     else

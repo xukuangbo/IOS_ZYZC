@@ -8,3 +8,4 @@ pod 'FXBlurView'
 pod 'AliyunOSSiOS'
 pod 'RongCloudIMKit’
 pod 'FreeStreamer'
+pod 'FMDB'

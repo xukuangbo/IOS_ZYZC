@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FMDB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FXBlurView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -67,7 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>46DE8505F5B01821EB86C3D11CB55FF9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6050E4445F851E96AD74916147A5FAB9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,6 +107,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9F12FB4A63E20F601CFB2E64A65B57C1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>DA5031B739E0701A67146E751C513B86</key>
 		<dict>
 			<key>primary</key>
@@ -102,17 +122,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E79F93B5E3D6B245FEA13A3CAA2F05F7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FE63E5A3B71033210CF018C4A307DBA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

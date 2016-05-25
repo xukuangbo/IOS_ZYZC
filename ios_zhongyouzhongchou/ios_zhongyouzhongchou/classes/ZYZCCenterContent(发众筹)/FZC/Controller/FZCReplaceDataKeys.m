@@ -165,7 +165,7 @@ MJCodingImplementation
 -(NSString *)changeFileName:(NSString *)fileName
 {
     NSString *subFileName=nil;
-    NSRange strRange=[fileName rangeOfString:KMY_ZHONGCHOU_TMP];
+    NSRange strRange=[fileName rangeOfString:KMY_ZHONGCHOU_FILE];
     if (strRange.length) {
         subFileName=[fileName substringFromIndex:(strRange.location+strRange.length+1)];
     }

@@ -5,7 +5,7 @@
 //  Created by liuliang on 16/3/31.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-#define TEXT_PLACEHOLDER @"编写众筹描述(100字以内)"
+#define TEXT_PLACEHOLDER @"编写众筹描述"
 #define IMGDESBTN_WIDTH 63
 
 #import "WordView.h"

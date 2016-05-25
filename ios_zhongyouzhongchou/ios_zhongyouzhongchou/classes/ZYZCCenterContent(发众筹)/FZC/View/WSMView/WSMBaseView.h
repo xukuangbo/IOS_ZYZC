@@ -9,7 +9,7 @@
 //筹旅费模块WSM（文字，语音，视屏录入）的归属标示
 #define RAISEMONEY_CONTENTBELONG @"raiseMoney"
 //行程模块WSM（文字，语音，视屏录入）的归属标示
-#define TRAVEL_CONTENTBELONG(day)  [NSString stringWithFormat:@"travel%.2zd天",day]
+#define TRAVEL_CONTENTBELONG(day)  [NSString stringWithFormat:@"travel%.2zd",day]
 //回报模块WSM（文字，语音，视屏录入）的归属标示
 #define RETURN_01_CONTENTBELONG @"return01"
 
