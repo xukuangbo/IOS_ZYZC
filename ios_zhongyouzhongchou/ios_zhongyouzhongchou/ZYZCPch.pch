@@ -109,7 +109,7 @@
 //获取国家列表
 #define LISTCOUNTRY       HTTPURL(@"user/listCountry")
 //获取国家-省份-城市信息
-#define GETCOUNTRYINFO    HTTPURL(@"user/getCountryInfo")
+#define GETVIEWSPOT    HTTPURL(@"viewSpot/getAllViews")
 //获取我的行程安排时间表
 #define GET_MY_OCCUPY_TIME  HTTPURL(@"list/listMyProductsTime")
 

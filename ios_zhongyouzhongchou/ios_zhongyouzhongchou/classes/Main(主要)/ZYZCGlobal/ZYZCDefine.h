@@ -12,8 +12,6 @@
 //在documents中创建保存发众筹资源的文件
 #define KMY_ZHONGCHOU_FILE  @"zcDraft"
 
-//#define KMY_ZHONGCHOU_DOCUMENT_PATH(fileName) [NSString stringWithFormat:@"%@/%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0],fileName]
-
 #define KMY_ZC_FILE_PATH(fileName) [NSString stringWithFormat:@"%@/zcDraft/%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0],fileName]
 
 #define KHTTP_FILE_HEAD @"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com"
@@ -69,6 +67,8 @@
 #define KAPP_VERSION                 @"version"       //存储app的版本号
 #define KMY_LOCALTION                @"myLocation"    //记录当地城市
 #define KMY_ZC_DRAFT_SAVE            @"myDraftSave"   //记录我的草稿的状态
+                                                      //@“yes”为保
+#define KVIEWSPOT_SAVE               @"viewSportSave" //记录地名库有没有存储下来
                                                       //@“yes”为保存
 #define KFAIL_UPLOAD_OSS             @"failUpload"    //记录上传资源到oss时失败没
                                                       //有删除的文件

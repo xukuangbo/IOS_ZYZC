@@ -37,16 +37,20 @@
     [self cleanMyDraftFile];
     //更改appBadge
     [self changeAppBadge];
-    //首次进入app获取地名库
-//    [self saveLocalDesct];
-    /**
-     初始化微信
-     */
+    //初始化微信
     [self initWithWechat];
+    //初始化融云
     [self initRCloud];
+    //获取app版本号，判断app是否是下载或更新后第一次进入
     [self getAppVersion];
+    //删除上传到oss上失败的文件
     [self deleteFailDataInOss];
+    //存储地名库
+    [self saveViewSpot];
+    //==========
     [ZYZCTool saveUserIdById:@"oulbuvtpzxiOe6t9hVBh2mNRgiaI"];
+    
+    //==========
     return YES;
 }
 
@@ -59,6 +63,7 @@
     }
 }
 
+#pragma mark --- 初始化融云
 -(void)initRCloud
 {
     [[RCIM sharedRCIM] initWithAppKey:@"sfci50a7c25fi"];
@@ -87,12 +92,18 @@
     NSString *myVersion=[user objectForKey:KAPP_VERSION];
     //下载或更新后第一次进入
     if (!myVersion||![myVersion isEqualToString:version]) {
-        
-        
-        
+        //首次进入app获取地名库
         [user setObject:version forKey:KAPP_VERSION];
         [user synchronize];
     }
+}
+
+#pragma mark --- 存储地名库
+-(void)saveViewSpot
+{
+    ZYZCDataBase *dbManager=[ZYZCDataBase sharedDBManager];
+    [dbManager saveDataWithFinishBlock:nil];
+//    [dbManager deleteAllData];
 }
 
 /**

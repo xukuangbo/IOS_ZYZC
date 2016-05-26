@@ -7,10 +7,13 @@
 //
 
 #import "MoreFZCChooseSceneController.h"
-
+#import "ZYZCDataBase.h"
+#import "ZYZCViewSpotModel.h"
+#import "LanguageTool.h"
 @interface MoreFZCChooseSceneController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
-@property(nonatomic,strong)UISearchBar *searchBar;
-@property(nonatomic,strong)UITableView *table;
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) UITableView *table;
+@property (nonatomic, strong) NSMutableArray  *viewSpot;
 @end
 
 @implementation MoreFZCChooseSceneController
@@ -18,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _viewSpot=[NSMutableArray array];
     self.title=@"发起众筹";
     [self setBackItem];
     [self configUI];
@@ -44,16 +48,44 @@
     [self.view addSubview:_table];
 }
 
+
+-(BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    return YES;
+}
+
 #pragma mark ---searchBar代理方法实现
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    _table.hidden=NO;
+
+    //监听键盘的出现和收起
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
     
+    _table.hidden=NO;
+    ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
+    NSArray *dataArr=[dataBase recieveDBData];
+    for (NSDictionary *dic in dataArr) {
+        OneSpotModel *oneSportModel=[[OneSpotModel alloc]mj_setKeyValues:dic];
+        [_viewSpot addObject:oneSportModel];
+    }
+    
+    [_table reloadData];
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     
+    ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
+    NSArray *arr=[dataBase queryWithStrCondition:searchText];
+    if (!arr.count) {
+        arr=[dataBase queryWithPinyinCondition:[LanguageTool chineseChangeToPinYin:searchText]];
+    }
+    [_viewSpot removeAllObjects];
+    for (OneSpotModel *oneSpotModel in arr) {
+        [_viewSpot addObject:oneSpotModel];
+    }
+    [_table reloadData];
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -75,27 +107,38 @@
 #pragma mark --- table代理方法实现
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return _viewSpot.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    NSString *cellId=@"cellId";
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId];
+    if (!cell) {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+    }
+    OneSpotModel *oneSportModel=_viewSpot[indexPath.row];
+    cell.textLabel.text=oneSportModel.name;
+    cell.textLabel.textColor=[UIColor ZYZC_TextBlackColor];
+    cell.textLabel.font=[UIFont systemFontOfSize:15];
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return 40;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *headView=[[UILabel alloc]initWithFrame:CGRectMake(0, 0,_table.width, 40)];
+    UILabel  *headView=[[UILabel alloc]initWithFrame:CGRectMake(0, 0,_table.width, 40)];
     headView.text=@"热门搜索";
     headView.font=[UIFont boldSystemFontOfSize:14];
     headView.textColor=[UIColor ZYZC_TextGrayColor];
     headView.textAlignment=NSTextAlignmentCenter;
-    [headView addSubview:[UIView lineViewWithFrame:CGRectMake(10, headView.height-1, headView.width-20, 1) andColor:nil]];
+    UIView *lineView=[UIView lineViewWithFrame:CGRectMake(KEDGE_DISTANCE, 35, headView.width-2*KEDGE_DISTANCE, 1) andColor:nil];
+    headView.backgroundColor=[UIColor whiteColor];
+    [headView addSubview:lineView];
     return headView;
 }
 
@@ -103,6 +146,33 @@
 {
     return 40;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    OneSpotModel *oneSpotModel=_viewSpot[indexPath.row];
+    _searchBar.text=oneSpotModel.name;
+}
+
+
+#pragma mark --- 键盘出现和收起方法
+-(void)keyboardWillShow:(NSNotification *)notify
+{
+    NSDictionary *dic = notify.userInfo;
+    NSValue *value = dic[UIKeyboardFrameEndUserInfoKey];
+    CGFloat height=value.CGRectValue.size.height;
+     _table.height-=height;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
+
+-(void)keyboardWillHidden:(NSNotification *)notify
+{
+    NSDictionary *dic = notify.userInfo;
+    NSValue *value = dic[UIKeyboardFrameEndUserInfoKey];
+    CGFloat height=value.CGRectValue.size.height;
+    _table.height+=height;
+    [[NSNotificationCenter defaultCenter] removeObserver: self name:UIKeyboardWillHideNotification object:nil];
+}
+
 
 
 #pragma mark --- 点击事件

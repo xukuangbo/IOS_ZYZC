@@ -14,7 +14,6 @@
 {
     self = [super init];
     if (self) {
-        
     }
     return self;
 }
@@ -99,6 +98,7 @@
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     if (!_audioPlayer) {
         NSURL *url=[NSURL fileURLWithPath:self.soundFileName];
+        NSLog(@"%@",url);
         NSError *error=nil;
         _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
         _audioPlayer.delegate=self;

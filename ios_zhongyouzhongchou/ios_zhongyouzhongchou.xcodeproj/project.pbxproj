@@ -190,6 +190,9 @@
 		2CD4B4491CCDAA2B006A7CE8 /* ZCDetailReturnSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4B4481CCDAA2B006A7CE8 /* ZCDetailReturnSecondCell.m */; };
 		2CD4B4541CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4B4511CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m */; };
 		2CD4B4551CCDE807006A7CE8 /* ZCDetailReturnThridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4B4531CCDE807006A7CE8 /* ZCDetailReturnThridCell.m */; };
+		2CD8027C1CF689C400823C9F /* ZYZCViewSpotModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8027B1CF689C400823C9F /* ZYZCViewSpotModel.m */; };
+		2CD8027F1CF68FCC00823C9F /* ZYZCDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8027E1CF68FCC00823C9F /* ZYZCDataBase.m */; };
+		2CD802841CF6DA3000823C9F /* LanguageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD802831CF6DA3000823C9F /* LanguageTool.m */; };
 		2CDAB2451CEBFEDB00E3E0F5 /* ZYZCMyWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2441CEBFEDB00E3E0F5 /* ZYZCMyWallet.m */; };
 		2CDAB2481CEC0AD900E3E0F5 /* WXApiPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */; };
 		2CDCE4971CCA29EB00873915 /* ZYZCCusomMovieImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */; };
@@ -586,6 +589,12 @@
 		2CD4B4511CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnFourthCell.m; sourceTree = "<group>"; };
 		2CD4B4521CCDE807006A7CE8 /* ZCDetailReturnThridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailReturnThridCell.h; sourceTree = "<group>"; };
 		2CD4B4531CCDE807006A7CE8 /* ZCDetailReturnThridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailReturnThridCell.m; sourceTree = "<group>"; };
+		2CD8027A1CF689C400823C9F /* ZYZCViewSpotModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCViewSpotModel.h; sourceTree = "<group>"; };
+		2CD8027B1CF689C400823C9F /* ZYZCViewSpotModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCViewSpotModel.m; sourceTree = "<group>"; };
+		2CD8027D1CF68FCC00823C9F /* ZYZCDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCDataBase.h; sourceTree = "<group>"; };
+		2CD8027E1CF68FCC00823C9F /* ZYZCDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCDataBase.m; sourceTree = "<group>"; };
+		2CD802821CF6DA3000823C9F /* LanguageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageTool.h; sourceTree = "<group>"; };
+		2CD802831CF6DA3000823C9F /* LanguageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageTool.m; sourceTree = "<group>"; };
 		2CDAB2431CEBFEDB00E3E0F5 /* ZYZCMyWallet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCMyWallet.h; sourceTree = "<group>"; };
 		2CDAB2441CEBFEDB00E3E0F5 /* ZYZCMyWallet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCMyWallet.m; sourceTree = "<group>"; };
 		2CDAB2461CEC0AD900E3E0F5 /* WXApiPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiPay.h; sourceTree = "<group>"; };
@@ -841,6 +850,7 @@
 		04A99BCE1CBF848C00C6F5F0 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				2CD802811CF6DA2000823C9F /* Chinese */,
 				04F8362E1CD72A6B00140980 /* SDPieProgressView */,
 				040651111CC62FC7003FD539 /* SDCycleScrollView */,
 				048DDE991CC229F600136C7A /* MBProgressHUD+MJ */,
@@ -885,6 +895,8 @@
 				041D06EC1CD322AB002B8329 /* ZYZCAVPlayer.m */,
 				2CDAB2431CEBFEDB00E3E0F5 /* ZYZCMyWallet.h */,
 				2CDAB2441CEBFEDB00E3E0F5 /* ZYZCMyWallet.m */,
+				2CD8027D1CF68FCC00823C9F /* ZYZCDataBase.h */,
+				2CD8027E1CF68FCC00823C9F /* ZYZCDataBase.m */,
 			);
 			path = ZYZCGlobal;
 			sourceTree = "<group>";
@@ -1206,6 +1218,8 @@
 				2CE5DD9C1CE999A900895A94 /* ZCCommentModel.m */,
 				04A99C781CBF848D00C6F5F0 /* ZCFilterModel.h */,
 				04A99C791CBF848D00C6F5F0 /* ZCFilterModel.m */,
+				2CD8027A1CF689C400823C9F /* ZYZCViewSpotModel.h */,
+				2CD8027B1CF689C400823C9F /* ZYZCViewSpotModel.m */,
 			);
 			path = ZCModel;
 			sourceTree = "<group>";
@@ -1588,6 +1602,15 @@
 			path = ios_zhongyouzhongchouUITests;
 			sourceTree = "<group>";
 		};
+		2CD802811CF6DA2000823C9F /* Chinese */ = {
+			isa = PBXGroup;
+			children = (
+				2CD802821CF6DA3000823C9F /* LanguageTool.h */,
+				2CD802831CF6DA3000823C9F /* LanguageTool.m */,
+			);
+			path = Chinese;
+			sourceTree = "<group>";
+		};
 		2CE21A781CC076AD00C7A797 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1908,6 +1931,7 @@
 				04A99CAF1CBF848D00C6F5F0 /* RaiseMoneyFirstModel.m in Sources */,
 				0406513B1CC7597A003FD539 /* TacticVideoModel.m in Sources */,
 				04F8362A1CD7102200140980 /* ZYZCPlayViewController.m in Sources */,
+				2CD8027C1CF689C400823C9F /* ZYZCViewSpotModel.m in Sources */,
 				2C901DC31C89788C004B844B /* ViewController.m in Sources */,
 				2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */,
 				2CDAB2481CEC0AD900E3E0F5 /* WXApiPay.m in Sources */,
@@ -1929,6 +1953,7 @@
 				0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */,
 				041D06F71CD3321D002B8329 /* RYNumberKeyboard.m in Sources */,
 				04A99CF21CBF851500C6F5F0 /* RMCalendarMonthHeaderView.m in Sources */,
+				2CD802841CF6DA3000823C9F /* LanguageTool.m in Sources */,
 				040651501CC8BF44003FD539 /* TacticSingleModel.m in Sources */,
 				04A99CB61CBF848D00C6F5F0 /* ReturnThirdCell.m in Sources */,
 				2CF7EB011CC7856D007074FE /* ZCDetailIntroFirstCell.m in Sources */,
@@ -2039,6 +2064,7 @@
 				04A99C9A1CBF848D00C6F5F0 /* ChooseSiteImgController.m in Sources */,
 				2C8288341CD886DE004873B6 /* NecessoryAlertManager.m in Sources */,
 				04A99CB81CBF848D00C6F5F0 /* AddSceneView.m in Sources */,
+				2CD8027F1CF68FCC00823C9F /* ZYZCDataBase.m in Sources */,
 				2CAF7BB71CE0363600CB0885 /* ZCInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
