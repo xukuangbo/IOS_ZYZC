@@ -64,13 +64,16 @@
     
     _table.hidden=NO;
     ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
-    NSArray *dataArr=[dataBase recieveDBData];
-    for (NSDictionary *dic in dataArr) {
-        OneSpotModel *oneSportModel=[[OneSpotModel alloc]mj_setKeyValues:dic];
-        [_viewSpot addObject:oneSportModel];
-    }
-    
-    [_table reloadData];
+    [dataBase saveDataWithFinishBlock:^(BOOL saveSuccess) {
+        if (saveSuccess) {
+            NSArray *dataArr=[dataBase recieveDBData];
+            for (NSDictionary *dic in dataArr) {
+                OneSpotModel *oneSportModel=[[OneSpotModel alloc]mj_setKeyValues:dic];
+                [_viewSpot addObject:oneSportModel];
+            }
+            [_table reloadData];
+        }
+    }];
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText

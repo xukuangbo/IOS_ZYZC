@@ -112,23 +112,24 @@ static ZYZCDataBase *_db;
 
 -(OneSpotModel *) searchOneDataWithName:(NSString *)name
 {
-    NSString *sql=@"select name from ViewSpot where  name=?";
+    NSString *sql=@"select * from ViewSpot where  name=?";
     FMResultSet *set=[_fmdb executeQuery:sql,name];
     
     BOOL success=[set next];
-    OneSpotModel *oneSpotModel=[[OneSpotModel alloc]init];
     if (success) {
+        OneSpotModel *oneSpotModel=[[OneSpotModel alloc]init];
         oneSpotModel.ID       =(NSNumber *)[set stringForColumn:@"id"];
         oneSpotModel.viewType =(NSNumber *)[set stringForColumn:@"viewType"];
         oneSpotModel.name     =[set stringForColumn:@"name"];
         oneSpotModel.pinyin   =[set stringForColumn:@"pinyin"];
         NSLog(@"查找成功");
+        return oneSpotModel;
     }
     else{
         NSLog(@"没有找到%@",_fmdb.lastErrorMessage);
     }
     
-    return oneSpotModel;
+    return nil;
 }
 
 #pragma mark---查看所有

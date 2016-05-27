@@ -7,9 +7,13 @@
 //
 
 #import "ZYZCBaseViewController.h"
+#import "TacticSingleModel.h"
+
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
 #define TacticSingleHeadViewHeight (KSCREEN_W * 5 / 8.0)
 @interface TacticSingleViewController : ZYZCBaseViewController
+
+@property (nonatomic, strong) TacticSingleModel *tacticSingleModel;
 
 
 /**

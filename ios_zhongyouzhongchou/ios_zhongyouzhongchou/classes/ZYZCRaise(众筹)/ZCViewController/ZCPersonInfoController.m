@@ -36,6 +36,7 @@
 
 #import "WXApiShare.h"
 #import "WXApiPay.h"
+#import "ZYZCDataBase.h"
 
 @interface ZCPersonInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView           *table;
@@ -54,6 +55,10 @@
 @property (nonatomic, strong) NSMutableArray *commentArr;//评论信息
 
 @property (nonatomic, strong) NSMutableArray   *detailDays;//行程安排数组
+
+@property (nonatomic, strong) NSMutableArray   *viewSpots;  //
+
+@property (nonatomic, strong) NSMutableArray   *dests;   //行程目的地
 
 @property (nonatomic, strong) NSMutableArray *favoriteTravel;//猜你喜欢的旅游
 
@@ -105,13 +110,27 @@
 #pragma mark --- 初始化数据
 -(void)initData
 {
+    if (_oneModel.product.productDest) {
+        NSArray *destArr=[ZYZCTool turnJsonStrToArray:_oneModel.product.productDest];
+        NSLog(@"%@",destArr);
+        ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
+        _viewSpots=[NSMutableArray array];
+        _dests=[NSMutableArray array];
+        for (NSString *dest in destArr) {
+             OneSpotModel *oneSportModel=[dataBase searchOneDataWithName:dest];
+            if (oneSportModel) {
+                [_dests addObject:dest];
+                [_viewSpots addObject:oneSportModel];
+            }
+        }
+    }
     _detailDays=[NSMutableArray arrayWithArray:_schedule];
     _commentArr=[NSMutableArray array];
     _favoriteTravel=[NSMutableArray array];
     self.contentType= IntroType;//展示介绍部分
     _hasCosponsor   = NO;//添加联和发起人项
     _hasIntroGoal   =_zcType==MyDraft?YES:NO;//添加众筹目的
-    _hasIntroGeneral= NO;//添加目的地介绍
+    _hasIntroGeneral= _viewSpots.count>0?YES:NO;//添加目的地介绍
     _hasIntroMovie  = NO;//添加动画攻略
     _hasHotComment  = NO;//添加热门评论
     _hasInterestTravel=NO;//添加兴趣标签匹配的旅游
@@ -124,7 +143,6 @@
     NSString *urlStr=KGET_DETAIL_PRODUCT([ZYZCTool getUserId],_productId);
     NSLog(@"%@",urlStr);
     [ZYZCHTTPTool getHttpDataByURL:KGET_DETAIL_PRODUCT([ZYZCTool getUserId], _productId) withSuccessGetBlock:^(id result, BOOL isSuccess) {
-        NSLog(@"%@",result);
         if (isSuccess) {
             _detailModel=[[ZCDetailModel alloc]mj_setKeyValues:result];
             NSArray *detailDays=_detailModel.detailProductModel.schedule;
@@ -149,7 +167,6 @@
 {
     NSDictionary  *parameters=@{@"openid":[ZYZCTool getUserId],@"productId":_productId};
     [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_COMMENT andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
-        NSLog(@"%@",result);
         [_commentArr removeAllObjects];
         if (isSuccess) {
             _commentList=[[ZCCommentList alloc]mj_setKeyValues:result];
@@ -324,7 +341,7 @@
             {
                 NSString *introSecondCellId=@"introSecondCell";
                 ZCDetailIntroSecondCell *introSecondCell=(ZCDetailIntroSecondCell *)[self customTableView:tableView cellWithIdentifier:introSecondCellId andCellClass:[ZCDetailIntroSecondCell class]];
-                introSecondCell.goals=@[@"普吉岛",@"清迈",@"烧麦"];
+                introSecondCell.goals=_viewSpots;
                 return introSecondCell;
             }
             else if (indexPath.row == 0 +2*_hasIntroGoal +2*_hasIntroGeneral && _hasIntroMovie)
@@ -539,6 +556,8 @@
             [self comment:NO];
         }
     }
+    
+    
 }
 
 #pragma mark --- tableView的滑动
@@ -669,6 +688,13 @@
 {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"viewControllerShow" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

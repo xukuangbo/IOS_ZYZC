@@ -7,7 +7,6 @@
 //
 
 #import "TacticSingleViewController.h"
-#import "TacticSingleModel.h"
 #import "TacticSingleFoodModel.h"
 #import "TacticSingleTipsModel.h"
 #import "TacticSingleTableViewCell.h"
@@ -81,6 +80,13 @@
 //    [self.tableView reloadData];
 //    
 //    return ;
+    
+    if (_tacticSingleModel) {
+        self.tacticSingleModelFrame.tacticSingleModel = _tacticSingleModel;
+        [self.tableView reloadData];
+        return;
+    }
+    
     NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
 //    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getVideoViewList.action"];
     //访问网络

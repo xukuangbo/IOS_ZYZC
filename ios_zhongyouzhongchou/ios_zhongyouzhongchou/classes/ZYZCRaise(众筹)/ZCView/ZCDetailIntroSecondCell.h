@@ -10,7 +10,7 @@
 
 #import "MoreFZCBaseTableViewCell.h"
 
-typedef void (^GetMoreGeneralInfo)();
+#import "TacticSingleModel.h"
 
 @interface ZCDetailIntroSecondCell : MoreFZCBaseTableViewCell
 
@@ -20,6 +20,6 @@ typedef void (^GetMoreGeneralInfo)();
 
 @property (nonatomic, strong) UILabel *generalLab;
 
-@property (nonatomic, copy  ) GetMoreGeneralInfo getMoreGeneralInfo;
+@property (nonatomic, strong) TacticSingleModel *tacticSingleModel;
 
 @end

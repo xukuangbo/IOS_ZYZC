@@ -66,10 +66,6 @@
     //    [self addSubview:_timeLab];
 }
 
-#pragma mark --- 语音动画播放
--(void)voicePlayAnimate
-{
-}
 
 -(void)setFaceImg:(NSString *)faceImg
 {
@@ -117,6 +113,12 @@
 {
     [_voiceImg stopAnimating];
 }
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+}
+
 
 
 /*

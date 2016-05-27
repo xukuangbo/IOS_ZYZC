@@ -5,15 +5,23 @@
 //  Created by liuliang on 16/4/20.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
+#define HTTP_URL(viewId)   [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=%@",viewId]
 
 #import "ZCDetailIntroSecondCell.h"
+
+#import "ZYZCViewSpotModel.h"
+
+#import "TacticSingleViewController.h"
+
 #define FIRSTBTN_TAG  3
 #define LINEVIEW_TAG  110
 @interface ZCDetailIntroSecondCell ()
+@property (nonatomic, strong) UILabel *destLab;
 @property (nonatomic, strong) UIScrollView *goalsView;
 @property (nonatomic, strong) UIButton *preClickBtn;
 @property (nonatomic, assign) CGFloat preBtnX;
 @property (nonatomic, assign) BOOL firstGetGoals;
+
 @end
 
 @implementation ZCDetailIntroSecondCell
@@ -34,15 +42,23 @@
     
     _goalsView=[[UIScrollView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.topLineView.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE, 30)];
     _goalsView.showsHorizontalScrollIndicator=NO;
-//    _goalsView.backgroundColor=[UIColor orangeColor];
     [self.contentView addSubview:_goalsView];
     _firstGetGoals=YES;
     
     _oneGoalImg=[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _goalsView.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE,(KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
-    _oneGoalImg.backgroundColor= [UIColor redColor];
+    _oneGoalImg.image =[UIImage imageNamed:@"image_placeholder"];
+    _oneGoalImg.contentMode=UIViewContentModeScaleAspectFill;
     _oneGoalImg.layer.cornerRadius=KCORNERRADIUS;
     _oneGoalImg.layer.masksToBounds=YES;
     [self.contentView addSubview:_oneGoalImg];
+    
+    _destLab=[[UILabel alloc]initWithFrame:CGRectMake(0, _oneGoalImg.height/4, _oneGoalImg.width, _oneGoalImg.height/2)];
+    _destLab.font=[UIFont boldSystemFontOfSize:30];
+    _destLab.textAlignment=NSTextAlignmentCenter;
+    _destLab.textColor=[UIColor whiteColor];
+    _destLab.shadowOffset=CGSizeMake(1, 1);
+    _destLab.shadowColor=[UIColor blackColor];
+    [_oneGoalImg addSubview:_destLab];
     
     UIView *view01=[UIView lineViewWithFrame:CGRectMake(2*KEDGE_DISTANCE, _oneGoalImg.bottom+KEDGE_DISTANCE, 2, 20) andColor:[UIColor ZYZC_MainColor]];
     [self.contentView addSubview:view01];
@@ -55,7 +71,7 @@
     UIButton *moreBtn=[ZYZCTool getCustomBtnByTilte:@"更多" andImageName:@"btn_rig_mor" andtitleFont:[UIFont systemFontOfSize:15]];
     moreBtn.frame=CGRectMake(KSCREEN_W-2*KEDGE_DISTANCE-50, _oneGoalImg.bottom+KEDGE_DISTANCE, 50, 20) ;
     [moreBtn setTitleColor:[UIColor ZYZC_TextGrayColor04] forState:UIControlStateNormal];
-    [moreBtn addTarget:self action:@selector(getMoregeneralText) forControlEvents:UIControlEventTouchUpInside];
+    [moreBtn addTarget:self action:@selector(gotoViewSpot) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:moreBtn];
     
     //目的地概况内容
@@ -67,6 +83,18 @@
     
     _generalLab.text=@"        三大纪律开始打架了扩大啊发哈肌肤恢复噶大是大非合适的接口发生地方就开始地方上独领风骚的护发素可点击发货速度快结束发生地方 i 松而我的大三大的发生地方首都发生地方是谁的冯绍峰发生地方是非得失";
     _generalLab.attributedText=[ZYZCTool setLineDistenceInText:_generalLab.text];
+    
+    //给cell添加点击事件
+    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gotoViewSpot)];
+    [self addGestureRecognizer:tap];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeViewFrame) name:@"viewControllerShow" object:nil];
+    
+}
+
+-(void)changeViewFrame
+{
+     _goalsView.contentOffset=CGPointMake(-(_goalsView.width-_preBtnX+16)/2, 0);
 }
 
 #pragma mark --- 目的地set方法
@@ -77,7 +105,8 @@
         _preBtnX=0;
         //添加目的地试图到_goalsView
         for (int i=0; i<goals.count; i++) {
-            UIButton *btn = [self setButton:i withTitle:goals[i]];
+            OneSpotModel *oneSpotModel=goals[i];
+            UIButton *btn = [self setButton:i withTitle:oneSpotModel.name];
             [_goalsView addSubview:btn];
             _preBtnX=btn.right+16;
         }
@@ -147,6 +176,40 @@
         
     }
     _preClickBtn=button;
+    
+    OneSpotModel *oneSpotModel=_goals[button.tag-FIRSTBTN_TAG];
+    //获取数据
+    [self getHttpDataByViewId:oneSpotModel.ID];
+    
+}
+
+#pragma mark --- 获取单个目的地数据
+-(void)getHttpDataByViewId:(NSNumber *)viewId
+{
+    [ZYZCHTTPTool getHttpDataByURL:HTTP_URL(viewId) withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        _tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
+        [self reloadData];
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
+#pragma mark --- 刷新数据
+-(void)reloadData
+{
+    [_oneGoalImg sd_setImageWithURL:[NSURL URLWithString:KWebImage(_tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
+    _generalLab.text=_tacticSingleModel.viewText ;
+    _destLab.text=_tacticSingleModel.name;
+    _generalLab.attributedText=[ZYZCTool setLineDistenceInText:_generalLab.text];
+}
+
+#pragma mark --- 景点详情
+-(void)gotoViewSpot
+{
+    TacticSingleViewController *singleViewVC=[[TacticSingleViewController alloc]init];
+    singleViewVC.tacticSingleModel=_tacticSingleModel;
+    singleViewVC.viewId=_tacticSingleModel.ID;
+    [self.viewController.navigationController pushViewController:singleViewVC animated:YES];
 }
 
 
@@ -171,12 +234,10 @@
     
 }
 
-#pragma mark --- 获取更多目的地概况内容
--(void)getMoregeneralText
+-(void)dealloc
 {
-    if (_getMoreGeneralInfo) {
-        _getMoreGeneralInfo();
-    }
+     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"viewControllerShow" object:nil];
 }
+
 
 @end
