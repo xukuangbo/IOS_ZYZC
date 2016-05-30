@@ -14,7 +14,8 @@
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) ZCCommentList *commentList;
 @property (nonatomic, strong) NSMutableArray *commentArr;
-@property (nonatomic, assign) BOOL scrollBottom;
+@property (nonatomic, assign) int  pageNo;
+@property (nonatomic, assign) int pageSize;
 @end
 
 @implementation ZCCommentViewController
@@ -23,6 +24,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _commentArr=[NSMutableArray array];
+    _pageNo=1;
+    _pageSize=10;
     [self setBackItem];
     [self configUI];
     [self getHttpData];
@@ -37,24 +40,30 @@
         _needGetData=YES;
         return;
     }
-    NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],@"productId":_productId};
+    NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],
+                               @"productId":_productId,
+                               @"pageNo":[NSNumber numberWithInt:_pageNo],
+                               @"pageSize":[NSNumber numberWithInt:_pageSize],
+                               };
     [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_COMMENT andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"%@",result);
-        [_commentArr removeAllObjects];
+        if (_pageNo==1) {
+            [_commentArr removeAllObjects];
+        }
         if (isSuccess) {
             _commentList=[[ZCCommentList alloc]mj_setKeyValues:result];
             for(ZCCommentModel *commentModel in _commentList.commentList)
             {
                 [_commentArr addObject:commentModel];
             }
-            [_table.mj_header endRefreshing];
             [_table reloadData];
-            if (_scrollBottom) {
-                [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_commentArr.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            }
+            [_table.mj_header endRefreshing];
+            [_table.mj_footer endRefreshing];
         }
     } andFailBlock:^(id failResult) {
         NSLog(@"%@",failResult);
+        [_table.mj_header endRefreshing];
+        [_table.mj_footer endRefreshing];
     }];
 }
 
@@ -72,6 +81,12 @@
     
     __weak typeof (&*self )weakSelf=self;
     _table.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pageNo=1;
+        [weakSelf getHttpData];
+    }];
+    
+    _table.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _pageNo++;
         [weakSelf getHttpData];
     }];
     
@@ -83,7 +98,7 @@
     
     addCommentView.commentSuccess=^(NSString *content)
     {
-        weakSelf.scrollBottom=YES;
+        weakSelf.pageNo=1;
         [weakSelf getHttpData];
 //        ZCCommentModel *commentModel=[[ZCCommentModel alloc]init];
 //        commentModel.comment.content=content;

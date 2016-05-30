@@ -13,6 +13,7 @@
 #import "WXApi.h"
 #import "WXApiManager.h"
 #import "ZYZCDataBase.h"
+#import "WXApiPay.h"
 @interface AppDelegate ()
 
 @end
@@ -49,7 +50,10 @@
     [self saveViewSpot];
     //==========
 //    [ZYZCTool saveUserIdById:@"oulbuvtpzxiOe6t9hVBh2mNRgiaI"];
-    NSLog(@"%@",[ZYZCTool getUserId]);
+//    NSLog(@"%@",[ZYZCTool getUserId]);
+//    WXApiPay *pay=[[WXApiPay alloc]init];
+//    [pay payForWeChat];
+    
     
     //==========
     return YES;
@@ -122,27 +126,6 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
-}
-
-#pragma mark --- 微信支付方法回调(添加通知)
--(void) onResp:(BaseResp*)resp
-{
-    if ([resp isKindOfClass:[PayResp class]])
-    {
-        PayResp *response = (PayResp *)resp;
-        switch (response.errCode) {
-            case WXSuccess: {
-                NSNotification *notification = [NSNotification notificationWithName:KORDER_PAY_NOTIFICATION object:@"success"];
-                [[NSNotificationCenter defaultCenter] postNotification:notification];
-                break;
-            }
-            default: {
-                NSNotification *notification = [NSNotification notificationWithName:KORDER_PAY_NOTIFICATION object:@"fail"];
-                [[NSNotificationCenter defaultCenter] postNotification:notification];
-                break;
-            }
-        }
-    }
 }
 
 #pragma mark --- 在Documents中创建资源文件存放视屏、语音、图片

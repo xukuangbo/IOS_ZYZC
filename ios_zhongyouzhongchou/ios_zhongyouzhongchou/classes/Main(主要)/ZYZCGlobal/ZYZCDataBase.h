@@ -19,7 +19,7 @@ typedef void (^DoFinish)(BOOL saveSuccess);
 /**
  *  增
  */
--(BOOL)insertDataWithId:(NSNumber *)dataId andType:(NSNumber *)type andName:(NSString *)name andPinyin:(NSString *)pinyin;
+-(BOOL)insertDataWithId:(NSNumber *)dataId andType:(NSNumber *)type andName:(NSString *)name  andCountry:(NSString *)country  andPinyin:(NSString *)pinyin;
 /**
  *  查
  */

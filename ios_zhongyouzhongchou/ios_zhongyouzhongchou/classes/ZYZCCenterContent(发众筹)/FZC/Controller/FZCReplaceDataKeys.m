@@ -107,7 +107,7 @@ MJCodingImplementation
         report03.desc=manager.return_wordDes;
         report03.voice=[self changeFileName:manager.return_voiceUrl];
         report03.video=[self changeFileName:manager.return_movieUrl];
-        report03.videoImg=[self changeFileName:manager.return_movieImg];
+        report03.videoUrl=[self changeFileName:manager.return_movieImg];
         [_report addObject:report03];
     }
     //一起游
@@ -126,7 +126,7 @@ MJCodingImplementation
         report05.desc=manager.return_wordDes01;
         report05.voice=[self changeFileName:manager.return_voiceUrl01];
         report05.video=[self changeFileName:manager.return_movieUrl01];
-        report05.videoImg=[self changeFileName:manager.return_movieImg01];
+        report05.videoUrl=[self changeFileName:manager.return_movieImg01];
         [_report addObject:report05];
     }
     if (manager.raiseMoney_sightMoney.floatValue>0) {

@@ -42,7 +42,7 @@ static ZYZCDataBase *_db;
             //@“create table if not exists” 表名（参数名 varchar(32)，参数名varchar(128),参数名 varchar(1024) ）,
             
             
-            NSString *sql=@"create table if not exists ViewSpot(id integer,viewType integer,name string,pinyin string)";
+            NSString *sql=@"create table if not exists ViewSpot(id integer,viewType integer,name string,country string,pinyin string)";
             
             BOOL tableSucced=[_fmdb executeUpdate:sql];
             
@@ -65,7 +65,7 @@ static ZYZCDataBase *_db;
 
 #pragma mark----增
 
--(BOOL)insertDataWithId:(NSNumber *)dataId andType:(NSNumber *)type andName:(NSString *)name andPinyin:(NSString *)pinyin
+-(BOOL)insertDataWithId:(NSNumber *)dataId andType:(NSNumber *)type andName:(NSString *)name  andCountry:(NSString *)country  andPinyin:(NSString *)pinyin
 {
     /*
      增insert into 表名(applicationId,name,iconurl) values(?,?,?)
@@ -75,10 +75,10 @@ static ZYZCDataBase *_db;
         NSLog(@"数据已存在!");
         return NO;
     }
-    NSString *sql=@"insert into ViewSpot(id,viewType,name,pinyin) values(?,?,?,?)";
+    NSString *sql=@"insert into ViewSpot(id,viewType,name,country,pinyin) values(?,?,?,?,?)";
     
     //插入一条数据
-    BOOL success=[_fmdb executeUpdate:sql,dataId,type,name,pinyin];
+    BOOL success=[_fmdb executeUpdate:sql,dataId,type,name,country,pinyin];
     
     if (success) {
         NSLog(@"插入成功");
@@ -121,6 +121,7 @@ static ZYZCDataBase *_db;
         oneSpotModel.ID       =(NSNumber *)[set stringForColumn:@"id"];
         oneSpotModel.viewType =(NSNumber *)[set stringForColumn:@"viewType"];
         oneSpotModel.name     =[set stringForColumn:@"name"];
+        oneSpotModel.country  =[set stringForColumn:@"country"];
         oneSpotModel.pinyin   =[set stringForColumn:@"pinyin"];
         NSLog(@"查找成功");
         return oneSpotModel;
@@ -176,7 +177,7 @@ static ZYZCDataBase *_db;
 -(void)saveDataWithFinishBlock:(DoFinish )doFinish
 {
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    
+
     if ([[user objectForKey:KVIEWSPOT_SAVE] isEqualToString:@"yes"]) {
         if (doFinish) {
             doFinish(YES);
@@ -188,9 +189,10 @@ static ZYZCDataBase *_db;
      {
          if (isSuccess) {
              ZYZCViewSpotModel *viewSpotModel=[[ZYZCViewSpotModel alloc]mj_setKeyValues:result];
+             NSLog(@"%@",result);
              for (OneSpotModel *oneSpotModel in viewSpotModel.data) {
                  NSString *pinyin=[LanguageTool chineseChangeToPinYin:oneSpotModel.name];
-                 [self insertDataWithId:oneSpotModel.ID andType:oneSpotModel.viewType andName:oneSpotModel.name andPinyin:pinyin];
+                 [self insertDataWithId:oneSpotModel.ID andType:oneSpotModel.viewType andName:oneSpotModel.name andCountry:oneSpotModel.country  andPinyin:pinyin];
              }
              [user setObject:@"yes" forKey:KVIEWSPOT_SAVE];
              [user synchronize];
@@ -199,7 +201,7 @@ static ZYZCDataBase *_db;
         doFinish(isSuccess);
     }
      } andFailBlock:^(id failResult) {
-         
+         NSLog(@"%@",failResult);
      }];
 }
 

@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSNumber *ID;
 @property (nonatomic, copy  ) NSString *name;
 @property (nonatomic, strong) NSNumber *viewType;
+@property (nonatomic, strong) NSString *country;
 @property (nonatomic, strong) NSString *pinyin;
 @end
 

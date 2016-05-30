@@ -73,6 +73,7 @@
     [self createToolBar];
     [self createClearMapView];
     [self createBottomView];
+    [self getHttpData];
 }
 /**
  *  创建空白容器，并创建4个tableview
@@ -595,10 +596,18 @@
     NSString *dest=[@"普吉岛" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@",dest);
     
+     NSString *str01=[@"⚽️" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@",str01);
+     NSString *str02=[@"😄" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@",str02);
+
+    NSString* str = [str02 stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@",str);
     NSDictionary *dataDic=@{
                             @"openid": @"oulbuvolvV8uHEyZwU7gAn8icJFw",
                             @"status":@1,
-                            @"title":@"海岛游😄",
+                            @"title":@"测试0002",
                             @"productCountryId":@"1",
                             @"dest":@[@"普吉岛"],
                             @"spell_buy_price":@5000,
@@ -607,33 +616,12 @@
                             @"spell_end_time":@"2016-09-03",
                             @"cover":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181124.png",
                             @"desc":@"筹旅费文字描述",
-                            @"voice":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181148.caf",
-                            @"video":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181157.mp4",
-                            @"videoImg":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181157.png",
                             @"schedule":@[
                                     @{
                                         @"day": @1,
-//                                        @"spot": @"景点描述",
-////                                        @"spots":@[@"url1",@"url2"],
-//                                        @"trans":@"交通描述",
-//                                        @"live":@"住宿描述",
-//                                        @"food":@"饮食描述",
                                         @"desc":@"第一天描述",
-                                        @"voice":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181206.caf",
-                                        @"video":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181216.mp4",
-                                        @"videoImg":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181216.png"
-                                        },
-                                    @{
-                                        @"day": @2,
-                                        @"desc":@"第二天描述",
-                                        @"voice":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181206.caf"
-                                    },
-                                    @{
-                                        @"day": @2,
-                                        @"desc":@"第二天描述",
-                                        @"voice":@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/oulbuvolvV8uHEyZwU7gAn8icJFw/20160517181332/20160517181206.caf"
                                         }
-                                    ],
+                                     ],
                             @"report": @[
                                     @{
                                         @"style": @1,
@@ -648,27 +636,16 @@
                                         @"price": @200,
                                         @"people": @5,
                                         @"desc": @"回报目的1",
-                                        @"voice":@"http://",
-                                        @"vodeo":@"http://",
-                                        @"vodeoUrl":@"http://"
+                                        @"voice":@"www.baidu.com",
+                                        @"video":@"www.souhu.com",
+                                        @"videoUrl":@"www.tengxun.com"
                                         },
-                                    @{
-                                        @"style": @6,
-                                        @"price": @0
-                                        },
-                                    @{
-                                        @"style": @7,
-                                        @"price": @0
-                                        },
-                                    @{
-                                        @"style": @8,
-                                        @"price": @0
-                                        },
-                                    @{
-                                        @"style": @9,
-                                        @"price": @1000
-                                        }
-                                    ]
+                                    @ {
+                                        @"style": @4,
+                                        @"people":@8,
+                                        @"price": @100
+                                    }
+                                ]
                             
                             };
     NSLog(@"%@",[self turnJson:dataDic]);

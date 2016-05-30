@@ -30,34 +30,55 @@
 //    style4: number       // 一起去支付的钱数   不传为未选择
 //        
 //    }
+   
     NSDictionary *dic=@{@"openid":[ZYZCTool getUserId],
                         @"ip":[ZYZCTool getDeviceIp],
                         @"productId":@190,
-                        @"style1":@1};
-    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_ORDER andParameters:dic andSuccessGetBlock:^(id result, BOOL isSuccess) {
-        NSLog(@"%@",result);
-        
+                        @"style1":@0.1,
+                        @"style2":@0.1,
+                        @"style3":@0.1,
+                        @"style4":@0.1,
+                        @"style5":@0.1,
+                        };
+    
+    NSString *url=@"http://121.40.225.119:8080/weixinpay/generateAppOrder.action";
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:url  andParameters:dic andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"result:%@",result);
+            PayReq *request = [[PayReq alloc] init];
+            /** 商家向财付通申请的商家id */
+        NSDictionary *data=[ZYZCTool turnJsonStrToDictionary:result[@"data"]];
+//        NSLog(@"%@",result[@"data"][@"partnerid"]);
+            request.openID=data[@"appid"];
+        NSLog(@"openID:%@",request.openID);
+            request.partnerId = data[@"partnerid"];
+        NSLog(@"partnerId:%@",request.partnerId);
+            /** 预支付订单 */
+            request.prepayId= data[@"prepayid"];
+        NSLog(@"prepayId:%@",request.prepayId);
+            /** 商家根据财付通文档填写的数据和签名 */
+            request.package = data[@"package"];
+        NSLog(@"package:%@",request.package);
+            /** 随机串，防重发 */
+            request.nonceStr= data[@"noncestr"];
+            NSLog(@"nonceStr:%@",request.nonceStr);
+            /** 时间戳，防重发 */
+            request.timeStamp=[data[@"timestamp"] intValue];
+            NSLog(@"timeStamp:%d",request.timeStamp);
+            /** 商家根据微信开放平台文档对数据做的签名 */
+            request.sign= data[@"sign"];
+           NSLog(@"sign:%@",request.sign);
+            //! @brief 发送请求到微信，等待微信返回onResp
+            [WXApi sendReq: request];
+
     } andFailBlock:^(id failResult) {
-        NSLog(@"%@",failResult);
+        NSLog(@"failResult:%@",failResult);
     }];
     
+}
+
+-(void)payMoney
+{
     
-//    
-//    PayReq *request = [[PayReq alloc] init];
-//    /** 商家向财付通申请的商家id */
-//    request.partnerId = @"1305176001";
-//    /** 预支付订单 */
-//    request.prepayId= @"wx201605182112137ab35040d00235109607";
-//    /** 商家根据财付通文档填写的数据和签名 */
-//    request.package = @"Sign=WXPay";
-//    /** 随机串，防重发 */
-//    request.nonceStr= @"92d9164eb03829dcef09deb2b4da9459";
-//    /** 时间戳，防重发 */
-//    request.timeStamp=1463577133;
-//    /** 商家根据微信开放平台文档对数据做的签名 */
-//    request.sign= @"3AE05BC12C229F902079291B98DAEE1B";
-//    //! @brief 发送请求到微信，等待微信返回onResp
-//    [WXApi sendReq: request];
 }
 
 #pragma mark --- 支付结果

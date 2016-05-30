@@ -58,7 +58,7 @@
 @property (nonatomic, copy  ) NSString *desc;
 @property (nonatomic, copy  ) NSString *voice;
 @property (nonatomic, copy  ) NSString *video;
-@property (nonatomic, copy  ) NSString *videoImg;
+@property (nonatomic, copy  ) NSString *videoUrl;
 
 @end
 

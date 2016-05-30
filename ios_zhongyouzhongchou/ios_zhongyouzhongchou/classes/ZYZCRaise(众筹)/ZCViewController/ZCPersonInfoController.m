@@ -131,7 +131,7 @@
     _hasCosponsor   = NO;//添加联和发起人项
     _hasIntroGoal   =_zcType==MyDraft?YES:NO;//添加众筹目的
     _hasIntroGeneral= _viewSpots.count>0?YES:NO;//添加目的地介绍
-    _hasIntroMovie  = NO;//添加动画攻略
+    _hasIntroMovie  = YES;//添加动画攻略
     _hasHotComment  = NO;//添加热门评论
     _hasInterestTravel=NO;//添加兴趣标签匹配的旅游
 
@@ -143,6 +143,7 @@
     NSString *urlStr=KGET_DETAIL_PRODUCT([ZYZCTool getUserId],_productId);
     NSLog(@"%@",urlStr);
     [ZYZCHTTPTool getHttpDataByURL:KGET_DETAIL_PRODUCT([ZYZCTool getUserId], _productId) withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
         if (isSuccess) {
             _detailModel=[[ZCDetailModel alloc]mj_setKeyValues:result];
             NSArray *detailDays=_detailModel.detailProductModel.schedule;
@@ -673,15 +674,24 @@
 #pragma mark --- 支持
 -(void)support
 {
-    if(_paySupportMoney)
-    {
-        NSLog(@"支付");
-        return;
-    }
+//    if(_paySupportMoney)
+//    {
+//        NSLog(@"支付");
+//        return;
+//    }
+     NSLog(@"支付");
+    WXApiPay *wxPay=[[WXApiPay alloc]init];
+    [wxPay payForWeChat];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOrderPayResult:) name:KORDER_PAY_NOTIFICATION object:nil];//监听一个通知
     
-    UIButton *supportBtn=(UIButton *)[_headView viewWithTag:ReturnType];
-    [_headView getContent:supportBtn];
-    [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//    UIButton *supportBtn=(UIButton *)[_headView viewWithTag:ReturnType];
+//    [_headView getContent:supportBtn];
+//    [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+-(void)getOrderPayResult:(NSNotification *)notify
+{
+    NSLog(@"notify%@",notify);
 }
 
 -(void)viewWillDisappear:(BOOL)animated

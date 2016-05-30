@@ -7,7 +7,7 @@
 //
 
 //所有众筹列表
-#define GET_ALL_LIST(pageNo) [NSString stringWithFormat:@"cache=false&orderType=1&pageNo=%d&pageSize=10",pageNo]
+#define GET_ALL_LIST(pageNo) [NSString stringWithFormat:@"cache=false&orderType=4&pageNo=%d&pageSize=10",pageNo]
 
 //我的众筹列表
 #define GET_MY_LIST(openid,type,pageNo) [NSString stringWithFormat:@"cache=false&openid=%@&self=%ld&pageNo=%d&pageSize=10",openid,type,pageNo]
