@@ -14,7 +14,7 @@
 NSString * const AccessKey = @"ZEoTY0iktlhynuSO";
 NSString * const SecretKey = @"GQkbvA5jPY3gCFKjXQg3Pvw6DZQulM";
 NSString * const endPoint  = @"http://oss-cn-hangzhou.aliyuncs.com";
-NSString * const multipartUploadKey = @"multipartUploadObject";
+NSString * const multipartUploadKey = @"multipartUploadObject"; 
 NSString * const _bucketName = @"zyzc-bucket01";
 
 static ZYZCOSSManager *ossManager;
