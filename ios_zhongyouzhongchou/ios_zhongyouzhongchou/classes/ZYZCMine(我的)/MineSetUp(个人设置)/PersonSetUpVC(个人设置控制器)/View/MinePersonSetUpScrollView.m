@@ -33,6 +33,7 @@
 {
     //头视图
      MinePersonSetUpHeadView *headView = [[MinePersonSetUpHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, imageHeadHeight)];
+//    headView.backgroundColor = [UIColor redColor];
     self.headView = headView;
     [self addSubview:headView];
     
@@ -64,7 +65,7 @@
     self.firstBg.userInteractionEnabled = YES;
     [self addSubview:self.firstBg];
     
-    //姓名标题
+    //姓名
     CGFloat nameTitleX = KEDGE_DISTANCE;
     CGFloat nameTitleY = KEDGE_DISTANCE;
     CGFloat nameTitleW = (bgImageViewW - nameTitleX * 2) * 0.3;
@@ -86,6 +87,8 @@
     sexLabel.text = @"性别";
     
     UIButton *sexButton = [[UIButton alloc] init];
+    sexButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [sexButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
     sexButton.userInteractionEnabled = NO;
     self.sexButton = sexButton;
     [self createUIWithSuperView:self.firstBg titleLabel:sexLabel titleView:sexButton];
@@ -98,52 +101,10 @@
     UILabel *birthdayLabel = [[UILabel alloc] initWithFrame:CGRectMake(birthdayLabelX, birthdayLabelY, birthdayLabelW, birthdayLabelH)];
     birthdayLabel.text = @"生日";
     UIButton *birthButton = [[UIButton alloc] init];
+    birthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [birthButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
     self.birthButton = birthButton;
     [self createUIWithSuperView:self.firstBg titleLabel:birthdayLabel titleView:birthButton];
-    
-//    //省会标题
-//    CGFloat proviceLabelX = KEDGE_DISTANCE;
-//    CGFloat proviceLabelY = birthButton.bottom;
-//    CGFloat proviceLabelW = (bgImageViewW - nameTitleX * 2) * 0.3;
-//    CGFloat proviceLabelH = SetUpFirstCellLabelHeight;
-//    UILabel *proviceLabel = [[UILabel alloc] initWithFrame:CGRectMake(proviceLabelX, proviceLabelY, proviceLabelW, proviceLabelH)];
-//    proviceLabel.text = @"地区";
-//    UIButton *proviceButton = [[UIButton alloc] init];
-//    self.proviceButton = proviceButton;
-//    [self createUIWithSuperView:self.firstBg titleLabel:proviceLabel titleView:proviceButton];
-//    
-//    //身高标题
-//    CGFloat heightLabelX = KEDGE_DISTANCE;
-//    CGFloat heightLabelY = proviceButton.bottom;
-//    CGFloat heightLabelW = (bgImageViewW - heightLabelX * 2) * 0.3;
-//    CGFloat heightLabelH = SetUpFirstCellLabelHeight;
-//    UILabel *heightLabel = [[UILabel alloc] initWithFrame:CGRectMake(heightLabelX, heightLabelY, heightLabelW, heightLabelH)];
-//    heightLabel.text = @"身高";
-//    UIButton *heightButton = [[UIButton alloc] init];
-//    self.heightButton = heightButton;
-//    [self createUIWithSuperView:self.firstBg titleLabel:heightLabel titleView:heightButton];
-//    
-//    //体重标题
-//    CGFloat weightLabelX = KEDGE_DISTANCE;
-//    CGFloat weightLabelY = heightButton.bottom;
-//    CGFloat weightLabelW = (bgImageViewW - weightLabelX * 2) * 0.3;
-//    CGFloat weightLabelH = SetUpFirstCellLabelHeight;
-//    UILabel *weightLabel = [[UILabel alloc] initWithFrame:CGRectMake(weightLabelX, weightLabelY, weightLabelW, weightLabelH)];
-//    weightLabel.text = @"体重";
-//    UIButton *weightButton = [[UIButton alloc] init];
-//    self.weightButton = weightButton;
-//    [self createUIWithSuperView:self.firstBg titleLabel:weightLabel titleView:weightButton];
-//    
-//    //婚姻状况标题
-//    CGFloat marryLabelX = KEDGE_DISTANCE;
-//    CGFloat marryLabelY = weightLabel.bottom;
-//    CGFloat marryLabelW = (bgImageViewW - nameTitleX * 2) * 0.3;
-//    CGFloat marryLabelH = SetUpFirstCellLabelHeight;
-//    UILabel *marryLabel = [[UILabel alloc] initWithFrame:CGRectMake(marryLabelX, marryLabelY, marryLabelW, marryLabelH)];
-//    marryLabel.text = @"婚姻状况";
-//    UIButton *marryButton = [[UIButton alloc] init];
-//    self.marryButton = marryButton;
-//    [self createUIWithSuperView:self.firstBg titleLabel:marryLabel titleView:marryButton];
     
     //星座标题
     CGFloat constellationLabelX = KEDGE_DISTANCE;
@@ -153,6 +114,8 @@
     UILabel *constellationLabel = [[UILabel alloc] initWithFrame:CGRectMake(constellationLabelX, constellationLabelY, constellationLabelW, constellationLabelH)];
     constellationLabel.text = @"星座";
     UITextField *constellationButton = [[UITextField alloc] init];
+    constellationButton.textColor = [UIColor ZYZC_TextGrayColor];
+    [constellationButton setValue:[UIColor ZYZC_TextGrayColor] forKeyPath:@"_placeholderLabel.textColor"];//设置占位字的颜色
     constellationButton.delegate = self;
     self.constellationButton = constellationButton;
     [self createUIWithSuperView:self.firstBg titleLabel:constellationLabel titleView:constellationButton];
@@ -163,7 +126,9 @@
     self.firstBg.height = (SetUpFirstCellLabelHeight * 4 + KEDGE_DISTANCE * 2);
 }
 
-
+/**
+ *  第二个cell
+ */
 - (void)createSecondUI
 {
     //背景白图
@@ -192,7 +157,9 @@
     self.secondBg.height = (SetUpFirstCellLabelHeight * 1 + KEDGE_DISTANCE * 2);
     
 }
-
+/**
+ *  第三个cell
+ */
 - (void)createThirdUI
 {
     //背景白图
@@ -224,7 +191,7 @@
     CGFloat heightLabelH = SetUpFirstCellLabelHeight;
     UILabel *heightLabel = [[UILabel alloc] initWithFrame:CGRectMake(heightLabelX, heightLabelY, heightLabelW, heightLabelH)];
     heightLabel.text = @"身高";
-    UIButton *heightButton = [[UIButton alloc] init];
+    UITextField *heightButton = [[UITextField alloc] init];
     self.heightButton = heightButton;
     [self createUIWithSuperView:self.thirdBg titleLabel:heightLabel titleView:heightButton];
 
@@ -235,7 +202,7 @@
     CGFloat weightLabelH = SetUpFirstCellLabelHeight;
     UILabel *weightLabel = [[UILabel alloc] initWithFrame:CGRectMake(weightLabelX, weightLabelY, weightLabelW, weightLabelH)];
     weightLabel.text = @"体重";
-    UIButton *weightButton = [[UIButton alloc] init];
+    UITextField *weightButton = [[UITextField alloc] init];
     self.weightButton = weightButton;
     [self createUIWithSuperView:self.thirdBg titleLabel:weightLabel titleView:weightButton];
     
@@ -244,7 +211,9 @@
     self.thirdBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     self.thirdBg.height = (SetUpFirstCellLabelHeight * 3 + KEDGE_DISTANCE * 2);
 }
-
+/**
+ *  第四个cell
+ */
 - (void)createFourthUI
 {
     //背景白图
@@ -313,7 +282,9 @@
     self.fourthBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     self.fourthBg.height = (SetUpFirstCellLabelHeight * 4 + KEDGE_DISTANCE * 2);
 }
-
+/**
+ *  第五个cell
+ */
 - (void)createFifthUI
 {
     //背景白图
@@ -367,8 +338,25 @@
  */
 - (void)setMinePersonSetUpModel:(MinePersonSetUpModel *)minePersonSetUpModel
 {
-    if (minePersonSetUpModel.realName) {
-        NSLog(@"%@",minePersonSetUpModel.realName);
-    }
+    //头视图
+    NSString *faceImg = minePersonSetUpModel.faceImg;
+    [self.headView.iconView sd_setImageWithURL:[NSURL URLWithString:faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:(SDWebImageRetryFailed | SDWebImageLowPriority)];
+    self.headView.nameLabel.text = minePersonSetUpModel.userName;
+    
+    [self.headView sd_setImageWithURL:[NSURL URLWithString:faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:(SDWebImageRetryFailed | SDWebImageLowPriority)];
+    //姓名
+    self.nameTextField.text = minePersonSetUpModel.userName? minePersonSetUpModel.userName : nil;
+    //性别
+    NSString *sexText = minePersonSetUpModel.sex? minePersonSetUpModel.sex : @"请输入性别";
+    [self.sexButton setTitle:sexText forState:UIControlStateNormal];
+    //生日
+    NSString *birthText = minePersonSetUpModel.birthday? minePersonSetUpModel.birthday : @"请输入生日";
+    [self.birthButton setTitle:birthText forState:UIControlStateNormal];
+    //星座
+    NSString *constellationText = minePersonSetUpModel.constellation? minePersonSetUpModel.constellation : @"请输入星座";
+    self.constellationButton.text = constellationText;
+    //兴趣标签
+    
+    
 }
 @end

@@ -64,10 +64,9 @@
     ZYZCAccountModel *model = [ZYZCAccountTool account];
     
     NSString *getUserInfoURL  = [NSString stringWithFormat:@"%@openid=%@",GETUSERINFO,model.openid];
-    NSLog(@"%@",getUserInfoURL);
     
     [ZYZCHTTPTool getHttpDataByURL:getUserInfoURL withSuccessGetBlock:^(id result, BOOL isSuccess) {
-        NSLog(@"%@",result);
+//        NSLog(@"%@",result);
         
         [self reloadUIData:result];
     } andFailBlock:^(id failResult) {
@@ -85,8 +84,6 @@
     
     [self setBackItem];
     
-    //创建界面
-    
 }
 
 /**
@@ -94,50 +91,27 @@
  */
 - (void)reloadUIData:(id)result
 {
-//    {
-//        code = 0;
-//        data =     {
-//            friend = 0;
-//            user =         {
-//                faceImg = "http://wx.qlogo.cn/mmopen/ajNVdqHZLLCt7YH6akbZxZZgFFJS1Y6qKoAibibzIODsVz47eKjhrUkI6bFqoCcnugbSPxP5XIn8ticSUSeO26pGQ/0";
-//                openid = "oulbuvlPG6-bzDIC6rkQXp53VURc";
-//                sex = 1;
-//                usedBalance = 0;
-//                usedPoints = 0;
-//                userId = 59;
-//                userName = "\U6bb5\U5b50\U624bmj";
-//            };
-//        };
-//        errorMsg = "";
-//    }
+
     NSDictionary *dic = (NSDictionary *)result;
+    NSDictionary *data = dic[@"data"];
     
-    MinePersonSetUpModel *model = [MinePersonSetUpModel mj_objectWithKeyValues:dic[@"data"]];
-    
-//    MinePersonAddressModel *addressModel = model.userbyaddress;
+    MinePersonSetUpModel *model = [MinePersonSetUpModel mj_objectWithKeyValues:data[@"user"]];
     
     self.scrollView.minePersonSetUpModel = model;
    
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    MinePersonSetUpHeadView *headView = [[MinePersonSetUpHeadView alloc] init];
-//    SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
-//    ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
-//    if (accountModel) {
-//        [headView.iconView sd_setImageWithURL:[NSURL URLWithString:accountModel.headimgurl] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:options];
-//        headView.nameLabel.text = accountModel.nickname;
-//    }else{
-//        headView.nameLabel.text = @"暂无";
-//        headView.iconView.image = [UIImage imageNamed:@"icon_placeholder"];
-//    }
-//    return headView;
-//}
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    //make keyboard down
+    [self.scrollView.nameTextField endEditing:YES];
+    [self.scrollView.constellationButton endEditing:YES];
+    [self.scrollView.heightButton endEditing:YES];
+    [self.scrollView.weightButton endEditing:YES];
+    
+    
     [self changeNaviColorWithScroll:scrollView];
 }
 

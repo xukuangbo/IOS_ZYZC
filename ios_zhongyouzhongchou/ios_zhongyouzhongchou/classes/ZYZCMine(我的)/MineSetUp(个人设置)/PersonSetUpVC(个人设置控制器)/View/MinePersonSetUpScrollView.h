@@ -56,11 +56,11 @@
 /**
  *  身高点击选择框
  */
-@property (nonatomic, weak) UIButton *heightButton;
+@property (nonatomic, weak) UITextField *heightButton;
 /**
  *  体重点击选择框
  */
-@property (nonatomic, weak) UIButton *weightButton;
+@property (nonatomic, weak) UITextField *weightButton;
 
 
 
