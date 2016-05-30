@@ -7,15 +7,23 @@
 //
 
 #import "MinePersonSetUpHeadView.h"
+#import "FXBlurView.h"
 @implementation MinePersonSetUpHeadView
 
-
-- (instancetype)init
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super init];
+    self = [super initWithFrame:frame];
     if (self) {
+        //创建一个背景毛玻璃
+        FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.bounds];
+        blurView.tintColor = [UIColor ZYZC_NavColor];  //前景颜色
+        blurView.blurRadius = 10;                 //模糊半径
+        blurView.dynamic = YES;                     //动态改变模糊效果
+        [self addSubview:blurView];
+        
         UIView *mapView = [[UIView alloc] init];
         [self addSubview:mapView];
+        
         //背后阴影
         CGFloat shadowViewWH = 80 * KCOFFICIEMNT;
         CGFloat shadowViewXY = 0;
@@ -42,7 +50,7 @@
         nameLabel.top = shadowView.height;
         nameLabel.size = CGSizeMake(shadowViewWH, 20 * KCOFFICIEMNT);
         [mapView addSubview:nameLabel];
-        nameLabel.backgroundColor = [UIColor redColor];
+//        nameLabel.backgroundColor = [UIColor redColor];
         nameLabel.textAlignment = NSTextAlignmentCenter;
         self.nameLabel = nameLabel;
         //最后设置容器的大小和位置
@@ -51,4 +59,5 @@
     }
     return self;
 }
+
 @end
