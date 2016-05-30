@@ -157,6 +157,8 @@
 		2C2421CD1CEEA98200F994FB /* ZCSupportAnyYuanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2421CC1CEEA98200F994FB /* ZCSupportAnyYuanView.m */; };
 		2C2421D01CEEAC9A00F994FB /* ZCSupportReturnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2421CF1CEEAC9A00F994FB /* ZCSupportReturnView.m */; };
 		2C2421D31CEEB22400F994FB /* ZCSupportTogetherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2421D21CEEB22400F994FB /* ZCSupportTogetherView.m */; };
+		2C24A08E1CFC26A400950663 /* ZCSpotVideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C24A08D1CFC26A400950663 /* ZCSpotVideoModel.m */; };
+		2C24A0941CFC389600950663 /* ZCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C24A0931CFC389600950663 /* ZCWebViewController.m */; };
 		2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */; };
 		2C39CD561CE32A7E001586A3 /* ZCDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C39CD551CE32A7E001586A3 /* ZCDetailModel.m */; };
 		2C4AD99F1CEDA98E005FC29E /* ZCWSMView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4AD99E1CEDA98E005FC29E /* ZCWSMView.m */; };
@@ -523,6 +525,10 @@
 		2C2421CF1CEEAC9A00F994FB /* ZCSupportReturnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSupportReturnView.m; sourceTree = "<group>"; };
 		2C2421D11CEEB22400F994FB /* ZCSupportTogetherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSupportTogetherView.h; sourceTree = "<group>"; };
 		2C2421D21CEEB22400F994FB /* ZCSupportTogetherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSupportTogetherView.m; sourceTree = "<group>"; };
+		2C24A08C1CFC26A400950663 /* ZCSpotVideoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSpotVideoModel.h; sourceTree = "<group>"; };
+		2C24A08D1CFC26A400950663 /* ZCSpotVideoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSpotVideoModel.m; sourceTree = "<group>"; };
+		2C24A0921CFC389600950663 /* ZCWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCWebViewController.h; sourceTree = "<group>"; };
+		2C24A0931CFC389600950663 /* ZCWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCWebViewController.m; sourceTree = "<group>"; };
 		2C2DEF131CCB4D3100111459 /* ZCDetailArrangeFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailArrangeFirstCell.h; sourceTree = "<group>"; };
 		2C2DEF141CCB4D3100111459 /* ZCDetailArrangeFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailArrangeFirstCell.m; sourceTree = "<group>"; };
 		2C39CD541CE32A7E001586A3 /* ZCDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailModel.h; sourceTree = "<group>"; };
@@ -1220,6 +1226,8 @@
 				04A99C791CBF848D00C6F5F0 /* ZCFilterModel.m */,
 				2CD8027A1CF689C400823C9F /* ZYZCViewSpotModel.h */,
 				2CD8027B1CF689C400823C9F /* ZYZCViewSpotModel.m */,
+				2C24A08C1CFC26A400950663 /* ZCSpotVideoModel.h */,
+				2C24A08D1CFC26A400950663 /* ZCSpotVideoModel.m */,
 			);
 			path = ZCModel;
 			sourceTree = "<group>";
@@ -1269,6 +1277,8 @@
 				04A99C861CBF848D00C6F5F0 /* ZCPersonInfoController.m */,
 				2C8B916C1CE70629004FDCB7 /* ZCCommentViewController.h */,
 				2C8B916D1CE70629004FDCB7 /* ZCCommentViewController.m */,
+				2C24A0921CFC389600950663 /* ZCWebViewController.h */,
+				2C24A0931CFC389600950663 /* ZCWebViewController.m */,
 			);
 			path = ZCViewController;
 			sourceTree = "<group>";
@@ -1895,6 +1905,7 @@
 				2CD4B4431CCDA84A006A7CE8 /* ZCDetailReturnFirstCell.m in Sources */,
 				040651351CC71A99003FD539 /* TacticModel.m in Sources */,
 				2CE5DD9A1CE9552400895A94 /* ZCCommentCell.m in Sources */,
+				2C24A0941CFC389600950663 /* ZCWebViewController.m in Sources */,
 				04A99D201CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */,
 				04A99D1D1CC07E1800C6F5F0 /* WXApiManager.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
@@ -1971,6 +1982,7 @@
 				04A99C991CBF848D00C6F5F0 /* ChooseSceneImgController.m in Sources */,
 				04A99CD71CBF848D00C6F5F0 /* ZCPersonInfoController.m in Sources */,
 				04F836431CD72C3300140980 /* SDLoopProgressView.m in Sources */,
+				2C24A08E1CFC26A400950663 /* ZCSpotVideoModel.m in Sources */,
 				04A99CBD1CBF848D00C6F5F0 /* SoundView.m in Sources */,
 				04A99CC81CBF848D00C6F5F0 /* MineMessageController.m in Sources */,
 				04A99CA51CBF848D00C6F5F0 /* MoreFZCBaseTableView.m in Sources */,

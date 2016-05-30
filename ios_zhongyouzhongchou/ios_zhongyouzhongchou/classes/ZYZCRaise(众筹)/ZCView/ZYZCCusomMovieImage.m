@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import "ZYZCAVPlayer.h"
+#import "ZCWebViewController.h"
 @interface ZYZCCusomMovieImage ()
 @property (nonatomic,strong) MPMoviePlayerController *moviePlayer;//视频播放控制器
 @end
@@ -79,6 +80,14 @@
         }
         //网络视屏
         else{
+            NSRange range=[_playUrl rangeOfString:@".html"];
+            if (range.length) {
+                ZCWebViewController *webController=[[ZCWebViewController alloc]init];
+                webController.requestUrl=_playUrl;
+                webController.myTitle=@"视频播放";
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:webController animated:YES completion:nil];
+                return;
+            }
             if (IOS8) {
                 ZYZCPlayViewController *playVC = [[ZYZCPlayViewController alloc] init];
                 playVC.urlString = self.playUrl;

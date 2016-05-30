@@ -6,7 +6,7 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#define SUBDES_FORMOVIE(goal) [NSString stringWithFormat:@"趣味动画教你畅游%@",goal]
+
 
 #import "ZCDetailIntroThirdCell.h"
 @implementation ZCDetailIntroThirdCell
@@ -39,6 +39,14 @@
     
     _movieImg =[[ZYZCCusomMovieImage alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, _subDesLab.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE,(KSCREEN_W-4*KEDGE_DISTANCE)*5/8)];
     [self.contentView addSubview:_movieImg];
+}
+
+-(void)setSpotVideoModel:(ZCSpotVideoModel *)spotVideoModel
+{
+    _spotVideoModel=spotVideoModel;
+    [_movieImg sd_setImageWithURL:[NSURL URLWithString:KWebImage(spotVideoModel.videoImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
+    _movieImg.playUrl=spotVideoModel.videoUrl;
+    
 }
 
 @end
