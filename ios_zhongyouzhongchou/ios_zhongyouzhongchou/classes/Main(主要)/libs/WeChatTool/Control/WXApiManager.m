@@ -25,27 +25,44 @@
 }
 
 #pragma mark - WXApiDelegate
-//- (void)onResp:(BaseResp *)resp {
-//    if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
-//        if (_delegate
-//            && [_delegate respondsToSelector:@selector(managerDidRecvMessageResponse:)]) {
-//            SendMessageToWXResp *messageResp = (SendMessageToWXResp *)resp;
-//            [_delegate managerDidRecvMessageResponse:messageResp];
-//        }
-//    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
-//        if (_delegate
-//            && [_delegate respondsToSelector:@selector(managerDidRecvAuthResponse:)]) {
-//            SendAuthResp *authResp = (SendAuthResp *)resp;
-//            [_delegate managerDidRecvAuthResponse:authResp];
-//        }
-//    } else if ([resp isKindOfClass:[AddCardToWXCardPackageResp class]]) {
-//        if (_delegate
-//            && [_delegate respondsToSelector:@selector(managerDidRecvAddCardResponse:)]) {
-//            AddCardToWXCardPackageResp *addCardResp = (AddCardToWXCardPackageResp *)resp;
-//            [_delegate managerDidRecvAddCardResponse:addCardResp];
-//        }
-//    }
-//}
+- (void)onResp:(BaseResp *)resp {
+    if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
+        if (_delegate
+            && [_delegate respondsToSelector:@selector(managerDidRecvMessageResponse:)]) {
+            SendMessageToWXResp *messageResp = (SendMessageToWXResp *)resp;
+            [_delegate managerDidRecvMessageResponse:messageResp];
+        }
+    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
+        if (_delegate
+            && [_delegate respondsToSelector:@selector(managerDidRecvAuthResponse:)]) {
+            SendAuthResp *authResp = (SendAuthResp *)resp;
+            [_delegate managerDidRecvAuthResponse:authResp];
+        }
+    } else if ([resp isKindOfClass:[AddCardToWXCardPackageResp class]]) {
+        if (_delegate
+            && [_delegate respondsToSelector:@selector(managerDidRecvAddCardResponse:)]) {
+            AddCardToWXCardPackageResp *addCardResp = (AddCardToWXCardPackageResp *)resp;
+            [_delegate managerDidRecvAddCardResponse:addCardResp];
+        }
+    }
+    
+    if ([resp isKindOfClass:[PayResp class]])
+    {
+        PayResp *response = (PayResp *)resp;
+        switch (response.errCode) {
+            case WXSuccess: {
+                NSNotification *notification = [NSNotification notificationWithName:KORDER_PAY_NOTIFICATION object:@"success"];
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+                break;
+            }
+            default: {
+                NSNotification *notification = [NSNotification notificationWithName:KORDER_PAY_NOTIFICATION object:@"fail"];
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+                break;
+            }
+        }
+    }
+}
 
 - (void)onReq:(BaseReq *)req {
     if ([req isKindOfClass:[GetMessageFromWXReq class]]) {
@@ -65,28 +82,6 @@
             && [_delegate respondsToSelector:@selector(managerDidRecvLaunchFromWXReq:)]) {
             LaunchFromWXReq *launchReq = (LaunchFromWXReq *)req;
             [_delegate managerDidRecvLaunchFromWXReq:launchReq];
-        }
-    }
-}
-
-#pragma mark --- 微信支付方法回调(添加通知)
--(void) onResp:(BaseResp*)resp
-
-{
-    if ([resp isKindOfClass:[PayResp class]])
-    {
-        PayResp *response = (PayResp *)resp;
-        switch (response.errCode) {
-            case WXSuccess: {
-                NSNotification *notification = [NSNotification notificationWithName:KORDER_PAY_NOTIFICATION object:@"success"];
-                [[NSNotificationCenter defaultCenter] postNotification:notification];
-                break;
-            }
-            default: {
-                NSNotification *notification = [NSNotification notificationWithName:KORDER_PAY_NOTIFICATION object:@"fail"];
-                [[NSNotificationCenter defaultCenter] postNotification:notification];
-                break;
-            }
         }
     }
 }

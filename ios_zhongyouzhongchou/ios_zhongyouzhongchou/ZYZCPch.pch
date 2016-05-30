@@ -113,6 +113,7 @@
 //获取我的行程安排时间表
 #define GET_MY_OCCUPY_TIME  HTTPURL(@"list/listMyProductsTime")
 
+#define GET_SPOT_VIDEO     HTTPURL(@"viewSpot/getViewSpotVideo")
 
 
 #endif /* ZYZCPch_pch */
