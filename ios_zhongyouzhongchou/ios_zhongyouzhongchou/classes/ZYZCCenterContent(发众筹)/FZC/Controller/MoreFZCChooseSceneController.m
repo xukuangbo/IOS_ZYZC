@@ -119,10 +119,10 @@
     if (!cell) {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
-    OneSpotModel *oneSportModel=_viewSpot[indexPath.row];
-    cell.textLabel.text=oneSportModel.name;
-    cell.textLabel.textColor=[UIColor ZYZC_TextBlackColor];
+    OneSpotModel *oneSpotModel=_viewSpot[indexPath.row];
+    cell.textLabel.text=oneSpotModel.country.length>0?[NSString stringWithFormat:@"%@    %@",oneSpotModel.name,oneSpotModel.country]:oneSpotModel.name;
     cell.textLabel.font=[UIFont systemFontOfSize:15];
+    cell.textLabel.attributedText=[self getAttributeTextByModel:oneSpotModel];
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -176,6 +176,22 @@
     [[NSNotificationCenter defaultCenter] removeObserver: self name:UIKeyboardWillHideNotification object:nil];
 }
 
+
+-(NSMutableAttributedString *)getAttributeTextByModel:(OneSpotModel *)oneSpotModel
+{
+    NSString *text=oneSpotModel.country.length>0?[NSString stringWithFormat:@"%@   %@",oneSpotModel.name,oneSpotModel.country]:oneSpotModel.name;
+    NSMutableAttributedString *attrStr=[[NSMutableAttributedString alloc]initWithString:text];
+    NSRange range=[text rangeOfString:oneSpotModel.name];
+    
+    if (text.length) {
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17] range:NSMakeRange(0, range.length)];
+        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, range.length)];
+        
+        [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(range.length, text.length-range.length)];
+        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor ZYZC_TextGrayColor] range:NSMakeRange(range.length, text.length-range.length)];
+    }
+    return  attrStr;
+}
 
 
 #pragma mark --- 点击事件

@@ -73,7 +73,7 @@
     [self createToolBar];
     [self createClearMapView];
     [self createBottomView];
-    [self getHttpData];
+//    [self getHttpData];
 }
 /**
  *  创建空白容器，并创建4个tableview
