@@ -9,6 +9,8 @@
 #import "MoreFZCChooseSceneController.h"
 #import "ZYZCDataBase.h"
 #import "LanguageTool.h"
+#import "TacticGeneralVC.h"
+#import "TacticSingleViewController.h"
 @interface MoreFZCChooseSceneController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UITableView *table;
@@ -149,7 +151,16 @@
 {
     _chooseSpotModel=_viewSpot[indexPath.row];
     _searchBar.text=_chooseSpotModel.name;
-    
+    if ([_chooseSpotModel.viewType intValue] == 1) {
+        [self.navigationController pushViewController:[[TacticSingleViewController alloc] initWithViewId:[_chooseSpotModel.ID intValue]] animated:YES];
+        return;
+    }else if([_chooseSpotModel.viewType intValue] == 2) {
+        [self.navigationController pushViewController:[[TacticSingleViewController alloc] initWithViewId:[_chooseSpotModel.ID intValue]] animated:YES];
+        return;
+    }else if ([_chooseSpotModel.viewType intValue] == 3){
+        [self.navigationController pushViewController:[[TacticGeneralVC alloc] initWithViewId:[_chooseSpotModel.ID intValue]] animated:YES];
+        return;
+    }
     //返回地名
     if (self.getOneScene) {
         self.getOneScene(_searchBar.text);
@@ -207,14 +218,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

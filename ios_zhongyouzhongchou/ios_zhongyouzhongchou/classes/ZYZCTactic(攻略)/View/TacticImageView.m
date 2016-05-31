@@ -14,6 +14,7 @@
 #import "ZYZCPlayViewController.h"
 #import "TacticSingleViewController.h"
 #import "TacticSingleFoodVC.h"
+#import "TacticGeneralVC.h"
 
 @interface TacticImageView ()
 
@@ -112,20 +113,9 @@
         [self.viewController.navigationController pushViewController:singleVC animated:YES];
     }else if(self.pushType == threeMapViewTypeSingleView) {
         //说明是一般景点
-        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] initWithViewId:self.tacticSingleModel.ID];
-        //要转换成tacvideomodel
-        TacticVideoModel *model = [[TacticVideoModel alloc] init];
-        model.name = self.tacticSingleModel.name;
-        if (self.tacticSingleModel.pics) {
-            model.pics = self.tacticSingleModel.pics;
-        }
-        if (self.tacticSingleModel.viewImg) {
-            model.viewImg = self.tacticSingleModel.viewImg;
-        }
-        model.viewText = self.tacticSingleModel.viewText;
+        TacticGeneralVC *generalVC = [[TacticGeneralVC alloc] initWithViewId:self.tacticSingleModel.ID];
         
-//        foodVC.tacticVideoModel = model;
-        [self.viewController.navigationController pushViewController:foodVC animated:YES];
+        [self.viewController.navigationController pushViewController:generalVC animated:YES];
     }else if (self.pushType == threeMapViewTypeFood){
         //说明是食物
         TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];

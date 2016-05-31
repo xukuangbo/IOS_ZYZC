@@ -132,6 +132,7 @@
 		04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */; };
 		04B99A611CFC251D00E3C33A /* MinePersonDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A601CFC251D00E3C33A /* MinePersonDatePickerView.m */; };
 		04B99A641CFC582C00E3C33A /* MinePersonSetUpLikeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A631CFC582C00E3C33A /* MinePersonSetUpLikeController.m */; };
+		04B99A681CFDA6F300E3C33A /* TacticGeneralVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A671CFDA6F300E3C33A /* TacticGeneralVC.m */; };
 		04F685491CF57C9F00E1A98E /* MinePersonSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */; };
 		04F6854A1CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685441CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m */; };
 		04F6854B1CF57C9F00E1A98E /* MinePersonSetUpHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685461CF57C9F00E1A98E /* MinePersonSetUpHeadView.m */; };
@@ -480,6 +481,8 @@
 		04B99A601CFC251D00E3C33A /* MinePersonDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonDatePickerView.m; sourceTree = "<group>"; };
 		04B99A621CFC582C00E3C33A /* MinePersonSetUpLikeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpLikeController.h; sourceTree = "<group>"; };
 		04B99A631CFC582C00E3C33A /* MinePersonSetUpLikeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpLikeController.m; sourceTree = "<group>"; };
+		04B99A661CFDA6F300E3C33A /* TacticGeneralVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticGeneralVC.h; sourceTree = "<group>"; };
+		04B99A671CFDA6F300E3C33A /* TacticGeneralVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticGeneralVC.m; sourceTree = "<group>"; };
 		04F6853F1CF57C9F00E1A98E /* MinePersonSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpController.h; sourceTree = "<group>"; };
 		04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpController.m; sourceTree = "<group>"; };
 		04F685431CF57C9F00E1A98E /* MinePersonSetUpFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpFirstCell.h; sourceTree = "<group>"; };
@@ -1302,6 +1305,7 @@
 		04A99C871CBF848D00C6F5F0 /* ZYZCTactic(攻略) */ = {
 			isa = PBXGroup;
 			children = (
+				04B99A651CFDA62F00E3C33A /* SingleVC(一般控制器) */,
 				04FCCA991CDB235B00540B28 /* foodVC(食物跟一般景点界面) */,
 				040651441CC87A1C003FD539 /* Single(单个景点控制器) */,
 				04FCCAA91CDC454C00540B28 /* MoreVC(更多界面) */,
@@ -1446,6 +1450,15 @@
 				04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */,
 			);
 			path = Tool;
+			sourceTree = "<group>";
+		};
+		04B99A651CFDA62F00E3C33A /* SingleVC(一般控制器) */ = {
+			isa = PBXGroup;
+			children = (
+				04B99A661CFDA6F300E3C33A /* TacticGeneralVC.h */,
+				04B99A671CFDA6F300E3C33A /* TacticGeneralVC.m */,
+			);
+			path = "SingleVC(一般控制器)";
 			sourceTree = "<group>";
 		};
 		04F685311CF57BE500E1A98E /* PersonSetUpVC(个人设置控制器) */ = {
@@ -2079,6 +2092,7 @@
 				2CE5DD9D1CE999A900895A94 /* ZCCommentModel.m in Sources */,
 				04A99C971CBF848D00C6F5F0 /* ZYZCNavigationController.m in Sources */,
 				2C4AD99F1CEDA98E005FC29E /* ZCWSMView.m in Sources */,
+				04B99A681CFDA6F300E3C33A /* TacticGeneralVC.m in Sources */,
 				2CAF7BB41CE02B6600CB0885 /* ZCOneProductCell.m in Sources */,
 				04A99CF31CBF851500C6F5F0 /* RMCollectionCell.m in Sources */,
 				04A99CBE1CBF848D00C6F5F0 /* WordEditViewController.m in Sources */,

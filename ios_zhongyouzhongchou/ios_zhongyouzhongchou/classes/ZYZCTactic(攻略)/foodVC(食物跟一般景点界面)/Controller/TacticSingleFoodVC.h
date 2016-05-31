@@ -17,12 +17,4 @@
 @property (nonatomic, strong) TacticSingleFoodModel *tacticSingleFoodModel;
 @property (nonatomic, strong) TacticVideoModel *tacticVideoModel;
 
-/**
- *  用于网络请求的id
- */
-@property (nonatomic, assign) NSInteger viewId;
-/**
- *  初始化方法
- */
-- (instancetype)initWithViewId:(NSInteger)viewId;
 @end

@@ -14,4 +14,8 @@ typedef void(^GetOneSpotModel) (OneSpotModel *model);
 @property (nonatomic, copy) GetOneScenceBlock getOneScene;
 @property (nonatomic, copy) GetOneSpotModel   getOneSpotModel;
 @property(nonatomic,strong)NSArray *mySceneArr;
+
+
+
+@property (nonatomic, assign) BOOL isHomeSearch;
 @end

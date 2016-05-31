@@ -14,7 +14,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        
         UILabel *namelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
         namelabel.font = [UIFont boldSystemFontOfSize:33];
         namelabel.shadowOffset=CGSizeMake(1, 1);

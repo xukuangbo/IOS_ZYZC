@@ -1,21 +1,19 @@
 //
-//  TacticSingleFoodVC.m
+//  TacticGeneralVC.m
 //  ios_zhongyouzhongchou
 //
-//  Created by mac on 16/5/5.
+//  Created by mac on 16/5/31.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-
-#import "TacticSingleFoodVC.h"
-#import "TacticSingleFoodModel.h"
-#import "TacticVideoModel.h"
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
 
 #define imageViewHeight (KSCREEN_W / 16 * 9)
 
 #define labelViewFont [UIFont systemFontOfSize:16]
 
-@interface TacticSingleFoodVC ()<UIScrollViewDelegate>
+#import "TacticGeneralVC.h"
+#import "TacticVideoModel.h"
+@interface TacticGeneralVC ()<UIScrollViewDelegate>
 @property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, weak) UILabel *nameLabel;
 
@@ -25,21 +23,23 @@
 @property (nonatomic, weak) UIScrollView *scrollView;
 @end
 
-static NSString *textCellID = @"TacticFoodTextCell";
-static NSString *picCellID = @"TacticFoodPicCell";
-
-@implementation TacticSingleFoodVC
-
-- (instancetype)init
+@implementation TacticGeneralVC
+- (instancetype)initWithViewId:(NSInteger)viewId
 {
     self = [super init];
     if (self) {
+        self.viewId = viewId;
         [self setUpUI];
         [self setBackItem];
         
         self.hidesBottomBarWhenPushed = YES;
         self.automaticallyAdjustsScrollViewInsets = NO;
         self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
+        
+        /**
+         *  刷新数据
+         */
+        [self refreshDataWithViewId:self.viewId];
     }
     return self;
 }
@@ -50,6 +50,12 @@ static NSString *picCellID = @"TacticFoodPicCell";
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(0)];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(1)];
+    self.navigationController.navigationBar.shadowImage = nil;
 }
 
 /**
@@ -81,13 +87,13 @@ static NSString *picCellID = @"TacticFoodPicCell";
     UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
     bgImg.image=[UIImage imageNamed:@"Background"];
     [imageView addSubview:bgImg];
+    
     /**
      图片上的文字
      */
     UILabel *namelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, imageViewW, 60)];
+    namelabel.font = [UIFont systemFontOfSize:33];
     namelabel.textAlignment = NSTextAlignmentCenter;
-    namelabel.font = [UIFont boldSystemFontOfSize:33];
-    namelabel.shadowOffset=CGSizeMake(1, 1);
     namelabel.textColor = [UIColor whiteColor];
     namelabel.centerX = KSCREEN_W * 0.5;
     namelabel.centerY = imageViewH * 0.5;
@@ -101,6 +107,7 @@ static NSString *picCellID = @"TacticFoodPicCell";
     mapView.userInteractionEnabled = YES;
     [self.scrollView addSubview:mapView];
     self.mapView = mapView;
+    
     /**
      *  创建文字
      */
@@ -135,48 +142,15 @@ static NSString *picCellID = @"TacticFoodPicCell";
         if (isSuccess) {
             //请求成功，转化为数组
             NSDictionary *dic = (NSDictionary *)result;
+            NSLog(@"%@",dic[@"foods"]);
             //先判断是那种类型
-//            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
-//            weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
-//            
-//            [weakSelf.tableView reloadData];
+            TacticVideoModel *tacticVideoModel = [TacticVideoModel mj_objectWithKeyValues:result[@"data"]];
+            weakSelf.tacticVideoModel = tacticVideoModel;
         }
         
     } andFailBlock:^(id failResult) {
         NSLog(@"%@",failResult);
     }];
-}
-
-- (void)setTacticSingleFoodModel:(TacticSingleFoodModel *)tacticSingleFoodModel
-{
-    _tacticSingleFoodModel = tacticSingleFoodModel;
-    
-    SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
-    //肯定有图片
-    CGFloat mapViewX = KEDGE_DISTANCE;
-    CGFloat mapViewY = imageViewHeight + KEDGE_DISTANCE;
-    CGFloat mapViewW = KSCREEN_W - mapViewX * 2;
-    //先计算文字高度
-    CGFloat labelViewX = KEDGE_DISTANCE;
-    CGFloat labelViewY = KEDGE_DISTANCE;
-    CGFloat labelViewW = mapViewW - KEDGE_DISTANCE * 2;
-    CGFloat labelViewH = 0;
-    CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticSingleFoodModel.foodText andFont:labelViewFont andMaxWidth:labelViewW];
-    labelViewH = textSize.height;
-    
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.foodImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
-    self.nameLabel.text = tacticSingleFoodModel.name;
-    
-    self.labelView.text = tacticSingleFoodModel.foodText;
-    self.labelView.frame = CGRectMake(labelViewX, labelViewY, labelViewW, labelViewH);
-    
-    CGFloat mapViewH = labelViewH + KEDGE_DISTANCE * 2;
-    
-    self.mapView.frame = CGRectMake(mapViewX, mapViewY, mapViewW, mapViewH);
-    self.mapView.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
-    
-    
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, self.mapView.height + KEDGE_DISTANCE * 2 + imageViewHeight);
 }
 
 
@@ -228,7 +202,6 @@ static NSString *picCellID = @"TacticFoodPicCell";
 }
 
 
-
 #pragma mark - UISrollViewDelegate
 /**
  *  navi背景色渐变的效果
@@ -245,23 +218,8 @@ static NSString *picCellID = @"TacticFoodPicCell";
         self.title = @"";
     } else {
         [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(1)];
-        if (self.tacticSingleFoodModel) {
-            self.title = self.tacticSingleFoodModel.name;
-        }
-        if (self.tacticVideoModel) {
-            self.title = self.tacticVideoModel.name;
-        }
+        self.title = @"景点";
         
     }
 }
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 @end
