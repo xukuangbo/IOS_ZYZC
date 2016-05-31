@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface RCManager : NSObject
+#import <RongIMKit/RongIMKit.h>
+@interface ZYZCRCManager : NSObject<RCIMUserInfoDataSource>
 
 @end

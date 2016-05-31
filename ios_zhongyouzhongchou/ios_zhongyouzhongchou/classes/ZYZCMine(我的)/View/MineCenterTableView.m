@@ -12,6 +12,9 @@
 #import "MineCenterTableViewCell.h"
 #import "MineMessageController.h"
 #import "ZCMainController.h"
+
+#import "ZYZCConversationController.h"
+
 @interface MineCenterTableView()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSArray *titleArray;
@@ -98,6 +101,15 @@
         myTravelVC.zcType=Mylist;
         myTravelVC.hidesBottomBarWhenPushed=YES;
         [self.viewController.navigationController pushViewController:myTravelVC animated:YES];
+    }
+    else if (indexPath.row == 3)
+    {
+        ZYZCConversationController *chat=[[ZYZCConversationController alloc]init];
+        chat.conversationType=ConversationType_PRIVATE;
+        chat.targetId = @"1";
+        chat.title = @"聊天";
+        //显示聊天会话界面
+        [self.viewController.navigationController pushViewController:chat animated:YES];
     }
 }
 
