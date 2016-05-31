@@ -207,6 +207,7 @@
     
     UIStoryboard *board = [UIStoryboard storyboardWithName:@"MineSetUpVC" bundle:nil];
     MineSetUpViewController *mineSetUpViewController = [board instantiateViewControllerWithIdentifier:@"MineSetUpViewController"];
+    mineSetUpViewController.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:mineSetUpViewController animated:YES];
 }
 

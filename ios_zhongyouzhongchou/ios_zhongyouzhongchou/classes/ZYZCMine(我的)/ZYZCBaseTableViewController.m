@@ -85,8 +85,6 @@
     return _imageViewHeight;
 }
 
-
-
 - (void)changeNaviColorWithScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;

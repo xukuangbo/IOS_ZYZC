@@ -32,7 +32,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     //界面出现的时候需要去加载数据
     [self requestData];
 }
@@ -46,6 +45,7 @@
     [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(0)];
 
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -56,6 +56,8 @@
     self.navigationController.navigationBar.titleTextAttributes=
     @{NSForegroundColorAttributeName:[UIColor whiteColor],
       NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
+    
+    self.hidesBottomBarWhenPushed = YES;
 }
 #pragma mark - 请求网络
 - (void)requestData
@@ -76,7 +78,7 @@
 
 - (void)createUI
 {
-    MinePersonSetUpScrollView *scrollView = [[MinePersonSetUpScrollView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49)];
+    MinePersonSetUpScrollView *scrollView = [[MinePersonSetUpScrollView alloc] initWithFrame:self.view.bounds];
     scrollView.delegate = self;
     [self.view addSubview:scrollView];
     self.scrollView = scrollView;
