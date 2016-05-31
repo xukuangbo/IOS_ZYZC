@@ -104,10 +104,11 @@
     if (self.getOneSpotModel) {
         self.getOneSpotModel(_chooseSpotModel);
     }
-    //返回
+    //返回地名
     if (self.getOneScene) {
         self.getOneScene(_searchBar.text);
     }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
