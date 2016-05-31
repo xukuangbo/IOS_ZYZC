@@ -201,6 +201,7 @@
 		2CDAB2481CEC0AD900E3E0F5 /* WXApiPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */; };
 		2CDC49F71CFD32FC00E7893C /* ZYZCConversationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC49F61CFD32FC00E7893C /* ZYZCConversationController.m */; };
 		2CDC49FA1CFD3B5900E7893C /* ZYZCRCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC49F91CFD3B5900E7893C /* ZYZCRCManager.m */; };
+		2CDC49FD1CFD960A00E7893C /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC49FC1CFD960A00E7893C /* ChatListViewController.m */; };
 		2CDCE4971CCA29EB00873915 /* ZYZCCusomMovieImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */; };
 		2CDDCE5E1CE2BB54006D372C /* ZCNoneDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDDCE5D1CE2BB54006D372C /* ZCNoneDataView.m */; };
 		2CDDCE601CE2BBA7006D372C /* ZCNoneDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDCE5F1CE2BBA7006D372C /* ZCNoneDataView.xib */; };
@@ -617,6 +618,8 @@
 		2CDC49F61CFD32FC00E7893C /* ZYZCConversationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCConversationController.m; sourceTree = "<group>"; };
 		2CDC49F81CFD3B5900E7893C /* ZYZCRCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCRCManager.h; sourceTree = "<group>"; };
 		2CDC49F91CFD3B5900E7893C /* ZYZCRCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCRCManager.m; sourceTree = "<group>"; };
+		2CDC49FB1CFD960A00E7893C /* ChatListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatListViewController.h; sourceTree = "<group>"; };
+		2CDC49FC1CFD960A00E7893C /* ChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatListViewController.m; sourceTree = "<group>"; };
 		2CDCE4951CCA29EB00873915 /* ZYZCCusomMovieImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCCusomMovieImage.h; sourceTree = "<group>"; };
 		2CDCE4961CCA29EB00873915 /* ZYZCCusomMovieImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCCusomMovieImage.m; sourceTree = "<group>"; };
 		2CDDCE5C1CE2BB54006D372C /* ZCNoneDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCNoneDataView.h; sourceTree = "<group>"; };
@@ -1641,6 +1644,8 @@
 		2CDC49F11CFD248B00E7893C /* RCConversation */ = {
 			isa = PBXGroup;
 			children = (
+				2CDC49FB1CFD960A00E7893C /* ChatListViewController.h */,
+				2CDC49FC1CFD960A00E7893C /* ChatListViewController.m */,
 				2CDC49F51CFD32FC00E7893C /* ZYZCConversationController.h */,
 				2CDC49F61CFD32FC00E7893C /* ZYZCConversationController.m */,
 				2CDC49F81CFD3B5900E7893C /* ZYZCRCManager.h */,
@@ -1997,6 +2002,7 @@
 				2CD802841CF6DA3000823C9F /* LanguageTool.m in Sources */,
 				040651501CC8BF44003FD539 /* TacticSingleModel.m in Sources */,
 				04A99CB61CBF848D00C6F5F0 /* ReturnThirdCell.m in Sources */,
+				2CDC49FD1CFD960A00E7893C /* ChatListViewController.m in Sources */,
 				2CF7EB011CC7856D007074FE /* ZCDetailIntroFirstCell.m in Sources */,
 				04F836461CD72C3300140980 /* SDRotationLoopProgressView.m in Sources */,
 				04A99D271CC0924E00C6F5F0 /* ZYZCAccountModel.m in Sources */,

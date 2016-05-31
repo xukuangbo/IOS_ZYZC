@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <RongIMKit/RongIMKit.h>
+
+typedef void (^LoginSuccess)();
+
 @interface ZYZCRCManager : NSObject<RCIMUserInfoDataSource>
 
 @end
