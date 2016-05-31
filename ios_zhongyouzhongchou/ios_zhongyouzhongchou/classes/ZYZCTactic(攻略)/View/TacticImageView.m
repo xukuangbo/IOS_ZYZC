@@ -70,7 +70,6 @@
     self.pushType = threeMapViewTypeVideo;
     self.startImg.hidden = NO;
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.videoImg)] forState:UIControlStateNormal];
-    
 }
 
 - (void)setTacticSingleModel:(TacticSingleModel *)tacticSingleModel
@@ -113,7 +112,7 @@
         [self.viewController.navigationController pushViewController:singleVC animated:YES];
     }else if(self.pushType == threeMapViewTypeSingleView) {
         //说明是一般景点
-        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] init];
+        TacticSingleFoodVC *foodVC = [[TacticSingleFoodVC alloc] initWithViewId:self.tacticSingleModel.ID];
         //要转换成tacvideomodel
         TacticVideoModel *model = [[TacticVideoModel alloc] init];
         model.name = self.tacticSingleModel.name;
@@ -125,7 +124,7 @@
         }
         model.viewText = self.tacticSingleModel.viewText;
         
-        foodVC.tacticVideoModel = model;
+//        foodVC.tacticVideoModel = model;
         [self.viewController.navigationController pushViewController:foodVC animated:YES];
     }else if (self.pushType == threeMapViewTypeFood){
         //说明是食物
