@@ -8,11 +8,11 @@
 
 #import "MoreFZCChooseSceneController.h"
 #import "ZYZCDataBase.h"
-#import "ZYZCViewSpotModel.h"
 #import "LanguageTool.h"
 @interface MoreFZCChooseSceneController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UITableView *table;
+@property (nonatomic, strong) OneSpotModel *chooseSpotModel;
 @property (nonatomic, strong) NSMutableArray  *viewSpot;
 @end
 
@@ -100,10 +100,15 @@
         }
     }
     
-    __weak typeof (&*self)weakSelf=self;
-    if (self.getOneScene) {
-        weakSelf.getOneScene(_searchBar.text);
+   //返回model
+    if (self.getOneSpotModel) {
+        self.getOneSpotModel(_chooseSpotModel);
     }
+    //返回地名
+    if (self.getOneScene) {
+        self.getOneScene(_searchBar.text);
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -152,8 +157,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OneSpotModel *oneSpotModel=_viewSpot[indexPath.row];
-    _searchBar.text=oneSpotModel.name;
+    _chooseSpotModel=_viewSpot[indexPath.row];
+    _searchBar.text=_chooseSpotModel.name;
 }
 
 
@@ -194,12 +199,12 @@
 }
 
 
-#pragma mark --- 点击事件
-
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [_searchBar resignFirstResponder];
-}
+//#pragma mark --- 点击事件
+//
+//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [_searchBar resignFirstResponder];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

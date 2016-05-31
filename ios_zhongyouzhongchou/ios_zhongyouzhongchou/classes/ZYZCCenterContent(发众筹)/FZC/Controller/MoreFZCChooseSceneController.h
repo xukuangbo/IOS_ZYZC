@@ -7,8 +7,11 @@
 //
 
 #import "ZYZCBaseViewController.h"
+#import "ZYZCViewSpotModel.h"
 typedef void(^GetOneScenceBlock)(NSString *scence);
+typedef void(^GetOneSpotModel) (OneSpotModel *model);
 @interface MoreFZCChooseSceneController : ZYZCBaseViewController
-@property(nonatomic,copy)GetOneScenceBlock getOneScene;
+@property (nonatomic, copy) GetOneScenceBlock getOneScene;
+@property (nonatomic, copy) GetOneSpotModel   getOneSpotModel;
 @property(nonatomic,strong)NSArray *mySceneArr;
 @end
