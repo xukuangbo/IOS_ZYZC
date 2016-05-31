@@ -112,7 +112,9 @@
 #define GETVIEWSPOT    HTTPURL(@"viewSpot/getAllViews")
 //获取我的行程安排时间表
 #define GET_MY_OCCUPY_TIME  HTTPURL(@"list/listMyProductsTime")
-
+//获取单个景点的详细数据
+#define GET_VIEWSPOT        HTTPURL(@"viewSpot/getViewSpot")
+//获取景点视屏
 #define GET_SPOT_VIDEO     HTTPURL(@"viewSpot/getViewSpotVideo")
 
 

@@ -343,11 +343,16 @@
     if (oneModel.product.productPrice) {
         raiseMoney=[oneModel.product.productPrice floatValue]/100.0;
     }
-    _moneyLab.attributedText=[self changeTextFontAndColorByString:KRAISE_MONEY(raiseMoney) andChangeRange:NSMakeRange(0, 2)];
-    
+    if (KRAISE_MONEY(raiseMoney).length>3) {
+        _moneyLab.attributedText=[self changeTextFontAndColorByString:KRAISE_MONEY(raiseMoney) andChangeRange:NSMakeRange(0, 2)];
+    }
+
     //出发日期
     NSString *startStr=KSTART_TIME(oneModel.product.travelstartTime);
-    _startLab.attributedText=[self changeTextFontAndColorByString:startStr andChangeRange:NSMakeRange(startStr.length-2, 2)];
+    if (startStr.length>2) {
+            _startLab.attributedText=[self changeTextFontAndColorByString:startStr andChangeRange:NSMakeRange(startStr.length-2, 2)];
+    }
+
     
     //已筹资金
     CGFloat spellRealBuyPrice=0.0;
@@ -360,7 +365,7 @@
     if (raiseMoney!=0) {
          rate=[oneModel.spellbuyproduct.spellRealBuyPrice floatValue]/raiseMoney;
     }
-     _zcInfoView.rateLab.text=[NSString stringWithFormat:@"%.f％",rate];
+     _zcInfoView.rateLab.text=[NSString stringWithFormat:@"%.f％",rate*100];
     //进度条更新
     _fillProgress.width=_emptyProgress.width*rate;
     //剩余天数

@@ -5,7 +5,6 @@
 //  Created by liuliang on 16/4/20.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-#define HTTP_URL(viewId)   [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=%@",viewId]
 
 #import "ZCDetailIntroSecondCell.h"
 
@@ -186,11 +185,12 @@
 #pragma mark --- 获取单个目的地数据
 -(void)getHttpDataByViewId:(NSNumber *)viewId
 {
-    [ZYZCHTTPTool getHttpDataByURL:HTTP_URL(viewId) withSuccessGetBlock:^(id result, BOOL isSuccess) {
+    NSString *url=[NSString stringWithFormat:@"%@viewId=%@",GET_VIEWSPOT,viewId];
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
         _tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
         [self reloadData];
     } andFailBlock:^(id failResult) {
-        NSLog(@"%@",failResult);
+//        NSLog(@"%@",failResult);
     }];
 }
 
@@ -200,7 +200,9 @@
     [_oneGoalImg sd_setImageWithURL:[NSURL URLWithString:KWebImage(_tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
     _generalLab.text=_tacticSingleModel.viewText ;
     _destLab.text=_tacticSingleModel.name;
-    _generalLab.attributedText=[ZYZCTool setLineDistenceInText:_generalLab.text];
+    if (_destLab.text.length) {
+       _generalLab.attributedText=[ZYZCTool setLineDistenceInText:_generalLab.text];
+    }
 }
 
 #pragma mark --- 景点详情
@@ -231,7 +233,6 @@
     
     UIView *lineView=[button viewWithTag:LINEVIEW_TAG];
     lineView.hidden=NO;
-    
 }
 
 -(void)dealloc

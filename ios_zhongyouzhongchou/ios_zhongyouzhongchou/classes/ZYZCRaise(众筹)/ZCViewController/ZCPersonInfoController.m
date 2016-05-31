@@ -31,6 +31,7 @@
 #import "FXBlurView.h"
 
 #import "ZCCommentModel.h"
+#import "ZCSpotVideoModel.h"
 #import "ZCCommentViewController.h"
 #import "MBProgressHUD+MJ.h"
 
@@ -56,9 +57,9 @@
 
 @property (nonatomic, strong) NSMutableArray   *detailDays;//行程安排数组
 
-@property (nonatomic, strong) NSMutableArray   *viewSpots;  //
+@property (nonatomic, strong) NSMutableArray   *viewSpots;  //目的地
 
-@property (nonatomic, strong) NSMutableArray   *dests;   //行程目的地
+@property (nonatomic, strong) NSMutableArray   *spotVideos;  //目的地视屏
 
 @property (nonatomic, strong) NSMutableArray *favoriteTravel;//猜你喜欢的旅游
 
@@ -112,14 +113,11 @@
 {
     if (_oneModel.product.productDest) {
         NSArray *destArr=[ZYZCTool turnJsonStrToArray:_oneModel.product.productDest];
-        NSLog(@"%@",destArr);
         ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
         _viewSpots=[NSMutableArray array];
-        _dests=[NSMutableArray array];
         for (NSString *dest in destArr) {
              OneSpotModel *oneSportModel=[dataBase searchOneDataWithName:dest];
             if (oneSportModel) {
-                [_dests addObject:dest];
                 [_viewSpots addObject:oneSportModel];
             }
         }
@@ -127,23 +125,22 @@
     _detailDays=[NSMutableArray arrayWithArray:_schedule];
     _commentArr=[NSMutableArray array];
     _favoriteTravel=[NSMutableArray array];
+    _spotVideos= [NSMutableArray array];
     self.contentType= IntroType;//展示介绍部分
     _hasCosponsor   = NO;//添加联和发起人项
     _hasIntroGoal   =_zcType==MyDraft?YES:NO;//添加众筹目的
     _hasIntroGeneral= _viewSpots.count>0?YES:NO;//添加目的地介绍
-    _hasIntroMovie  = YES;//添加动画攻略
+    _hasIntroMovie  = NO;//添加动画攻略
     _hasHotComment  = NO;//添加热门评论
     _hasInterestTravel=NO;//添加兴趣标签匹配的旅游
 
 }
 
-#pragma mark --- 获取数据
+#pragma mark --- 获取众筹详情数据
 -(void)getHttpData
 {
     NSString *urlStr=KGET_DETAIL_PRODUCT([ZYZCTool getUserId],_productId);
-    NSLog(@"%@",urlStr);
-    [ZYZCHTTPTool getHttpDataByURL:KGET_DETAIL_PRODUCT([ZYZCTool getUserId], _productId) withSuccessGetBlock:^(id result, BOOL isSuccess) {
-        NSLog(@"%@",result);
+    [ZYZCHTTPTool getHttpDataByURL:urlStr withSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
             _detailModel=[[ZCDetailModel alloc]mj_setKeyValues:result];
             NSArray *detailDays=_detailModel.detailProductModel.schedule;
@@ -159,14 +156,42 @@
             [_table reloadData];
         }
     } andFailBlock:^(id failResult) {
-        NSLog(@"%@",failResult);
+//        NSLog(@"%@",failResult);
     }];
+    
+//    获取景点视屏
+    for(OneSpotModel *oneSportModel in _viewSpots){
+        NSNumber *viewId=oneSportModel.ID;
+//        NSLog(@"viewId:%@",viewId);
+        [ZYZCHTTPTool getHttpDataByURL:[NSString stringWithFormat:@"%@viewId=%@",GET_SPOT_VIDEO,viewId] withSuccessGetBlock:^(id result, BOOL isSuccess)
+        {
+            if (isSuccess) {
+                ZCSpotVideoModel *spotVideo=[[ZCSpotVideoModel alloc]mj_setKeyValues:result[@"data"]];
+                if (spotVideo.videoUrl.length) {
+                    spotVideo.spotName=oneSportModel.name;
+                    [_spotVideos addObject:spotVideo];
+                    _hasIntroMovie=YES;
+                    [_table reloadData];
+                } ;
+            }
+//            NSLog(@"%@",result);
+        }
+        andFailBlock:^(id failResult)
+        {
+//            NSLog(@"%@",failResult);
+        }];
+    }
 }
+
 
 #pragma mark --- 获取热门评论
 -(void)getHotComment
 {
-    NSDictionary  *parameters=@{@"openid":[ZYZCTool getUserId],@"productId":_productId};
+    NSDictionary  *parameters=@{@"openid":[ZYZCTool getUserId],
+                                @"productId":_productId,
+                                @"pageNO":@1,
+                                @"pageSize":@1
+                                };
     [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_COMMENT andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
         [_commentArr removeAllObjects];
         if (isSuccess) {
@@ -179,7 +204,6 @@
                 _hasHotComment=YES;
                 [_table reloadData];
             }
-            
        }
     } andFailBlock:^(id failResult) {
         NSLog(@"%@",failResult);
@@ -287,7 +311,7 @@
     NSInteger days=_detailDays.count;
     //第二组的cell数量
     NSInteger secondSectionCellNumber=
-    (2*_hasIntroGoal+2*_hasIntroGeneral+2*_hasIntroMovie)*(self.contentType==IntroType?1:0)
+    (2*_hasIntroGoal+2*_hasIntroGeneral+2*_hasIntroMovie*_spotVideos.count)*(self.contentType==IntroType?1:0)
     +2*days*(self.contentType==ArrangeType?1:0)
     +(2+2*_hasHotComment+2*_hasInterestTravel*(1+4))*(self.contentType==ReturnType?1:0);
     
@@ -345,10 +369,13 @@
                 introSecondCell.goals=_viewSpots;
                 return introSecondCell;
             }
-            else if (indexPath.row == 0 +2*_hasIntroGoal +2*_hasIntroGeneral && _hasIntroMovie)
+            else if (indexPath.row >=2*_hasIntroGoal +2*_hasIntroGeneral &&indexPath.row <=2*_hasIntroGoal +2*_hasIntroGeneral+2*_hasIntroMovie*_spotVideos.count&&(indexPath.row-(2*_hasIntroGoal +2*_hasIntroGeneral))%2==0&& _hasIntroMovie)
             {
                 NSString *introThirdCellId=@"introThirdCell";
                 ZCDetailIntroThirdCell *introThirdCell=(ZCDetailIntroThirdCell *)[self customTableView:tableView cellWithIdentifier:introThirdCellId andCellClass:[ZCDetailIntroThirdCell class]];
+                ZCSpotVideoModel *spotVideoModel=_spotVideos[(indexPath.row-2*_hasIntroGoal -2*_hasIntroGeneral)/2];
+                introThirdCell.spotVideoModel=spotVideoModel;
+                introThirdCell.subDesLab.text=SUBDES_FORMOVIE(spotVideoModel.spotName);
                 return introThirdCell;
                 
             }
@@ -459,7 +486,7 @@
             {
                 return ZCDETAILINTRO_SECONDCELL_HEIGHT;
             }
-            else if (indexPath.row == 0+2*_hasIntroGoal +2*_hasIntroGeneral && _hasIntroMovie)
+            else if (_hasIntroMovie&&indexPath.row >=2*_hasIntroGoal +2*_hasIntroGeneral &&indexPath.row <=2*_hasIntroGoal +2*_hasIntroGeneral+2*_hasIntroMovie*_spotVideos.count&&(indexPath.row-(2*_hasIntroGoal +2*_hasIntroGeneral))%2==0)
             {
                 return ZCDETAILINTRO_THIRDCELL_HEIGHT;
             }
