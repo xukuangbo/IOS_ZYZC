@@ -99,16 +99,6 @@
             return;
         }
     }
-    
-   //返回model
-    if (self.getOneSpotModel) {
-        self.getOneSpotModel(_chooseSpotModel);
-    }
-    //返回地名
-    if (self.getOneScene) {
-        self.getOneScene(_searchBar.text);
-    }
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -159,6 +149,12 @@
 {
     _chooseSpotModel=_viewSpot[indexPath.row];
     _searchBar.text=_chooseSpotModel.name;
+    
+    //返回地名
+    if (self.getOneScene) {
+        self.getOneScene(_searchBar.text);
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
