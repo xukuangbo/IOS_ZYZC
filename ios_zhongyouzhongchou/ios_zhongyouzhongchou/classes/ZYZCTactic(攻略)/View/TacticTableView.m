@@ -57,7 +57,7 @@
 //    _tacticModel = model;
 //    
 //    _headImageArray = model.pics;
-    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getIndexHot.action"];
+    NSString *url = [NSString stringWithFormat:@"http://www.sosona.cn:8080/viewSpot/getIndexHot.action"];
     //访问网络
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
@@ -73,7 +73,6 @@
         NSLog(@"%@",failResult);
     }];
     
-   
 }
 
 #pragma mark - UITableDelegate和Datasource

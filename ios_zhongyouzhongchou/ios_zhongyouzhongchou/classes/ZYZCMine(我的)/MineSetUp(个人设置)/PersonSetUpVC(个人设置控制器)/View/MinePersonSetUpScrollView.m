@@ -8,6 +8,8 @@
 #import "MinePersonSetUpScrollView.h"
 #import "MinePersonSetUpHeadView.h"
 #import "MinePersonSetUpModel.h"
+#import "MinePersonDatePickerView.h"
+#import "MinePersonSetUpLikeController.h"
 #define SetUpFirstCellLabelHeight 34
 @interface MinePersonSetUpScrollView()<UITextFieldDelegate>
 @property (nonatomic, strong) UIImageView *firstBg;
@@ -50,7 +52,6 @@
     self.contentSize = CGSizeMake(KSCREEN_W, self.fifthBg.bottom + KEDGE_DISTANCE);
     NSLog(@"%@",NSStringFromCGSize(self.contentSize));
 }
-
 /**
  *  第一个cell
  */
@@ -101,6 +102,7 @@
     UILabel *birthdayLabel = [[UILabel alloc] initWithFrame:CGRectMake(birthdayLabelX, birthdayLabelY, birthdayLabelW, birthdayLabelH)];
     birthdayLabel.text = @"生日";
     UIButton *birthButton = [[UIButton alloc] init];
+    [birthButton addTarget:self action:@selector(birthButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     birthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [birthButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
     self.birthButton = birthButton;
@@ -115,6 +117,8 @@
     constellationLabel.text = @"星座";
     UITextField *constellationButton = [[UITextField alloc] init];
     constellationButton.textColor = [UIColor ZYZC_TextGrayColor];
+    constellationButton.placeholder = @"请输入星座";
+    constellationButton.delegate = self;
     [constellationButton setValue:[UIColor ZYZC_TextGrayColor] forKeyPath:@"_placeholderLabel.textColor"];//设置占位字的颜色
     constellationButton.delegate = self;
     self.constellationButton = constellationButton;
@@ -125,7 +129,6 @@
     self.firstBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     self.firstBg.height = (SetUpFirstCellLabelHeight * 4 + KEDGE_DISTANCE * 2);
 }
-
 /**
  *  第二个cell
  */
@@ -148,6 +151,7 @@
     UILabel *likeLabel = [[UILabel alloc] initWithFrame:CGRectMake(likeLabelX, likeLabelY, likeLabelW, likeLabelH)];
     likeLabel.text = @"兴趣标签";
     UIButton *likeButton = [[UIButton alloc] init];
+    [likeButton addTarget:self action:@selector(likeButtonAction) forControlEvents:UIControlEventTouchUpInside];
     self.likeButton = likeButton;
     [self createUIWithSuperView:self.secondBg titleLabel:likeLabel titleView:likeButton];
     
@@ -155,7 +159,6 @@
     self.secondBg.layer.masksToBounds = YES;
     self.secondBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     self.secondBg.height = (SetUpFirstCellLabelHeight * 1 + KEDGE_DISTANCE * 2);
-    
 }
 /**
  *  第三个cell
@@ -333,6 +336,32 @@
     [superView addSubview:titleView];
 }
 
+- (void)birthButtonAction:(UIButton *)birthButton
+{
+    [self.nameTextField endEditing:YES];
+    [self.constellationButton endEditing:YES];
+    [self.heightButton endEditing:YES];
+    [self.weightButton endEditing:YES];
+    
+    MinePersonDatePickerView *datePickerView = [[MinePersonDatePickerView alloc] initWithFrame:self.bounds];
+
+    __weak typeof(&*self) weakSelf = self;
+    datePickerView.sureBlock = ^(NSString *dateString){
+        [weakSelf.birthButton setTitle:dateString forState:UIControlStateNormal];
+    };
+    
+    [self addSubview:datePickerView];
+}
+
+/**
+ *  兴趣标签
+ */
+- (void)likeButtonAction
+{
+    MinePersonSetUpLikeController *likeController = [[MinePersonSetUpLikeController alloc] init];
+    [self.viewController.navigationController pushViewController:likeController animated:YES];
+}
+
 /**
  *  刷新数据
  */
@@ -341,9 +370,11 @@
     //头视图
     NSString *faceImg = minePersonSetUpModel.faceImg;
     [self.headView.iconView sd_setImageWithURL:[NSURL URLWithString:faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:(SDWebImageRetryFailed | SDWebImageLowPriority)];
+    
     self.headView.nameLabel.text = minePersonSetUpModel.userName;
     
     [self.headView sd_setImageWithURL:[NSURL URLWithString:faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:(SDWebImageRetryFailed | SDWebImageLowPriority)];
+    
     //姓名
     self.nameTextField.text = minePersonSetUpModel.userName? minePersonSetUpModel.userName : nil;
     //性别
@@ -353,10 +384,16 @@
     NSString *birthText = minePersonSetUpModel.birthday? minePersonSetUpModel.birthday : @"请输入生日";
     [self.birthButton setTitle:birthText forState:UIControlStateNormal];
     //星座
-    NSString *constellationText = minePersonSetUpModel.constellation? minePersonSetUpModel.constellation : @"请输入星座";
+    NSString *constellationText = minePersonSetUpModel.constellation? minePersonSetUpModel.constellation : nil;
     self.constellationButton.text = constellationText;
     //兴趣标签
     
-    
+}
+
+#pragma mark - UITextfieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField endEditing:YES];
+    return YES;
 }
 @end
