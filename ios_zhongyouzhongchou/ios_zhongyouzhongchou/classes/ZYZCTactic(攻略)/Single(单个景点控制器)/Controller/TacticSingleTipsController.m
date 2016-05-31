@@ -26,6 +26,7 @@
         [self setUpUI];
         [self setBackItem];
         self.automaticallyAdjustsScrollViewInsets = NO;
+        self.hidesBottomBarWhenPushed = YES;
         self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
     }
     return self;

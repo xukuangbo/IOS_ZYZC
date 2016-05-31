@@ -24,7 +24,8 @@
 {
     self = [super initWithFrame:frame style:style];
     if (self) {
-//        self.backgroundColor = [UIColor blackColor];
+        self.backgroundColor = [UIColor ZYZC_BgGrayColor];
+        self.separatorColor = [UIColor clearColor];
         self.dataSource = self;
         self.delegate = self;
         
@@ -114,6 +115,7 @@
     [headView addSubview:bgImg];
     
     headView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+    headView.pageDotColor = [UIColor whiteColor];
     headView.currentPageDotColor = [UIColor ZYZC_MainColor]; // 自定义分页控件小圆标颜色
     NSMutableArray *headURLArray = [NSMutableArray array];
     if (self.tacticModel.pics) {

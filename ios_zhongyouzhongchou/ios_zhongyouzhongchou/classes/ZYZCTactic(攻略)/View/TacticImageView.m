@@ -90,7 +90,6 @@
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleModel.viewImg)] forState:UIControlStateNormal];
 }
 
-
 - (void)setTacticSingleFoodModel:(TacticSingleFoodModel *)tacticSingleFoodModel
 {
     _tacticSingleFoodModel = tacticSingleFoodModel;

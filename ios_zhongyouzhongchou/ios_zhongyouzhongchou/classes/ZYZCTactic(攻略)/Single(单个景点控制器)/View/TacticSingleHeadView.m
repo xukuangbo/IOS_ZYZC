@@ -16,7 +16,8 @@
         
         
         UILabel *namelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-        namelabel.font = [UIFont systemFontOfSize:33];
+        namelabel.font = [UIFont boldSystemFontOfSize:33];
+        namelabel.shadowOffset=CGSizeMake(1, 1);
         namelabel.textAlignment = NSTextAlignmentCenter;
         namelabel.textColor = [UIColor whiteColor];
         namelabel.centerX = KSCREEN_W * 0.5;
