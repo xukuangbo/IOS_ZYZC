@@ -29,17 +29,27 @@ static NSString *textCellID = @"TacticFoodTextCell";
 static NSString *picCellID = @"TacticFoodPicCell";
 
 @implementation TacticSingleFoodVC
-- (instancetype)init
+
+- (instancetype)initWithViewId:(NSInteger)viewId
 {
     self = [super init];
     if (self) {
+        self.viewId = viewId;
         [self setUpUI];
         [self setBackItem];
+        
+        self.hidesBottomBarWhenPushed = YES;
         self.automaticallyAdjustsScrollViewInsets = NO;
         self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
+        
+        /**
+         *  刷新数据
+         */
+        [self refreshDataWithViewId:self.viewId];
     }
     return self;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -115,6 +125,32 @@ static NSString *picCellID = @"TacticFoodPicCell";
         UIImageView *imageView = [[UIImageView alloc] init];
         [self.imageArray addObject:imageView];
     }
+}
+
+/**
+ *  刷新数据
+ */
+- (void)refreshDataWithViewId:(NSInteger)viewId
+{
+    
+    
+    NSString *url = [NSString stringWithFormat:@"http://www.sosona.cn:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
+    //    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getVideoViewList.action"];
+    
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            //请求成功，转化为数组
+            //先判断是那种类型
+//            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
+//            weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
+//            
+//            [weakSelf.tableView reloadData];
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
 }
 
 - (void)setTacticSingleFoodModel:(TacticSingleFoodModel *)tacticSingleFoodModel

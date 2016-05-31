@@ -98,6 +98,7 @@
     searchButton.size = CGSizeMake(searchButtonW, 25);
     [searchButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
     searchButton.backgroundColor = [UIColor whiteColor];
+    searchButton.titleLabel.font = [UIFont systemFontOfSize:15];
     searchButton.layer.cornerRadius = 5;
     searchButton.layer.masksToBounds = YES;
     [searchButton setImage:[UIImage imageNamed:@"icon_search"] forState:UIControlStateNormal];

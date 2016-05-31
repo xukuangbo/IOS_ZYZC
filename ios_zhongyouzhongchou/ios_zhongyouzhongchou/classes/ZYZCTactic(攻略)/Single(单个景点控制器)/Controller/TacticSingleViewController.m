@@ -30,15 +30,16 @@
     if (self) {
         self.viewId = viewId;
         
+        self.hidesBottomBarWhenPushed = YES;
     }
     return self;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self setBackItem];
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
     /**
      *  设置导航栏
      */
@@ -52,6 +53,10 @@
      *  刷新数据
      */
     [self refreshDataWithViewId:self.viewId];
+    /**
+     *  创建底部工具条
+     */
+    [self createBottomBar];
     
 }
 
@@ -68,18 +73,6 @@
  */
 - (void)refreshDataWithViewId:(NSInteger)viewId
 {
-//    NSString *Json_path = [[NSBundle mainBundle] pathForResource:@"SingleView.json" ofType:nil];
-//    //==Json数据
-//    NSData *data=[NSData dataWithContentsOfFile:Json_path];
-//    //==JsonObject
-//    
-//    NSDictionary *JsonObject=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-//    TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:JsonObject[@"data"]];
-//    self.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
-//    
-//    [self.tableView reloadData];
-//    
-//    return ;
     
     if (_tacticSingleModel) {
         self.tacticSingleModelFrame.tacticSingleModel = _tacticSingleModel;
@@ -87,7 +80,7 @@
         return;
     }
     
-    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
+    NSString *url = [NSString stringWithFormat:@"http://www.sosona.cn:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
 //    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getVideoViewList.action"];
     //访问网络
     
@@ -125,8 +118,35 @@
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     tableView.delegate = self;
     tableView.dataSource = self;
+    tableView.backgroundColor = [UIColor ZYZC_BgGrayColor];
+    tableView.separatorColor = [UIColor clearColor];
     [self.view addSubview:tableView];
     self.tableView = tableView;
+}
+/**
+ *  创建底部工具条
+ */
+- (void)createBottomBar
+{
+    UIView *bottomBar = [[UIView alloc] init];
+    bottomBar.size = CGSizeMake(KSCREEN_W, 49);
+    bottomBar.left = 0;
+    bottomBar.bottom = KSCREEN_H;
+    bottomBar.backgroundColor=[UIColor ZYZC_TabBarGrayColor];
+    [self.view addSubview:bottomBar];
+    CGFloat btn_width = KSCREEN_W/2;
+    UIButton *sureBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    sureBtn.frame=CGRectMake(btn_width * 0.5, 0, btn_width, bottomBar.height);
+    [sureBtn setTitle:@"想去" forState:UIControlStateNormal];
+    [sureBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
+    sureBtn.titleLabel.font=[UIFont systemFontOfSize:20];
+    [sureBtn addTarget:self action:@selector(wantToGoAction:) forControlEvents:UIControlEventTouchUpInside];
+    [bottomBar addSubview:sureBtn];
+}
+
+- (void)wantToGoAction:(UIButton *)button
+{
+    NSLog(@"想去");
 }
 
 - (void)viewWillAppear:(BOOL)animated
