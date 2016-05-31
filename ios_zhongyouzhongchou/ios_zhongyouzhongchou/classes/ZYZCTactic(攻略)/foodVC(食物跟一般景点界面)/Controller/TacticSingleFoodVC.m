@@ -141,6 +141,7 @@ static NSString *picCellID = @"TacticFoodPicCell";
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
             //请求成功，转化为数组
+            NSDictionary *dic = (NSDictionary *)result;
             //先判断是那种类型
 //            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
 //            weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;

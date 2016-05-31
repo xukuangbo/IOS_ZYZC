@@ -136,7 +136,7 @@
     [self.view addSubview:bottomBar];
     CGFloat btn_width = KSCREEN_W/2;
     UIButton *sureBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    sureBtn.frame=CGRectMake(btn_width * 0.5, 0, btn_width, bottomBar.height);
+    sureBtn.frame = CGRectMake(btn_width * 0.5, 0, btn_width, bottomBar.height);
     [sureBtn setTitle:@"想去" forState:UIControlStateNormal];
     [sureBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
     sureBtn.titleLabel.font=[UIFont systemFontOfSize:20];
