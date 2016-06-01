@@ -216,6 +216,8 @@
 		2CE5DD9D1CE999A900895A94 /* ZCCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE5DD9C1CE999A900895A94 /* ZCCommentModel.m */; };
 		2CE5DDA01CE99BFD00895A94 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE5DD9F1CE99BFD00895A94 /* UserModel.m */; };
 		2CE5DDA31CE9CF5900895A94 /* AddCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE5DDA21CE9CF5900895A94 /* AddCommentView.m */; };
+		2CEEC1911CFEDC4A00A2DCA8 /* ZYZCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CEEC1901CFEDC4A00A2DCA8 /* ZYZCLoginViewController.m */; };
+		2CEEC1971CFEE4DB00A2DCA8 /* ZYZCPersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CEEC1961CFEE4DB00A2DCA8 /* ZYZCPersonalController.m */; };
 		2CF7EB011CC7856D007074FE /* ZCDetailIntroFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF7EB001CC7856D007074FE /* ZCDetailIntroFirstCell.m */; };
 		2CF7EB041CC78582007074FE /* ZCDetailIntroSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF7EB031CC78582007074FE /* ZCDetailIntroSecondCell.m */; };
 		2CF7EB071CC78599007074FE /* ZCDetailIntroThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF7EB061CC78599007074FE /* ZCDetailIntroThirdCell.m */; };
@@ -648,6 +650,10 @@
 		2CE5DD9F1CE99BFD00895A94 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		2CE5DDA11CE9CF5900895A94 /* AddCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCommentView.h; sourceTree = "<group>"; };
 		2CE5DDA21CE9CF5900895A94 /* AddCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCommentView.m; sourceTree = "<group>"; };
+		2CEEC18F1CFEDC4A00A2DCA8 /* ZYZCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCLoginViewController.h; sourceTree = "<group>"; };
+		2CEEC1901CFEDC4A00A2DCA8 /* ZYZCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCLoginViewController.m; sourceTree = "<group>"; };
+		2CEEC1951CFEE4DB00A2DCA8 /* ZYZCPersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCPersonalController.h; sourceTree = "<group>"; };
+		2CEEC1961CFEE4DB00A2DCA8 /* ZYZCPersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCPersonalController.m; sourceTree = "<group>"; };
 		2CF7EAFF1CC7856D007074FE /* ZCDetailIntroFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailIntroFirstCell.h; sourceTree = "<group>"; };
 		2CF7EB001CC7856D007074FE /* ZCDetailIntroFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailIntroFirstCell.m; sourceTree = "<group>"; };
 		2CF7EB021CC78582007074FE /* ZCDetailIntroSecondCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailIntroSecondCell.h; sourceTree = "<group>"; };
@@ -853,6 +859,7 @@
 		04A99BCC1CBF848C00C6F5F0 /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				2CEEC18B1CFEC04B00A2DCA8 /* ZYZCPersonal(他人空间) */,
 				04A99BCD1CBF848C00C6F5F0 /* Main(主要) */,
 				04A99BEA1CBF848C00C6F5F0 /* ZYZCBase */,
 				04A99BF31CBF848C00C6F5F0 /* ZYZCCenterContent(发众筹) */,
@@ -940,6 +947,8 @@
 				04A99BF01CBF848C00C6F5F0 /* ZYZCNavigationController.m */,
 				04A99BF11CBF848C00C6F5F0 /* ZYZCTabBarController.h */,
 				2CE074C21CCF7ECC006D312D /* ZYZCTabBarController.m */,
+				2CEEC18F1CFEDC4A00A2DCA8 /* ZYZCLoginViewController.h */,
+				2CEEC1901CFEDC4A00A2DCA8 /* ZYZCLoginViewController.m */,
 			);
 			path = ZYZCBase;
 			sourceTree = "<group>";
@@ -1662,10 +1671,10 @@
 		2CDC49F11CFD248B00E7893C /* RCConversation */ = {
 			isa = PBXGroup;
 			children = (
-				2CDC49FB1CFD960A00E7893C /* ChatListViewController.h */,
-				2CDC49FC1CFD960A00E7893C /* ChatListViewController.m */,
 				2CDC49F51CFD32FC00E7893C /* ZYZCConversationController.h */,
 				2CDC49F61CFD32FC00E7893C /* ZYZCConversationController.m */,
+				2CDC49FB1CFD960A00E7893C /* ChatListViewController.h */,
+				2CDC49FC1CFD960A00E7893C /* ChatListViewController.m */,
 				2CDC49F81CFD3B5900E7893C /* ZYZCRCManager.h */,
 				2CDC49F91CFD3B5900E7893C /* ZYZCRCManager.m */,
 			);
@@ -1679,6 +1688,39 @@
 				2CE21A7A1CC076C700C7A797 /* MoreFZCTravelOneDayDetailMdel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		2CEEC18B1CFEC04B00A2DCA8 /* ZYZCPersonal(他人空间) */ = {
+			isa = PBXGroup;
+			children = (
+				2CEEC1941CFEE4CB00A2DCA8 /* viewController */,
+				2CEEC1931CFEE4C400A2DCA8 /* view */,
+				2CEEC1921CFEE4BE00A2DCA8 /* model */,
+			);
+			path = "ZYZCPersonal(他人空间)";
+			sourceTree = "<group>";
+		};
+		2CEEC1921CFEE4BE00A2DCA8 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		2CEEC1931CFEE4C400A2DCA8 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		2CEEC1941CFEE4CB00A2DCA8 /* viewController */ = {
+			isa = PBXGroup;
+			children = (
+				2CEEC1951CFEE4DB00A2DCA8 /* ZYZCPersonalController.h */,
+				2CEEC1961CFEE4DB00A2DCA8 /* ZYZCPersonalController.m */,
+			);
+			path = viewController;
 			sourceTree = "<group>";
 		};
 		2CF7EAFB1CC784A8007074FE /* ZCDetailIntroShowTableCell */ = {
@@ -1960,6 +2002,7 @@
 				04A99D201CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */,
 				04A99D1D1CC07E1800C6F5F0 /* WXApiManager.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
+				2CEEC1911CFEDC4A00A2DCA8 /* ZYZCLoginViewController.m in Sources */,
 				2C4EEFC41CC6316900AA99F6 /* ZCDetailFirstCell.m in Sources */,
 				04F8364D1CD734CD00140980 /* TacticSingleTipsController.m in Sources */,
 				04B99A6B1CFEFB7B00E3C33A /* TacticGeneralModel.m in Sources */,
@@ -1986,6 +2029,7 @@
 				0490D15C1CC9FAA80064844C /* TacticSingleHeadView.m in Sources */,
 				04F6854B1CF57C9F00E1A98E /* MinePersonSetUpHeadView.m in Sources */,
 				2CDDCE5E1CE2BB54006D372C /* ZCNoneDataView.m in Sources */,
+				2CEEC1971CFEE4DB00A2DCA8 /* ZYZCPersonalController.m in Sources */,
 				040651241CC62FC7003FD539 /* TAPageControl.m in Sources */,
 				04A99C9F1CBF848D00C6F5F0 /* SelectImageViewController.m in Sources */,
 				0406512D1CC6356C003FD539 /* TacticMainViewController.m in Sources */,

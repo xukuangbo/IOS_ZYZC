@@ -58,7 +58,7 @@
 //    _tacticModel = model;
 //    
 //    _headImageArray = model.pics;
-    NSString *url = [NSString stringWithFormat:@"http://www.sosona.cn:8080/viewSpot/getIndexHot.action"];
+    NSString *url = GET_TACTIC;
     //访问网络
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {

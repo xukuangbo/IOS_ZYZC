@@ -13,11 +13,12 @@
 #import "MineMessageController.h"
 #import "ZCMainController.h"
 
-#import "ZYZCConversationController.h"
+#import "ZYZCRCManager.h"
 
 @interface MineCenterTableView()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSArray *titleArray;
+@property (nonatomic, strong) ZYZCRCManager *manager;
 @end
 @implementation MineCenterTableView
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
@@ -104,12 +105,10 @@
     }
     else if (indexPath.row == 3)
     {
-        ZYZCConversationController *chat=[[ZYZCConversationController alloc]init];
-        chat.conversationType=ConversationType_PRIVATE;
-        chat.targetId = @"1";
-        chat.title = @"聊天";
-        //显示聊天会话界面
-        [self.viewController.navigationController pushViewController:chat animated:YES];
+        _manager=[[ZYZCRCManager alloc]init];
+        [_manager loginRongCloudByToken:@"y68HeKPj3aK04KdeHmsBW7kQ/amtuFTau6PSbUfZaYCna9+Ujfic4a0iQbYUY+OX6p+VGsdHQb8YinPT+TfsDrWpvyhK/AeTBNq+QziAOMdKP/yatbojVTRpAqWTSr2z"];
+        
+        [_manager getMyConversationListWithSupperController:self.viewController];
     }
 }
 
