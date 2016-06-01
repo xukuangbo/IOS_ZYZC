@@ -45,7 +45,7 @@
 #import "Masonry.h"
 
 #pragma mark --- 基础网络接口
-#define BASE_URL @"http://121.40.225.119:8080/"
+#define BASE_URL @"http://114.55.137.241:8080/"
 
 #define HTTPURL(APPEND_URL) [NSString stringWithFormat:@"%@%@.action?",BASE_URL,APPEND_URL]
 
@@ -103,20 +103,21 @@
 #define GET_ORDER          HTTPURL(@"weixinpay/generateAppOrder")
 
 //获取所有众筹列表
-#define LISTALLPRODUCTS   HTTPURL(@"list/listAllProducts")
+#define LISTALLPRODUCTS    HTTPURL(@"list/listAllProducts")
 //获取我的众筹列表
-#define LISTMYPRODUCTS    HTTPURL(@"list/listMyProducts")
+#define LISTMYPRODUCTS     HTTPURL(@"list/listMyProducts")
 //获取国家列表
-#define LISTCOUNTRY       HTTPURL(@"user/listCountry")
+#define LISTCOUNTRY        HTTPURL(@"user/listCountry")
 //获取国家-省份-城市信息
-#define GETVIEWSPOT    HTTPURL(@"viewSpot/getAllViews")
+#define GETVIEWSPOT        HTTPURL(@"viewSpot/getAllViews")
 //获取我的行程安排时间表
-#define GET_MY_OCCUPY_TIME  HTTPURL(@"list/listMyProductsTime")
+#define GET_MY_OCCUPY_TIME HTTPURL(@"list/listMyProductsTime")
 //获取单个景点的详细数据
-#define GET_VIEWSPOT        HTTPURL(@"viewSpot/getViewSpot")
+#define GET_VIEWSPOT       HTTPURL(@"viewSpot/getViewSpot")
 //获取景点视屏
 #define GET_SPOT_VIDEO     HTTPURL(@"viewSpot/getViewSpotVideo")
-
+//获取攻略首页数据
+#define GET_TACTIC         [NSString stringWithFormat:@"%@viewSpot/getIndexHot.action",BASE_URL]
 
 #endif /* ZYZCPch_pch */
 

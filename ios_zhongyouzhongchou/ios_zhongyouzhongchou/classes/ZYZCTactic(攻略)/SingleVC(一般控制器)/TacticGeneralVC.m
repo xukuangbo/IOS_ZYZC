@@ -135,8 +135,8 @@
 - (void)refreshDataWithViewId:(NSInteger)viewId
 {
     
-    NSString *url = [NSString stringWithFormat:@"http://www.sosona.cn:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
-    
+//    NSString *url = [NSString stringWithFormat:@"http://www.sosona.cn:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
+    NSString *url=[NSString stringWithFormat:@"%@viewId=%zd",GET_VIEWSPOT,(long)viewId];
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {

@@ -6,6 +6,8 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 #define IOS8 [[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0
+#define RC_APPKEY @"lmxuhwagxqfzd"
+
 #import "AppDelegate.h"
 #import "ZYZCTabBarController.h"
 #import "ZYZCOSSManager.h"
@@ -14,8 +16,9 @@
 #import "WXApiManager.h"
 #import "ZYZCDataBase.h"
 #import "WXApiPay.h"
+#import "ZYZCRCManager.h"
 @interface AppDelegate ()
-
+@property (nonatomic, strong)ZYZCRCManager *RCManager;
 @end
 
 @implementation AppDelegate
@@ -71,7 +74,13 @@
 #pragma mark --- 初始化融云
 -(void)initRCloud
 {
-    [[RCIM sharedRCIM] initWithAppKey:@"sfci50a7c25fi"];
+    [[RCIM sharedRCIM] initWithAppKey:RC_APPKEY];
+//    if ([ZYZCTool getUserId].length) {
+//        NSLog(@"userId%@",[ZYZCTool getUserId]);
+//        //与融云建立联系
+//        _RCManager=[[ZYZCRCManager alloc]init];
+//        [_RCManager loginRongCloudByToken:@"y68HeKPj3aK04KdeHmsBW7kQ/amtuFTau6PSbUfZaYCna9+Ujfic4a0iQbYUY+OX6p+VGsdHQb8YinPT+TfsDrWpvyhK/AeTBNq+QziAOMdKP/yatbojVTRpAqWTSr2z"];
+//    }
 }
 
 #pragma mark --- 设置根控制器

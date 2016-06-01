@@ -191,6 +191,8 @@
     [headView addSubview:bgImg];
     
     headView.nameLabel.text = self.tacticSingleModelFrame.tacticSingleModel.name;
+    headView.nameLabel.shadowOffset=CGSizeMake(1, 1);
+    headView.nameLabel.shadowColor=[UIColor blackColor];
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     
 //  [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];

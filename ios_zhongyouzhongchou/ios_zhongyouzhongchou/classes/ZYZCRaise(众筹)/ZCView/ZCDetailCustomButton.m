@@ -7,7 +7,7 @@
 //
 
 #import "ZCDetailCustomButton.h"
-
+#import "ZYZCPersonalController.h"
 @implementation ZCDetailCustomButton
 
 /*
@@ -37,7 +37,9 @@
 #pragma mark --- 访问个人空间
 -(void)personZone
 {
-    
+    ZYZCPersonalController *personalController=[[ZYZCPersonalController alloc]init];
+    personalController.hidesBottomBarWhenPushed=YES;
+    [self.viewController.navigationController pushViewController:personalController animated:YES];
 }
 
 @end

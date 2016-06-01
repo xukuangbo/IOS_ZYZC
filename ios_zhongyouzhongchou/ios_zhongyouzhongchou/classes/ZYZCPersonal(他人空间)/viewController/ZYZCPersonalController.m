@@ -1,32 +1,29 @@
 //
-//  ZYZCConversationController.m
+//  ZYZCPersonalController.m
 //  ios_zhongyouzhongchou
 //
-//  Created by liuliang on 16/5/31.
+//  Created by liuliang on 16/6/1.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#import "ZYZCConversationController.h"
+#import "ZYZCPersonalController.h"
 
-@interface ZYZCConversationController ()
+@interface ZYZCPersonalController ()
 
 @end
 
-@implementation ZYZCConversationController
+@implementation ZYZCPersonalController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_back_new"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(pressBack)];
-    
-    self.conversationMessageCollectionView.backgroundColor=[UIColor whiteColor];
+    self.navigationController.navigationBar.hidden=YES;
 }
 
--(void)pressBack
+-(void)viewDidDisappear:(BOOL)animated
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    self.navigationController.navigationBar.hidden=NO;
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -81,6 +81,9 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor ZYZC_BgGrayColor];
     _navColor=[UIColor ZYZC_NavColor];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:0];
+//    self.navigationController.navigationBar.shadowImage=[UIImage new];
+//    self.navigationController.navigationBar.backgroundColor=[_navColor colorWithAlphaComponent:0];
      [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.navigationController.navigationBar.titleTextAttributes=
