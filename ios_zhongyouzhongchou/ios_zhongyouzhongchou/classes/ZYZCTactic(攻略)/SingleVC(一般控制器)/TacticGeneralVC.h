@@ -7,10 +7,10 @@
 //
 
 #import "ZYZCBaseViewController.h"
-@class TacticVideoModel;
+@class TacticGeneralModel;
 @interface TacticGeneralVC : ZYZCBaseViewController
 
-@property (nonatomic, strong) TacticVideoModel *tacticVideoModel;
+@property (nonatomic, strong) TacticGeneralModel *tacticGeneralModel;
 /**
  *  用于网络请求的id
  */

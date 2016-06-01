@@ -122,30 +122,6 @@ static NSString *picCellID = @"TacticFoodPicCell";
     }
 }
 
-/**
- *  刷新数据
- */
-- (void)refreshDataWithViewId:(NSInteger)viewId
-{
-    
-    NSString *url = [NSString stringWithFormat:@"http://www.sosona.cn:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
-    
-    __weak typeof(&*self) weakSelf = self;
-    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
-        if (isSuccess) {
-            //请求成功，转化为数组
-            NSDictionary *dic = (NSDictionary *)result;
-            //先判断是那种类型
-//            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
-//            weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
-//            
-//            [weakSelf.tableView reloadData];
-        }
-        
-    } andFailBlock:^(id failResult) {
-        NSLog(@"%@",failResult);
-    }];
-}
 
 - (void)setTacticSingleFoodModel:(TacticSingleFoodModel *)tacticSingleFoodModel
 {

@@ -12,7 +12,7 @@
 #define labelViewFont [UIFont systemFontOfSize:16]
 
 #import "TacticGeneralVC.h"
-#import "TacticVideoModel.h"
+#import "TacticGeneralModel.h"
 @interface TacticGeneralVC ()<UIScrollViewDelegate>
 @property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, weak) UILabel *nameLabel;
@@ -134,9 +134,7 @@
  */
 - (void)refreshDataWithViewId:(NSInteger)viewId
 {
-    
-//    NSString *url = [NSString stringWithFormat:@"http://www.sosona.cn:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
-    NSString *url=[NSString stringWithFormat:@"%@viewId=%zd",GET_VIEWSPOT,(long)viewId];
+    NSString *url= GET_TACTIC_VIEW(viewId);
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
@@ -144,8 +142,8 @@
             NSDictionary *dic = (NSDictionary *)result;
             NSLog(@"%@",dic[@"foods"]);
             //先判断是那种类型
-            TacticVideoModel *tacticVideoModel = [TacticVideoModel mj_objectWithKeyValues:result[@"data"]];
-            weakSelf.tacticVideoModel = tacticVideoModel;
+            TacticGeneralModel *tacticGeneralModel = [TacticGeneralModel mj_objectWithKeyValues:result[@"data"]];
+            weakSelf.tacticGeneralModel = tacticGeneralModel;
         }
         
     } andFailBlock:^(id failResult) {
@@ -153,10 +151,9 @@
     }];
 }
 
-
-- (void)setTacticVideoModel:(TacticVideoModel *)tacticVideoModel
+- (void)setTacticGeneralModel:(TacticGeneralModel *)tacticGeneralModel
 {
-    _tacticVideoModel = tacticVideoModel;
+    _tacticGeneralModel = tacticGeneralModel;
     
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     //肯定有图片
@@ -168,24 +165,24 @@
     CGFloat labelViewY = KEDGE_DISTANCE;
     CGFloat labelViewW = mapViewW - labelViewX * 2;
     CGFloat labelViewH = 0;
-    CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticVideoModel.viewText andFont:labelViewFont andMaxWidth:labelViewW];
+    CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticGeneralModel.viewText andFont:labelViewFont andMaxWidth:labelViewW];
     labelViewH = textSize.height;
     
-    self.nameLabel.text = tacticVideoModel.name;
+    self.nameLabel.text = tacticGeneralModel.name;
     
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticGeneralModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     
-    self.labelView.text = tacticVideoModel.viewText;
+    self.labelView.text = tacticGeneralModel.viewText;
     self.labelView.frame = CGRectMake(labelViewX, labelViewY, labelViewW, labelViewH);
     
     CGFloat mapViewH = labelViewH + KEDGE_DISTANCE * 2;
     
-    if (tacticVideoModel.pics) {
+    if (tacticGeneralModel.pics) {
         
         CGFloat imageX = KEDGE_DISTANCE;
         CGFloat imageW = mapViewW - imageX * 2;
         CGFloat imageH = imageW / 16 * 9;
-        NSArray *detailImageArray = [tacticVideoModel.pics componentsSeparatedByString:@","];
+        NSArray *detailImageArray = tacticGeneralModel.pics;
         for (int i = 0; i < detailImageArray.count; i++) {
             CGFloat imageY = CGRectGetMaxY(self.labelView.frame) + i * (imageH + KEDGE_DISTANCE) + KEDGE_DISTANCE;
             UIImageView *imageView = self.imageArray[i];
