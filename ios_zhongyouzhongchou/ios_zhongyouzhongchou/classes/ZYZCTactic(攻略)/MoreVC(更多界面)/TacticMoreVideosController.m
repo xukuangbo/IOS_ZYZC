@@ -92,4 +92,9 @@ static NSString *const ID = @"MoreCollectioncell";
 {
     return UIEdgeInsetsMake(10, 10, 10, 10);
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
+}
 @end

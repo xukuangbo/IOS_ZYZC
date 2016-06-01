@@ -59,7 +59,7 @@
     
     //添加旅行目的地
         //添加底部视图
-        _destLayerImg=[[UIImageView alloc]initWithFrame:CGRectMake(-KEDGE_DISTANCE, _headImage.top+7, 50, 30)];
+        _destLayerImg=[[UIImageView alloc]initWithFrame:CGRectMake(-KEDGE_DISTANCE+2, _headImage.top+7, 50, 30)];
         _destLayerImg.image=KPULLIMG(@"xjj_fuc", 0, 10, 0, 10);
     _destLayerImg.alpha=0.7;
         [bgImg  addSubview:_destLayerImg];

@@ -378,10 +378,9 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-//    [self.navigationController.navigationBar addSubview:_segmentedView];
-
+    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
 }
+
 
 
 

@@ -45,7 +45,7 @@
 #import "Masonry.h"
 
 #pragma mark --- 基础网络接口
-#define BASE_URL @"http://114.55.137.241:8080/"
+#define BASE_URL @"http://121.40.225.119:8080/"
 
 #define HTTPURL(APPEND_URL) [NSString stringWithFormat:@"%@%@.action?",BASE_URL,APPEND_URL]
 

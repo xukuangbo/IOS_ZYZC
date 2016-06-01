@@ -72,6 +72,7 @@
 @property (nonatomic, assign) BOOL hasHotComment;//热门评论
 @property (nonatomic, assign) BOOL hasInterestTravel;//兴趣标签匹配的旅游
 @property (nonatomic, assign) BOOL getCollection;
+@property (nonatomic, assign) BOOL viewDisappear;
 @end
 
 @implementation ZCPersonInfoController
@@ -81,11 +82,6 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor ZYZC_BgGrayColor];
     _navColor=[UIColor ZYZC_NavColor];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:0];
-//    self.navigationController.navigationBar.shadowImage=[UIImage new];
-//    self.navigationController.navigationBar.backgroundColor=[_navColor colorWithAlphaComponent:0];
-     [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
-    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.navigationController.navigationBar.titleTextAttributes=
     @{NSForegroundColorAttributeName:[UIColor whiteColor],
       NSFontAttributeName:[UIFont boldSystemFontOfSize:18]};
@@ -144,6 +140,7 @@
 {
     NSString *urlStr=KGET_DETAIL_PRODUCT([ZYZCTool getUserId],_productId);
     [ZYZCHTTPTool getHttpDataByURL:urlStr withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"result:%@",result);
         if (isSuccess) {
             _detailModel=[[ZCDetailModel alloc]mj_setKeyValues:result];
             NSArray *detailDays=_detailModel.detailProductModel.schedule;
@@ -595,7 +592,7 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     //图片拉伸效果
-    if (scrollView==self.table) {
+    if (scrollView==self.table&&!_viewDisappear) {
         CGFloat offsetY = scrollView.contentOffset.y;
         if (offsetY <= -BGIMAGEHEIGHT)
         {
@@ -724,17 +721,19 @@
     NSLog(@"notify%@",notify);
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
-}
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    _viewDisappear=NO;
+    [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
+    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:@"viewControllerShow" object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    _viewDisappear=YES;
 }
 
 - (void)didReceiveMemoryWarning {
