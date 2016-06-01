@@ -80,14 +80,12 @@
         return;
     }
     
-    NSString *url = [NSString stringWithFormat:@"http://www.sosona.cn:8080/viewSpot/getViewSpot.action?viewId=%zd",(long)viewId];
-//    NSString *url = [NSString stringWithFormat:@"http://www.sosona.com:8080/viewSpot/getVideoViewList.action"];
-    //访问网络
+    NSString *url = GET_TACTIC_VIEW(viewId);
     
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
-            //请求成功，转化为数组
+            
 //          NSLog(@"%@",result);
             TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
             weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
@@ -184,7 +182,6 @@
 {
     TacticSingleHeadView *headView = [[TacticSingleHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, 50)];
     
-    
     //添加渐变条
     UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
     bgImg.image=[UIImage imageNamed:@"Background"];
@@ -195,7 +192,6 @@
     headView.nameLabel.shadowColor=[UIColor blackColor];
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     
-//  [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     return headView;
     

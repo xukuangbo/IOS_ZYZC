@@ -118,6 +118,8 @@
 #define GET_SPOT_VIDEO     HTTPURL(@"viewSpot/getViewSpotVideo")
 //获取攻略首页数据
 #define GET_TACTIC         [NSString stringWithFormat:@"%@viewSpot/getIndexHot.action",BASE_URL]
+//获取单个景点的数据，一般，国家，城市
+#define GET_TACTIC_VIEW(viewID) [NSString stringWithFormat:@"%@viewSpot/getViewSpot.action?viewId=%zd",BASE_URL,viewID]
 
 #endif /* ZYZCPch_pch */
 

@@ -70,7 +70,7 @@
     self.viewType = tacticVideoModel.viewType;
     self.pushType = threeMapViewTypeVideo;
     self.startImg.hidden = NO;
-    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.videoImg)] forState:UIControlStateNormal];
+    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.min_viewImg)] forState:UIControlStateNormal];
 }
 
 - (void)setTacticSingleModel:(TacticSingleModel *)tacticSingleModel

@@ -58,6 +58,11 @@
  *  头像
  */
 @property (nonatomic, copy) NSString *headimgurl;
+/**
+ *  userId
+ */
+@property (nonatomic, copy) NSNumber *userId;
+
 
 
 + (instancetype)accountWithDict:(NSDictionary *)dict;

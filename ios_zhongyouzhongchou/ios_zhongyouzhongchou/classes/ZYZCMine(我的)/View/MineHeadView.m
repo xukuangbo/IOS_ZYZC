@@ -294,9 +294,14 @@
     [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:@"http://121.40.225.119:8080/register/saveWeixinInfo.action" andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
             
+            ZYZCAccountModel *model = [ZYZCAccountTool account];
+            model.userId = result[@"data"][@"userId"];
+            [ZYZCAccountTool saveAccount:model];
             [NSThread sleepForTimeInterval:2];
             [MBProgressHUD hideHUD];
             [MBProgressHUD showSuccess:@"注册成功"];
+            
+            
             //展示数据
             weakSelf.nameLabel.text = weakAccount.nickname;
             [weakSelf.iconButton sd_setImageWithURL:[NSURL URLWithString:weakAccount.headimgurl] forState:UIControlStateNormal];
