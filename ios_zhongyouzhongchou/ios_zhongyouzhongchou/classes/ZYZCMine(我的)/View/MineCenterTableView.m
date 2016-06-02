@@ -105,9 +105,9 @@
     }
     else if (indexPath.row == 3)
     {
-        _manager=[[ZYZCRCManager alloc]init];
-        [_manager loginRongCloudByToken:@"y68HeKPj3aK04KdeHmsBW7kQ/amtuFTau6PSbUfZaYCna9+Ujfic4a0iQbYUY+OX6p+VGsdHQb8YinPT+TfsDrWpvyhK/AeTBNq+QziAOMdKP/yatbojVTRpAqWTSr2z"];
-        
+        NSUserDefaults  *user=[NSUserDefaults standardUserDefaults];
+        [user setObject:@"" forKey:KCHAT_TOKEN];
+        _manager=[ZYZCRCManager defaultRCManager];
         [_manager getMyConversationListWithSupperController:self.viewController];
     }
 }

@@ -13,10 +13,10 @@ typedef void (^LoginSuccess)();
 
 @interface ZYZCRCManager : NSObject<RCIMUserInfoDataSource>
 
-/**
- *  登陆融云
- */
--(void)loginRongCloudByToken:(NSString *)myToken;
+@property (nonatomic, assign) BOOL hasLogin;
+
++(instancetype )defaultRCManager;
+
 /**
  *  获取会话列表
  */

@@ -75,12 +75,6 @@
 -(void)initRCloud
 {
     [[RCIM sharedRCIM] initWithAppKey:RC_APPKEY];
-//    if ([ZYZCTool getUserId].length) {
-//        NSLog(@"userId%@",[ZYZCTool getUserId]);
-//        //与融云建立联系
-//        _RCManager=[[ZYZCRCManager alloc]init];
-//        [_RCManager loginRongCloudByToken:@"y68HeKPj3aK04KdeHmsBW7kQ/amtuFTau6PSbUfZaYCna9+Ujfic4a0iQbYUY+OX6p+VGsdHQb8YinPT+TfsDrWpvyhK/AeTBNq+QziAOMdKP/yatbojVTRpAqWTSr2z"];
-//    }
 }
 
 #pragma mark --- 设置根控制器

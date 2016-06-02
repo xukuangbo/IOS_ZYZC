@@ -204,6 +204,15 @@
     [_supportBtn setImage:[UIImage imageNamed:@"Butttn_support_pre"] forState:UIControlStateNormal];
 }
 
+#pragma mark --- 是否可支持
+-(void)setChooseSupport:(BOOL)chooseSupport
+{
+    _chooseSupport=chooseSupport;
+    if (!_chooseSupport) {
+        _supportBtn.enabled=NO;
+    }
+}
+
 #pragma mark --- 改变文字样式
 -(NSAttributedString *)customStringByString:(NSString *)str
 {

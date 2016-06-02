@@ -55,21 +55,6 @@
     
     _togetherView =[[ZCSupportTogetherView alloc]initSupportViewByTop:_returnSupportView02.bottom andTitle:TOGETHERSUPPORT(5,0.00) andText:text04 ];
     [self.contentView addSubview:_togetherView];
-    
-//    __weak typeof (&*self)weakSelf=self;
-//    _supportOneYuanView.clickSupport=_supportAnyYuanView.clickSupport=_returnSupportView01.clickSupport=_returnSupportView02.clickSupport=_togetherView.clickSupport=^(UIButton *clickBtn)
-//    {
-//        if (weakSelf.preClickBtn&&weakSelf.preClickBtn!=clickBtn) {
-//            [weakSelf.preClickBtn setImage:[UIImage imageNamed:@"Butttn_support"] forState:UIControlStateNormal];
-//        }
-//        weakSelf.preClickBtn=clickBtn;
-//        ZCPersonInfoController *VC=(ZCPersonInfoController *)weakSelf.viewController;
-//        VC.paySupportMoney=YES;
-//        UIButton *supportBtn=[(UIButton *)VC.view viewWithTag:KZCDETAIL_ATTITUDETYPE+1];
-//        supportBtn.backgroundColor=[UIColor ZYZC_MainColor];
-//        [supportBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    };
-    
 }
 
 -(void)setCellModel:(ZCDetailProductModel *)cellModel
@@ -89,7 +74,14 @@
             }
         }
         else if ([reportModel.style intValue]==1) {
+            NSNumber *myUserId=@1;//获取我的userId
             _supportOneYuanView.users=reportModel.users;
+            BOOL hasSupportOneYuan=NO;
+            for (UserModel *user in _supportOneYuanView.users) {
+                if ([myUserId isEqual:user.userId]) {
+                    
+                }
+            }
         }
         else if ([reportModel.style intValue]==2)
         {
