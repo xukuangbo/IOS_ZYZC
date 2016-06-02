@@ -183,14 +183,14 @@ static ZYZCDataBase *_db;
 #pragma mark --- 保存地名到数据库（景点地名库）
 -(void)saveDataWithFinishBlock:(DoFinish )doFinish
 {
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-
-    if ([[user objectForKey:KVIEWSPOT_SAVE] isEqualToString:@"yes"]) {
-        if (doFinish) {
-            doFinish(YES);
-        }
-        return;
-    }
+//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+//
+//    if ([[user objectForKey:KVIEWSPOT_SAVE] isEqualToString:@"yes"]) {
+//        if (doFinish) {
+//            doFinish(YES);
+//        }
+//        return;
+//    }
     
     [ZYZCHTTPTool getHttpDataByURL:GETVIEWSPOT withSuccessGetBlock:^(id result, BOOL isSuccess)
      {
@@ -201,8 +201,8 @@ static ZYZCDataBase *_db;
                  NSString *pinyin=[LanguageTool chineseChangeToPinYin:oneSpotModel.name];
                  [self insertDataWithId:oneSpotModel.ID andType:oneSpotModel.viewType andName:oneSpotModel.name andCountry:oneSpotModel.country  andPinyin:pinyin];
              }
-             [user setObject:@"yes" forKey:KVIEWSPOT_SAVE];
-             [user synchronize];
+//             [user setObject:@"yes" forKey:KVIEWSPOT_SAVE];
+//             [user synchronize];
      }
     if (doFinish) {
         doFinish(isSuccess);

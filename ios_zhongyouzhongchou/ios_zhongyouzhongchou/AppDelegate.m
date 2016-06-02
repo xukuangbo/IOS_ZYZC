@@ -110,8 +110,8 @@
 -(void)saveViewSpot
 {
     ZYZCDataBase *dbManager=[ZYZCDataBase sharedDBManager];
-    [dbManager saveDataWithFinishBlock:nil];
-//    [dbManager deleteAllData];
+    [dbManager deleteAllData];
+//    [dbManager saveDataWithFinishBlock:nil];
 }
 
 /**
