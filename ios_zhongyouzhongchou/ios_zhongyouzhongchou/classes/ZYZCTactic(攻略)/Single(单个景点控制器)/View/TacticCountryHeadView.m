@@ -17,7 +17,6 @@
     if (self) {
         
         UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 0)];
-//        mapView.backgroundColor = [UIColor redColor];
         [self addSubview:mapView];
         
         CGFloat flagImageWH = 60;

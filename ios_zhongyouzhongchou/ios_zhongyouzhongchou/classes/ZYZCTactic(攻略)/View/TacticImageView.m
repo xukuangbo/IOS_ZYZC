@@ -5,7 +5,7 @@
 //  Created by mac on 16/4/20.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-
+#define IOS8 [[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0
 #import "TacticImageView.h"
 #import "TacticSingleViewController.h"
 #import "TacticVideoModel.h"
@@ -15,6 +15,7 @@
 #import "TacticSingleViewController.h"
 #import "TacticSingleFoodVC.h"
 #import "TacticGeneralVC.h"
+#import "ZCWebViewController.h"
 
 @interface TacticImageView ()
 
@@ -102,11 +103,21 @@
 - (void)clickAction:(UIButton *)button
 {
     if (self.pushType == threeMapViewTypeVideo) {
-        //说明是播放器
-        ZYZCPlayViewController *playVC = [[ZYZCPlayViewController alloc] init];
-        playVC.urlString = self.tacticVideoModel.videoUrl;
+        NSRange range=[self.tacticVideoModel.videoUrl rangeOfString:@".html"];
+        if (range.length) {//网页
+            ZCWebViewController *webController=[[ZCWebViewController alloc]init];
+            webController.requestUrl=self.tacticVideoModel.videoUrl;
+            webController.myTitle=@"视频播放";
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:webController animated:YES completion:nil];
+            return;
+        }
+        if (IOS8) {//视频
+            ZYZCPlayViewController *playVC = [[ZYZCPlayViewController alloc] init];
+            playVC.urlString = self.tacticVideoModel.videoUrl;
+            [self.viewController presentViewController:playVC animated:YES completion:nil];
+            return;
+        }
         
-        [self.viewController presentViewController:playVC animated:YES completion:nil];
     }else if(self.pushType == threeMapViewTypeCountryView || self.pushType == threeMapViewTypeCityView) {
         //说明是国家或者城市
         TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:self.tacticSingleModel.ID];
