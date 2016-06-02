@@ -23,11 +23,11 @@
 {
     self = [super init];
     if (self) {
-        [self setUpUI];
-        [self setBackItem];
+        self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
         self.automaticallyAdjustsScrollViewInsets = NO;
         self.hidesBottomBarWhenPushed = YES;
-        self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
+        [self setUpUI];
+        [self setBackItem];
     }
     return self;
 }
@@ -54,7 +54,7 @@
     /**
      *  创建Scrollview
      */
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H)];
     scrollView.bounces = YES;
     scrollView.backgroundColor = [UIColor clearColor];
     scrollView.delegate = self;

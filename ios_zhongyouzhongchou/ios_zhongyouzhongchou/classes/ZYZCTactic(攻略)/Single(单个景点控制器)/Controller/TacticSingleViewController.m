@@ -10,9 +10,10 @@
 #import "TacticSingleFoodModel.h"
 #import "TacticSingleTipsModel.h"
 #import "TacticSingleTableViewCell.h"
-#import "TacticSingleHeadView.h"
+//#import "TacticSingleHeadView.h"
 #import "TacticCustomMapView.h"
-
+#import "TacticCityHeadView.h"
+#import "TacticCountryHeadView.h"
 #import "TacticSingleModelFrame.h"
 @interface TacticSingleViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, weak) UITableView *tableView;
@@ -180,21 +181,36 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    TacticSingleHeadView *headView = [[TacticSingleHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, 50)];
-    
-    //添加渐变条
-    UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
-    bgImg.image=[UIImage imageNamed:@"Background"];
-    [headView addSubview:bgImg];
-    
-    headView.nameLabel.text = self.tacticSingleModelFrame.tacticSingleModel.name;
-    headView.nameLabel.shadowOffset=CGSizeMake(1, 1);
-    headView.nameLabel.shadowColor=[UIColor blackColor];
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
-    
-    [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
-    return headView;
-    
+    //进行判断，是国家还是城市
+    if (self.tacticSingleModelFrame.tacticSingleModel.viewType == 1) {
+        TacticCountryHeadView *headView = [[TacticCountryHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, TacticSingleHeadViewHeight)];
+        
+        //国家
+        headView.flagImageName.text = self.tacticSingleModelFrame.tacticSingleModel.name;
+        [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+        [headView.flagImage sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.countryImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+        
+        return headView;
+    }else if (self.tacticSingleModelFrame.tacticSingleModel.viewType == 2) {
+        
+        TacticCityHeadView *headView = [[TacticCityHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, TacticSingleHeadViewHeight)];
+        
+        //添加渐变条
+        UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
+        bgImg.image=[UIImage imageNamed:@"Background"];
+        [headView addSubview:bgImg];
+        
+        headView.nameLabel.text = self.tacticSingleModelFrame.tacticSingleModel.name;
+       
+        [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+        [headView.flagImage sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.countryImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+        headView.flagImageName.text = self.tacticSingleModelFrame.tacticSingleModel.country;
+        return headView;
+        
+    }else{
+        return nil;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

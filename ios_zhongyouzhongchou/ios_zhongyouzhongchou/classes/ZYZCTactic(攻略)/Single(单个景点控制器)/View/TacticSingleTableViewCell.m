@@ -18,6 +18,8 @@
 #import "TacticMoreVideosController.h"
 #import "TacticSingleFoodVC.h"
 #import "TacticSingleFoodModel.h"
+#import "TacticMoreDescVC.h"
+#import "TacticMoreDescModel.h"
 @interface TacticSingleTableViewCell()<TacticCustomMapViewDelegate>
 //描述
 @property (nonatomic, weak) TacticCustomMapView *descView;
@@ -209,8 +211,8 @@
     self.pictureView.frame = tacticSingleModelFrame.pictureViewF;
     self.pictureView.descLabel.text = [NSString stringWithFormat:@"一张图玩转%@",tacticSingleModel.name];
     self.pictureShowButton.frame = tacticSingleModelFrame.pictureShowButtonF;
-    self.pictureShowButton.urlString = @"http://ww4.sinaimg.cn/mw690/66b6e1c4jw1f3fni2x7prj214f6jlqgl.jpg";
-    [self.pictureShowButton sd_setImageWithURL:[NSURL URLWithString:@"http://ww4.sinaimg.cn/mw690/66b6e1c4jw1f3fni2x7prj214f6jlqgl.jpg"] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    self.pictureShowButton.urlString = tacticSingleModel.glid;
+    [self.pictureShowButton sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.glid)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
     
     self.tipsView.frame = tacticSingleModelFrame.tipsViewF;
     //设置图片，跳转
@@ -246,12 +248,12 @@
         [self.viewController.navigationController pushViewController:moreVC animated:YES];
     }else if (button.tag == MoreVCTypeTypeMoreText){
         NSLog(@"我是更多介绍");
-        TacticSingleFoodVC *moreVC = [[TacticSingleFoodVC alloc] init];
-        TacticSingleFoodModel *model = [[TacticSingleFoodModel alloc] init];
-        model.foodText = self.tacticSingleModelFrame.allString;
-        model.foodImg = self.tacticSingleModelFrame.tacticSingleModel.viewImg;
+        TacticMoreDescVC *moreVC = [[TacticMoreDescVC alloc] init];
+        TacticMoreDescModel *model = [[TacticMoreDescModel alloc] init];
+        model.descText = self.tacticSingleModelFrame.allString;
+        model.descImage = self.tacticSingleModelFrame.tacticSingleModel.viewImg;
         model.name = self.tacticSingleModelFrame.tacticSingleModel.name;
-        moreVC.tacticSingleFoodModel = model;
+        moreVC.tacticMoreDescModel = model;
         [self.viewController.navigationController pushViewController:moreVC animated:YES];
     }
 }
