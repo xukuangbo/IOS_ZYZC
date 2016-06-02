@@ -17,12 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationController.navigationBar.hidden=YES;
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-    self.navigationController.navigationBar.hidden=NO;
+    [self setBackItem];
+    [self.navigationController.navigationBar cnSetBackgroundColor:[[UIColor ZYZC_NavColor] colorWithAlphaComponent:0]];
+    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
