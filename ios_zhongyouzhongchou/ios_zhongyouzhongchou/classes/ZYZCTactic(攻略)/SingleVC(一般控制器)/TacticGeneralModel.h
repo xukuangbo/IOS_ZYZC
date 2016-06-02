@@ -21,4 +21,9 @@
 @property (nonatomic, copy) NSArray *pics;
 //"name": "test12",
 @property (nonatomic, copy) NSString *viewImg;
+
+@property (nonatomic, copy) NSString *countryImg;
+
+@property (nonatomic, copy) NSString *country;
+
 @end

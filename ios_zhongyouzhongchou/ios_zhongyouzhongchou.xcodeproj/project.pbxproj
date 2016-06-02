@@ -134,6 +134,8 @@
 		04B99A641CFC582C00E3C33A /* MinePersonSetUpLikeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A631CFC582C00E3C33A /* MinePersonSetUpLikeController.m */; };
 		04B99A681CFDA6F300E3C33A /* TacticGeneralVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A671CFDA6F300E3C33A /* TacticGeneralVC.m */; };
 		04B99A6B1CFEFB7B00E3C33A /* TacticGeneralModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A6A1CFEFB7B00E3C33A /* TacticGeneralModel.m */; };
+		04B99A6E1CFFBAA600E3C33A /* TacticCityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A6D1CFFBAA600E3C33A /* TacticCityHeadView.m */; };
+		04B99A711CFFC12200E3C33A /* TacticCountryHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A701CFFC12200E3C33A /* TacticCountryHeadView.m */; };
 		04F685491CF57C9F00E1A98E /* MinePersonSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */; };
 		04F6854A1CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685441CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m */; };
 		04F6854B1CF57C9F00E1A98E /* MinePersonSetUpHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685461CF57C9F00E1A98E /* MinePersonSetUpHeadView.m */; };
@@ -488,6 +490,10 @@
 		04B99A671CFDA6F300E3C33A /* TacticGeneralVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticGeneralVC.m; sourceTree = "<group>"; };
 		04B99A691CFEFB7B00E3C33A /* TacticGeneralModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticGeneralModel.h; sourceTree = "<group>"; };
 		04B99A6A1CFEFB7B00E3C33A /* TacticGeneralModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticGeneralModel.m; sourceTree = "<group>"; };
+		04B99A6C1CFFBAA600E3C33A /* TacticCityHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticCityHeadView.h; sourceTree = "<group>"; };
+		04B99A6D1CFFBAA600E3C33A /* TacticCityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticCityHeadView.m; sourceTree = "<group>"; };
+		04B99A6F1CFFC12200E3C33A /* TacticCountryHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticCountryHeadView.h; sourceTree = "<group>"; };
+		04B99A701CFFC12200E3C33A /* TacticCountryHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticCountryHeadView.m; sourceTree = "<group>"; };
 		04F6853F1CF57C9F00E1A98E /* MinePersonSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpController.h; sourceTree = "<group>"; };
 		04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpController.m; sourceTree = "<group>"; };
 		04F685431CF57C9F00E1A98E /* MinePersonSetUpFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpFirstCell.h; sourceTree = "<group>"; };
@@ -809,6 +815,10 @@
 				0490D15E1CCB6A3E0064844C /* TacticCustomMapView.m */,
 				0490D15A1CC9FAA80064844C /* TacticSingleHeadView.h */,
 				0490D15B1CC9FAA80064844C /* TacticSingleHeadView.m */,
+				04B99A6C1CFFBAA600E3C33A /* TacticCityHeadView.h */,
+				04B99A6D1CFFBAA600E3C33A /* TacticCityHeadView.m */,
+				04B99A6F1CFFC12200E3C33A /* TacticCountryHeadView.h */,
+				04B99A701CFFC12200E3C33A /* TacticCountryHeadView.m */,
 				04F8362B1CD7225200140980 /* TacticSingleLongPicture.h */,
 				04F8362C1CD7225200140980 /* TacticSingleLongPicture.m */,
 			);
@@ -2001,6 +2011,7 @@
 				2C24A0941CFC389600950663 /* ZCWebViewController.m in Sources */,
 				04A99D201CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */,
 				04A99D1D1CC07E1800C6F5F0 /* WXApiManager.m in Sources */,
+				04B99A711CFFC12200E3C33A /* TacticCountryHeadView.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
 				2CEEC1911CFEDC4A00A2DCA8 /* ZYZCLoginViewController.m in Sources */,
 				2C4EEFC41CC6316900AA99F6 /* ZCDetailFirstCell.m in Sources */,
@@ -2122,6 +2133,7 @@
 				04A99CAB1CBF848D00C6F5F0 /* MoreFZCTravelTableView.m in Sources */,
 				2CE21A771CC074CC00C7A797 /* MoreFZCDataManager.m in Sources */,
 				04A99CB41CBF848D00C6F5F0 /* ReturnFourthCell.m in Sources */,
+				04B99A6E1CFFBAA600E3C33A /* TacticCityHeadView.m in Sources */,
 				2C901DC01C89788C004B844B /* AppDelegate.m in Sources */,
 				2C39CD561CE32A7E001586A3 /* ZCDetailModel.m in Sources */,
 				2C2DEF151CCB4D3100111459 /* ZCDetailArrangeFirstCell.m in Sources */,

@@ -14,9 +14,12 @@
 #import "TacticGeneralVC.h"
 #import "TacticGeneralModel.h"
 @interface TacticGeneralVC ()<UIScrollViewDelegate>
+//head
 @property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, weak) UILabel *nameLabel;
-
+@property (nonatomic, weak) UIImageView *flagImage;
+@property (nonatomic, weak) UILabel *flagImageName;
+//body
 @property (nonatomic, weak) UIImageView *mapView;
 @property (nonatomic, weak) UILabel *labelView;
 @property (nonatomic, strong) NSMutableArray *imageArray;
@@ -80,7 +83,6 @@
     CGFloat imageViewH = imageViewHeight;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH)];
     [scrollView addSubview:imageView];
-    imageView.backgroundColor = [UIColor redColor];
     self.imageView = imageView;
     
     //添加渐变条
@@ -99,6 +101,25 @@
     namelabel.centerY = imageViewH * 0.5;
     [imageView addSubview:namelabel];
     self.nameLabel = namelabel;
+    
+    CGFloat flagImageWH = 30;
+    UIImageView *flagImage = [[UIImageView alloc] init];
+    flagImage.size = CGSizeMake(flagImageWH, flagImageWH);
+    flagImage.layer.cornerRadius = flagImageWH / 2.0;
+    flagImage.layer.masksToBounds = YES;
+    flagImage.left = KEDGE_DISTANCE;
+    flagImage.bottom = imageView.size.height - KEDGE_DISTANCE;
+    [imageView addSubview:flagImage];
+    self.flagImage = flagImage;
+    
+    UILabel *flagImageName = [[UILabel alloc] init];
+    flagImageName.size = CGSizeMake(200, 30);
+    flagImageName.left = flagImage.right + 5;
+    flagImageName.textColor = [UIColor whiteColor];
+    flagImageName.centerY = flagImage.centerY;
+    flagImageName.shadowOffset=CGSizeMake(1, 1);
+    [imageView addSubview:flagImageName];
+    self.flagImageName = flagImageName;
     
     /**
      创建白色背景

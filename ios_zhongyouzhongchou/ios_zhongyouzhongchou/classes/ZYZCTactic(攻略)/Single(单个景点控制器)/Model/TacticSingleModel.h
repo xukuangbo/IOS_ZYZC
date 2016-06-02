@@ -60,6 +60,8 @@
 @property (nonatomic, copy) NSString *viewImg;
 //"country":"俄罗斯",
 @property (nonatomic, copy) NSString *country;
+//"country":"俄罗斯",
+@property (nonatomic, copy) NSString *countryImg;
 //"id":150,
 @property (nonatomic, assign) NSInteger ID;
 //"mgViewsName":"克里姆林宫,红场,圣瓦西里升天教堂,新圣女公墓,莫斯科大学,莫斯科察里津诺庄园,阿尔巴特街,麻雀山,普希金造型艺术博物馆,卡洛明斯克皇家庄园,莫斯科地铁",

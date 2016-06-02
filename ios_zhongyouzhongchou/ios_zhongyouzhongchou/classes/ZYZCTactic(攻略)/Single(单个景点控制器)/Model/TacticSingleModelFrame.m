@@ -18,12 +18,13 @@
     
     self.descViewF = CGRectMake(TacticTableViewCellMargin, TacticTableViewCellMargin, KSCREEN_W - TacticTableViewCellMargin * 2, 120);
     
+    CGFloat noContentHeight = descLabelBottom + TacticTableViewCellMargin;
     //视频
-    CGFloat pictureViewY = 0;
+    CGFloat flashViewX = TacticTableViewCellMargin;
+    CGFloat flashViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
     CGFloat flashViewY = CGRectGetMaxY(self.descViewF) + TacticTableViewCellMargin;
     if (tacticSingleModel.videoUrl && ![tacticSingleModel.videoUrl isEqualToString:@""]) {//有视频
-        CGFloat flashViewX = TacticTableViewCellMargin;
-        CGFloat flashViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+        
         CGFloat flashViewH = oneViewMapHeight;
         self.flashViewF = CGRectMake(flashViewX, flashViewY, flashViewW, flashViewH);
         
@@ -32,18 +33,19 @@
         CGFloat flashPlayButtonW = flashViewW - TacticTableViewCellMargin * 2;
         CGFloat flashPlayButtonH = oneViewHeight;
         self.flashPlayButtonF = CGRectMake(flashPlayButtonX, flashPlayButtonY, flashPlayButtonW, flashPlayButtonH);
-        
-        pictureViewY = CGRectGetMaxY(self.flashViewF) + TacticTableViewCellMargin;
     }else{
-        self.flashViewF = CGRectMake(0, flashViewY, 0, 0);
-        pictureViewY = CGRectGetMaxY(self.descViewF);
+        
+        CGFloat flashViewH = noContentHeight;
+        self.flashViewF = CGRectMake(flashViewX, flashViewY, flashViewW, flashViewH);
     }
     
+    
     //长图
-    CGFloat tipsViewY = 0;
+    CGFloat pictureViewX = TacticTableViewCellMargin;
+    CGFloat pictureViewY = CGRectGetMaxY(self.flashViewF) + TacticTableViewCellMargin;
+    CGFloat pictureViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
     if(tacticSingleModel.glid){//有长图
-        CGFloat pictureViewX = TacticTableViewCellMargin;
-        CGFloat pictureViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+        
         CGFloat pictureViewH = oneViewMapHeight;
         self.pictureViewF = CGRectMake(pictureViewX, pictureViewY, pictureViewW, pictureViewH);
         
@@ -53,20 +55,17 @@
         CGFloat pictureShowButtonH = oneViewHeight;
         self.pictureShowButtonF = CGRectMake(pictureShowButtonX, pictureShowButtonY, pictureShowButtonW, pictureShowButtonH);
         
-        tipsViewY = CGRectGetMaxY(self.pictureViewF) + TacticTableViewCellMargin;
-        
     }else{//无长图
-        tipsViewY = CGRectGetMaxY(self.flashViewF) +TacticTableViewCellMargin;
-        self.pictureViewF = CGRectMake(0, pictureViewY, 0, 0);
+        self.pictureViewF = CGRectMake(pictureViewX, pictureViewY, pictureViewW, noContentHeight);
     }
     
     //众游小贴士
-    CGFloat mustPlayViewY = 0;
+    CGFloat tipsViewX = TacticTableViewCellMargin;
+    CGFloat tipsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+    CGFloat tipsViewY = CGRectGetMaxY(self.pictureViewF) + TacticTableViewCellMargin;
     if(tacticSingleModel.tips){//有贴士
-        CGFloat tipsViewX = TacticTableViewCellMargin;
-        CGFloat tipsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-        CGFloat tipsViewH = oneViewMapHeight;
         
+        CGFloat tipsViewH = oneViewMapHeight;
         self.tipsViewF = CGRectMake(tipsViewX, tipsViewY, tipsViewW, tipsViewH);
         
         CGFloat tipsShowButtonX = TacticTableViewCellMargin;
@@ -74,20 +73,18 @@
         CGFloat tipsShowButtonW = tipsViewW - TacticTableViewCellMargin * 2;
         CGFloat tipsShowButtonH = oneViewHeight;
         self.tipsShowButtonF = CGRectMake(tipsShowButtonX, tipsShowButtonY, tipsShowButtonW, tipsShowButtonH);
-        
-        mustPlayViewY = CGRectGetMaxY(self.tipsViewF) + TacticTableViewCellMargin;
     }else{
-        self.tipsViewF = CGRectMake(0, tipsViewY, 0, 0);
-        mustPlayViewY = CGRectGetMaxY(self.pictureShowButtonF) + TacticTableViewCellMargin;
+        
+        self.tipsViewF = CGRectMake(tipsViewX, tipsViewY, tipsViewW, noContentHeight);
     }
     
     //必玩景点
-    CGFloat foodsY = 0;
+    CGFloat mustPlayViewY = CGRectGetMaxY(self.tipsViewF) + TacticTableViewCellMargin;
+    CGFloat mustPlayViewX = TacticTableViewCellMargin;
+    CGFloat mustPlayViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
     if(tacticSingleModel.mgViews.count > 0){//有必玩景点
-        CGFloat mustPlayViewX = TacticTableViewCellMargin;
-        CGFloat mustPlayViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-        CGFloat mustPlayViewH = threeViewMapHeight;
         
+        CGFloat mustPlayViewH = threeViewMapHeight;
         self.mustPlayViewF = CGRectMake(mustPlayViewX, mustPlayViewY, mustPlayViewW, mustPlayViewH);
         
         CGFloat mustPlayViewButtonX = TacticTableViewCellMargin;
@@ -96,20 +93,19 @@
         CGFloat mustPlayViewButtonH = threeViewHeight;
         self.mustPlayViewButtonF = CGRectMake(mustPlayViewButtonX, mustPlayViewButtonY, mustPlayViewButtonW, mustPlayViewButtonH);
         
-        foodsY = CGRectGetMaxY(self.mustPlayViewF) + TacticTableViewCellMargin;
     }else{
-        self.mustPlayViewF = CGRectMake(0, mustPlayViewY, 0, 0);
-        foodsY = CGRectGetMaxY(self.tipsViewF) + TacticTableViewCellMargin;
+        self.mustPlayViewF = CGRectMake(mustPlayViewX, mustPlayViewY, mustPlayViewW, noContentHeight);
     }
     
     //特色美食
     CGFloat XXX = 0;
+    CGFloat foodsViewX = TacticTableViewCellMargin;
+    CGFloat foodsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+    CGFloat foodsViewY = CGRectGetMaxY(self.mustPlayViewF) + TacticTableViewCellMargin;
     if(tacticSingleModel.foods.count > 0){//有必玩景点
-        CGFloat foodsViewX = TacticTableViewCellMargin;
-        CGFloat foodsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-        CGFloat foodsViewH = threeViewMapHeight;
         
-        self.foodsViewF = CGRectMake(foodsViewX, foodsY, foodsViewW, foodsViewH);
+        CGFloat foodsViewH = threeViewMapHeight;
+        self.foodsViewF = CGRectMake(foodsViewX, foodsViewY, foodsViewW, foodsViewH);
         
         CGFloat foodsPlayViewButtonX = TacticTableViewCellMargin;
         CGFloat foodsPlayViewButtonY = descLabelBottom + TacticTableViewCellTextMargin;
@@ -119,7 +115,7 @@
         
         XXX = CGRectGetMaxY(self.foodsViewF);
     }else{
-        self.foodsPlayViewButtonF = CGRectMake(0, mustPlayViewY, 0, 0);
+        self.foodsViewF = CGRectMake(foodsViewX, foodsViewY, foodsViewW, noContentHeight);
         XXX = CGRectGetMaxY(self.mustPlayViewF);
     }
     
