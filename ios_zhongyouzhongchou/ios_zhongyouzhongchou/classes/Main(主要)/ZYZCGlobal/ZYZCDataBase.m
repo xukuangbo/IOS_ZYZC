@@ -26,44 +26,50 @@ static ZYZCDataBase *_db;
 
 -(instancetype)init
 {
-    //初始化数据时，需要给数据库一个沙盒路径进行永久保存，存储在Documents目录下
     if (self=[super init]) {
-        NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *path=[docDir stringByAppendingPathComponent:@"viewSpotData.db"];
-        
-        NSLog(@"%@",path);
-        
-        _fmdb=[FMDatabase databaseWithPath:path];
-        
-        BOOL isSuccess=[_fmdb open];
-        if (isSuccess) {
-            
-            // 数据库语言，sqlite语句，创建一张数据库表名
-            //@“create table if not exists” 表名（参数名 varchar(32)，参数名varchar(128),参数名 varchar(1024) ）,
-            
-            
-            NSString *sql=@"create table if not exists ViewSpot(id integer,viewType integer,name string,country string,pinyin string)";
-            
-            BOOL tableSucced=[_fmdb executeUpdate:sql];
-            
-            if (tableSucced) {
-                NSLog(@"表格创建成功");
-            }
-            else{
-                NSLog(@"表格创建失败");
-            }
-            
-            NSLog(@"数据库创建成功");
-        }
-        else{
-            NSLog(@"数据库创建失败%@", _fmdb.lastErrorMessage);
-            
-        }
+        [self createSpotTable];
+        [self createChatUserMsgTable];
     }
     return self;
 }
 
-#pragma mark----增
+#pragma mark --- 创建景点地名库表单
+-(void)createSpotTable
+{
+    //初始化数据时，需要给数据库一个沙盒路径进行永久保存，存储在Documents目录下
+    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path=[docDir stringByAppendingPathComponent:@"viewSpotData.db"];
+    
+    NSLog(@"%@",path);
+    
+    _fmdb=[FMDatabase databaseWithPath:path];
+    
+    BOOL isSuccess=[_fmdb open];
+    if (isSuccess) {
+        
+        // 数据库语言，sqlite语句，创建一张数据库表名
+        //@“create table if not exists” 表名（参数名 varchar(32)，参数名varchar(128),参数名 varchar(1024) ）,
+        
+        NSString *sql=@"create table if not exists ViewSpot(id integer,viewType integer,name string,country string,pinyin string)";
+        
+        BOOL tableSucced=[_fmdb executeUpdate:sql];
+        
+        if (tableSucced) {
+            NSLog(@"表格创建成功");
+        }
+        else{
+            NSLog(@"表格创建失败");
+        }
+        
+        NSLog(@"数据库创建成功");
+    }
+    else{
+        NSLog(@"数据库创建失败%@", _fmdb.lastErrorMessage);
+        
+    }
+}
+
+#pragma mark----增（景点地名库）
 
 -(BOOL)insertDataWithId:(NSNumber *)dataId andType:(NSNumber *)type andName:(NSString *)name  andCountry:(NSString *)country  andPinyin:(NSString *)pinyin
 {
@@ -91,7 +97,7 @@ static ZYZCDataBase *_db;
     
 }
 
-#pragma mark---查
+#pragma mark---查（景点地名库）
 
 -(BOOL )searchOneDataWithID:(NSNumber *)dataId
 {
@@ -110,6 +116,7 @@ static ZYZCDataBase *_db;
     return success;
 }
 
+#pragma mark --- 查询某个地名（景点地名库）
 -(OneSpotModel *) searchOneDataWithName:(NSString *)name
 {
     NSString *sql=@"select * from ViewSpot where  name=?";
@@ -133,7 +140,7 @@ static ZYZCDataBase *_db;
     return nil;
 }
 
-#pragma mark---查看所有
+#pragma mark---查看所有（景点地名库）
 
 -(NSArray *)recieveDBData
 {
@@ -154,7 +161,7 @@ static ZYZCDataBase *_db;
     return array;
 }
 
-#pragma mark --- 删除数据库
+#pragma mark --- 删除数据库（景点地名库）
 -(BOOL)deleteAllData
 {
     NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -173,7 +180,7 @@ static ZYZCDataBase *_db;
     return success;
 }
 
-#pragma mark --- 保存地名到数据库
+#pragma mark --- 保存地名到数据库（景点地名库）
 -(void)saveDataWithFinishBlock:(DoFinish )doFinish
 {
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
@@ -205,7 +212,7 @@ static ZYZCDataBase *_db;
      }];
 }
 
-#pragma mark --- 拼音匹配
+#pragma mark --- 拼音匹配（景点地名库）
 -(NSArray*)queryWithPinyinCondition:(NSString *)condition
 {
 //    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM pinyinSimple WHERE alpha like '%@%%'",item.dream_keyword];//模糊查询，查找alpha中 以 item.dream_keyword 开头的内容
@@ -225,7 +232,7 @@ static ZYZCDataBase *_db;
     return array;
 }
 
-#pragma mark --- 文字匹配
+#pragma mark --- 文字匹配（景点地名库）
 -(NSArray*)queryWithStrCondition:(NSString *)condition
 {
     //    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM pinyinSimple WHERE alpha like '%@%%'",item.dream_keyword];//模糊查询，查找alpha中 以 item.dream_keyword 开头的内容
@@ -245,7 +252,118 @@ static ZYZCDataBase *_db;
     return array;
 }
 
+/**
+ *  ==============================================================
+ */
+#pragma mark --- 创建聊天人基本信息存储表单
+-(void)createChatUserMsgTable
+{
+    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path=[docDir stringByAppendingPathComponent:@"ChatUsersData.db"];
+    NSLog(@"%@",path);
+    _fmdb=[FMDatabase databaseWithPath:path];
+    BOOL isSuccess=[_fmdb open];
+    if (isSuccess) {
+        // 数据库语言，sqlite语句，创建一张数据库表名
+        NSString *sql=@"create table if not exists ChatUsers(userId string,name string,portraitUri string,token string)";
+        
+        BOOL tableSucced=[_fmdb executeUpdate:sql];
+        
+        if (tableSucced) {
+            NSLog(@"表格创建成功");
+        }
+        else{
+            NSLog(@"表格创建失败");
+        }
+        
+        NSLog(@"数据库创建成功");
+    }
+    else{
+        NSLog(@"数据库创建失败%@", _fmdb.lastErrorMessage);
+    }
+}
 
+#pragma mark----增（聊天）
+
+-(BOOL)insertDataWithUserId:(NSString *)userId andName:(NSString *)name andportraitUri:(NSString *)portraitUri andToken:(NSString *)token
+{
+    BOOL exist=[self searchOneUerWithID:userId];
+    if (exist) {
+        NSLog(@"数据已存在!");
+        return NO;
+    }
+    
+    NSString *sql=@"insert into ChatUsers(userId,name,portraitUri,token) values(?,?,?,?)";
+    
+    //插入一条数据
+    BOOL success=[_fmdb executeUpdate:sql,userId,name,portraitUri,token];
+    
+    if (success) {
+        NSLog(@"插入成功");
+    }
+    else{
+        NSLog(@"插入失败%@",_fmdb.lastErrorMessage);
+    }
+    return success;
+}
+
+#pragma mark---查，返回bool（聊天）
+
+-(BOOL )searchOneUerWithID:(NSString *)userId
+{
+    NSString *sql=@"select name from ChatUsers where  userId=?";
+    FMResultSet *set=[_fmdb executeQuery:sql,userId];
+    BOOL success=[set next];
+    if (success) {
+        NSLog(@"查找成功");
+    }
+    else{
+        NSLog(@"没有找到%@",_fmdb.lastErrorMessage);
+    }
+    return success;
+}
+
+#pragma mark---查返回对象（聊天）
+-(ChatUserModel *)searchOneUerWithUserID:(NSString *)userId
+{
+    NSString *sql=@"select name from ChatUsers where  userId=?";
+    FMResultSet *set=[_fmdb executeQuery:sql,userId];
+    BOOL success=[set next];
+    if (success) {
+        NSLog(@"查找成功");
+        ChatUserModel *chatUserModel=[[ChatUserModel alloc]init];
+        chatUserModel.userId       =[set stringForColumn:@"userId"];
+        chatUserModel.name         =[set stringForColumn:@"name"];
+        chatUserModel.portraitUri  =[set stringForColumn:@"portraitUri"];
+        chatUserModel.token        =[set stringForColumn:@"token"];
+        return chatUserModel;
+    }
+    else{
+        NSLog(@"没有找到%@",_fmdb.lastErrorMessage);
+    }
+    return nil;
+}
+
+
+#pragma mark---查看所有,返回ChatUserModel对象数组（聊天）
+
+-(NSArray *)recieveChatUsers
+{
+    /* 查询所有的数据select * from 表名 */
+    
+    NSString *sql=@"select * from ChatUsers";
+    
+    FMResultSet *set=[_fmdb executeQuery:sql];
+    
+    NSMutableArray *array=[NSMutableArray array];
+    
+    while ([set next]) {
+        NSDictionary *dic=[set resultDictionary];
+        ChatUserModel *chatUserModel=[[ChatUserModel alloc]mj_setKeyValues:dic];
+        [array addObject:chatUserModel];
+    }
+    return array;
+}
 
 @end
 

@@ -2,14 +2,14 @@
 //  FHFDBManager.h
 //
 
-
-//地名库
 #import <Foundation/Foundation.h>
-
-#import "ZYZCViewSpotModel.h"
-
 #import "FMDatabase.h"
 #import "FMResultSet.h"
+
+//地名库模型
+#import "ZYZCViewSpotModel.h"
+//聊天人模型
+#import "ChatUserModel.h"
 
 typedef void (^DoFinish)(BOOL saveSuccess);
 
@@ -48,5 +48,22 @@ typedef void (^DoFinish)(BOOL saveSuccess);
  *  文字匹配
  */
 -(NSArray*)queryWithStrCondition:(NSString *)condition;
+
+
+//========================
+//聊天信息
+
+/**
+ *  增
+ */
+-(BOOL)insertDataWithUserId:(NSString *)userId andName:(NSString *)name andportraitUri:(NSString *)portraitUri andToken:(NSString *)token;
+/**
+ *    查,返回对象
+ */
+-(ChatUserModel *)searchOneUerWithUserID:(NSString *)userId;
+/**
+ *  查看所有,返回ChatUserModel对象数组
+ */
+-(NSArray *)recieveChatUsers;
 
 @end
