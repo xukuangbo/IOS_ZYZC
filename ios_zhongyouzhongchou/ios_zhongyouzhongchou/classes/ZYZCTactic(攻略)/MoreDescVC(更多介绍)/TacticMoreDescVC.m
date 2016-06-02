@@ -1,41 +1,45 @@
 //
-//  TacticSingleTipsController.m
+//  TacticMoreDescVC.m
 //  ios_zhongyouzhongchou
 //
-//  Created by mac on 16/5/2.
+//  Created by mac on 16/6/2.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#import "TacticSingleTipsController.h"
-#import "TacticSingleTipsModel.h"
+#import "TacticMoreDescVC.h"
+#import "TacticMoreDescModel.h"
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
+
 #define imageViewHeight (KSCREEN_W / 16 * 9)
-@interface TacticSingleTipsController ()<UIScrollViewDelegate>
+
+#define labelViewFont [UIFont systemFontOfSize:16]
+
+@interface TacticMoreDescVC()<UIScrollViewDelegate>
 @property (nonatomic, weak) UIImageView *imageView;
-@property (nonatomic, weak) UILabel *labelView;
+@property (nonatomic, weak) UILabel *nameLabel;
+
 @property (nonatomic, weak) UIImageView *mapView;
+@property (nonatomic, weak) UILabel *labelView;
+@property (nonatomic, strong) NSMutableArray *imageArray;
 @property (nonatomic, weak) UIScrollView *scrollView;
 @end
 
-@implementation TacticSingleTipsController
+
+@implementation TacticMoreDescVC
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
-        self.automaticallyAdjustsScrollViewInsets = NO;
         self.hidesBottomBarWhenPushed = YES;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
+//        self.edgesForExtendedLayout = UIEdgeInsetsMake(0, 0, 0, 0);
         [self setUpUI];
         [self setBackItem];
+        
     }
     return self;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-   
 }
 
 
@@ -43,9 +47,9 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(0)];
-    
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
+
 /**
  *  创建界面
  */
@@ -55,18 +59,10 @@
      *  创建Scrollview
      */
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H)];
-    scrollView.bounces = YES;
     scrollView.backgroundColor = [UIColor clearColor];
     scrollView.delegate = self;
     [self.view addSubview:scrollView];
     self.scrollView = scrollView;
-    /**
-     创建白色背景
-     */
-    UIImageView *mapView = [[UIImageView alloc] init];
-    mapView.userInteractionEnabled = YES;
-    [self.scrollView addSubview:mapView];
-    self.mapView = mapView;
     /**
      *  创建图片
      */
@@ -75,7 +71,7 @@
     CGFloat imageViewW = KSCREEN_W;
     CGFloat imageViewH = imageViewHeight;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH)];
-    [self.scrollView addSubview:imageView];
+    [scrollView addSubview:imageView];
     imageView.backgroundColor = [UIColor redColor];
     self.imageView = imageView;
     
@@ -83,24 +79,50 @@
     UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
     bgImg.image=[UIImage imageNamed:@"Background"];
     [imageView addSubview:bgImg];
+    /**
+     图片上的文字
+     */
+    UILabel *namelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, imageViewW, 60)];
+    namelabel.textAlignment = NSTextAlignmentCenter;
+    namelabel.font = [UIFont boldSystemFontOfSize:33];
+    namelabel.shadowOffset=CGSizeMake(1, 1);
+    namelabel.textColor = [UIColor whiteColor];
+    namelabel.centerX = KSCREEN_W * 0.5;
+    namelabel.centerY = imageViewH * 0.5;
+    [imageView addSubview:namelabel];
+    self.nameLabel = namelabel;
     
+    /**
+     创建白色背景
+     */
+    UIImageView *mapView = [[UIImageView alloc] init];
+    mapView.userInteractionEnabled = YES;
+    [self.scrollView addSubview:mapView];
+    self.mapView = mapView;
     /**
      *  创建文字
      */
     UILabel *labelView = [[UILabel alloc] init];
     labelView.layer.cornerRadius = 5;
     labelView.layer.masksToBounds = YES;
-    labelView.font = labelViewFont;
+    labelView.font = [UIFont systemFontOfSize:16];
+    labelView.backgroundColor = [UIColor whiteColor];
     labelView.textColor = [UIColor ZYZC_TextGrayColor];
     labelView.numberOfLines = 0;
     [mapView addSubview:labelView];
     self.labelView = labelView;
     
+    //创造3个imageView的数组
+    self.imageArray = [NSMutableArray array];
+    for (int i = 0; i < 3; i++) {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        [self.imageArray addObject:imageView];
+    }
 }
 
-- (void)setTacticSingleTipsModel:(TacticSingleTipsModel *)tacticSingleTipsModel
+- (void)setTacticMoreDescModel:(TacticMoreDescModel *)tacticMoreDescModel
 {
-    _tacticSingleTipsModel = tacticSingleTipsModel;
+    _tacticMoreDescModel = tacticMoreDescModel;
     
     SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
     //肯定有图片
@@ -112,30 +134,25 @@
     CGFloat labelViewY = KEDGE_DISTANCE;
     CGFloat labelViewW = mapViewW - KEDGE_DISTANCE * 2;
     CGFloat labelViewH = 0;
-    if (tacticSingleTipsModel.tipsText) {
-//        NSString *str = [NSString string];
-//        NSLog(@"%@",tacticSingleTipsModel.tipsText);
-//        NSArray *tempArray = [tacticSingleTipsModel.tipsText componentsSeparatedByString:@"\r\n"];
-//        NSLog(@"%@",tempArray);
-        
-        CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticSingleTipsModel.tipsText andFont:labelViewFont andMaxWidth:labelViewW];
-        labelViewH = textSize.height;
-    }else{
-        labelViewH = 0;
-    }
+    CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticMoreDescModel.descText andFont:labelViewFont andMaxWidth:labelViewW];
+    labelViewH = textSize.height;
     
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleTipsModel.tipsImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticMoreDescModel.descImage)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+    self.nameLabel.text = tacticMoreDescModel.name;
     
+    self.labelView.text = tacticMoreDescModel.descText;
     self.labelView.frame = CGRectMake(labelViewX, labelViewY, labelViewW, labelViewH);
-    self.labelView.text = tacticSingleTipsModel.tipsText;
     
     CGFloat mapViewH = labelViewH + KEDGE_DISTANCE * 2;
+    
     self.mapView.frame = CGRectMake(mapViewX, mapViewY, mapViewW, mapViewH);
     self.mapView.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     
-    CGFloat scrollViewH = self.imageView.height + mapViewH + KEDGE_DISTANCE * 2;
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, scrollViewH);
+    
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, self.mapView.height + KEDGE_DISTANCE * 2 + imageViewHeight);
 }
+
+
 
 
 #pragma mark - UISrollViewDelegate
@@ -154,10 +171,10 @@
         self.title = @"";
     } else {
         [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(1)];
-        if (self.tacticSingleTipsModel) {
-            self.title = self.tacticSingleTipsModel.name;
-        }
+        self.title = self.tacticMoreDescModel.name;
         
     }
 }
+
+
 @end

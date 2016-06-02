@@ -81,7 +81,7 @@
         return;
     }
     
-    NSString *url = GET_TACTIC_VIEW(234);
+    NSString *url = GET_TACTIC_VIEW(viewId);
     
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
@@ -187,7 +187,7 @@
         TacticCountryHeadView *headView = [[TacticCountryHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, TacticSingleHeadViewHeight)];
         
         //国家
-        headView.flagImageName.text = self.tacticSingleModelFrame.tacticSingleModel.country;
+        headView.flagImageName.text = self.tacticSingleModelFrame.tacticSingleModel.name;
         [headView sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
         [headView.flagImage sd_setImageWithURL:[NSURL URLWithString:KWebImage(self.tacticSingleModelFrame.tacticSingleModel.countryImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
         
