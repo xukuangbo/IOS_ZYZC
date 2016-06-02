@@ -82,6 +82,7 @@
     }
     
     NSString *url = GET_TACTIC_VIEW(viewId);
+    NSLog(@"%@",url);
     
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {

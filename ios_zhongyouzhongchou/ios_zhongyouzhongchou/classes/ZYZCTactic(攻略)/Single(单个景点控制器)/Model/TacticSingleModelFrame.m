@@ -40,29 +40,30 @@
     }
     
     
-    //长图
-    CGFloat pictureViewX = TacticTableViewCellMargin;
-    CGFloat pictureViewY = CGRectGetMaxY(self.flashViewF) + TacticTableViewCellMargin;
-    CGFloat pictureViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-    if(tacticSingleModel.glid){//有长图
-        
-        CGFloat pictureViewH = oneViewMapHeight;
-        self.pictureViewF = CGRectMake(pictureViewX, pictureViewY, pictureViewW, pictureViewH);
-        
-        CGFloat pictureShowButtonX = TacticTableViewCellMargin;
-        CGFloat pictureShowButtonY = descLabelBottom + TacticTableViewCellTextMargin;
-        CGFloat pictureShowButtonW = pictureViewW - TacticTableViewCellMargin * 2;
-        CGFloat pictureShowButtonH = oneViewHeight;
-        self.pictureShowButtonF = CGRectMake(pictureShowButtonX, pictureShowButtonY, pictureShowButtonW, pictureShowButtonH);
-        
-    }else{//无长图
-        self.pictureViewF = CGRectMake(pictureViewX, pictureViewY, pictureViewW, noContentHeight);
-    }
+//    //长图
+//    CGFloat pictureViewX = TacticTableViewCellMargin;
+//    CGFloat pictureViewY = CGRectGetMaxY(self.flashViewF) + TacticTableViewCellMargin;
+//    CGFloat pictureViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+//    if(tacticSingleModel.glid){//有长图
+//        
+//        CGFloat pictureViewH = oneViewMapHeight;
+//        self.pictureViewF = CGRectMake(pictureViewX, pictureViewY, pictureViewW, pictureViewH);
+//        
+//        CGFloat pictureShowButtonX = TacticTableViewCellMargin;
+//        CGFloat pictureShowButtonY = descLabelBottom + TacticTableViewCellTextMargin;
+//        CGFloat pictureShowButtonW = pictureViewW - TacticTableViewCellMargin * 2;
+//        CGFloat pictureShowButtonH = oneViewHeight;
+//        self.pictureShowButtonF = CGRectMake(pictureShowButtonX, pictureShowButtonY, pictureShowButtonW, pictureShowButtonH);
+//        
+//    }else{//无长图
+//        self.pictureViewF = CGRectMake(pictureViewX, pictureViewY, pictureViewW, noContentHeight);
+//    }
     
     //众游小贴士
     CGFloat tipsViewX = TacticTableViewCellMargin;
     CGFloat tipsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
-    CGFloat tipsViewY = CGRectGetMaxY(self.pictureViewF) + TacticTableViewCellMargin;
+//    CGFloat tipsViewY = CGRectGetMaxY(self.pictureViewF) + TacticTableViewCellMargin;
+    CGFloat tipsViewY = CGRectGetMaxY(self.flashViewF) + TacticTableViewCellMargin;
     if(tacticSingleModel.tips){//有贴士
         
         CGFloat tipsViewH = oneViewMapHeight;
