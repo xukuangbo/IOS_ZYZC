@@ -27,7 +27,7 @@
         [self addSubview:namelabel];
         self.nameLabel = namelabel;
         
-        CGFloat flagImageWH = 20;
+        CGFloat flagImageWH = 30;
         UIImageView *flagImage = [[UIImageView alloc] init];
         flagImage.size = CGSizeMake(flagImageWH, flagImageWH);
         flagImage.layer.cornerRadius = flagImageWH / 2.0;
@@ -37,8 +37,8 @@
         [self addSubview:flagImage];
         self.flagImage = flagImage;
         
-        UILabel *flagImageName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
-        flagImageName.font = [UIFont boldSystemFontOfSize:15];
+        UILabel *flagImageName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+        flagImageName.font = [UIFont boldSystemFontOfSize:18];
         flagImageName.shadowOffset=CGSizeMake(1, 1);
         flagImageName.shadowColor=[UIColor blackColor];
         flagImageName.textAlignment = NSTextAlignmentLeft;

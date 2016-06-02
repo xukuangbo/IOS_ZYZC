@@ -113,12 +113,11 @@
         CGFloat foodsPlayViewButtonH = (KSCREEN_W - 10 * 6) / 3.0;
         self.foodsPlayViewButtonF = CGRectMake(foodsPlayViewButtonX, foodsPlayViewButtonY, foodsPlayViewButtonW, foodsPlayViewButtonH);
         
-        XXX = CGRectGetMaxY(self.foodsViewF);
     }else{
         self.foodsViewF = CGRectMake(foodsViewX, foodsViewY, foodsViewW, noContentHeight);
-        XXX = CGRectGetMaxY(self.mustPlayViewF);
     }
     
+    XXX = CGRectGetMaxY(self.foodsViewF);
     self.realHeight = XXX + TacticTableViewCellMargin;
     
     //这里添加一个方法,返回一个字符串

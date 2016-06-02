@@ -22,6 +22,7 @@
         
         CGFloat flagImageWH = 60;
         UIImageView *flagImage = [[UIImageView alloc] init];
+        flagImage.contentMode = UIViewContentModeScaleAspectFill;
         flagImage.size = CGSizeMake(flagImageWH, flagImageWH);
         flagImage.layer.cornerRadius = flagImageWH / 2.0;
         flagImage.layer.masksToBounds = YES;
