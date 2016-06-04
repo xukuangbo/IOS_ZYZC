@@ -116,10 +116,16 @@
 #define GET_VIEWSPOT       HTTPURL(@"viewSpot/getViewSpot")
 //获取景点视屏
 #define GET_SPOT_VIDEO     HTTPURL(@"viewSpot/getViewSpotVideo")
+
 //获取攻略首页数据
 #define GET_TACTIC         [NSString stringWithFormat:@"%@viewSpot/getIndexHot.action",BASE_URL]
 //获取单个景点的数据，一般，国家，城市
 #define GET_TACTIC_VIEW(viewID) [NSString stringWithFormat:@"%@viewSpot/getViewSpot.action?viewId=%zd",BASE_URL,viewID]
+//获取更多景点
+#define GET_TACTIC_More_Cities [NSString stringWithFormat:@"%@admin_back/getViewList.action?viewType=2",BASE_URL]
+//获取更多视频
+#define GET_TACTIC_More_Videos [NSString stringWithFormat:@"%@admin_back/getViewVideoList.action?viewType=2",BASE_URL]
+
 //通过userid获取用户基本信息
 #define GET_USERINFO_BYUSERID    HTTPURL(@"u/getUserById")
 //通过openid获取用户基本信息

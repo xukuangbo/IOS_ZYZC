@@ -87,7 +87,6 @@
     }else if(tacticSingleModel.viewType == 3) {
         self.pushType = threeMapViewTypeSingleView;
     }
-    
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleModel.viewImg)] forState:UIControlStateNormal];
 }
 
