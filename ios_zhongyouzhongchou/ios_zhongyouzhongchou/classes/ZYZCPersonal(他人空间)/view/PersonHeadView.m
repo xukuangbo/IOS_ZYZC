@@ -6,18 +6,22 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
+#define FOLLIOW_AND_BEFOLLOW(follow,befollow)  [NSString stringWithFormat:@"关注 %ld   ｜   粉丝 %ld",follow,befollow]
+
 #import "PersonHeadView.h"
 #import "FXBlurView.h"
 #import "ZYZCRCManager.h"
 @interface PersonHeadView ()
 @property (nonatomic, strong) UIImageView *infoView;
 @property (nonatomic, strong) UIImageView *faceImgView;
+@property (nonatomic, strong) UILabel     *attentionLab;
 @property (nonatomic, strong) UIView      *baseInfoView;
 @property (nonatomic, strong) UIButton    *preButton;
 @property (nonatomic, strong) UIView      *moveLineView;
 @property (nonatomic, strong) UIButton    *addInterestBtn;
 @property (nonatomic, strong) UIButton    *chatBtn;
 @property (nonatomic, strong) FXBlurView *blurView;
+@property (nonatomic, strong) ZYZCRCManager *RCManager;
 @end
 
 @implementation PersonHeadView
@@ -115,13 +119,13 @@
     [_baseInfoView addSubview:sexImg];
     
     //关注和粉丝
-    NSString *attentionText=[NSString stringWithFormat:@"关注 %@   ｜   粉丝 %@",@100,@1000];
-    UILabel *attentionLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, nameLab.bottom, self.width-2*KEDGE_DISTANCE, 15) andText:attentionText andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
-    [_baseInfoView addSubview:attentionLab];
+    NSString *attentionText=FOLLIOW_AND_BEFOLLOW([_meGzAll integerValue], [_gzMeAll integerValue]);
+    _attentionLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, nameLab.bottom, self.width-2*KEDGE_DISTANCE, 15) andText:attentionText andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
+    [_baseInfoView addSubview:_attentionLab];
     
     //基础信息
     NSString *personInfo=@"23岁、天枰座、50kg、170cm、单身";
-    UILabel  *personInfoLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, attentionLab.bottom+5, attentionLab.width, 15) andText:personInfo andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
+    UILabel  *personInfoLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, _attentionLab.bottom+5, _attentionLab.width, 15) andText:personInfo andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
     [_baseInfoView addSubview:personInfoLab];
     
     //他发起，他参与，他推荐
@@ -211,8 +215,15 @@
     else if(button.tag==ChatType)
     {
         NSLog(@"留言");
-        
+        [self chat];
     }
+}
+
+#pragma mark --- 留言
+-(void)chat
+{
+    _RCManager=[ZYZCRCManager defaultManager];
+    [_RCManager connectTarget:_userModel.openid andSuperViewController:self.viewController];
 }
 
 #pragma mark --- 添加关注／取消关注
@@ -221,12 +232,15 @@
      NSDictionary *params=@{@"openid":[ZYZCTool getUserId],@"friendsId":_userModel.userId};
     if (_friendship) {
         //取消关注
-        [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:UNFOLLOWPRODUCT andParameters:params andSuccessGetBlock:^(id result, BOOL isSuccess)
+        [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:UNFOLLOWUSER andParameters:params andSuccessGetBlock:^(id result, BOOL isSuccess)
         {
             NSLog(@"%@",result);
             if (isSuccess) {
             [_addInterestBtn setTitle:@"＋  关注" forState:UIControlStateNormal];
             }
+            _gzMeAll=[NSNumber numberWithInteger:([_gzMeAll integerValue]-1)];
+            _attentionLab.text=FOLLIOW_AND_BEFOLLOW([_meGzAll integerValue], [_gzMeAll integerValue]);
+            _friendship=!_friendship;
         } andFailBlock:^(id failResult) {
             
         }];
@@ -240,7 +254,9 @@
             if (isSuccess) {
                 [_addInterestBtn setTitle:@"取消关注" forState:UIControlStateNormal];
             }
-            
+            _gzMeAll=[NSNumber numberWithInteger:([_gzMeAll integerValue]+1)];
+            _attentionLab.text=FOLLIOW_AND_BEFOLLOW([_meGzAll integerValue], [_gzMeAll integerValue]);
+             _friendship=!_friendship;
         } andFailBlock:^(id failResult) {
             
         }];

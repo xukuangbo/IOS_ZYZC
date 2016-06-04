@@ -45,7 +45,7 @@
             [_delegate managerDidRecvAddCardResponse:addCardResp];
         }
     }
-    
+    //支付结果回调
     if ([resp isKindOfClass:[PayResp class]])
     {
         PayResp *response = (PayResp *)resp;

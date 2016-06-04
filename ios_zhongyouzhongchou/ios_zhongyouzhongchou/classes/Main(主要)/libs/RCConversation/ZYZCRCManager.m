@@ -13,6 +13,7 @@
 #import "ZYZCAccountTool.h"
 #import "ZYZCAccountModel.h"
 #import "UserModel.h"
+
 static ZYZCRCManager *_RCManager;
 
 @interface ZYZCRCManager()
@@ -22,7 +23,7 @@ static ZYZCRCManager *_RCManager;
 
 @implementation ZYZCRCManager
 
-+(instancetype )defaultRCManager
++(instancetype )defaultManager
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken,^{
@@ -30,19 +31,15 @@ static ZYZCRCManager *_RCManager;
             _RCManager=[[ZYZCRCManager alloc]init];
         }
     });
-    
     return _RCManager;
 }
+
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-        NSString *myToken=[user objectForKey:KCHAT_TOKEN];
-        if (myToken) {
-            [self loginRongCloudByToken:myToken andLoginSuccess:nil];
-        }
+        
     }
     return self;
 }
@@ -64,7 +61,6 @@ static ZYZCRCManager *_RCManager;
                 if ([dic[@"code"] isEqual:@200])
                 {
                     NSString *token=dic[@"token"];
-                    NSLog(@"token:%@",token);
                     
                     //获取token后保存到本地
                     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
@@ -81,18 +77,26 @@ static ZYZCRCManager *_RCManager;
 
 //进入app或微信登陆后执行这个方法
 #pragma mark --- 登陆融云
-- (void)loginRongCloudByToken:(NSString *)myToken andLoginSuccess:(LoginSuccess ) loginSuccess
+- (void)loginRongCloudSuccess:(LoginSuccess ) loginSuccess
 {
-    //登录融云服务器,开始阶段可以先从融云API调试网站获取，之后token需要通过服务器到融云服务器取。
-    NSLog(@"myToken:%@",myToken);
-    
+    //在 App 整个生命周期，您只需要调用一次此方法与融云服务器建立连接
     if (_hasLogin) {
+        //已登陆
+        //执行登陆后操作
         if (loginSuccess) {
             loginSuccess();
         }
         return;
     }
-//    在 App 整个生命周期，您只需要调用一次此方法与融云服务器建立连接
+    
+    //未登录进行登陆操作
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *myToken=[user objectForKey:KCHAT_TOKEN];
+    if (!myToken) {
+        //如果myToken不存在，说明没有聊天的权限
+        return;
+    }
+    NSLog(@"myToken:%@",myToken);
     [[RCIM sharedRCIM] connectWithToken:myToken success:^(NSString *userId) {
         //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
         _hasLogin=YES;
@@ -114,6 +118,7 @@ static ZYZCRCManager *_RCManager;
  */
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void(^)(RCUserInfo* userInfo))completion
 {
+    NSLog(@"融云userid：%@",userId);
     //如果是自己的userid（准确说是openid）直接获取
     if ([userId isEqualToString:[ZYZCTool getUserId]]) {
         ZYZCAccountModel *model = [ZYZCAccountTool account];
@@ -149,29 +154,38 @@ static ZYZCRCManager *_RCManager;
 }
 
 #pragma mark ---直接进入聊天界面
+/**
+ *  单聊
+ *
+ *  @param targetId       聊天的对象id
+ *  @param viewController 推出聊天界面的控制器
+ */
 -(void)connectTarget:(NSString *)targetId andSuperViewController:(UIViewController *)viewController
 {
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    NSString *myToken=[user objectForKey:KCHAT_TOKEN];
-    //
-    [self loginRongCloudByToken:myToken andLoginSuccess:^{
+    [self loginRongCloudSuccess:^{
         [[RCIM sharedRCIM] setUserInfoDataSource:self];
-        ZYZCConversationController  *conversationVC = [[ZYZCConversationController alloc]init];
-        conversationVC.hidesBottomBarWhenPushed=YES;
-        conversationVC.conversationType =ConversationType_PRIVATE;
-        conversationVC.targetId = targetId;
-        conversationVC.title = @"聊天";
-        [viewController.navigationController pushViewController:conversationVC animated:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            ZYZCConversationController  *conversationVC = [[ZYZCConversationController alloc]init];
+            conversationVC.hidesBottomBarWhenPushed=YES;
+            conversationVC.conversationType =ConversationType_PRIVATE;
+            conversationVC.targetId = targetId;
+            conversationVC.title = @"聊天";
+            [viewController.navigationController pushViewController:conversationVC animated:YES];
+        });
     }];
 }
 
 #pragma mark --- 获取会话列表
 -(void)getMyConversationListWithSupperController:(UIViewController *)viewContrroller
 {
-    [[RCIM sharedRCIM] setUserInfoDataSource:self];
-    ChatListViewController *chatListViewController = [[ChatListViewController alloc]init];
-    chatListViewController.hidesBottomBarWhenPushed=YES;
-    [viewContrroller.navigationController pushViewController:chatListViewController animated:YES];
+    [self loginRongCloudSuccess:^{
+        [[RCIM sharedRCIM] setUserInfoDataSource:self];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            ChatListViewController *chatListViewController = [[ChatListViewController alloc]init];
+            chatListViewController.hidesBottomBarWhenPushed=YES;
+            [viewContrroller.navigationController pushViewController:chatListViewController animated:YES];
+        });
+    }];
 }
 
 @end

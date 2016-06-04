@@ -84,10 +84,10 @@ static ZYZCDataBase *_db;
     BOOL success=[_fmdb executeUpdate:sql,dataId,type,name,country,pinyin];
     
     if (success) {
-        NSLog(@"插入成功");
+//        NSLog(@"插入成功");
     }
     else{
-        NSLog(@"插入失败%@",_fmdb.lastErrorMessage);
+//        NSLog(@"插入失败%@",_fmdb.lastErrorMessage);
     }
     
     return success;
@@ -278,10 +278,10 @@ static ZYZCDataBase *_db;
     BOOL success=[_fmdb executeUpdate:sql,userId,name,portraitUri,token];
     
     if (success) {
-        NSLog(@"插入成功");
+//        NSLog(@"插入成功");
     }
     else{
-        NSLog(@"插入失败%@",_fmdb.lastErrorMessage);
+//        NSLog(@"插入失败%@",_fmdb.lastErrorMessage);
     }
     return success;
 }

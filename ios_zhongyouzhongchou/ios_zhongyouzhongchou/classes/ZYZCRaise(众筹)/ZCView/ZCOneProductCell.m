@@ -37,6 +37,7 @@
 {
     bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, 0, KSCREEN_W-2*KEDGE_DISTANCE, PRODUCT_CELL_HEIGHT)];
     bgImg.image=KPULLIMG(@"tab_bg_boss0", 10, 0, 10, 0);
+    bgImg.userInteractionEnabled=YES;
     [self.contentView addSubview:bgImg];
     
     //添加标题
@@ -80,10 +81,9 @@
     
     [bgImg addSubview:_iconBgView];
     
-    _iconImage=[[UIImageView alloc]initWithFrame:CGRectMake(4, 4, 74, 74)];
+    _iconImage=[[ZCDetailCustomButton alloc]initWithFrame:CGRectMake(4, 4, 74, 74)];
     _iconImage.layer.cornerRadius=3;
     _iconImage.layer.masksToBounds=YES;
-    _iconImage.backgroundColor=[UIColor yellowColor];
     [_iconBgView addSubview:_iconImage];
     
     //添加姓名
@@ -253,7 +253,8 @@
         _destLayerImg.width=placeStrWidth+40;
     }
     //用户图像
-    [_iconImage sd_setImageWithURL:[NSURL URLWithString:oneModel.user.faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"]];
+    [_iconImage sd_setImageWithURL:[NSURL URLWithString:oneModel.user.faceImg] forState:UIControlStateNormal];
+    _iconImage.userId=oneModel.user.userId;
     
     //计算名字的文字长度
     NSString *name=oneModel.user.userName;

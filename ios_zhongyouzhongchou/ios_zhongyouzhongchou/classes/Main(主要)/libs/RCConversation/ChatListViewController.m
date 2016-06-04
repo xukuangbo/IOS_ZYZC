@@ -17,7 +17,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title=@"会话列表";
+    self.title=@"聊天列表";
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION)]];
     //自定义导航左右按钮
 //    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"单聊" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemPressed:)];

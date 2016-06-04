@@ -9,19 +9,24 @@
 #import <Foundation/Foundation.h>
 #import <RongIMKit/RongIMKit.h>
 
-typedef void (^LoginSuccess)();
+typedef void (^LoginSuccess)();//登陆后操作
 
 @interface ZYZCRCManager : NSObject<RCIMUserInfoDataSource>
 
 //如果用户退出登陆，记得将haslogin置为no
 @property (nonatomic, assign) BOOL hasLogin;//记录是否已经登陆过
 
-+(instancetype )defaultRCManager;
++(instancetype )defaultManager;
 
 /**
  *  获取token
  */
 -(void)getRCloudToken;
+
+/**
+ *  登陆融云
+ */
+- (void)loginRongCloudSuccess:(LoginSuccess ) loginSuccess;
 
 /**
  *  获取会话列表

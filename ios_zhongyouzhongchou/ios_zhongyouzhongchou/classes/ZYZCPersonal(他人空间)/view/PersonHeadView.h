@@ -28,5 +28,7 @@ typedef NS_ENUM(NSInteger, TouchPersonType)
 @interface PersonHeadView : UIView
 @property (nonatomic, strong) UserModel *userModel;
 @property (nonatomic, assign) BOOL      friendship;
+@property (nonatomic, strong) NSNumber  *meGzAll;
+@property (nonatomic, strong) NSNumber  *gzMeAll;
 @property (nonatomic, assign) CGFloat   tableOffSetY;
 @end

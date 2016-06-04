@@ -18,7 +18,7 @@
 @interface MineCenterTableView()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSArray *titleArray;
-@property (nonatomic, strong) ZYZCRCManager *manager;
+@property (nonatomic, strong) ZYZCRCManager *RCManager;
 @end
 @implementation MineCenterTableView
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
@@ -105,10 +105,8 @@
     }
     else if (indexPath.row == 3)
     {
-        NSUserDefaults  *user=[NSUserDefaults standardUserDefaults];
-        [user setObject:@"" forKey:KCHAT_TOKEN];
-        _manager=[ZYZCRCManager defaultRCManager];
-        [_manager getMyConversationListWithSupperController:self.viewController];
+        _RCManager=[ZYZCRCManager defaultManager];
+        [_RCManager getMyConversationListWithSupperController:self.viewController];
     }
 }
 

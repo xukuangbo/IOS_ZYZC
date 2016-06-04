@@ -68,6 +68,7 @@
 {
     
     [_iconBtn sd_setImageWithURL:[NSURL URLWithString:commentModel.user.faceImg] forState:UIControlStateNormal];
+    _iconBtn.userId=commentModel.user.userId;
     //计算名字的文字长度
     NSString *name=commentModel.user.userName;
     CGFloat nameStrWidth=[ZYZCTool calculateStrLengthByText:name andFont:_nameLab.font andMaxWidth:KSCREEN_W].width;

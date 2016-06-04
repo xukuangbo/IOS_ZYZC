@@ -65,7 +65,7 @@
 
 //NSUserDefaults-key使用
 #define KMOREFZC_RETURN_SUPPORTTYPE  @"return_supportType"
-#define KUSER_ID                     @"userId"    //用于保存用户id(这里是openid)
+#define KUSER_ID                     @"openId"     //用于保存用户id(这里是openid)
 #define KAPP_VERSION                 @"version"       //存储app的版本号
 #define KMY_LOCALTION                @"myLocation"    //记录当地城市
 #define KMY_ZC_DRAFT_SAVE            @"myDraftSave"   //记录我的草稿的状态
@@ -75,6 +75,8 @@
 #define KFAIL_UPLOAD_OSS             @"failUpload"    //记录上传资源到oss时失败没
                                                       //有删除的文件
 #define KCHAT_TOKEN                  @"chatToken"     //存储用户聊天信息
+
+#define KUSER_MARK                   @"userId"        //存储用户userId
 
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]

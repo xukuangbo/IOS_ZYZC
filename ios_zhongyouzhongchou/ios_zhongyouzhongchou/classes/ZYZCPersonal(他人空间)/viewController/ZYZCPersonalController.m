@@ -22,8 +22,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setBackItem];
-    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Background"]]];
-    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
     self.navigationController.navigationBar.titleTextAttributes=
     @{NSForegroundColorAttributeName:[UIColor whiteColor],
       NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
@@ -56,18 +54,21 @@
 -(void)getUserInfoData
 {
     NSString *url=[NSString stringWithFormat:@"%@openid=%@&userId=%@",GETUSERDETAIL,[ZYZCTool getUserId],_userId];
+    NSLog(@"%@",url);
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess)
      {
          NSLog(@"%@",result);
          if (isSuccess) {
              _userModel=[[UserModel alloc]mj_setKeyValues:result[@"data"][@"user"]];
-             _headView.userModel=_userModel;
              NSNumber *friendShip=result[@"data"][@"friend"];
              _headView.friendship=[friendShip isEqual:@1]?YES:NO;
+             _headView.meGzAll=result[@"data"][@"meGzAll"];
+             _headView.gzMeAll=result[@"data"][@"gzMeAll"];
+              _headView.userModel=_userModel;
          }
          
      } andFailBlock:^(id failResult) {
-         
+         NSLog(@"%@",failResult);
      }];
 }
 
@@ -112,9 +113,13 @@
     {
         self.title=nil;
     }
-   
-    
-    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Background"]]];
+    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ZCInfoView.h"
 #import "ZCListModel.h"
+#import "ZCDetailCustomButton.h"
 
 #define PRODUCT_CELL_HEIGHT 195+135*KCOFFICIEMNT
 
@@ -24,7 +25,7 @@
 @property (nonatomic, strong) UILabel      *destLab;
 @property (nonatomic, strong) UIImageView  *destLayerImg;
 @property (nonatomic, strong) UIView       *iconBgView;
-@property (nonatomic, strong) UIImageView  *iconImage;
+@property (nonatomic, strong) ZCDetailCustomButton  *iconImage;
 @property (nonatomic, strong) UILabel      *nameLab;
 @property (nonatomic, strong) UIImageView  *sexImg;
 @property (nonatomic, strong) UIImageView  *vipImg;

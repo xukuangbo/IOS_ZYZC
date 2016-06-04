@@ -7,7 +7,7 @@
 //
 
 #import "ZYZCConversationController.h"
-
+#import "UINavigationBar+Background.h"
 @interface ZYZCConversationController ()
 
 @end
@@ -25,6 +25,13 @@
 -(void)pressBack
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
 }
 
 

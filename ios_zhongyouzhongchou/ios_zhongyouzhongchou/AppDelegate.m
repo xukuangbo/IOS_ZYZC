@@ -42,7 +42,7 @@
     //更改appBadge
     [self changeAppBadge];
     //初始化微信
-    [self initWithWechat];
+    [self initWithWechat]; 
     //初始化融云
     [self initRCloud];
     //获取app版本号，判断app是否是下载或更新后第一次进入
@@ -51,11 +51,52 @@
     [self deleteFailDataInOss];
     //存储地名库
     [self saveViewSpot];
+    
     //==========
 //    [ZYZCTool saveUserIdById:@"oulbuvtpzxiOe6t9hVBh2mNRgiaI"];
 //    NSLog(@"%@",[ZYZCTool getUserId]);
 //    WXApiPay *pay=[[WXApiPay alloc]init];
 //    [pay payForWeChat];
+    
+//    NSLog(@"openid:%@",[ZYZCTool getUserId]);
+//    [ZYZCHTTPTool getHttpDataByURL:[NSString stringWithFormat:@"http://192.168.1.25/viewSpot/addMySpot.action?openid=%@&viewId=%@",[ZYZCTool getUserId],@201] withSuccessGetBlock:^(id result, BOOL isSuccess)
+//    {
+//        NSLog(@"%@",result);
+//        
+//        [ZYZCHTTPTool getHttpDataByURL:[NSString stringWithFormat:@"http://192.168.1.25/viewSpot/getMySpots.action?openid=%@",[ZYZCTool getUserId]] withSuccessGetBlock:^(id result, BOOL isSuccess)
+//         {
+//             NSLog(@"%@",result);
+//             
+//         } andFailBlock:^(id failResult) {
+//             NSLog(@"%@",failResult);
+//         }];
+//
+//        
+//    } andFailBlock:^(id failResult) {
+//        NSLog(@"%@",failResult);
+//    }];
+    
+    
+//    [ZYZCHTTPTool getHttpDataByURL:[NSString stringWithFormat:@"http://192.168.1.25/viewSpot/getMySpots.action?openid=%@",[ZYZCTool getUserId]] withSuccessGetBlock:^(id result, BOOL isSuccess)
+//     {
+//         NSLog(@"%@",result);
+//         
+//     } andFailBlock:^(id failResult) {
+//         NSLog(@"%@",failResult);
+//     }];
+//    
+//        [ZYZCHTTPTool getHttpDataByURL:[NSString stringWithFormat:@"http://192.168.1.25/viewSpot/delMySpot.action?openid=%@&viewId=%@",[ZYZCTool getUserId],@200] withSuccessGetBlock:^(id result, BOOL isSuccess)
+//         {
+//             NSLog(@"%@",result);
+//             
+//             //
+//    
+//         } andFailBlock:^(id failResult) {
+//             NSLog(@"%@",failResult);
+//         }];
+
+    
+
     
     
     //==========
@@ -75,6 +116,8 @@
 -(void)initRCloud
 {
     [[RCIM sharedRCIM] initWithAppKey:RC_APPKEY];
+    ZYZCRCManager *RCManager=[ZYZCRCManager defaultManager];
+    [RCManager loginRongCloudSuccess:nil];
 }
 
 #pragma mark --- 设置根控制器
@@ -119,8 +162,6 @@
 - (void)initWithWechat
 {
     [WXApi registerApp:kAppOpenid withDescription:@"ZYZC"];
-//    ZYZCRCManager *rcManager=[ZYZCRCManager defaultRCManager];
-//    [rcManager getRCloudToken];
 }
 
 #pragma mark - 打开微信，回调微信
