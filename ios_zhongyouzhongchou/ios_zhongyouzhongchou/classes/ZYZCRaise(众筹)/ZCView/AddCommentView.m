@@ -8,10 +8,8 @@
 
 #import "AddCommentView.h"
 #import "MBProgressHUD+MJ.h"
-#import "UIView+GetSuperTableView.h"
 @interface AddCommentView ()<UITextFieldDelegate>
-@property (nonatomic, strong) UITextField *editFieldView;
-@property (nonatomic, strong) UIButton    *sendComentBtn;
+
 @end
 
 @implementation AddCommentView
@@ -145,9 +143,6 @@
      NSValue *value = dic[UIKeyboardFrameEndUserInfoKey];
     CGFloat height=value.CGRectValue.size.height;
     self.bottom-=height;
-    if (_keyBoardChange) {
-        _keyBoardChange(height,YES);
-    }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 }
 
@@ -157,9 +152,6 @@
     NSValue *value = dic[UIKeyboardFrameEndUserInfoKey];
     CGFloat height=value.CGRectValue.size.height;
     self.bottom+=height;
-    if (_keyBoardChange) {
-        _keyBoardChange(height,NO);
-    }
     [[NSNotificationCenter defaultCenter] removeObserver: self name:UIKeyboardWillHideNotification object:nil];
 }
 

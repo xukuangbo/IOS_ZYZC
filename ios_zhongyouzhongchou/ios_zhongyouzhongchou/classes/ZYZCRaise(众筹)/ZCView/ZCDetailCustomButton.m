@@ -34,11 +34,19 @@
     [self addTarget:self action:@selector(personZone) forControlEvents:UIControlEventTouchUpInside];
 }
 
-#pragma mark --- 访问个人空间
+#pragma mark --- 访问个人空间，如果是用户自己，进用户个人主页，如果是别人，进别人主页
 -(void)personZone
 {
+    NSLog(@"_userId:%@",_userId);
+    
+//    NSNumber *myUserId=@54;
+    
+//    if ([myUserId isEqual:_userId]) {
+//        return;
+//    }
     ZYZCPersonalController *personalController=[[ZYZCPersonalController alloc]init];
     personalController.hidesBottomBarWhenPushed=YES;
+    personalController.userId=_userId;
     [self.viewController.navigationController pushViewController:personalController animated:YES];
 }
 

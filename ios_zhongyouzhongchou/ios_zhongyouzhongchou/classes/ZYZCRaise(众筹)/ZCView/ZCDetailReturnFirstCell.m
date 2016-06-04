@@ -65,7 +65,7 @@
     CGFloat totalMoney=0.0;
     for (ReportModel *reportModel in report) {
         //临时数据
-        reportModel.users=@[cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user];
+//        reportModel.users=@[cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user];
         //==============
         
         if ([reportModel.style intValue]==0) {
@@ -79,8 +79,11 @@
             BOOL hasSupportOneYuan=NO;
             for (UserModel *user in _supportOneYuanView.users) {
                 if ([myUserId isEqual:user.userId]) {
-                    
+                    hasSupportOneYuan=YES;
                 }
+            }
+            if (hasSupportOneYuan) {
+                _supportAnyYuanView.chooseSupport=NO;
             }
         }
         else if ([reportModel.style intValue]==2)
@@ -92,7 +95,7 @@
             hasReturn01=YES;
             _returnSupportView01.limitNumber=[reportModel.sumPeople intValue];
             if ([reportModel.sumPeople integerValue]<=reportModel.users.count) {
-                _returnSupportView01.supportBtn.enabled=NO;
+                _returnSupportView01.chooseSupport=NO;
             }
             CGFloat money=[reportModel.price floatValue]/100;
             _returnSupportView01.titleLab.text=RETURNSUPPORT01(money);
@@ -103,6 +106,9 @@
             }
         else if ([reportModel.style intValue]==4)
         {
+            if ([_cellModel.mySelf isEqual:@1]) {
+                _togetherView.chooseSupport=NO;
+            }
             _togetherView.limitNumber=[reportModel.sumPeople intValue];
             _togetherView.users=reportModel.users;
             CGFloat money=[reportModel.price floatValue]/100;

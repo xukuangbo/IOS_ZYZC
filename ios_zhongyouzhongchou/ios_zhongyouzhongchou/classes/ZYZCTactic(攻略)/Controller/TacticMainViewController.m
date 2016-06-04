@@ -132,6 +132,8 @@
  */
 - (void)searchButton:(UIButton *)button{
     MoreFZCChooseSceneController *chooseSceneVC = [[MoreFZCChooseSceneController alloc] init];
+    chooseSceneVC.isHomeSearch=YES;
+    chooseSceneVC.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:chooseSceneVC animated:YES];
 }
 #pragma mark - 获取当前定位城市

@@ -56,6 +56,8 @@
 "error_no_startChoose_time"="时间有冲突！请重新选择开始日期";
 "error_no_endChoose_time"="时间有冲突！请重新选择返回日期";
 
+
+"error_no_spot"="没有找到匹配的目的地";
 /**
  *  评论结果
  */

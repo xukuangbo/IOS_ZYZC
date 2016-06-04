@@ -45,7 +45,7 @@
 #import "Masonry.h"
 
 #pragma mark --- 基础网络接口
-#define BASE_URL @"http://114.55.137.241:8080/"
+#define BASE_URL @"http://121.40.225.119:8080/"
 
 #define HTTPURL(APPEND_URL) [NSString stringWithFormat:@"%@%@.action?",BASE_URL,APPEND_URL]
 
@@ -120,6 +120,13 @@
 #define GET_TACTIC         [NSString stringWithFormat:@"%@viewSpot/getIndexHot.action",BASE_URL]
 //获取单个景点的数据，一般，国家，城市
 #define GET_TACTIC_VIEW(viewID) [NSString stringWithFormat:@"%@viewSpot/getViewSpot.action?viewId=%zd",BASE_URL,viewID]
+//通过userid获取用户基本信息
+#define GET_USERINFO_BYUSERID    HTTPURL(@"u/getUserById")
+//通过openid获取用户基本信息
+#define GET_USERINFO_BYOPENID   HTTPURL(@"u/getUserByOpenId")
+//获取聊天的token
+#define GET_CHAT_TOKEN(openId,name,headImg)   [NSString stringWithFormat:@"%@rongAPI/getToken.action?userId=%@&userName=%@&portraitUri=%@",BASE_URL,openId,name,headImg]
+
 
 #endif /* ZYZCPch_pch */
 

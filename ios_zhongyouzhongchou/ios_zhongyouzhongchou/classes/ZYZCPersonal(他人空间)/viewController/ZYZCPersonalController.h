@@ -9,5 +9,5 @@
 #import "ZYZCBaseViewController.h"
 
 @interface ZYZCPersonalController : ZYZCBaseViewController
-
+@property (nonatomic, strong) NSNumber *userId;//不是openid
 @end

@@ -33,7 +33,8 @@
 
 @property (nonatomic, assign) int limitNumber;
 
-@property (nonatomic, assign) BOOL chooseSupport;//  是否选择支持
+@property (nonatomic, assign) BOOL chooseSupport;//  是否可以支持
+@property (nonatomic, assign)BOOL sureSupport;   //  是否支持
 
 - (instancetype)initSupportViewByTop:(CGFloat   )top
                             andTitle:(NSString *)title

@@ -13,9 +13,15 @@ typedef void (^LoginSuccess)();
 
 @interface ZYZCRCManager : NSObject<RCIMUserInfoDataSource>
 
-@property (nonatomic, assign) BOOL hasLogin;
+//如果用户退出登陆，记得将haslogin置为no
+@property (nonatomic, assign) BOOL hasLogin;//记录是否已经登陆过
 
 +(instancetype )defaultRCManager;
+
+/**
+ *  获取token
+ */
+-(void)getRCloudToken;
 
 /**
  *  获取会话列表

@@ -1,0 +1,32 @@
+//
+//  PersonHeadView.h
+//  ios_zhongyouzhongchou
+//
+//  Created by liuliang on 16/6/3.
+//  Copyright © 2016年 liuliang. All rights reserved.
+//
+
+#define HEAD_VIEW_HEIGHT  234+80*KCOFFICIEMNT
+
+//typedef void (^ScrollTable)(CGFloat offSetY);
+
+typedef NS_ENUM(NSInteger, PersonProductType)
+{
+    PublishType=KPERSON_PRODUCT_TYPE,
+    JoinType,
+    RecommendType
+};
+
+typedef NS_ENUM(NSInteger, TouchPersonType)
+{
+    AddInterest=KTOUCH_PERSON_TYPE,
+    ChatType
+};
+
+#import <UIKit/UIKit.h>
+#import "UserModel.h"
+@interface PersonHeadView : UIView
+@property (nonatomic, strong) UserModel *userModel;
+@property (nonatomic, assign) BOOL      friendship;
+@property (nonatomic, assign) CGFloat   tableOffSetY;
+@end

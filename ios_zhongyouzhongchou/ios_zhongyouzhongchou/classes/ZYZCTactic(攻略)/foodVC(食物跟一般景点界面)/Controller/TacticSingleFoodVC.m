@@ -91,6 +91,8 @@ static NSString *picCellID = @"TacticFoodPicCell";
     namelabel.textColor = [UIColor whiteColor];
     namelabel.centerX = KSCREEN_W * 0.5;
     namelabel.centerY = imageViewH * 0.5;
+    namelabel.shadowOffset=CGSizeMake(1, 1);
+    namelabel.shadowColor=[UIColor blackColor];
     [imageView addSubview:namelabel];
     self.nameLabel = namelabel;
     

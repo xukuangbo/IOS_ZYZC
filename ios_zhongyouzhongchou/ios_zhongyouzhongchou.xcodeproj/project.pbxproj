@@ -190,6 +190,7 @@
 		2C901DCB1C89788C004B844B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C901DC91C89788C004B844B /* LaunchScreen.storyboard */; };
 		2C901DD61C89788C004B844B /* ios_zhongyouzhongchouTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DD51C89788C004B844B /* ios_zhongyouzhongchouTests.m */; };
 		2C901DE11C89788C004B844B /* ios_zhongyouzhongchouUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C901DE01C89788C004B844B /* ios_zhongyouzhongchouUITests.m */; };
+		2CA172061D0122030033A91A /* PersonHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA172051D0122030033A91A /* PersonHeadView.m */; };
 		2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */; };
 		2CAF7BB41CE02B6600CB0885 /* ZCOneProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF7BB31CE02B6600CB0885 /* ZCOneProductCell.m */; };
 		2CAF7BB71CE0363600CB0885 /* ZCInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF7BB61CE0363600CB0885 /* ZCInfoView.m */; };
@@ -605,6 +606,8 @@
 		2C901DE01C89788C004B844B /* ios_zhongyouzhongchouUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ios_zhongyouzhongchouUITests.m; sourceTree = "<group>"; };
 		2C901DE21C89788C004B844B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C901DEE1C89809A004B844B /* ZYZCPch.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZYZCPch.pch; sourceTree = "<group>"; };
+		2CA172041D0122030033A91A /* PersonHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonHeadView.h; sourceTree = "<group>"; };
+		2CA172051D0122030033A91A /* PersonHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonHeadView.m; sourceTree = "<group>"; };
 		2CAAB26C1CC23FD6006D4827 /* ZYZCTool+getLocalTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZYZCTool+getLocalTime.h"; sourceTree = "<group>"; };
 		2CAAB26D1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZYZCTool+getLocalTime.m"; sourceTree = "<group>"; };
 		2CAF7BB21CE02B6600CB0885 /* ZCOneProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCOneProductCell.h; sourceTree = "<group>"; };
@@ -1722,6 +1725,8 @@
 		2CEEC1931CFEE4C400A2DCA8 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				2CA172041D0122030033A91A /* PersonHeadView.h */,
+				2CA172051D0122030033A91A /* PersonHeadView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -2016,6 +2021,7 @@
 				04B99A711CFFC12200E3C33A /* TacticCountryHeadView.m in Sources */,
 				04A99CC41CBF848D00C6F5F0 /* ZYZCCenterContentView.m in Sources */,
 				2CEEC1911CFEDC4A00A2DCA8 /* ZYZCLoginViewController.m in Sources */,
+				2CA172061D0122030033A91A /* PersonHeadView.m in Sources */,
 				2C4EEFC41CC6316900AA99F6 /* ZCDetailFirstCell.m in Sources */,
 				04F8364D1CD734CD00140980 /* TacticSingleTipsController.m in Sources */,
 				04B99A6B1CFEFB7B00E3C33A /* TacticGeneralModel.m in Sources */,

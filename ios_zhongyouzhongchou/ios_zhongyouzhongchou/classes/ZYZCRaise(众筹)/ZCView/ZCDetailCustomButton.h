@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ZCDetailCustomButton : UIButton
-
+@property (nonatomic, strong) NSNumber *userId;
 @end

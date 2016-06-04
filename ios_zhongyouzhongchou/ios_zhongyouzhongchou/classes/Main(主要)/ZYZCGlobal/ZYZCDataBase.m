@@ -9,6 +9,7 @@ static ZYZCDataBase *_db;
 @implementation ZYZCDataBase
 {
     FMDatabase *_fmdb;
+    BOOL hasSaveSpotData;
 }
 
 
@@ -27,46 +28,42 @@ static ZYZCDataBase *_db;
 -(instancetype)init
 {
     if (self=[super init]) {
-        [self createSpotTable];
-        [self createChatUserMsgTable];
+        [self createTables];
+  
     }
     return self;
 }
 
-#pragma mark --- 创建景点地名库表单
--(void)createSpotTable
+#pragma mark --- 创建数据库表单
+-(void)createTables
 {
-    //初始化数据时，需要给数据库一个沙盒路径进行永久保存，存储在Documents目录下
-    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *path=[docDir stringByAppendingPathComponent:@"viewSpotData.db"];
-    
-    NSLog(@"%@",path);
-    
-    _fmdb=[FMDatabase databaseWithPath:path];
-    
-    BOOL isSuccess=[_fmdb open];
-    if (isSuccess) {
+    [self deleteAllDataWithBlock:^(BOOL doSuccess) {
+        //初始化数据时，需要给数据库一个沙盒路径进行永久保存，存储在Documents目录下
+        NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *path=[docDir stringByAppendingPathComponent:@"DataBase.db"];
         
-        // 数据库语言，sqlite语句，创建一张数据库表名
-        //@“create table if not exists” 表名（参数名 varchar(32)，参数名varchar(128),参数名 varchar(1024) ）,
+        NSLog(@"%@",path);
         
-        NSString *sql=@"create table if not exists ViewSpot(id integer,viewType integer,name string,country string,pinyin string)";
+        _fmdb=[FMDatabase databaseWithPath:path];
         
-        BOOL tableSucced=[_fmdb executeUpdate:sql];
-        
-        if (tableSucced) {
-            NSLog(@"表格创建成功");
+        BOOL isSuccess=[_fmdb open];
+        if (isSuccess) {
+            
+            // 数据库语言，sqlite语句，创建一张数据库表名
+            //创建地名库表单
+            NSString *spotSQL=@"create table if not exists ViewSpot(id integer,viewType integer,name string,country string,pinyin string)";
+            BOOL spotTableSucced=[_fmdb executeUpdate:spotSQL];
+            if (spotTableSucced) {
+                NSLog(@"spot表格创建成功");
+            }
+            else{
+                NSLog(@"spot表格创建失败");
+            }
         }
         else{
-            NSLog(@"表格创建失败");
+            NSLog(@"数据库创建失败%@", _fmdb.lastErrorMessage);
         }
-        
-        NSLog(@"数据库创建成功");
-    }
-    else{
-        NSLog(@"数据库创建失败%@", _fmdb.lastErrorMessage);
-        
-    }
+    }];
 }
 
 #pragma mark----增（景点地名库）
@@ -78,7 +75,7 @@ static ZYZCDataBase *_db;
      */
     BOOL exist=[self searchOneDataWithID:dataId];
     if (exist) {
-        NSLog(@"数据已存在!");
+//        NSLog(@"数据已存在!");
         return NO;
     }
     NSString *sql=@"insert into ViewSpot(id,viewType,name,country,pinyin) values(?,?,?,?,?)";
@@ -108,10 +105,10 @@ static ZYZCDataBase *_db;
     
     BOOL success=[set next];
     if (success) {
-        NSLog(@"查找成功");
+//        NSLog(@"查找成功");
     }
     else{
-        NSLog(@"没有找到%@",_fmdb.lastErrorMessage);
+//        NSLog(@"没有找到%@",_fmdb.lastErrorMessage);
     }
     return success;
 }
@@ -130,11 +127,11 @@ static ZYZCDataBase *_db;
         oneSpotModel.name     =[set stringForColumn:@"name"];
         oneSpotModel.country  =[set stringForColumn:@"country"];
         oneSpotModel.pinyin   =[set stringForColumn:@"pinyin"];
-        NSLog(@"查找成功");
+//        NSLog(@"查找成功");
         return oneSpotModel;
     }
     else{
-        NSLog(@"没有找到%@",_fmdb.lastErrorMessage);
+//        NSLog(@"没有找到%@",_fmdb.lastErrorMessage);
     }
     
     return nil;
@@ -161,20 +158,31 @@ static ZYZCDataBase *_db;
     return array;
 }
 
-#pragma mark --- 删除数据库（景点地名库）
--(BOOL)deleteAllData
+#pragma mark --- 删除数据库
+-(BOOL)deleteAllDataWithBlock:(DoFinish )doFinish
 {
+    //如果文件已存在则删除，如果不存在表示删除成功
     NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *path=[docDir stringByAppendingPathComponent:@"viewSpotData.db"];
+    NSString *path=[docDir stringByAppendingPathComponent:@"DataBase.db"];
     
     NSFileManager *fileManager=[NSFileManager defaultManager];
     BOOL success=YES;
     if ([fileManager fileExistsAtPath:path]) {
         success=[fileManager removeItemAtPath:path error:nil];
         if (success) {
+            hasSaveSpotData=NO;
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
             [user setObject:nil forKey:KVIEWSPOT_SAVE];
             [user synchronize];
+            if (doFinish) {
+                doFinish(success);
+            }
+        }
+    }
+    else
+    {
+        if (doFinish) {
+            doFinish(success);
         }
     }
     return success;
@@ -183,27 +191,24 @@ static ZYZCDataBase *_db;
 #pragma mark --- 保存地名到数据库（景点地名库）
 -(void)saveDataWithFinishBlock:(DoFinish )doFinish
 {
-//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-//
-//    if ([[user objectForKey:KVIEWSPOT_SAVE] isEqualToString:@"yes"]) {
-//        if (doFinish) {
-//            doFinish(YES);
-//        }
-//        return;
-//    }
-    
+    if (hasSaveSpotData) {
+        if (doFinish) {
+            doFinish(YES);
+        }
+        return;
+    }
     [ZYZCHTTPTool getHttpDataByURL:GETVIEWSPOT withSuccessGetBlock:^(id result, BOOL isSuccess)
      {
          if (isSuccess) {
              ZYZCViewSpotModel *viewSpotModel=[[ZYZCViewSpotModel alloc]mj_setKeyValues:result];
-             NSLog(@"%@",result);
-             for (OneSpotModel *oneSpotModel in viewSpotModel.data) {
-                 NSString *pinyin=[LanguageTool chineseChangeToPinYin:oneSpotModel.name];
-                 [self insertDataWithId:oneSpotModel.ID andType:oneSpotModel.viewType andName:oneSpotModel.name andCountry:oneSpotModel.country  andPinyin:pinyin];
-             }
-//             [user setObject:@"yes" forKey:KVIEWSPOT_SAVE];
-//             [user synchronize];
-     }
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 for (OneSpotModel *oneSpotModel in viewSpotModel.data) {
+                     NSString *pinyin=[LanguageTool chineseChangeToPinYin:oneSpotModel.name];
+                     [self insertDataWithId:oneSpotModel.ID andType:oneSpotModel.viewType andName:oneSpotModel.name andCountry:oneSpotModel.country  andPinyin:pinyin];
+                 }
+             });
+             hasSaveSpotData=YES;
+        }
     if (doFinish) {
         doFinish(isSuccess);
     }
@@ -255,34 +260,8 @@ static ZYZCDataBase *_db;
 /**
  *  ==============================================================
  */
-#pragma mark --- 创建聊天人基本信息存储表单
--(void)createChatUserMsgTable
-{
-    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *path=[docDir stringByAppendingPathComponent:@"ChatUsersData.db"];
-    NSLog(@"%@",path);
-    _fmdb=[FMDatabase databaseWithPath:path];
-    BOOL isSuccess=[_fmdb open];
-    if (isSuccess) {
-        // 数据库语言，sqlite语句，创建一张数据库表名
-        NSString *sql=@"create table if not exists ChatUsers(userId string,name string,portraitUri string,token string)";
-        
-        BOOL tableSucced=[_fmdb executeUpdate:sql];
-        
-        if (tableSucced) {
-            NSLog(@"表格创建成功");
-        }
-        else{
-            NSLog(@"表格创建失败");
-        }
-        
-        NSLog(@"数据库创建成功");
-    }
-    else{
-        NSLog(@"数据库创建失败%@", _fmdb.lastErrorMessage);
-    }
-}
 
+//聊天表单
 #pragma mark----增（聊天）
 
 -(BOOL)insertDataWithUserId:(NSString *)userId andName:(NSString *)name andportraitUri:(NSString *)portraitUri andToken:(NSString *)token

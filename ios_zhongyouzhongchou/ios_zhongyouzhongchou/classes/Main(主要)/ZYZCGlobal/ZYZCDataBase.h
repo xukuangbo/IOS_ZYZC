@@ -11,7 +11,7 @@
 //聊天人模型
 #import "ChatUserModel.h"
 
-typedef void (^DoFinish)(BOOL saveSuccess);
+typedef void (^DoFinish)(BOOL doSuccess);
 
 @interface ZYZCDataBase : NSObject
 
@@ -33,7 +33,7 @@ typedef void (^DoFinish)(BOOL saveSuccess);
 /**
  *  删除所有数据
  */
--(BOOL)deleteAllData;
+-(BOOL)deleteAllDataWithBlock:(DoFinish )doFinish;
 
 /**
  *  存储数据到数据库

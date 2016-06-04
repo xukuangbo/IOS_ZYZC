@@ -12,6 +12,7 @@
 #import "AddCommentView.h"
 @interface ZCCommentViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *table;
+@property (nonatomic, strong) AddCommentView *addCommentView;
 @property (nonatomic, strong) ZCCommentList *commentList;
 @property (nonatomic, strong) NSMutableArray *commentArr;
 @property (nonatomic, assign) int  pageNo;
@@ -91,31 +92,27 @@
     }];
     
     //添加评论
-    AddCommentView *addCommentView=[[AddCommentView alloc]init];
-    addCommentView.top=KSCREEN_H-addCommentView.height;
-    addCommentView.productId=_productId;
-    [self.view addSubview:addCommentView];
+    _addCommentView=[[AddCommentView alloc]init];
+    _addCommentView.top=KSCREEN_H-_addCommentView.height;
+    _addCommentView.productId=_productId;
+    [self.view addSubview:_addCommentView];
     
-    addCommentView.commentSuccess=^(NSString *content)
+    _addCommentView.commentSuccess=^(NSString *content)
     {
         weakSelf.pageNo=1;
         [weakSelf getHttpData];
-//        ZCCommentModel *commentModel=[[ZCCommentModel alloc]init];
-//        commentModel.comment.content=content;
-//        commentModel.user=weakSelf.user;
     };
-    addCommentView.keyBoardChange=^(CGFloat height,BOOL change)
-    {
-        if (change) {
-            weakSelf.table.height-=height;
-        }
-        else
-        {
-            weakSelf.table.height+=height;
-        }
-    };
-    
 }
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if(scrollView==_table)
+    {
+        [_addCommentView.editFieldView resignFirstResponder];
+    }
+}
+
+    
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -142,6 +139,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [_addCommentView.editFieldView resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {

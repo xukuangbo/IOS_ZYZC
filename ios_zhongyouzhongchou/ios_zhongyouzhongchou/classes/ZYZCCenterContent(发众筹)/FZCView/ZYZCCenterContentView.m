@@ -29,7 +29,7 @@
 -(void)configUI
 {
     btnArr=@[@"btn_xyj",@"btn_fzc",@"btn_lxxj"];
-    NSArray *titleArr=@[@"写游记",@"发众筹",@"旅行照片"];
+    NSArray *titleArr=@[@"写游记",@"发众筹",@"旅行相机"];
     NSInteger numberItems=btnArr.count;
     CGFloat width=55;
     CGFloat height=95;

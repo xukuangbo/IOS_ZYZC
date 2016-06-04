@@ -77,7 +77,7 @@
     for (NSInteger i=0; i<users.count; i++) {
         UserModel *user=users[i];
         ZCDetailCustomButton *userBtn=[[ZCDetailCustomButton alloc]initWithFrame:CGRectMake(btn_edg+(btn_edg+btn_width)*(i%row), btn_edg+(btn_edg+btn_width)*(i/row), btn_width, btn_width)];
-        [userBtn sd_setImageWithURL:[NSURL URLWithString:user.faceImg] forState:UIControlStateNormal];
+        [userBtn sd_setImageWithURL:[NSURL URLWithString:user.img] forState:UIControlStateNormal];
         userBtn.layer.cornerRadius=4;
         userBtn.layer.masksToBounds=YES;
         [_scroll addSubview:userBtn];

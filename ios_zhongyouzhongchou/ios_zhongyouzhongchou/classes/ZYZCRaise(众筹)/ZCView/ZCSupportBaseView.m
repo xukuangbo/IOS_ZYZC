@@ -14,6 +14,7 @@
 @interface ZCSupportBaseView ()
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *text;
+//确认支付或取消支付
 
 @end
 @implementation ZCSupportBaseView
@@ -181,7 +182,8 @@
         for (int i=0; i<number; i++) {
             UserModel *user=users[i];
             ZCDetailCustomButton *iconBtn=[[ZCDetailCustomButton alloc]initWithFrame:CGRectMake((btn_width+btn_edg)*i, 0, btn_width, btn_width)];
-            [iconBtn sd_setImageWithURL:[NSURL URLWithString:user.faceImg] forState:UIControlStateNormal];
+            iconBtn.userId=user.userId;
+            [iconBtn sd_setImageWithURL:[NSURL URLWithString:user.img] forState:UIControlStateNormal];
             [_supportPeople addSubview:iconBtn];
         }
     }
@@ -201,7 +203,14 @@
 #pragma mark --- 支持金额
 -(void)supportMoney
 {
-    [_supportBtn setImage:[UIImage imageNamed:@"Butttn_support_pre"] forState:UIControlStateNormal];
+    if (!_sureSupport) {
+        [_supportBtn setImage:[UIImage imageNamed:@"Butttn_support_pre"] forState:UIControlStateNormal];
+    }
+    else
+    {
+         [_supportBtn setImage:[UIImage imageNamed:@"Butttn_support"] forState:UIControlStateNormal];
+    }
+    _sureSupport=!_sureSupport;
 }
 
 #pragma mark --- 是否可支持

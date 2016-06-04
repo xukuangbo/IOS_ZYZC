@@ -58,6 +58,8 @@
 #define KFZC_INPUTCONTENT_TYPE      120//tag取值范围120～122
 #define KFZC_INPUTCONTENTVIEW_TYPE  130//tag取值范围130～132
 #define KSUPPORTMONEY_TYPE          140//tag取值范围140～142
+#define KPERSON_PRODUCT_TYPE        150//tag取值范围150～152
+#define KTOUCH_PERSON_TYPE          160//tag取值范围160～161
 
 #define KWebImage(urlImage) [[NSString stringWithFormat:@"http://zhongyou-hz.oss-cn-hangzhou.aliyuncs.com/%@",[urlImage stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] //网络访问阿里云的图片
 

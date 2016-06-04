@@ -110,8 +110,7 @@
 -(void)saveViewSpot
 {
     ZYZCDataBase *dbManager=[ZYZCDataBase sharedDBManager];
-    [dbManager deleteAllData];
-//    [dbManager saveDataWithFinishBlock:nil];
+    [dbManager saveDataWithFinishBlock:nil];
 }
 
 /**
@@ -120,6 +119,8 @@
 - (void)initWithWechat
 {
     [WXApi registerApp:kAppOpenid withDescription:@"ZYZC"];
+//    ZYZCRCManager *rcManager=[ZYZCRCManager defaultRCManager];
+//    [rcManager getRCloudToken];
 }
 
 #pragma mark - 打开微信，回调微信

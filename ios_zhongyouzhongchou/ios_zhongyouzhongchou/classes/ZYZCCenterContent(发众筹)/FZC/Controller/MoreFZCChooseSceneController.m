@@ -11,6 +11,7 @@
 #import "LanguageTool.h"
 #import "TacticGeneralVC.h"
 #import "TacticSingleViewController.h"
+#import "MBProgressHUD+MJ.h"
 @interface MoreFZCChooseSceneController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UITableView *table;
@@ -24,9 +25,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _viewSpot=[NSMutableArray array];
-    self.title=@"发起众筹";
+    self.title=@"目的地搜索";
     [self setBackItem];
     [self configUI];
+    [self getData];
 }
 
 -(void)configUI
@@ -46,10 +48,24 @@
     _table.separatorStyle=UITableViewCellSeparatorStyleNone;
     _table.showsVerticalScrollIndicator=NO;
     _table.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
-    _table.hidden=YES;
     [self.view addSubview:_table];
 }
 
+-(void)getData
+{
+    ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
+    [dataBase saveDataWithFinishBlock:^(BOOL saveSuccess) {
+        if (saveSuccess) {
+            NSArray *dataArr=[dataBase recieveDBData];
+            for (NSDictionary *dic in dataArr) {
+                OneSpotModel *oneSportModel=[[OneSpotModel alloc]mj_setKeyValues:dic];
+                [_viewSpot addObject:oneSportModel];
+            }
+            [_table reloadData];
+        }
+    }];
+
+}
 
 -(BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
@@ -63,19 +79,6 @@
     //监听键盘的出现和收起
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
-    
-    _table.hidden=NO;
-    ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
-    [dataBase saveDataWithFinishBlock:^(BOOL saveSuccess) {
-        if (saveSuccess) {
-            NSArray *dataArr=[dataBase recieveDBData];
-            for (NSDictionary *dic in dataArr) {
-                OneSpotModel *oneSportModel=[[OneSpotModel alloc]mj_setKeyValues:dic];
-                [_viewSpot addObject:oneSportModel];
-            }
-            [_table reloadData];
-        }
-    }];
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -95,13 +98,30 @@
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    for (NSString *obj in self.mySceneArr) {
-        if ([obj isEqualToString:_searchBar.text]) {
-            NSLog(@"该目的地已存在!");
-            return;
+    //攻略主页搜索
+    if (_isHomeSearch) {
+        if (_searchBar.text.length) {
+            ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
+            OneSpotModel *spotModel=[dataBase searchOneDataWithName:_searchBar.text];
+            if (spotModel) {
+                 [self.navigationController pushViewController:[[TacticSingleViewController alloc] initWithViewId:[spotModel.ID intValue]] animated:YES];
+            }
+            else
+            {
+                [MBProgressHUD showError:ZYLocalizedString(@"error_no_spot")];
+            }
         }
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    //发众筹搜索
+    else{
+        for (NSString *obj in self.mySceneArr) {
+            if ([obj isEqualToString:_searchBar.text]) {
+                NSLog(@"该目的地已存在!");
+                return;
+            }
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark --- table代理方法实现
@@ -169,6 +189,11 @@
 }
 
 
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [_searchBar resignFirstResponder];
+}
+
 #pragma mark --- 键盘出现和收起方法
 -(void)keyboardWillShow:(NSNotification *)notify
 {
@@ -204,6 +229,17 @@
     }
     return  attrStr;
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+     [_searchBar resignFirstResponder];
+}
+
 
 
 //#pragma mark --- 点击事件

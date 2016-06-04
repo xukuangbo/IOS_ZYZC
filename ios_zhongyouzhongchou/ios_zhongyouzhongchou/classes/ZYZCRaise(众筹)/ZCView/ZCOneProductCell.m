@@ -93,7 +93,7 @@
     
     //添加性别
     _sexImg=[[UIImageView alloc]initWithFrame:CGRectMake(_nameLab.right+3, _nameLab.top, 20, 20)];
-    _sexImg.image=[UIImage imageNamed:@"btn_sex_fem"];
+//    _sexImg.image=[UIImage imageNamed:@"btn_sex_fem"];
     [bgImg addSubview:_sexImg];
     
     //添加vip
