@@ -6,14 +6,22 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
+//我的众筹列表
+#define GET_MY_LIST(openid,type,pageNo) [NSString stringWithFormat:@"cache=false&openid=%@&self=%ld&pageNo=%d&pageSize=10",openid,type,pageNo]
 
 #import "ZYZCPersonalController.h"
 #import "PersonHeadView.h"
+#import "ZCListModel.h"
+#import "ZCOneProductCell.h"
+
 @interface ZYZCPersonalController ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic, strong) UITableView *table;
-@property (nonatomic, strong) PersonHeadView *headView;
-@property (nonatomic, strong) UserModel *userModel;
-@property (nonatomic, strong) NSMutableArray *productArr;
+@property (nonatomic, strong) UITableView       *table;
+@property (nonatomic, strong) PersonHeadView    *headView;
+@property (nonatomic, strong) UserModel         *userModel;
+@property (nonatomic, strong) NSMutableArray    *productArr;
+@property (nonatomic, assign) int               pageNo;
+@property (nonatomic, assign) PersonProductType productType;
+@property (nonatomic, strong) ZCListModel       *listModel;
 @end
 
 @implementation ZYZCPersonalController
@@ -26,19 +34,19 @@
     @{NSForegroundColorAttributeName:[UIColor whiteColor],
       NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
     _productArr=[NSMutableArray array];
-//    NSLog(@"_userId:%@",_userId);
-//    NSLog(@"%f",HEAD_VIEW_HEIGHT);
+    _pageNo=1;
+    _productType=PublishType;
     [self configUI];
     [self getUserInfoData];
 }
 
 -(void)configUI
 {
-    UIImageView *navBgView=[[UIImageView alloc]initWithFrame:self.view.bounds];
+    UIView *navBgView=[[UIView alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:navBgView];
     
     _table=[[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _table.contentInset=UIEdgeInsetsMake(HEAD_VIEW_HEIGHT, 0, 0, 0);
+    _table.contentInset=UIEdgeInsetsMake(HEAD_VIEW_HEIGHT, 0, -44, 0);
     _table.dataSource=self;
     _table.delegate=self;
     _table.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
@@ -46,11 +54,31 @@
     _table.separatorStyle=UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
     
+    _table.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pageNo=1;
+        [self getProductsData];
+    }];
+    
+    _table.mj_footer=[MJRefreshAutoFooter footerWithRefreshingBlock:^{
+        _pageNo++;
+        [self getProductsData];
+    }];
+    
+    //添加头视图
     _headView=[[PersonHeadView alloc]init];
     [self.view addSubview:_headView];
     
+    __weak typeof (&*self )weakSelf=self;
+    _headView.changeProduct=^(PersonProductType productType)
+    {
+        weakSelf.productType=productType;
+        weakSelf.pageNo=1;
+       [weakSelf getProductsData];
+    };
+    
 }
 
+#pragma mark --- 获取个人信息
 -(void)getUserInfoData
 {
     NSString *url=[NSString stringWithFormat:@"%@openid=%@&userId=%@",GETUSERDETAIL,[ZYZCTool getUserId],_userId];
@@ -65,6 +93,7 @@
              _headView.meGzAll=result[@"data"][@"meGzAll"];
              _headView.gzMeAll=result[@"data"][@"gzMeAll"];
               _headView.userModel=_userModel;
+             [self getProductsData];
          }
          
      } andFailBlock:^(id failResult) {
@@ -72,28 +101,78 @@
      }];
 }
 
+#pragma mark --- 获取他的众筹
+-(void)getProductsData
+{
+    if (!_userModel.openid) {
+        return;
+    }
+     NSLog(@"type:%ld",_productType-PublishType);
+    NSString *url=[NSString stringWithFormat:@"%@%@",LISTMYPRODUCTS,
+                   GET_MY_LIST(_userModel.openid,_productType-PublishType+1,_pageNo)];
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess)
+    {
+        NSLog(@"%@",result);
+        if (isSuccess) {
+            if (_pageNo==1&&_productArr.count) {
+                [_productArr removeAllObjects];
+            }
+            _listModel=[[ZCListModel alloc]mj_setKeyValues:result];
+            for(ZCOneModel *oneModel in _listModel.data)
+            {
+                [_productArr addObject:oneModel];
+            }
+            [_table reloadData];
+        }
+        
+        //停止下拉刷新
+        [_table.mj_header endRefreshing];
+        //停止上拉刷新
+        [_table.mj_footer endRefreshing];
+        
+    } andFailBlock:^(id failResult) {
+        
+        //停止下拉刷新
+        [_table.mj_header endRefreshing];
+        //停止上拉刷新
+        [_table.mj_footer endRefreshing];
+    }];
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    
+    return _productArr.count>0?_productArr.count*2+1:0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    if (indexPath.row==0) {
-        cell.contentView.backgroundColor=[UIColor orangeColor];
+    if (indexPath.row%2) {
+        NSString *cellId=@"productCell";
+        ZCOneProductCell *productCell=[tableView dequeueReusableCellWithIdentifier:cellId];
+        if (!productCell) {
+            productCell=[[ZCOneProductCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        }
+        productCell.oneModel=_productArr[(indexPath.row+1)/2-1];
+        return productCell;
     }
-    else if (indexPath.row==1)
-    {
-        cell.contentView.backgroundColor=[UIColor greenColor];
-
+    else{
+        UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+        return cell;
     }
-    return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    if (indexPath.row%2) {
+        return PRODUCT_CELL_HEIGHT;
+    }
+    else
+    {
+        return KEDGE_DISTANCE;
+    }
 }
 
 

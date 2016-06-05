@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, TouchPersonType)
     ChatType
 };
 
+typedef void (^ChangeProduct)(PersonProductType productType) ;
+
 #import <UIKit/UIKit.h>
 #import "UserModel.h"
 @interface PersonHeadView : UIView
@@ -31,4 +33,8 @@ typedef NS_ENUM(NSInteger, TouchPersonType)
 @property (nonatomic, strong) NSNumber  *meGzAll;
 @property (nonatomic, strong) NSNumber  *gzMeAll;
 @property (nonatomic, assign) CGFloat   tableOffSetY;
+
+//改变众筹项目类型
+@property (nonatomic, copy  ) ChangeProduct changeProduct;
+
 @end

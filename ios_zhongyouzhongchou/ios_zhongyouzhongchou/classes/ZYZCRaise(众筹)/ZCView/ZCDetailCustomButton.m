@@ -39,8 +39,9 @@
 {
     NSLog(@"_userId:%@",_userId);
     
-//    NSNumber *myUserId=@54;
-    
+////    NSNumber *myUserId=@54;
+//    NSUserDefaults  *user=[NSUserDefaults standardUserDefaults];
+//    NSNumber *myUserId=[user objectForKey:KUSER_MARK];
 //    if ([myUserId isEqual:_userId]) {
 //        return;
 //    }

@@ -150,10 +150,8 @@
     [ZYZCHTTPTool getHttpDataByURL:httpUrl withSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"%@",result);
         if (isSuccess) {
-            if (_pageNo==1) {
-                if (_listArr.count) {
+            if (_pageNo==1&&_listArr.count) {
                     [_listArr removeAllObjects];
-                }
             }
             _listModel=[[ZCListModel alloc]mj_setKeyValues:result];
             for(ZCOneModel *oneModel in _listModel.data)
