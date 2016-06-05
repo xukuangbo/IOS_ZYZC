@@ -18,6 +18,8 @@
 
 //"foodImg": "/productImg/show/indexImg/1458657885064.jpg",
 @property (nonatomic, copy) NSString *foodImg;
+
+@property (nonatomic, copy) NSString *min_foodImg;
 //"foodText": "小笼包",
 @property (nonatomic, copy) NSString *foodText;
 //"id": 5,

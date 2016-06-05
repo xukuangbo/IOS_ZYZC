@@ -1,32 +1,35 @@
 //
-//  TacticMoreVideosController.m
+//  TacticMoreCitiesVC.m
 //  ios_zhongyouzhongchou
 //
-//  Created by mac on 16/5/3.
+//  Created by mac on 16/6/4.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-
-#import "TacticMoreVideosController.h"
-#import "TacticMoreCollectionViewCell.h"
-#import "TacticSingleModel.h"
-#import "TacticVideoModel.h"
-#import "TacticSingleFoodModel.h"
-#import "TacticImageView.h"
 #define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
 #define naviHeight 64
-@interface TacticMoreVideosController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
-@property (nonatomic, weak) UICollectionView *collectionView;
 
+#import "TacticMoreCitiesVC.h"
+//#import "TacticMoreCitiesModel.h"
+#import "TacticMoreCollectionViewCell.h"
+#import "TacticThreeMapView.h"
+#import "TacticImageView.h"
+#import "TacticSingleModel.h"
+
+@interface TacticMoreCitiesVC ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+
+@property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray *moreCitiesModelArray;
 @end
-static NSString *const ID = @"MoreCollectioncell";
-@implementation TacticMoreVideosController
 
+@implementation TacticMoreCitiesVC
+
+static NSString *const ID = @"TacticMoreCitiesCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self configUI];
     
+    [self requestData];
 }
 
 - (void)configUI
@@ -47,41 +50,49 @@ static NSString *const ID = @"MoreCollectioncell";
     self.collectionView = collectionView;
 }
 
+- (void)requestData
+{
+    NSString *url = GET_TACTIC_More_Cities;
+    NSLog(@"%@",url);
+    //访问网络
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            //请求成功，转化为数组
+            weakSelf.moreCitiesModelArray = [TacticSingleModel mj_objectArrayWithKeyValuesArray:result[@"data"]];
+            [weakSelf.collectionView reloadData];
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
+
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.moreArray.count;
+    return self.moreCitiesModelArray.count;
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TacticMoreCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
-    if ([self.moreArray[indexPath.item] isKindOfClass:[TacticVideoModel class]]) {//视频
-         TacticVideoModel *model = self.moreArray[indexPath.item];
-        cell.imageView.tacticVideoModel = model;
-    }else if ([self.moreArray[indexPath.item] isKindOfClass:[TacticSingleModel class]]){
-        //判断是否国家城市一般景点
-        TacticSingleModel *model = self.moreArray[indexPath.item];
-        if (model.viewType == 1) {
-            cell.imageView.pushType = threeMapViewTypeCountryView;
-        }else if (model.viewType == 2){
-            cell.imageView.pushType = threeMapViewTypeCityView;
-        }else if (model.viewType == 3){
-            cell.imageView.pushType = threeMapViewTypeSingleView;
-        }
-        cell.imageView.tacticSingleModel = model;
-    }else if ([self.moreArray[indexPath.item] isKindOfClass:[TacticSingleFoodModel class]]){
-        TacticSingleFoodModel *model = self.moreArray[indexPath.item];
-        cell.imageView.pushType = threeMapViewTypeFood;
-        cell.imageView.tacticSingleFoodModel = model;
-    }else{
-        NSLog(@"mgviews种类不定");
-    }
+    TacticSingleModel *moreModel = self.moreCitiesModelArray[indexPath.item];
+    
+    cell.imageView.pushType = threeMapViewTypeCityView;
+    
+    TacticSingleModel *tacticSingleModel = [[TacticSingleModel alloc] init];
+    tacticSingleModel.viewType = 2;
+    tacticSingleModel.viewImg = moreModel.min_viewImg;
+    tacticSingleModel.ID = moreModel.ID;
+    tacticSingleModel.name = moreModel.name;
+    
+    cell.imageView.tacticSingleModel = tacticSingleModel;
     
     return cell;
 }
-
 
 
 #pragma mark - UICollectionViewDelegateFlowLayout

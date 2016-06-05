@@ -125,6 +125,8 @@
 #define GET_TACTIC_More_Cities [NSString stringWithFormat:@"%@admin_back/getViewList.action?viewType=2",BASE_URL]
 //获取更多视频
 #define GET_TACTIC_More_Videos [NSString stringWithFormat:@"%@admin_back/getViewVideoList.action?viewType=2",BASE_URL]
+//添加想去的目的地
+#define GET_TACTIC_WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/addMySpot.action?openid=%@&viewId=%d",BASE_URL,openid,viewId]
 
 //通过userid获取用户基本信息
 #define GET_USERINFO_BYUSERID    HTTPURL(@"u/getUserById")

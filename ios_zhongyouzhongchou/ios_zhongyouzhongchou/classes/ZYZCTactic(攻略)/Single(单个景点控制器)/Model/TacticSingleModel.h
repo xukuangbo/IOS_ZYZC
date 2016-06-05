@@ -58,6 +58,8 @@
 @property (nonatomic, strong) NSArray *mgViews;
 //"viewImg":"  ",
 @property (nonatomic, copy) NSString *viewImg;
+//"viewImg":"  ",
+@property (nonatomic, copy) NSString *min_viewImg;
 //"country":"俄罗斯",
 @property (nonatomic, copy) NSString *country;
 //"country":"俄罗斯",
