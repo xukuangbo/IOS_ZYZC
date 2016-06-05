@@ -13,7 +13,7 @@
 #import "PersonHeadView.h"
 #import "ZCListModel.h"
 #import "ZCOneProductCell.h"
-
+#import "ZCPersonInfoController.h"
 @interface ZYZCPersonalController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView       *table;
 @property (nonatomic, strong) PersonHeadView    *headView;
@@ -107,7 +107,7 @@
     if (!_userModel.openid) {
         return;
     }
-     NSLog(@"type:%ld",_productType-PublishType);
+     NSLog(@"type:%ld",_productType-PublishType+1);
     NSString *url=[NSString stringWithFormat:@"%@%@",LISTMYPRODUCTS,
                    GET_MY_LIST(_userModel.openid,_productType-PublishType+1,_pageNo)];
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess)
@@ -118,17 +118,18 @@
                 [_productArr removeAllObjects];
             }
             _listModel=[[ZCListModel alloc]mj_setKeyValues:result];
+            
             if (_listModel.data.count) {
                 for(ZCOneModel *oneModel in _listModel.data)
                 {
                     [_productArr addObject:oneModel];
                 }
-                [_table reloadData];
             }
             else
             {
                 _pageNo--;
             }
+             [_table reloadData];
         }
         
         //停止下拉刷新
@@ -181,6 +182,16 @@
     }
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //推出信息详情页
+    ZCPersonInfoController *personInfoVC=[[ZCPersonInfoController alloc]init];
+    personInfoVC.hidesBottomBarWhenPushed=YES;
+    ZCOneModel *oneModel=_productArr[indexPath.row];
+    personInfoVC.oneModel=oneModel;
+    personInfoVC.productId=oneModel.product.productId;
+    [self.navigationController pushViewController:personInfoVC animated:YES];
+}
 
 
 

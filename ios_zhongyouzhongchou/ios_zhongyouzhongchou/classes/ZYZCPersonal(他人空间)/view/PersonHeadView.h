@@ -33,7 +33,9 @@ typedef void (^ChangeProduct)(PersonProductType productType) ;
 @property (nonatomic, strong) NSNumber  *meGzAll;
 @property (nonatomic, strong) NSNumber  *gzMeAll;
 @property (nonatomic, assign) CGFloat   tableOffSetY;
+@property (nonatomic, strong) UIColor   *blurColor;
 
+@property (nonatomic, assign) BOOL      isMineView;
 //改变众筹项目类型
 @property (nonatomic, copy  ) ChangeProduct changeProduct;
 

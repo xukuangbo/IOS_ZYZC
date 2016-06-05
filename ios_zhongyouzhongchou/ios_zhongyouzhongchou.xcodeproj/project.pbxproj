@@ -228,6 +228,7 @@
 		2CF7EB011CC7856D007074FE /* ZCDetailIntroFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF7EB001CC7856D007074FE /* ZCDetailIntroFirstCell.m */; };
 		2CF7EB041CC78582007074FE /* ZCDetailIntroSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF7EB031CC78582007074FE /* ZCDetailIntroSecondCell.m */; };
 		2CF7EB071CC78599007074FE /* ZCDetailIntroThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF7EB061CC78599007074FE /* ZCDetailIntroThirdCell.m */; };
+		2CFFE4C71D04101E006D5AD9 /* ZYZCMineVIewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CFFE4C61D04101E006D5AD9 /* ZYZCMineVIewController.m */; };
 		773C9B15B394065770448BFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DC679E6EF03FA415FEEF7D /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -681,6 +682,8 @@
 		2CF7EB031CC78582007074FE /* ZCDetailIntroSecondCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailIntroSecondCell.m; sourceTree = "<group>"; };
 		2CF7EB051CC78599007074FE /* ZCDetailIntroThirdCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDetailIntroThirdCell.h; sourceTree = "<group>"; };
 		2CF7EB061CC78599007074FE /* ZCDetailIntroThirdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailIntroThirdCell.m; sourceTree = "<group>"; };
+		2CFFE4C51D04101E006D5AD9 /* ZYZCMineVIewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCMineVIewController.h; sourceTree = "<group>"; };
+		2CFFE4C61D04101E006D5AD9 /* ZYZCMineVIewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCMineVIewController.m; sourceTree = "<group>"; };
 		5F74EDEB5AED9D3FE531BA3F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		75DC679E6EF03FA415FEEF7D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A975BB3FB47993D61E1FF732 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -1192,6 +1195,8 @@
 			children = (
 				04A99C5B1CBF848D00C6F5F0 /* MineViewController.h */,
 				04A99C5C1CBF848D00C6F5F0 /* MineViewController.m */,
+				2CFFE4C51D04101E006D5AD9 /* ZYZCMineVIewController.h */,
+				2CFFE4C61D04101E006D5AD9 /* ZYZCMineVIewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2119,6 +2124,7 @@
 				04A99D271CC0924E00C6F5F0 /* ZYZCAccountModel.m in Sources */,
 				041D06F91CD3321D002B8329 /* UITextField+RYNumberKeyboard.m in Sources */,
 				04A99CA91CBF848D00C6F5F0 /* MoreFZCReturnTableView.m in Sources */,
+				2CFFE4C71D04101E006D5AD9 /* ZYZCMineVIewController.m in Sources */,
 				04A99CA61CBF848D00C6F5F0 /* MoreFZCBaseTableViewCell.m in Sources */,
 				2CD4B4491CCDAA2B006A7CE8 /* ZCDetailReturnSecondCell.m in Sources */,
 				2C8B91711CE71552004FDCB7 /* WXApiShare.m in Sources */,
