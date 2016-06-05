@@ -92,8 +92,9 @@
     _userModel=userModel;
     NSArray *textArr=nil;
     [_faceImgView sd_setImageWithURL:[NSURL URLWithString:userModel.faceImg]];
-    [_infoView sd_setImageWithURL:[NSURL URLWithString:userModel.faceImg]];
-    [self addFXBlurView];
+    [_infoView sd_setImageWithURL:[NSURL URLWithString:userModel.faceImg] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+         [self addFXBlurView];
+    }];
 
     //名字
     UIFont *font=[UIFont boldSystemFontOfSize:22];
