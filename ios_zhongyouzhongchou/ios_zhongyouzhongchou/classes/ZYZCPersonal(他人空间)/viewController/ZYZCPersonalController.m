@@ -7,7 +7,7 @@
 //
 
 //我的众筹列表
-#define GET_MY_LIST(openid,type,pageNo) [NSString stringWithFormat:@"cache=false&openid=%@&self=%ld&pageNo=%d&pageSize=10",openid,type,pageNo]
+#define GET_MY_LIST(openid,type,pageNo) [NSString stringWithFormat:@"cache=false&openid=%@&self=%ld&pageNo=%d&status_not=0,2&pageSize=10",openid,type,pageNo]
 
 #import "ZYZCPersonalController.h"
 #import "PersonHeadView.h"
@@ -118,11 +118,17 @@
                 [_productArr removeAllObjects];
             }
             _listModel=[[ZCListModel alloc]mj_setKeyValues:result];
-            for(ZCOneModel *oneModel in _listModel.data)
-            {
-                [_productArr addObject:oneModel];
+            if (_listModel.data.count) {
+                for(ZCOneModel *oneModel in _listModel.data)
+                {
+                    [_productArr addObject:oneModel];
+                }
+                [_table reloadData];
             }
-            [_table reloadData];
+            else
+            {
+                _pageNo--;
+            }
         }
         
         //停止下拉刷新
@@ -176,6 +182,8 @@
 }
 
 
+
+
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY=scrollView.contentOffset.y;
@@ -193,6 +201,7 @@
         self.title=nil;
     }
 }
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
