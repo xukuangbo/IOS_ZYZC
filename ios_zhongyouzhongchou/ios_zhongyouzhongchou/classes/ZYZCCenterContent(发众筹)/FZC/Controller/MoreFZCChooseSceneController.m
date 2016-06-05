@@ -120,6 +120,9 @@
                 return;
             }
         }
+        if (self.getOneScene) {
+            self.getOneScene(_searchBar.text);
+        }
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -171,6 +174,15 @@
 {
     _chooseSpotModel=_viewSpot[indexPath.row];
     _searchBar.text=_chooseSpotModel.name;
+    if (!_isHomeSearch) {
+        //返回地名
+        if (self.getOneScene) {
+            self.getOneScene(_searchBar.text);
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+    
     if ([_chooseSpotModel.viewType intValue] == 1) {
         [self.navigationController pushViewController:[[TacticSingleViewController alloc] initWithViewId:[_chooseSpotModel.ID intValue]] animated:YES];
         return;
@@ -181,11 +193,6 @@
         [self.navigationController pushViewController:[[TacticGeneralVC alloc] initWithViewId:[_chooseSpotModel.ID intValue]] animated:YES];
         return;
     }
-    //返回地名
-    if (self.getOneScene) {
-        self.getOneScene(_searchBar.text);
-    }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

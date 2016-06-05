@@ -65,18 +65,22 @@
 
 //NSUserDefaults-key使用
 #define KMOREFZC_RETURN_SUPPORTTYPE  @"return_supportType"
-#define KUSER_ID                     @"openId"     //用于保存用户id(这里是openid)
-#define KAPP_VERSION                 @"version"       //存储app的版本号
-#define KMY_LOCALTION                @"myLocation"    //记录当地城市
-#define KMY_ZC_DRAFT_SAVE            @"myDraftSave"   //记录我的草稿的状态
-                                                      //@“yes”为保
-#define KVIEWSPOT_SAVE               @"viewSportSave" //记录地名库有没有存储下来
-                                                      //@“yes”为保存
-#define KFAIL_UPLOAD_OSS             @"failUpload"    //记录上传资源到oss时失败没
-                                                      //有删除的文件
-#define KCHAT_TOKEN                  @"chatToken"     //存储用户聊天信息
-
-#define KUSER_MARK                   @"userId"        //存储用户userId
+//用于保存用户id(这里是openid)
+#define KUSER_ID                     @"openId"
+//存储app的版本号
+#define KAPP_VERSION                 @"version"
+//记录当地城市
+#define KMY_LOCALTION                @"myLocation"
+//记录我的草稿的状态，@“yes”为保
+#define KMY_ZC_DRAFT_SAVE            @"myDraftSave"
+//记录地名库有没有存储下来@“yes”为保存
+#define KVIEWSPOT_SAVE               @"viewSportSave"
+//记录上传资源到oss时失败没，有，删除文件
+#define KFAIL_UPLOAD_OSS             @"failUpload"
+//存储用户聊天信息
+#define KCHAT_TOKEN                  @"chatToken"
+//存储用户userId（进入个人空间作为判断条件，如果是自己的userId，不能进入）
+#define KUSER_MARK                   @"userId"
 
 //图片拉伸
 #define KPULLIMG(IMGNAME,TOP,LEFT,BOTTOM,RIGHT) [[UIImage imageNamed:IMGNAME]resizableImageWithCapInsets:UIEdgeInsetsMake(TOP, LEFT, BOTTOM, RIGHT) resizingMode:UIImageResizingModeStretch]

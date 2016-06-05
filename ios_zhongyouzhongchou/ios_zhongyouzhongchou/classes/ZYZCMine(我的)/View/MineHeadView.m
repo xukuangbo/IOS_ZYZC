@@ -303,8 +303,14 @@
             
             //注册成功,获取融云token
             ZYZCRCManager *RCManager=[ZYZCRCManager defaultManager];
+            RCManager.hasLogin=NO;
             [RCManager getRCloudToken];
             
+            //存储userId到NSUserDefaults中
+            NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+            [user setObject:result[@"data"][@"userId"] forKey:KUSER_MARK];
+            [user synchronize];
+        
             //展示数据
             weakSelf.nameLabel.text = weakAccount.nickname;
             [weakSelf.iconButton sd_setImageWithURL:[NSURL URLWithString:weakAccount.headimgurl] forState:UIControlStateNormal];

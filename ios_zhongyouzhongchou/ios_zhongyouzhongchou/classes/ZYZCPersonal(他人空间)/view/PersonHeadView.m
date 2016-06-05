@@ -144,7 +144,7 @@
             _preButton=button;
         }
     }
-    _moveLineView=[UIView lineViewWithFrame:CGRectMake(0,clickView.height-2 , buttonWidth, 2) andColor:[UIColor ZYZC_MainColor]];
+    _moveLineView=[UIView lineViewWithFrame:CGRectMake(_preButton.left,clickView.height-2 , buttonWidth, 2) andColor:[UIColor ZYZC_MainColor]];
     [clickView addSubview:_moveLineView];
     
     [self clickButton:_preButton];
@@ -196,8 +196,16 @@
 #pragma mark --- button点击事件
 -(void)clickButton:(UIButton *)button
 {
+    if (_preButton==button) {
+        return;
+    }
     //发布，参与，推荐
     if (button.tag>=PublishType&&button.tag<=RecommendType) {
+        
+        if (_changeProduct) {
+            _changeProduct(button.tag);
+        }
+
         if (_preButton&&_preButton!=button) {
             [_preButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
         }
