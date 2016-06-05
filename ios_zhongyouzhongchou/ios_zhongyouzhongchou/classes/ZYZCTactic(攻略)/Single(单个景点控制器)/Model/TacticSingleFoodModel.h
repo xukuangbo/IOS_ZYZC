@@ -27,4 +27,5 @@
 //"name": "小笼包",
 @property (nonatomic, copy) NSString *name;
 //"status": 1
+@property (nonatomic, copy) NSArray *pics;
 @end

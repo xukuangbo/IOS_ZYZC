@@ -138,7 +138,7 @@
     labelView.layer.cornerRadius = 5;
     labelView.layer.masksToBounds = YES;
     labelView.font = [UIFont systemFontOfSize:16];
-    labelView.backgroundColor = [UIColor whiteColor];
+//    labelView.backgroundColor = [UIColor whiteColor];
     labelView.textColor = [UIColor ZYZC_TextGrayColor];
     labelView.numberOfLines = 0;
     [mapView addSubview:labelView];
@@ -148,6 +148,8 @@
     self.imageArray = [NSMutableArray array];
     for (int i = 0; i < 3; i++) {
         UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
         [self.imageArray addObject:imageView];
     }
 }

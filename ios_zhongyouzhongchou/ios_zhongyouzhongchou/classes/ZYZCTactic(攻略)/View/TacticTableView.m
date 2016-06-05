@@ -12,11 +12,13 @@
 #import "TacticModel.h"
 #import "MJExtension.h"
 #import "TacticCustomMapView.h"
-
+#import "TacticIndexImgModel.h"
+#import "ZCWebViewController.h"
 #import "TacticTableViewCell.h"
 @interface TacticTableView ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 
-@property (nonatomic, strong) NSArray *headImageArray;
+@property (nonatomic, strong) NSArray *headURLArray;
+
 @end
 
 @implementation TacticTableView
@@ -107,7 +109,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     // 网络加载 --- 创建带标题的图片轮播器
-//    NSArray *titles = @[@"柳亮机器人一号",@"柳亮机器人二号",@"柳亮机器人三号",@"柳亮机器人四号",@"柳亮机器人五号"];
+
     SDCycleScrollView *headView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 280, KSCREEN_W, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     //添加渐变条
     UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
@@ -117,14 +119,25 @@
     headView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     headView.pageDotColor = [UIColor whiteColor];
     headView.currentPageDotColor = [UIColor ZYZC_MainColor]; // 自定义分页控件小圆标颜色
-    NSMutableArray *headURLArray = [NSMutableArray array];
-    if (self.tacticModel.pics) {
-        for (NSString *urlString in self.tacticModel.pics) {
-            NSString *tempUrlString = KWebImage(urlString);
-            [headURLArray addObject:tempUrlString];
+    
+    if (self.tacticModel.indexImg) {
+        NSMutableArray *headImgArray = [NSMutableArray array];
+        NSMutableArray *headTitleArray = [NSMutableArray array];
+        NSMutableArray *headURLArray = [NSMutableArray array];
+        for (TacticIndexImgModel *indexImgModel in self.tacticModel.indexImg) {
+            if (indexImgModel.status == 0) {//有效
+                NSString *headImgString = [NSString stringWithFormat:@"http://www.sosona.com:8080%@",indexImgModel.proImg];
+                [headImgArray addObject:headImgString];
+                [headTitleArray addObject:indexImgModel.title];
+                [headURLArray addObject:indexImgModel.proUrl];
+            }else{
+                
+            }
         }
+        self.headURLArray = headURLArray;
+        headView.titlesGroup = headTitleArray;
+        headView.imageURLStringsGroup = headImgArray;
     }
-    headView.imageURLStringsGroup = headURLArray;
     return headView;
 }
 
@@ -148,8 +161,7 @@
         CGFloat alpha = MAX(0, offsetY/headViewHeight);
         
         [homeVC.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(alpha)];
-        
-    } else {
+    }else {
         [homeVC.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(1)];
     }
 }
@@ -159,6 +171,9 @@
 {
     NSLog(@"---点击了第%ld张图片", (long)index);
     
-    //    [self.navigationController pushViewController:[NSClassFromString(@"DemoVCWithXib") new] animated:YES];
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
+    webVC.myTitle = @"最新活动";
+    webVC.requestUrl = self.headURLArray[index];
+    [self.viewController presentViewController:webVC animated:YES completion:nil];
 }
 @end
