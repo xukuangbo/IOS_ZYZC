@@ -20,6 +20,11 @@
 @property (nonatomic, weak) UIButton *iconButton;
 
 /**
+ *  空心点击用按钮
+ */
+@property (nonatomic, weak) UIButton *iconClickButton;
+
+/**
  *  小标题
  */
 @property (nonatomic, weak) UILabel *titleLabel;

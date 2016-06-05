@@ -36,7 +36,6 @@
 		041D06F91CD3321D002B8329 /* UITextField+RYNumberKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 041D06F51CD3321D002B8329 /* UITextField+RYNumberKeyboard.m */; };
 		04518B4B1CE419F0001921D0 /* MineSetUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */; };
 		04518B4C1CE419F0001921D0 /* MineSetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */; };
-		04518B4F1CE42905001921D0 /* ZYZCBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B4E1CE42905001921D0 /* ZYZCBaseTableViewController.m */; };
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
 		0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */; };
 		0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */; };
@@ -302,8 +301,6 @@
 		04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MineSetUpVC.storyboard; sourceTree = "<group>"; };
 		04518B491CE419F0001921D0 /* MineSetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineSetUpViewController.h; sourceTree = "<group>"; };
 		04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineSetUpViewController.m; sourceTree = "<group>"; };
-		04518B4D1CE42905001921D0 /* ZYZCBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCBaseTableViewController.h; sourceTree = "<group>"; };
-		04518B4E1CE42905001921D0 /* ZYZCBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCBaseTableViewController.m; sourceTree = "<group>"; };
 		048DDE9A1CC229F600136C7A /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
 		048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
 		0490D14E1CC92B350064844C /* TacticSingleFoodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleFoodModel.h; sourceTree = "<group>"; };
@@ -1180,8 +1177,6 @@
 		04A99C591CBF848D00C6F5F0 /* ZYZCMine(我的) */ = {
 			isa = PBXGroup;
 			children = (
-				04518B4D1CE42905001921D0 /* ZYZCBaseTableViewController.h */,
-				04518B4E1CE42905001921D0 /* ZYZCBaseTableViewController.m */,
 				04518B471CE419F0001921D0 /* MineSetUp(个人设置) */,
 				04A99C5D1CBF848D00C6F5F0 /* Login(登录授权) */,
 				04A99C5E1CBF848D00C6F5F0 /* Message(消息) */,
@@ -2228,7 +2223,6 @@
 				2CF7EB071CC78599007074FE /* ZCDetailIntroThirdCell.m in Sources */,
 				04A99CC61CBF848D00C6F5F0 /* FZCBaseViewController.m in Sources */,
 				04A99CB01CBF848D00C6F5F0 /* RaiseMoneySecondCellView.m in Sources */,
-				04518B4F1CE42905001921D0 /* ZYZCBaseTableViewController.m in Sources */,
 				04A99CA21CBF848D00C6F5F0 /* GoalPeoplePickerView.m in Sources */,
 				04FCCAAC1CDC454C00540B28 /* TacticMoreVideosController.m in Sources */,
 				04A99C9A1CBF848D00C6F5F0 /* ChooseSiteImgController.m in Sources */,
