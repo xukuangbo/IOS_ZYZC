@@ -16,6 +16,8 @@
 #define naviHeight 64
 @interface TacticMoreVideosController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 @property (nonatomic, weak) UICollectionView *collectionView;
+
+@property (nonatomic, strong) NSArray *moreCitiesModelArray;
 @end
 static NSString *const ID = @"MoreCollectioncell";
 @implementation TacticMoreVideosController
@@ -24,6 +26,8 @@ static NSString *const ID = @"MoreCollectioncell";
     [super viewDidLoad];
     
     [self configUI];
+    
+    [self requestData];
 }
 
 - (void)configUI
@@ -43,6 +47,26 @@ static NSString *const ID = @"MoreCollectioncell";
     [self.view addSubview:collectionView];
     self.collectionView = collectionView;
 }
+
+
+- (void)requestData
+{
+    NSString *url = GET_TACTIC_More_Cities;
+    NSLog(@"%@",url);
+    //访问网络
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            //请求成功，转化为数组
+            weakSelf.moreCitiesModelArray = [TacticSingleModel mj_objectArrayWithKeyValuesArray:result[@"data"]];
+            [weakSelf.collectionView reloadData];
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
