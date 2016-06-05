@@ -119,6 +119,8 @@ static NSString *picCellID = @"TacticFoodPicCell";
     self.imageArray = [NSMutableArray array];
     for (int i = 0; i < 3; i++) {
         UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
         [self.imageArray addObject:imageView];
     }
 }
@@ -148,6 +150,22 @@ static NSString *picCellID = @"TacticFoodPicCell";
     self.labelView.frame = CGRectMake(labelViewX, labelViewY, labelViewW, labelViewH);
     
     CGFloat mapViewH = labelViewH + KEDGE_DISTANCE * 2;
+    if (tacticSingleFoodModel.pics) {
+        
+        CGFloat imageX = KEDGE_DISTANCE;
+        CGFloat imageW = mapViewW - imageX * 2;
+        CGFloat imageH = imageW / 16 * 9;
+        NSArray *detailImageArray = tacticSingleFoodModel.pics;
+        for (int i = 0; i < detailImageArray.count; i++) {
+            CGFloat imageY = CGRectGetMaxY(self.labelView.frame) + i * (imageH + KEDGE_DISTANCE) + KEDGE_DISTANCE;
+            UIImageView *imageView = self.imageArray[i];
+            [self.mapView addSubview:imageView];
+            imageView.backgroundColor = [UIColor redColor];
+            imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
+            [imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(detailImageArray[i])] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
+        }
+        mapViewH = mapViewH + detailImageArray.count * (imageH + KEDGE_DISTANCE);
+    }
     
     self.mapView.frame = CGRectMake(mapViewX, mapViewY, mapViewW, mapViewH);
     self.mapView.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);

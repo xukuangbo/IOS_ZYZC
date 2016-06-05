@@ -25,4 +25,6 @@
  */
 @property (nonatomic, strong) NSArray *mgViews;
 
+@property (nonatomic, strong) NSArray *indexImg;
+
 @end

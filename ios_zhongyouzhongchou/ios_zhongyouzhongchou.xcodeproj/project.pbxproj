@@ -139,6 +139,7 @@
 		04B99A711CFFC12200E3C33A /* TacticCountryHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A701CFFC12200E3C33A /* TacticCountryHeadView.m */; };
 		04C087A01D03E31300203D40 /* TacticMoreCitiesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C0879F1D03E31300203D40 /* TacticMoreCitiesVC.m */; };
 		04C087A41D03E97000203D40 /* TacticMoreVideosVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C087A31D03E97000203D40 /* TacticMoreVideosVC.m */; };
+		04C087A71D040F3A00203D40 /* TacticIndexImgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C087A61D040F3A00203D40 /* TacticIndexImgModel.m */; };
 		04F685491CF57C9F00E1A98E /* MinePersonSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */; };
 		04F6854A1CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685441CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m */; };
 		04F6854B1CF57C9F00E1A98E /* MinePersonSetUpHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685461CF57C9F00E1A98E /* MinePersonSetUpHeadView.m */; };
@@ -505,6 +506,8 @@
 		04C0879F1D03E31300203D40 /* TacticMoreCitiesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMoreCitiesVC.m; sourceTree = "<group>"; };
 		04C087A21D03E97000203D40 /* TacticMoreVideosVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticMoreVideosVC.h; sourceTree = "<group>"; };
 		04C087A31D03E97000203D40 /* TacticMoreVideosVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMoreVideosVC.m; sourceTree = "<group>"; };
+		04C087A51D040F3A00203D40 /* TacticIndexImgModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticIndexImgModel.h; sourceTree = "<group>"; };
+		04C087A61D040F3A00203D40 /* TacticIndexImgModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticIndexImgModel.m; sourceTree = "<group>"; };
 		04F6853F1CF57C9F00E1A98E /* MinePersonSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpController.h; sourceTree = "<group>"; };
 		04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpController.m; sourceTree = "<group>"; };
 		04F685431CF57C9F00E1A98E /* MinePersonSetUpFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpFirstCell.h; sourceTree = "<group>"; };
@@ -775,6 +778,8 @@
 				040651341CC71A99003FD539 /* TacticModel.m */,
 				040651391CC7597A003FD539 /* TacticVideoModel.h */,
 				0406513A1CC7597A003FD539 /* TacticVideoModel.m */,
+				04C087A51D040F3A00203D40 /* TacticIndexImgModel.h */,
+				04C087A61D040F3A00203D40 /* TacticIndexImgModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2059,6 +2064,7 @@
 				2CF7EB041CC78582007074FE /* ZCDetailIntroSecondCell.m in Sources */,
 				04A99CBA1CBF848D00C6F5F0 /* TravelSecondCell.m in Sources */,
 				04F685521CF58B1B00E1A98E /* MinePersonAddressModel.m in Sources */,
+				04C087A71D040F3A00203D40 /* TacticIndexImgModel.m in Sources */,
 				04A99CD31CBF848D00C6F5F0 /* ZCFilterTableViewCell.m in Sources */,
 				2CCB52ED1CC70F1800F99CD3 /* ZCDetailTableHeadView.m in Sources */,
 				04A99CA41CBF848D00C6F5F0 /* GoalSecondCell.m in Sources */,
