@@ -20,7 +20,8 @@
 @property (nonatomic, strong) UIView      *moveLineView;
 @property (nonatomic, strong) UIButton    *addInterestBtn;
 @property (nonatomic, strong) UIButton    *chatBtn;
-@property (nonatomic, strong) FXBlurView *blurView;
+@property (nonatomic, strong) FXBlurView  *blurView;
+@property (nonatomic, strong) UIView      *blurColorView;
 @property (nonatomic, strong) ZYZCRCManager *RCManager;
 @end
 
@@ -79,10 +80,10 @@
     [_blurView setDynamic:NO];
     _blurView.blurRadius=10;
     [self addSubview:_blurView];
-    UIView *greenView=[[UIView alloc]initWithFrame:_blurView.bounds];
-    greenView.backgroundColor=[UIColor ZYZC_MainColor];
-    greenView.alpha=0.6;
-    [_blurView addSubview:greenView];
+    _blurColorView=[[UIView alloc]initWithFrame:_blurView.bounds];
+    _blurColorView.backgroundColor=[UIColor ZYZC_MainColor];
+    _blurColorView.alpha=0.6;
+    [_blurView addSubview:_blurColorView];
     [self insertSubview:_blurView atIndex:1];
     
 }
@@ -94,6 +95,9 @@
     [_faceImgView sd_setImageWithURL:[NSURL URLWithString:userModel.faceImg]];
     [_infoView sd_setImageWithURL:[NSURL URLWithString:userModel.faceImg] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
          [self addFXBlurView];
+        if (_isMineView) {
+            [_blurColorView removeFromSuperview];
+        }
     }];
 
     //名字
@@ -129,6 +133,10 @@
     UILabel  *personInfoLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, _attentionLab.bottom+5, _attentionLab.width, 15) andText:personInfo andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
     [_baseInfoView addSubview:personInfoLab];
     
+    if (_isMineView) {
+        self.height=HEAD_VIEW_HEIGHT-45;
+        return;
+    }
     //他发起，他参与，他推荐
     UIView *clickView=[[UIView alloc]initWithFrame:CGRectMake(0, _infoView.bottom, self.width, 45)];
     clickView.backgroundColor=[UIColor whiteColor];
@@ -290,7 +298,11 @@
         
         _baseInfoView.alpha=1-rate;
     }
+}
 
+-(void)setBlurColor:(UIColor *)blurColor
+{
+    _blurColorView.backgroundColor=blurColor;
 }
 
 @end

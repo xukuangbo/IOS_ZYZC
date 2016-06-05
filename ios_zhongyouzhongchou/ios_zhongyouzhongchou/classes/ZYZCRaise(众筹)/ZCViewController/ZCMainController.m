@@ -367,6 +367,14 @@
     }
 }
 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offSetY=scrollView.contentOffset.y;
+    if (offSetY>=0) {
+        
+    }
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
