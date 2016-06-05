@@ -20,6 +20,16 @@
 
 @implementation TacticMoreVideosVC
 static NSString *const ID = @"TacticMoreVideosCell";
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -32,7 +42,7 @@ static NSString *const ID = @"TacticMoreVideosCell";
 - (void)configUI
 {
     [self setBackItem];
-    
+    self.title = @"更多攻略视频";
     self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];

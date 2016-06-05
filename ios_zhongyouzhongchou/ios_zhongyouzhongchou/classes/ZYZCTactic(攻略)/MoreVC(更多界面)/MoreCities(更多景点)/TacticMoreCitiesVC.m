@@ -22,6 +22,14 @@
 @end
 
 @implementation TacticMoreCitiesVC
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
+    return self;
+}
 
 static NSString *const ID = @"TacticMoreCitiesCell";
 - (void)viewDidLoad {
@@ -35,13 +43,13 @@ static NSString *const ID = @"TacticMoreCitiesCell";
 - (void)configUI
 {
     [self setBackItem];
-    
+    self.title = @"更多热门目的地";
     self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49) collectionViewLayout:layout];
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H) collectionViewLayout:layout];
     collectionView.backgroundColor = [UIColor ZYZC_BgGrayColor];
     [collectionView registerClass:[TacticMoreCollectionViewCell class] forCellWithReuseIdentifier:ID];
     collectionView.dataSource = self;
