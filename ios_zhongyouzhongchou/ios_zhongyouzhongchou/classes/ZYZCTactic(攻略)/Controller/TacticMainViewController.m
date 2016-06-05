@@ -55,8 +55,6 @@
      */
     [self getLocation];
     
-    
-    
 }
 /**
  *  设置导航栏

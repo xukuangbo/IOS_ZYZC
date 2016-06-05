@@ -15,6 +15,9 @@
 #import "TacticCityHeadView.h"
 #import "TacticCountryHeadView.h"
 #import "TacticSingleModelFrame.h"
+#import "ZYZCAccountTool.h"
+#import "ZYZCAccountModel.h"
+#import "MBProgressHUD+MJ.h"
 @interface TacticSingleViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, weak) UITableView *tableView;
 
@@ -146,7 +149,20 @@
 
 - (void)wantToGoAction:(UIButton *)button
 {
-    NSLog(@"想去");
+    //添加想去目的地
+    ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
+    if (!accountModel) {//没有账号
+        [MBProgressHUD showError:@"请登录后再点击"];
+    }else{
+        NSString *wantGoUrl = GET_TACTIC_WantGo(accountModel.openid, self.viewId);
+        NSLog(@"%@",wantGoUrl);
+        [ZYZCHTTPTool getHttpDataByURL:wantGoUrl withSuccessGetBlock:^(id result, BOOL isSuccess) {
+            [MBProgressHUD showSuccess:ZYLocalizedString(@"add_spot_success")];
+        } andFailBlock:^(id failResult) {
+            [MBProgressHUD showError:ZYLocalizedString(@"add_spot_fail")];
+        }];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -167,7 +183,6 @@
     if (!cell) {
         cell = [[TacticSingleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    
     
     //这里进行模型的赋值
     cell.tacticSingleModelFrame = self.tacticSingleModelFrame;

@@ -76,7 +76,7 @@
     [self.contentView addSubview:videoView];
     
     //    descLabel.bottom == 44
-    CGFloat threeMapViewX = 0;
+    CGFloat threeMapViewX = KEDGE_DISTANCE;
     CGFloat threeMapViewY = 44 + 4;
     CGFloat threeMapViewW = videoViewW - TacticTableViewCellMargin * 2;
     CGFloat threeMapViewH = threeViewHeight;
@@ -109,7 +109,7 @@
     hotDestView.descLabel.text = @"根据兴趣标签精准匹配更靠谱";
     //创建3个图片的容器
 //    descLabel.bottom == 44
-    CGFloat threeMapViewX = 0;
+    CGFloat threeMapViewX = KEDGE_DISTANCE;
     CGFloat threeMapViewY = 44 + 4;
     CGFloat threeMapViewW = hotDestViewW - TacticTableViewCellMargin * 2;
     CGFloat threeMapViewH = threeViewHeight;

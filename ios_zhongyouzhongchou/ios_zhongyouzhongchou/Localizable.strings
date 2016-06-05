@@ -69,3 +69,6 @@
  */
 "collection_success"="收藏成功";
 "collection_fail"="取消收藏";
+
+"add_spot_success"="成功添加目的地";
+"add_spot_fail"="添加失败";

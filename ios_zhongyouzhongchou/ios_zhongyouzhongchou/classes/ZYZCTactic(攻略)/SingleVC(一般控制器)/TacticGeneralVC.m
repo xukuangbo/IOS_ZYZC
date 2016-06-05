@@ -69,7 +69,7 @@
     /**
      *  创建Scrollview
      */
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H - 49)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H)];
     scrollView.backgroundColor = [UIColor clearColor];
     scrollView.delegate = self;
     [self.view addSubview:scrollView];
