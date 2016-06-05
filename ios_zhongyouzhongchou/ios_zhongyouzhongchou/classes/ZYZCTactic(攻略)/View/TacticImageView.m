@@ -71,7 +71,7 @@
     self.viewType = tacticVideoModel.viewType;
     self.pushType = threeMapViewTypeVideo;
     self.startImg.hidden = NO;
-    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.min_viewImg)] forState:UIControlStateNormal];
+    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.videoImg)] forState:UIControlStateNormal];
 }
 
 - (void)setTacticSingleModel:(TacticSingleModel *)tacticSingleModel
@@ -95,7 +95,7 @@
     _tacticSingleFoodModel = tacticSingleFoodModel;
     self.pushType = threeMapViewTypeFood;
     self.nameLabel.text = tacticSingleFoodModel.name;
-    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.foodImg)] forState:UIControlStateNormal];
+    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.min_foodImg)] forState:UIControlStateNormal];
 }
 
 //这里写个跳转到单个景点

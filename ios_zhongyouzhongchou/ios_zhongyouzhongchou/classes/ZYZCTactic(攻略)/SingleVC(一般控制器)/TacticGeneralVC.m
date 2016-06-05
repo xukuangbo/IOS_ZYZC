@@ -97,6 +97,8 @@
     namelabel.font = [UIFont systemFontOfSize:33];
     namelabel.textAlignment = NSTextAlignmentCenter;
     namelabel.textColor = [UIColor whiteColor];
+    namelabel.shadowOffset=CGSizeMake(1, 1);
+    namelabel.shadowColor=[UIColor blackColor];
     namelabel.centerX = KSCREEN_W * 0.5;
     namelabel.centerY = imageViewH * 0.5;
     [imageView addSubview:namelabel];

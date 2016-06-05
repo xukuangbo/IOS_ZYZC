@@ -110,7 +110,6 @@ static NSString *picCellID = @"TacticFoodPicCell";
     labelView.layer.cornerRadius = 5;
     labelView.layer.masksToBounds = YES;
     labelView.font = [UIFont systemFontOfSize:16];
-    labelView.backgroundColor = [UIColor whiteColor];
     labelView.textColor = [UIColor ZYZC_TextGrayColor];
     labelView.numberOfLines = 0;
     [mapView addSubview:labelView];
@@ -158,55 +157,6 @@ static NSString *picCellID = @"TacticFoodPicCell";
 }
 
 
-- (void)setTacticVideoModel:(TacticVideoModel *)tacticVideoModel
-{
-    _tacticVideoModel = tacticVideoModel;
-    
-    SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
-    //肯定有图片
-    CGFloat mapViewX = KEDGE_DISTANCE;
-    CGFloat mapViewY = imageViewHeight + KEDGE_DISTANCE;
-    CGFloat mapViewW = KSCREEN_W - mapViewX * 2;
-    //先计算文字高度
-    CGFloat labelViewX = KEDGE_DISTANCE;
-    CGFloat labelViewY = KEDGE_DISTANCE;
-    CGFloat labelViewW = mapViewW - labelViewX * 2;
-    CGFloat labelViewH = 0;
-    CGSize textSize = [ZYZCTool calculateStrLengthByText:tacticVideoModel.viewText andFont:labelViewFont andMaxWidth:labelViewW];
-    labelViewH = textSize.height;
-    
-    self.nameLabel.text = tacticVideoModel.name;
-    
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticVideoModel.viewImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
-    
-    self.labelView.text = tacticVideoModel.viewText;
-    self.labelView.frame = CGRectMake(labelViewX, labelViewY, labelViewW, labelViewH);
-    
-    CGFloat mapViewH = labelViewH + KEDGE_DISTANCE * 2;
-    
-    if (tacticVideoModel.pics) {
-        
-        CGFloat imageX = KEDGE_DISTANCE;
-        CGFloat imageW = mapViewW - imageX * 2;
-        CGFloat imageH = imageW / 16 * 9;
-        NSArray *detailImageArray = [tacticVideoModel.pics componentsSeparatedByString:@","];
-        for (int i = 0; i < detailImageArray.count; i++) {
-            CGFloat imageY = CGRectGetMaxY(self.labelView.frame) + i * (imageH + KEDGE_DISTANCE) + KEDGE_DISTANCE;
-            UIImageView *imageView = self.imageArray[i];
-            [self.mapView addSubview:imageView];
-            imageView.backgroundColor = [UIColor redColor];
-            imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-            [imageView sd_setImageWithURL:[NSURL URLWithString:KWebImage(detailImageArray[i])] placeholderImage:[UIImage imageNamed:@"image_placeholder"] options:options];
-        }
-        mapViewH = mapViewH + detailImageArray.count * (imageH + KEDGE_DISTANCE);
-    }
-    self.mapView.frame = CGRectMake(mapViewX, mapViewY, mapViewW, mapViewH);
-    self.mapView.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.width, CGRectGetMaxY(self.mapView.frame) + KEDGE_DISTANCE);
-}
-
-
-
 #pragma mark - UISrollViewDelegate
 /**
  *  navi背景色渐变的效果
@@ -223,12 +173,8 @@ static NSString *picCellID = @"TacticFoodPicCell";
         self.title = @"";
     } else {
         [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(1)];
-        if (self.tacticSingleFoodModel) {
-            self.title = self.tacticSingleFoodModel.name;
-        }
-        if (self.tacticVideoModel) {
-            self.title = self.tacticVideoModel.name;
-        }
+       
+        self.title = self.tacticSingleFoodModel.name;
         
     }
 }

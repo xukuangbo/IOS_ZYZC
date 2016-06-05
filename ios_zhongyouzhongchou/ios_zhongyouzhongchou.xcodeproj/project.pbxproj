@@ -137,6 +137,8 @@
 		04B99A6B1CFEFB7B00E3C33A /* TacticGeneralModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A6A1CFEFB7B00E3C33A /* TacticGeneralModel.m */; };
 		04B99A6E1CFFBAA600E3C33A /* TacticCityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A6D1CFFBAA600E3C33A /* TacticCityHeadView.m */; };
 		04B99A711CFFC12200E3C33A /* TacticCountryHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A701CFFC12200E3C33A /* TacticCountryHeadView.m */; };
+		04C087A01D03E31300203D40 /* TacticMoreCitiesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C0879F1D03E31300203D40 /* TacticMoreCitiesVC.m */; };
+		04C087A41D03E97000203D40 /* TacticMoreVideosVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C087A31D03E97000203D40 /* TacticMoreVideosVC.m */; };
 		04F685491CF57C9F00E1A98E /* MinePersonSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */; };
 		04F6854A1CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685441CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m */; };
 		04F6854B1CF57C9F00E1A98E /* MinePersonSetUpHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685461CF57C9F00E1A98E /* MinePersonSetUpHeadView.m */; };
@@ -499,6 +501,10 @@
 		04B99A6D1CFFBAA600E3C33A /* TacticCityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticCityHeadView.m; sourceTree = "<group>"; };
 		04B99A6F1CFFC12200E3C33A /* TacticCountryHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticCountryHeadView.h; sourceTree = "<group>"; };
 		04B99A701CFFC12200E3C33A /* TacticCountryHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticCountryHeadView.m; sourceTree = "<group>"; };
+		04C0879E1D03E31300203D40 /* TacticMoreCitiesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticMoreCitiesVC.h; sourceTree = "<group>"; };
+		04C0879F1D03E31300203D40 /* TacticMoreCitiesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMoreCitiesVC.m; sourceTree = "<group>"; };
+		04C087A21D03E97000203D40 /* TacticMoreVideosVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticMoreVideosVC.h; sourceTree = "<group>"; };
+		04C087A31D03E97000203D40 /* TacticMoreVideosVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticMoreVideosVC.m; sourceTree = "<group>"; };
 		04F6853F1CF57C9F00E1A98E /* MinePersonSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpController.h; sourceTree = "<group>"; };
 		04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpController.m; sourceTree = "<group>"; };
 		04F685431CF57C9F00E1A98E /* MinePersonSetUpFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpFirstCell.h; sourceTree = "<group>"; };
@@ -1504,6 +1510,24 @@
 			path = "SingleVC(一般控制器)";
 			sourceTree = "<group>";
 		};
+		04C0879D1D03E31300203D40 /* MoreCities(更多景点) */ = {
+			isa = PBXGroup;
+			children = (
+				04C0879E1D03E31300203D40 /* TacticMoreCitiesVC.h */,
+				04C0879F1D03E31300203D40 /* TacticMoreCitiesVC.m */,
+			);
+			path = "MoreCities(更多景点)";
+			sourceTree = "<group>";
+		};
+		04C087A11D03E95000203D40 /* MoreVideos(更多视频) */ = {
+			isa = PBXGroup;
+			children = (
+				04C087A21D03E97000203D40 /* TacticMoreVideosVC.h */,
+				04C087A31D03E97000203D40 /* TacticMoreVideosVC.m */,
+			);
+			path = "MoreVideos(更多视频)";
+			sourceTree = "<group>";
+		};
 		04F685311CF57BE500E1A98E /* PersonSetUpVC(个人设置控制器) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1593,6 +1617,8 @@
 		04FCCAA91CDC454C00540B28 /* MoreVC(更多界面) */ = {
 			isa = PBXGroup;
 			children = (
+				04C087A11D03E95000203D40 /* MoreVideos(更多视频) */,
+				04C0879D1D03E31300203D40 /* MoreCities(更多景点) */,
 				04FCCAAA1CDC454C00540B28 /* TacticMoreVideosController.h */,
 				04FCCAAB1CDC454C00540B28 /* TacticMoreVideosController.m */,
 				04FCCAAD1CDC45AD00540B28 /* TacticMoreCollectionViewCell.h */,
@@ -2015,6 +2041,7 @@
 				2CD4B4431CCDA84A006A7CE8 /* ZCDetailReturnFirstCell.m in Sources */,
 				040651351CC71A99003FD539 /* TacticModel.m in Sources */,
 				2CE5DD9A1CE9552400895A94 /* ZCCommentCell.m in Sources */,
+				04C087A01D03E31300203D40 /* TacticMoreCitiesVC.m in Sources */,
 				2C24A0941CFC389600950663 /* ZCWebViewController.m in Sources */,
 				04A99D201CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */,
 				04A99D1D1CC07E1800C6F5F0 /* WXApiManager.m in Sources */,
@@ -2101,6 +2128,7 @@
 				04A99C991CBF848D00C6F5F0 /* ChooseSceneImgController.m in Sources */,
 				04A99CD71CBF848D00C6F5F0 /* ZCPersonInfoController.m in Sources */,
 				04F836431CD72C3300140980 /* SDLoopProgressView.m in Sources */,
+				04C087A41D03E97000203D40 /* TacticMoreVideosVC.m in Sources */,
 				2C24A08E1CFC26A400950663 /* ZCSpotVideoModel.m in Sources */,
 				04A99CBD1CBF848D00C6F5F0 /* SoundView.m in Sources */,
 				04B99A641CFC582C00E3C33A /* MinePersonSetUpLikeController.m in Sources */,

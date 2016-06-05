@@ -7,6 +7,8 @@
 #import "TacticCustomMapView.h"
 #import "ZYZCTool.h"
 #import "TacticMoreVideosController.h"
+#import "TacticMoreCitiesVC.h"
+#import "TacticMoreVideosVC.h"
 
 @interface TacticTableViewCell()<TacticCustomMapViewDelegate>
 /**
@@ -135,13 +137,13 @@
 {
     if (button.tag == MoreVCTypeTypeVideo) {
         NSLog(@"我是更多视频");
-        TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
-        moreVC.moreArray = self.tacticModel.videos;
+        TacticMoreVideosVC *moreVC = [[TacticMoreVideosVC alloc] init];
+//        moreVC.moreArray = self.tacticModel.videos;
         [self.viewController.navigationController pushViewController:moreVC animated:YES];
     }else if (button.tag == MoreVCTypeTypeCountryView || button.tag == MoreVCTypeTypeCityView){
         NSLog(@"我是更多景点");
-        TacticMoreVideosController *moreVC = [[TacticMoreVideosController alloc] init];
-        moreVC.moreArray = self.tacticModel.mgViews;
+        TacticMoreCitiesVC *moreVC = [[TacticMoreCitiesVC alloc] init];
+//        moreVC.moreArray = self.tacticModel.mgViews;
         [self.viewController.navigationController pushViewController:moreVC animated:YES];
     }else if (button.tag == MoreVCTypeTypeFood){
         NSLog(@"我是更多美食");

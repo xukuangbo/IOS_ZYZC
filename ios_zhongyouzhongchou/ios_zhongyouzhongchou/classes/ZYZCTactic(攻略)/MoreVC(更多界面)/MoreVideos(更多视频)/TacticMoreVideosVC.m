@@ -1,31 +1,31 @@
 //
-//  TacticMoreVideosController.m
+//  TacticMoreVideosVC.m
 //  ios_zhongyouzhongchou
 //
-//  Created by mac on 16/5/3.
+//  Created by mac on 16/6/5.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 
-#import "TacticMoreVideosController.h"
+#import "TacticMoreVideosVC.h"
 #import "TacticMoreCollectionViewCell.h"
-#import "TacticSingleModel.h"
-#import "TacticVideoModel.h"
-#import "TacticSingleFoodModel.h"
+#import "TacticThreeMapView.h"
 #import "TacticImageView.h"
-#define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
-#define naviHeight 64
-@interface TacticMoreVideosController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+#import "TacticVideoModel.h"
+
+@interface TacticMoreVideosVC ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 @property (nonatomic, weak) UICollectionView *collectionView;
+@property (nonatomic, strong) NSArray *moreVideosModelArray;
 
-@property (nonatomic, strong) NSArray *moreCitiesModelArray;
 @end
-static NSString *const ID = @"MoreCollectioncell";
-@implementation TacticMoreVideosController
 
+@implementation TacticMoreVideosVC
+static NSString *const ID = @"TacticMoreVideosCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self configUI];
+    
+    [self requestData];
     
 }
 
@@ -47,41 +47,43 @@ static NSString *const ID = @"MoreCollectioncell";
     self.collectionView = collectionView;
 }
 
+
+- (void)requestData
+{
+    NSString *url = GET_TACTIC_More_Videos;
+    NSLog(@"%@",url);
+    //访问网络
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            //请求成功，转化为数组
+            weakSelf.moreVideosModelArray = [TacticVideoModel mj_objectArrayWithKeyValuesArray:result[@"data"]];
+            [weakSelf.collectionView reloadData];
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.moreArray.count;
+    return self.moreVideosModelArray.count;
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TacticMoreCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
-    if ([self.moreArray[indexPath.item] isKindOfClass:[TacticVideoModel class]]) {//视频
-         TacticVideoModel *model = self.moreArray[indexPath.item];
-        cell.imageView.tacticVideoModel = model;
-    }else if ([self.moreArray[indexPath.item] isKindOfClass:[TacticSingleModel class]]){
-        //判断是否国家城市一般景点
-        TacticSingleModel *model = self.moreArray[indexPath.item];
-        if (model.viewType == 1) {
-            cell.imageView.pushType = threeMapViewTypeCountryView;
-        }else if (model.viewType == 2){
-            cell.imageView.pushType = threeMapViewTypeCityView;
-        }else if (model.viewType == 3){
-            cell.imageView.pushType = threeMapViewTypeSingleView;
-        }
-        cell.imageView.tacticSingleModel = model;
-    }else if ([self.moreArray[indexPath.item] isKindOfClass:[TacticSingleFoodModel class]]){
-        TacticSingleFoodModel *model = self.moreArray[indexPath.item];
-        cell.imageView.pushType = threeMapViewTypeFood;
-        cell.imageView.tacticSingleFoodModel = model;
-    }else{
-        NSLog(@"mgviews种类不定");
-    }
+    TacticVideoModel *moreModel = self.moreVideosModelArray[indexPath.item];
+    
+    cell.imageView.pushType = threeMapViewTypeCityView;
+    
+    cell.imageView.tacticVideoModel = moreModel;
     
     return cell;
 }
-
 
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -90,6 +92,7 @@ static NSString *const ID = @"MoreCollectioncell";
     CGFloat width = ((collectionView.width - 5 * KEDGE_DISTANCE) / 3);
     return CGSizeMake(width, width);
 }
+
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
@@ -100,4 +103,5 @@ static NSString *const ID = @"MoreCollectioncell";
 {
     [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
 }
+
 @end
