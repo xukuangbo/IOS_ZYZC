@@ -16,9 +16,12 @@
 #import "ZCPersonInfoController.h"
 
 @interface ZCDetailReturnFirstCell ()
-
-@property (nonatomic, strong) UIButton  *preClickBtn;
-
+@property (nonatomic, strong) NSMutableArray *mySubViews;
+@property(nonatomic,  strong) NSNumber *supportOneMoney;
+@property(nonatomic,  strong) NSNumber *supportAnyMoney;
+@property (nonatomic, strong) NSNumber *returnMoney01;
+@property (nonatomic, strong) NSNumber *returnMoney02;
+@property (nonatomic, strong) NSNumber *togetherMoney;
 @end
 
 @implementation ZCDetailReturnFirstCell
@@ -41,20 +44,30 @@
     NSString *text03=ZYLocalizedString(@"support_return");
     NSString *text04=ZYLocalizedString(@"support_together");;
     
-   _supportOneYuanView =[[ZCSupportOneYuanView alloc]initSupportViewByTop:0 andTitle:@"支持1元" andText:text01 ];
+    _mySubViews=[NSMutableArray array];
+    _supportOneYuanView =[[ZCSupportOneYuanView alloc]initSupportViewByTop:0 andTitle:@"支持1元" andText:text01 ];
     [self.contentView addSubview:_supportOneYuanView];
+    [_mySubViews addObject:_supportOneYuanView];
     
     _supportAnyYuanView =[[ZCSupportAnyYuanView alloc]initSupportViewByTop:_supportOneYuanView.bottom andTitle:@"支持任意金额:" andText:text02];
     [self.contentView addSubview:_supportAnyYuanView];
+    [_mySubViews addObject:_supportAnyYuanView];
+    _supportAnyYuanView.chooseSupport=NO;
     
     _returnSupportView01 =[[ZCSupportReturnView alloc]initSupportViewByTop:_supportAnyYuanView.bottom andTitle:RETURNSUPPORT01(0.00) andText:text03];
     [self.contentView addSubview:_returnSupportView01];
+    [_mySubViews addObject:_returnSupportView01];
     
     _returnSupportView02 =[[ZCSupportReturnView alloc]initSupportViewByTop:_returnSupportView01.bottom andTitle:RETURNSUPPORT02(0.00) andText:text03];
     [self.contentView addSubview:_returnSupportView02];
+    [_mySubViews addObject:_returnSupportView02];
     
-    _togetherView =[[ZCSupportTogetherView alloc]initSupportViewByTop:_returnSupportView02.bottom andTitle:TOGETHERSUPPORT(5,0.00) andText:text04 ];
+    _togetherView =[[ZCSupportTogetherView alloc]initSupportViewByTop:_returnSupportView02.bottom andTitle:TOGETHERSUPPORT(0,0.00) andText:text04 ];
     [self.contentView addSubview:_togetherView];
+    [_mySubViews addObject:_togetherView];
+    
+     [self supportCode];
+    
 }
 
 -(void)setCellModel:(ZCDetailProductModel *)cellModel
@@ -64,10 +77,6 @@
     BOOL hasReturn01=NO,hasReturn02=NO;
     CGFloat totalMoney=0.0;
     for (ReportModel *reportModel in report) {
-        //临时数据
-//        reportModel.users=@[cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user,cellModel.user];
-        //==============
-        
         if ([reportModel.style intValue]==0) {
             if (reportModel.price) {
                  totalMoney=[reportModel.price floatValue];
@@ -94,10 +103,11 @@
         {
             hasReturn01=YES;
             _returnSupportView01.limitNumber=[reportModel.sumPeople intValue];
-            if ([reportModel.sumPeople integerValue]<=reportModel.users.count) {
+            if ([reportModel.sumPeople integerValue]<=reportModel.users.count||[_cellModel.mySelf isEqual:@1]) {
                 _returnSupportView01.chooseSupport=NO;
             }
             CGFloat money=[reportModel.price floatValue]/100;
+            _returnMoney01=[NSNumber numberWithFloat:money];
             _returnSupportView01.titleLab.text=RETURNSUPPORT01(money);
             _returnSupportView01.titleLab.width=[ZYZCTool calculateStrLengthByText:RETURNSUPPORT01(money) andFont:[UIFont systemFontOfSize:15] andMaxWidth:KSCREEN_W].width;
             
@@ -112,6 +122,7 @@
             _togetherView.limitNumber=[reportModel.sumPeople intValue];
             _togetherView.users=reportModel.users;
             CGFloat money=[reportModel.price floatValue]/100;
+            _togetherMoney=[NSNumber numberWithFloat:money];
             int  rate=0;
             if (totalMoney) {
                 rate=(int)[reportModel.price floatValue]/totalMoney*100;
@@ -123,10 +134,11 @@
         {
             hasReturn02=YES;
             _returnSupportView02.limitNumber=[reportModel.sumPeople intValue];
-            if ([reportModel.sumPeople integerValue]<=reportModel.users.count) {
+            if ([reportModel.sumPeople integerValue]<=reportModel.users.count||[_cellModel.mySelf isEqual:@1]) {
                 _returnSupportView02.supportBtn.enabled=NO;
             }
             CGFloat money=[reportModel.price floatValue]/100;
+            _returnMoney02=[NSNumber numberWithFloat:money];
             _returnSupportView02.titleLab.text=RETURNSUPPORT02(money);
             _returnSupportView02.titleLab.width=[ZYZCTool calculateStrLengthByText:RETURNSUPPORT02(money) andFont:[UIFont systemFontOfSize:15] andMaxWidth:KSCREEN_W].width;
              [_returnSupportView02 reloadDataByVideoImgUrl:reportModel.spellVideoImg andPlayUrl:reportModel.spellVideo andVoiceUrl:reportModel.spellVoice andFaceImg:cellModel.user.faceImg andDesc:reportModel.desc];
@@ -140,6 +152,59 @@
     _togetherView.top =_supportAnyYuanView.bottom+_returnSupportView01.height*hasReturn01+_returnSupportView02.height*hasReturn02;
     self.bgImg.height=_togetherView.bottom;
     cellModel.returnFirtCellHeight=self.bgImg.height;
+}
+
+
+#pragma ark --- 支持
+-(void)supportCode
+{
+    
+    __weak typeof (&*self)weakSelf=self;
+    _supportOneYuanView.supportBlock=_supportAnyYuanView.supportBlock=_returnSupportView01.supportBlock=_returnSupportView02.supportBlock=_togetherView.supportBlock=^()
+    {
+        BOOL showSupport=NO;
+        for (ZCSupportBaseView *view in weakSelf.mySubViews) {
+            if (view.sureSupport) {
+                
+                showSupport=YES;
+            }
+        }
+        NSMutableDictionary *dic=[NSMutableDictionary dictionary];
+        if (weakSelf.supportOneYuanView.sureSupport) {
+            [dic setObject:@1 forKey:@"style1"];
+        }
+        if (weakSelf.supportAnyYuanView.sureSupport) {
+            NSNumber *anyMoney=nil;
+            if (!weakSelf.supportAnyYuanView.textField.text.length) {
+                anyMoney=@0;
+            }
+            else
+            {
+                CGFloat money=[weakSelf.supportAnyYuanView.textField.text floatValue];
+                anyMoney=[NSNumber numberWithFloat:money];
+            }
+            [dic setObject:anyMoney forKey:@"style2"];
+        }
+        if (weakSelf.returnSupportView01.sureSupport) {
+            [dic setObject:weakSelf.returnMoney01 forKey:@"style3"];
+        }
+        if (weakSelf.returnSupportView02.sureSupport) {
+            [dic setObject:weakSelf.returnMoney02 forKey:@"style4"];
+        }
+        if (weakSelf.togetherView.sureSupport) {
+            [dic setObject:weakSelf.togetherMoney forKey:@"style5"];
+        }
+        NSData *data = [NSJSONSerialization dataWithJSONObject :dic options : NSJSONWritingPrettyPrinted error:NULL];
+        NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
+        if (showSupport) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:KCAN_SUPPORT_MONEY object:jsonStr];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:KCAN_SUPPORT_MONEY object:@"hidden"];
+        }
+    };
+
 }
 
 @end

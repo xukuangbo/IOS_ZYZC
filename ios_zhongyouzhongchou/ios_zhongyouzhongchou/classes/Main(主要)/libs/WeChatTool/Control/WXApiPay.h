@@ -24,7 +24,7 @@
 /**
  *  支付
  */
--(void)payForWeChat;
+-(void )payForWeChat:(NSDictionary *)dict;
 
 /**
  *  支付结果

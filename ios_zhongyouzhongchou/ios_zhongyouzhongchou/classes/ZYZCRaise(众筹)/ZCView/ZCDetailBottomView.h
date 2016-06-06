@@ -17,15 +17,18 @@ typedef NS_ENUM(NSInteger, ZCBottomButtonType)
     RecommendType
 };
 
-typedef void (^CommentBlock)();
-
-typedef void (^SupportBlock)();
+typedef void (^ButtonClickBlock)(ZCBottomButtonType buttonType);
+typedef void (^PayMoneyBlock)(NSNumber *productId);
 
 @interface ZCDetailBottomView : UIView
 
 @property (nonatomic, assign) ZC_TYPE zcType;       //标记：区分访客版和个人版
 
-@property (nonatomic, copy  ) CommentBlock commentBlock;
-@property (nonatomic, copy  ) SupportBlock supportBlock;
+@property (nonatomic, assign) BOOL   surePay;       //标记：是否支付
+
+@property (nonatomic, copy  ) ButtonClickBlock buttonClick;
+
+@property (nonatomic, copy  ) PayMoneyBlock   payMoneyBlock;
+
 
 @end

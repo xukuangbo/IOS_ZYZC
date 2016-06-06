@@ -50,7 +50,7 @@
     [self.contentView addSubview:_vipImg];
     _vipImg.hidden=YES;
     
-    _timeLab=[self createLabWithFrame:CGRectMake(KSCREEN_W-KEDGE_DISTANCE-120, KEDGE_DISTANCE, 120, 20) andFont:[UIFont systemFontOfSize:14] andTitleColor:[UIColor ZYZC_TextGrayColor]];
+    _timeLab=[self createLabWithFrame:CGRectMake(KSCREEN_W-KEDGE_DISTANCE-130, KEDGE_DISTANCE, 130, 20) andFont:[UIFont systemFontOfSize:14] andTitleColor:[UIColor ZYZC_TextGrayColor]];
     _timeLab.textAlignment=NSTextAlignmentRight;
     [self.contentView addSubview:_timeLab];
     

@@ -29,13 +29,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setBackItem];
-    self.navigationController.navigationBar.titleTextAttributes=
-    @{NSForegroundColorAttributeName:[UIColor whiteColor],
-      NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
     _productArr=[NSMutableArray array];
     _pageNo=1;
     _productType=PublishType;
+    [self setBackItem];
     [self configUI];
     [self getUserInfoData];
 }
@@ -177,7 +174,7 @@
     //推出信息详情页
     ZCPersonInfoController *personInfoVC=[[ZCPersonInfoController alloc]init];
     personInfoVC.hidesBottomBarWhenPushed=YES;
-    ZCOneModel *oneModel=_productArr[indexPath.row];
+    ZCOneModel *oneModel=_productArr[(indexPath.row+1)/2-1];
     personInfoVC.oneModel=oneModel;
     personInfoVC.productId=oneModel.product.productId;
     [self.navigationController pushViewController:personInfoVC animated:YES];
@@ -217,6 +214,10 @@
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Background"]]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    
+    self.navigationController.navigationBar.titleTextAttributes=
+    @{NSForegroundColorAttributeName:[UIColor whiteColor],
+      NSFontAttributeName:[UIFont boldSystemFontOfSize:20]};
 }
 
 - (void)didReceiveMemoryWarning {

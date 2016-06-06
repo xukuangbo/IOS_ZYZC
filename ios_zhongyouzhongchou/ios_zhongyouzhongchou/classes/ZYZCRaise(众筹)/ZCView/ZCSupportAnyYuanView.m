@@ -37,14 +37,48 @@
     lab.textColor=[UIColor ZYZC_TextBlackColor];
     lab.font=[UIFont systemFontOfSize:15];
     [self addSubview:lab];
+    
+    //监听键盘的出现和收起
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
+    [self keyboardHidden];
     return YES;
 }
 
+-(void)keyboardHidden
+{
+    [_textField resignFirstResponder];
+    if ([_textField.text floatValue]>0) {
+        self.chooseSupport=YES;
+        self.sureSupport=NO;
+        [self supportMoney];
+    }
+    else
+    {
+        self.chooseSupport=NO;
+        self.sureSupport=YES;
+        [self supportMoney];
+    }
+
+}
+
+-(void)supportMoney
+{
+    [super supportMoney];
+    if (!self.sureSupport) {
+        _textField.text=nil;
+        self.chooseSupport=NO;
+    }
+}
+
+
+-(void)keyboardWillHidden:(NSNotification *)notify
+{
+    [self keyboardHidden];
+}
 
 
 @end
