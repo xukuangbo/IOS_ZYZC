@@ -29,22 +29,20 @@
     if (self) {
         self.userInteractionEnabled = YES;
         //间隙
-        CGFloat returnViewMargin = 10;
-        
         //创建图片btn
         UIButton *iconbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-        iconbutton.frame = CGRectMake(returnViewMargin, returnViewMargin, 20, 20);
+        iconbutton.frame = CGRectMake(KEDGE_DISTANCE, KEDGE_DISTANCE, 20, 20);
         [iconbutton setImage:image forState:UIControlStateNormal];
         [iconbutton setImage:selectedImage forState:UIControlStateSelected];
 //        iconbutton.enabled = NO;
-        [iconbutton addTarget:self action:@selector(bgEnabledAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [iconbutton addTarget:self action:@selector(bgEnabledAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:iconbutton];
         self.iconButton = iconbutton;
         
         //创建标题label
-        CGFloat titleLabelX = iconbutton.right + returnViewMargin;
+        CGFloat titleLabelX = iconbutton.right + KEDGE_DISTANCE;
         CGFloat titleLabelY = iconbutton.top;
-        CGFloat titleLabelW = self.width - titleLabelX - returnViewMargin;
+        CGFloat titleLabelW = self.width - titleLabelX - KEDGE_DISTANCE;
         CGFloat titleLabelH = iconbutton.height;
         
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelX,titleLabelY,titleLabelW,titleLabelH)];
@@ -54,9 +52,17 @@
         [self addSubview:titleLabel];
         self.titleLabel = titleLabel;
         
+        //图标点击事件
+        UIButton *iconClickButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        iconClickButton.frame = CGRectMake(0, 0, titleLabel.right, 40);
+        [iconClickButton addTarget:self action:@selector(bgEnabledAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:iconClickButton];
+        self.iconClickButton = iconClickButton;
+        
+        
         //创建一条虚线
         CGFloat lineViewX = iconbutton.left;
-        CGFloat lineViewY = iconbutton.bottom + returnViewMargin;
+        CGFloat lineViewY = iconbutton.bottom + KEDGE_DISTANCE;
         CGFloat lineViewW = self.width - lineViewX * 2;
         CGFloat lineViewH = 1;
         UIView *lineView = [UIView lineViewWithFrame:CGRectMake(lineViewX, lineViewY, lineViewW, lineViewH) andColor:[UIColor ZYZC_LineGrayColor]];
@@ -65,7 +71,7 @@
         
         
         //创建实体内容
-        UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(iconbutton.left, lineView.bottom + returnViewMargin, lineView.width - iconbutton.width - returnViewMargin, 80)];
+        UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(iconbutton.left, lineView.bottom + KEDGE_DISTANCE, lineView.width - iconbutton.width - KEDGE_DISTANCE, 80)];
         descLabel.font = [UIFont systemFontOfSize:14];
 //        descLabel.backgroundColor = [UIColor greenColor];
         descLabel.numberOfLines = 3;
@@ -73,7 +79,6 @@
         descLabel.attributedText=[ZYZCTool setLineDistenceInText:desc];
         //    [descLabel sizeToFit];
         [self addSubview:descLabel];
-//        descLabel.backgroundColor = [UIColor greenColor];
         self.descLabel = descLabel;
         
         
@@ -82,8 +87,8 @@
         
         //创建一个向下的箭头
         CGFloat downButtonWH = 30;
-        CGFloat downButtonY = self.height - returnViewMargin - downButtonWH;
-        CGFloat downButtonX = self.width - returnViewMargin - downButtonWH;
+        CGFloat downButtonY = self.height - KEDGE_DISTANCE - downButtonWH;
+        CGFloat downButtonX = self.width - KEDGE_DISTANCE - downButtonWH;
         UIButton *downButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [downButton setImage:[UIImage imageNamed:@"btn_xxd"] forState:UIControlStateNormal];
         downButton.frame = CGRectMake(downButtonX, downButtonY, downButtonWH, downButtonWH);
@@ -117,11 +122,14 @@
         return;
     }
 
+    self.iconButton.selected = !self.iconButton.selected;
     button.selected = !button.selected;
     if (button.selected == YES) {
+        
          self.shadowView.hidden = YES;
         
     }else{
+        
         [self bringSubviewToFront:self.shadowView];
         self.shadowView.hidden = NO;
     }

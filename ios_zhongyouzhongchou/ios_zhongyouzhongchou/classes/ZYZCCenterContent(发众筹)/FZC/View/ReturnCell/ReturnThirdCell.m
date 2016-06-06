@@ -23,12 +23,12 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
         
-        ReturnCellBaseBGView *bgImageView = [ReturnCellBaseBGView viewWithRect:CGRectMake(ReturnThirdCellMargin, 0, KSCREEN_W - 20, ReturnThirdCellHeight) title:@"回报众筹1" image:[UIImage imageNamed:@"btn_xs_one_n_pre"] selectedImage:[UIImage imageNamed:@"btn_xs_one_pre"] desc:@"可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。"];
+        ReturnCellBaseBGView *bgImageView = [ReturnCellBaseBGView viewWithRect:CGRectMake(ReturnThirdCellMargin, 0, KSCREEN_W - 20, ReturnThirdCellHeight) title:@"回报众筹1" image:[UIImage imageNamed:@"btn_xs_one_n_pre"] selectedImage:[UIImage imageNamed:@"btn_xs_one_pre"] desc:ZYLocalizedString(@"support_return")];
         self.bgImageView = bgImageView;
         [self.contentView addSubview:bgImageView];
         self.bgImageView.userInteractionEnabled = YES;
-        self.bgImageView.iconButton.enabled = YES;
-        self.bgImageView.iconButton.selected = YES;
+        self.bgImageView.iconClickButton.enabled = YES;
+        self.bgImageView.iconClickButton.selected = YES;
         self.bgImageView.index = 2;
         
         

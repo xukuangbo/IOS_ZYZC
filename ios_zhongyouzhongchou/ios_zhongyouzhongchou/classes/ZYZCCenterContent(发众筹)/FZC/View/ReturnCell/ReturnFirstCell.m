@@ -17,8 +17,9 @@
     if (self) {
         self.contentView.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         self.backgroundColor = [UIColor clearColor];
-        ReturnCellBaseBGView *bgImageView = [ReturnCellBaseBGView viewWithRect:CGRectMake(10, 0, KSCREEN_W - 20, 150) title:@"支持1元" image:[UIImage imageNamed:@"btn_xs_one"] selectedImage:nil desc:@"每人仅能支持一次，与发起人增加10亲密度。平台奖励支持者1U币，可购买商城特惠产品。如果众筹失败，不扣除支持者U币金额每人仅能支持一次，与发起人增加10亲密度。平台奖励支持者1U币，可购买商城特惠产品。如果众筹失败，不扣除支持者U币金额每人仅能支持一次，与发起人增加10亲密度。平台奖励支持者1U币，可购买商城特惠产品。如果众筹失败，不扣除支持者U币金额每人仅能支持一次，与发起人增加10亲密度。平台奖励支持者1U币，可购买商城特惠产品。如果众筹失败，不扣除支持者U币金额每人仅能支持一次，与发起人增加10亲密度。平台奖励支持者1U币，可购买商城特惠产品。如果众筹失败"];
+        ReturnCellBaseBGView *bgImageView = [ReturnCellBaseBGView viewWithRect:CGRectMake(10, 0, KSCREEN_W - 20, 150) title:@"支持1元" image:[UIImage imageNamed:@"btn_xs_one"] selectedImage:nil desc:ZYLocalizedString(@"support_one_yuan")];
         [self.contentView addSubview:bgImageView];
         self.bgImageView = bgImageView;
         

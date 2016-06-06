@@ -27,7 +27,7 @@
         self.contentView.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
-        ReturnCellBaseBGView *bgImageView = [ReturnCellBaseBGView viewWithRect:CGRectMake(ReturnFourthCellMargin, 0, KSCREEN_W - ReturnFourthCellMargin * 2, ReturnFourthCellHeight) title:@"一起游" image:[UIImage imageNamed:@"btn_xs_one"] selectedImage:nil desc:@"可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。\n每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。\n可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支    持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。可多次支持，最多可支持众筹剩余金额的ReturnThirdCellMargin0%。每支持一元,可与发起人增加1的亲密度。如果众筹失败，支持金额全额退返。"];
+        ReturnCellBaseBGView *bgImageView = [ReturnCellBaseBGView viewWithRect:CGRectMake(ReturnFourthCellMargin, 0, KSCREEN_W - ReturnFourthCellMargin * 2, ReturnFourthCellHeight) title:@"一起游" image:[UIImage imageNamed:@"btn_xs_one"] selectedImage:nil desc:ZYLocalizedString(@"support_together")];
         [self.contentView addSubview:bgImageView];
         self.bgImageView = bgImageView;
         self.bgImageView.userInteractionEnabled = YES;
@@ -45,8 +45,6 @@
          *  支持金额
          */
         [self createMoneyView];
-        
-        
         
         
     }
@@ -91,7 +89,6 @@
     }
     self.pickerView = pickerView;
     [self.bigContentView addSubview:pickerView];
-    
     
 }
 /**
