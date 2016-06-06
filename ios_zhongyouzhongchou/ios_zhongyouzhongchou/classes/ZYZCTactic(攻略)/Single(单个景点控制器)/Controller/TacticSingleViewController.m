@@ -152,7 +152,6 @@
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
-            
             //          NSLog(@"%@",result);
             TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
             weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
@@ -186,10 +185,11 @@
                 [MBProgressHUD showSuccess:ZYLocalizedString(@"add_spot_success")];
                 //改文字
                 [self.sureButton setTitle:@"已关注" forState:UIControlStateNormal];
-                
+                _isWantGo = !_isWantGo;
             } andFailBlock:^(id failResult) {
                 [MBProgressHUD showError:ZYLocalizedString(@"add_spot_fail")];
             }];
+            
         }else{//取关
             NSString *wantGoUrl = Del_Tactic__WantGo(accountModel.openid, self.viewId);
             [ZYZCHTTPTool getHttpDataByURL:wantGoUrl withSuccessGetBlock:^(id result, BOOL isSuccess) {
@@ -197,6 +197,7 @@
                 //改文字
                 [self.sureButton setTitle:@"想去" forState:UIControlStateNormal];
                 
+                _isWantGo = !_isWantGo;
             } andFailBlock:^(id failResult) {
                 [MBProgressHUD showError:ZYLocalizedString(@"del_spot_fail")];
             }];

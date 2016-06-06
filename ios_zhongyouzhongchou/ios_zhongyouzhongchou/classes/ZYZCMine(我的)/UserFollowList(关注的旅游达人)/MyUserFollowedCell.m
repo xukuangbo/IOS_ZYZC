@@ -9,8 +9,7 @@
 
 #define MyUserCornerRadius 5
 #define MyUserTextMargin 5
-#define MyUserFollowedCellNumberLabelFont 10
-#define MyUserFollowedCellNameberLabelFont 13
+#define MyUserFollowedCellNameLabelFont 16
 #import "MyUserFollowedCell.h"
 #import "MyUserFollowedModel.h"
 @interface MyUserFollowedCell()
@@ -47,6 +46,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
         self.contentView.backgroundColor = [UIColor ZYZC_BgGrayColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -80,7 +80,7 @@
         CGFloat nameLabelH = 20;
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH)];
         [self.mapView addSubview:nameLabel];
-        nameLabel.font = [UIFont systemFontOfSize:MyUserFollowedCellNameberLabelFont];
+        nameLabel.font = [UIFont systemFontOfSize:MyUserFollowedCellNameLabelFont];
         nameLabel.text = @"名字呢";
         self.nameLabel = nameLabel;
         
@@ -108,7 +108,7 @@
         CGFloat descLabelW = nameLabelW * 1.5;
         CGFloat descLabelH = 20;
         UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(descLabelX, descLabelY, descLabelW, descLabelH)];
-        descLabel.font = [UIFont systemFontOfSize:MyUserFollowedCellNameberLabelFont];
+        descLabel.font = [UIFont systemFontOfSize:MyUserFollowedCellNameLabelFont];
         descLabel.textColor = [UIColor ZYZC_TextGrayColor];
         descLabel.text = @"这是一个很牛逼的应用";
         [self.mapView addSubview:descLabel];
@@ -121,7 +121,18 @@
 - (void)setUserFollowModel:(MyUserFollowedModel *)userFollowModel
 {
     _userFollowModel = userFollowModel;
+    SDWebImageOptions options = SDWebImageRetryFailed | SDWebImageLowPriority;
+    [_iconView sd_setImageWithURL:[NSURL URLWithString:userFollowModel.faceImg] placeholderImage:nil options:options];
+    CGSize nameSize = [ZYZCTool calculateStrLengthByText:userFollowModel.userName andFont:_nameLabel.font andMaxWidth:MAXFLOAT];
+    _nameLabel.text = userFollowModel.userName;
+    _nameLabel.size = nameSize;
     
+    _sexImageView.image = [userFollowModel.sex integerValue] == 1?[UIImage imageNamed:@"btn_sex_mal"]:[UIImage imageNamed:@"btn_sex_fem"];
+    
+    _sexImageView.left = _nameLabel.right + MyUserTextMargin;
+    
+    _vipView.left = _sexImageView.right;
+    _vipView.size = CGSizeMake(nameSize.height, nameSize.height);
     
 }
 @end

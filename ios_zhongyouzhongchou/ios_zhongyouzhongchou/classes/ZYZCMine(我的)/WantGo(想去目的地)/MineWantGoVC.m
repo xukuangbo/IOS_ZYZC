@@ -36,13 +36,14 @@ static NSString *const ID = @"MineWantGoCollectionViewCell";
     
     [self configUI];
     
-    [self requestData];
 }
 
 - (void)configUI
 {
     [self setBackItem];
+    
     self.title = @"我想去的目的地";
+    
     self.view.backgroundColor = [UIColor ZYZC_BgGrayColor];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -59,7 +60,6 @@ static NSString *const ID = @"MineWantGoCollectionViewCell";
 
 - (void)requestData
 {
-    
     ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
     NSString *url = Get_Tactic_List_WantGo(accountModel.openid);
     NSLog(@"%@",url);
@@ -71,13 +71,19 @@ static NSString *const ID = @"MineWantGoCollectionViewCell";
             weakSelf.mineWantGoModelArray = [MineWantGoModel mj_objectArrayWithKeyValuesArray:result[@"data"]];
             [weakSelf.collectionView reloadData];
         }
-        
     } andFailBlock:^(id failResult) {
         NSLog(@"%@",failResult);
     }];
 }
 
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
+    
+    [self requestData];
+}
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -85,7 +91,6 @@ static NSString *const ID = @"MineWantGoCollectionViewCell";
     return self.mineWantGoModelArray.count;
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TacticMoreCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
@@ -115,8 +120,4 @@ static NSString *const ID = @"MineWantGoCollectionViewCell";
     return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
-}
 @end

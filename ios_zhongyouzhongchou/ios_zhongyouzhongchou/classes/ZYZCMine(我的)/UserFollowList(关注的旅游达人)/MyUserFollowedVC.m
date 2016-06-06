@@ -5,12 +5,13 @@
 //  Created by mac on 16/6/6.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-
+#define home_navi_bgcolor(alpha) [[UIColor ZYZC_NavColor] colorWithAlphaComponent:alpha]
 #import "MyUserFollowedVC.h"
 #import "ZYZCAccountModel.h"
 #import "ZYZCAccountTool.h"
 #import "MyUserFollowedModel.h"
 #import "MyUserFollowedCell.h"
+#import "ZYZCPersonalController.h"
 @interface MyUserFollowedVC()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *userFollowedArray;
 
@@ -25,6 +26,7 @@
 {
     self = [super init];
     if (self) {
+        [self setBackItem];
         self.hidesBottomBarWhenPushed = YES;
         [self configUI];
     }
@@ -34,8 +36,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self requestData];
     
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(1)];
+    
+    [self requestData];
 }
 
 #pragma mark - setUI方法
@@ -88,5 +99,17 @@
     }
     cell.userFollowModel = self.userFollowedArray[indexPath.row];
     return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MyUserFollowedModel *followedModel = _userFollowedArray[indexPath.row];
+    
+    ZYZCPersonalController *personalVC = [[ZYZCPersonalController alloc] init];
+    personalVC.userId = [NSNumber numberWithInt:followedModel.userId];
+    
+    [self.navigationController pushViewController:personalVC animated:YES];
+    
 }
 @end
