@@ -22,6 +22,9 @@
 @property (nonatomic, strong) UIButton    *chatBtn;
 @property (nonatomic, strong) FXBlurView  *blurView;
 @property (nonatomic, strong) UIView      *blurColorView;
+@property (nonatomic, strong) UILabel     *nameLab;
+@property (nonatomic, strong) UIImageView *sexImg;
+@property (nonatomic, strong) UILabel  *personInfoLab;
 @property (nonatomic, strong) ZYZCRCManager *RCManager;
 @end
 
@@ -90,48 +93,45 @@
 
 -(void)setUserModel:(UserModel *)userModel
 {
-    _userModel=userModel;
     NSArray *textArr=nil;
-    [_faceImgView sd_setImageWithURL:[NSURL URLWithString:userModel.faceImg]];
-    [_infoView sd_setImageWithURL:[NSURL URLWithString:userModel.faceImg] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-         [self addFXBlurView];
-        if (_isMineView) {
-            [_blurColorView removeFromSuperview];
-        }
-    }];
-
+    if (![_userModel.faceImg isEqualToString:userModel.faceImg]) {
+        [_faceImgView sd_setImageWithURL:[NSURL URLWithString:userModel.faceImg]];
+        [_infoView sd_setImageWithURL:[NSURL URLWithString:userModel.faceImg] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [self addFXBlurView];
+        }];
+    }
     //名字
     UIFont *font=[UIFont boldSystemFontOfSize:22];
     CGFloat nameWidth=[ZYZCTool calculateStrLengthByText:userModel.userName andFont:font andMaxWidth:self.width].width;
     if (nameWidth>self.width-40) {
         nameWidth=self.width-40;
     }
-    UILabel *nameLab=[self creatLabWithFrame:CGRectMake(self.width/2-(nameWidth+20)/2, 0, nameWidth, 30) andText:userModel.userName  andTextColor:[UIColor whiteColor] andFont:font andTextAlignment:NSTextAlignmentRight];
-    [_baseInfoView addSubview:nameLab];
+    _nameLab=[self creatLabWithFrame:CGRectMake(self.width/2-(nameWidth+20)/2, 0, nameWidth, 30) andText:userModel.userName  andTextColor:[UIColor whiteColor] andFont:font andTextAlignment:NSTextAlignmentRight];
+    [_baseInfoView addSubview:_nameLab];
     
     //性别
-    UIImageView *sexImg=[[UIImageView alloc]initWithFrame:CGRectMake(nameLab.right, nameLab.top+5, 20, 20)];
+    _sexImg=[[UIImageView alloc]initWithFrame:CGRectMake(_nameLab.right, _nameLab.top+5, 20, 20)];
     if ([userModel.sex isEqualToString:@"1"]) {
         textArr=@[@"他发起的",@"他参与的",@"他推荐的"];
-        sexImg.image=[UIImage imageNamed:@"btn_sex_mal"];
+        _sexImg.image=[UIImage imageNamed:@"btn_sex_mal"];
         
     }
     else if([userModel.sex isEqualToString:@"2"])
     {
         textArr=@[@"她发起的",@"她参与的",@"她推荐的"];
-        sexImg.image=[UIImage imageNamed:@"btn_sex_fem"];
+        _sexImg.image=[UIImage imageNamed:@"btn_sex_fem"];
     }
-    [_baseInfoView addSubview:sexImg];
+    [_baseInfoView addSubview:_sexImg];
     
     //关注和粉丝
     NSString *attentionText=FOLLIOW_AND_BEFOLLOW([_meGzAll integerValue], [_gzMeAll integerValue]);
-    _attentionLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, nameLab.bottom, self.width-2*KEDGE_DISTANCE, 15) andText:attentionText andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
+    _attentionLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, _nameLab.bottom, self.width-2*KEDGE_DISTANCE, 15) andText:attentionText andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
     [_baseInfoView addSubview:_attentionLab];
     
     //基础信息
     NSString *personInfo=@"23岁、天枰座、50kg、170cm、单身";
-    UILabel  *personInfoLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, _attentionLab.bottom+5, _attentionLab.width, 15) andText:personInfo andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
-    [_baseInfoView addSubview:personInfoLab];
+    _personInfoLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, _attentionLab.bottom+5, _attentionLab.width, 15) andText:personInfo andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
+    [_baseInfoView addSubview:_personInfoLab];
     
     if (_isMineView) {
         self.height=HEAD_VIEW_HEIGHT-45;
@@ -158,6 +158,7 @@
     
     [self clickButton:_preButton];
     
+    _userModel=userModel;
 }
 
 -(void)setFriendship:(BOOL )friendship
@@ -280,8 +281,6 @@
     }
 }
 
-
-
 #pragma mark --- 控件随tableView的contentOffSet而改变
 -(void)setTableOffSetY:(CGFloat)tableOffSetY
 {
@@ -293,16 +292,16 @@
         _faceImgView.alpha=1-rate;
     }
     
-    if (tableOffSetY>=-(HEAD_VIEW_HEIGHT)&&tableOffSetY<=64+_faceImgView.height+KEDGE_DISTANCE-HEAD_VIEW_HEIGHT) {
-        CGFloat rate=MIN(1, (tableOffSetY+HEAD_VIEW_HEIGHT)/(64+_faceImgView.height+KEDGE_DISTANCE));
+    if (tableOffSetY>=-(HEAD_VIEW_HEIGHT)&&tableOffSetY<=_faceImgView.height+KEDGE_DISTANCE-HEAD_VIEW_HEIGHT) {
+        CGFloat rate=MIN(1, (tableOffSetY+HEAD_VIEW_HEIGHT)/(_faceImgView.height+KEDGE_DISTANCE));
         
         _baseInfoView.alpha=1-rate;
     }
 }
 
--(void)setBlurColor:(UIColor *)blurColor
+-(void)reloadPersonInfo
 {
-    _blurColorView.backgroundColor=blurColor;
+    
 }
 
 @end

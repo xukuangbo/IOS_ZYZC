@@ -213,6 +213,7 @@
 #pragma mark --- 创建控件
 -(void)configUI
 {
+    NSLog(@"+++%f",BGIMAGEHEIGHT-64);
     _table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H-KTABBAR_HEIGHT) style:UITableViewStylePlain];
     _table.height=_zcType==MyDraft?KSCREEN_H-KEDGE_DISTANCE:KSCREEN_H-KTABBAR_HEIGHT;
     _table.dataSource=self;
@@ -613,8 +614,7 @@
         }
         
         //设置导航栏title
-        if ((height + offsetY)/height>=1) {
-            scrollView.contentInset=UIEdgeInsetsMake(64, 0, 0, 0);
+        if ((height + offsetY)/(height)>1) {
              self.title= _travelThemeLab.text;
             if (_travelThemeLab.text.length>8) {
                 self.title=[NSString stringWithFormat:@"%@...",[_travelThemeLab.text substringToIndex:7]];
@@ -623,6 +623,14 @@
         else
         {
             self.title=nil;
+
+        }
+        
+        if (offsetY>-64) {
+            scrollView.contentInset=UIEdgeInsetsMake(64, 0, 0, 0);
+        }
+        else
+        {
             scrollView.contentInset=UIEdgeInsetsMake(BGIMAGEHEIGHT, 0, 0, 0);
         }
     }
@@ -701,12 +709,7 @@
 #pragma mark --- 支持
 -(void)support
 {
-//    if(_paySupportMoney)
-//    {
-//        NSLog(@"支付");
-//        return;
-//    }
-     NSLog(@"支付");
+    NSLog(@"支付");
     WXApiPay *wxPay=[[WXApiPay alloc]init];
     [wxPay payForWeChat];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOrderPayResult:) name:KORDER_PAY_NOTIFICATION object:nil];//监听一个通知
@@ -719,6 +722,9 @@
 -(void)getOrderPayResult:(NSNotification *)notify
 {
     NSLog(@"notify%@",notify);
+    if ([notify.object isEqualToString:@"success"]) {
+        //支付成功
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated

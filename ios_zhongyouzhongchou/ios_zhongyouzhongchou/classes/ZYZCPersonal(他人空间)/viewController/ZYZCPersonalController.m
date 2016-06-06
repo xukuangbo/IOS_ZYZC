@@ -54,11 +54,6 @@
     _table.separatorStyle=UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
     
-    _table.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _pageNo=1;
-        [self getProductsData];
-    }];
-    
     _table.mj_footer=[MJRefreshAutoFooter footerWithRefreshingBlock:^{
         _pageNo++;
         [self getProductsData];
@@ -131,16 +126,11 @@
             }
              [_table reloadData];
         }
-        
-        //停止下拉刷新
-        [_table.mj_header endRefreshing];
         //停止上拉刷新
         [_table.mj_footer endRefreshing];
         
     } andFailBlock:^(id failResult) {
         
-        //停止下拉刷新
-        [_table.mj_header endRefreshing];
         //停止上拉刷新
         [_table.mj_footer endRefreshing];
     }];
@@ -210,6 +200,14 @@
     else
     {
         self.title=nil;
+    }
+    
+    if (offsetY<=-(HEAD_VIEW_HEIGHT)+KEDGE_DISTANCE) {
+        _table.bounces=NO;
+    }
+    else
+    {
+        _table.bounces=YES;
     }
 }
 

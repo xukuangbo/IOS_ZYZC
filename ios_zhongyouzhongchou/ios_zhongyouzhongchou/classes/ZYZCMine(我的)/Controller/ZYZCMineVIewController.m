@@ -12,7 +12,10 @@
 #import "ZYZCAccountTool.h"
 #import "ZYZCAccountModel.h"
 @interface ZYZCMineVIewController ()
-
+@property (nonatomic, strong) PersonHeadView *personHeadView;
+@property (nonatomic, strong) UserModel      *userModel;
+@property (nonatomic, strong) NSNumber  *meGzAll;
+@property (nonatomic, strong) NSNumber  *gzMeAll;
 @end
 
 @implementation ZYZCMineVIewController
@@ -33,10 +36,10 @@
 
 -(void)configUI
 {
-    PersonHeadView *personHeadView=[[PersonHeadView alloc]init];
-    personHeadView.isMineView=YES;
-    personHeadView.userModel=[self getUser];
-    [self.view addSubview:personHeadView];
+    _personHeadView=[[PersonHeadView alloc]init];
+    _personHeadView.isMineView=YES;
+    _personHeadView.userModel=[self getUser];
+    [self.view addSubview:_personHeadView];
     
 }
 
@@ -70,9 +73,35 @@
     
     [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Background"]]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-//    btn_set
 
+    [self getUserInfoData];
+    
 }
+
+#pragma mark --- 获取个人信息
+-(void)getUserInfoData
+{
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    NSString *userId=[user objectForKey:KUSER_MARK];
+    if (!userId) {
+        return;
+    }
+    NSString *url=[NSString stringWithFormat:@"%@openid=%@&userId=%@",GETUSERDETAIL,[ZYZCTool getUserId],userId];
+    NSLog(@"%@",url);
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess)
+     {
+         NSLog(@"%@",result);
+         if (isSuccess) {
+             _userModel=[[UserModel alloc]mj_setKeyValues:result[@"data"][@"user"]];
+             _personHeadView.meGzAll=result[@"data"][@"meGzAll"];
+             _personHeadView.gzMeAll=result[@"data"][@"gzMeAll"];
+             _personHeadView.userModel=_userModel;
+         }
+     } andFailBlock:^(id failResult) {
+         NSLog(@"%@",failResult);
+     }];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
