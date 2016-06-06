@@ -12,8 +12,12 @@
 #import "MineCenterTableViewCell.h"
 #import "MineMessageController.h"
 #import "ZCMainController.h"
-
+#import "MineWantGoVC.h"
 #import "ZYZCRCManager.h"
+#import "MyUserFollowedVC.h"
+#import "ZYZCAccountTool.h"
+#import "ZYZCAccountModel.h"
+#import "MBProgressHUD+MJ.h"
 
 @interface MineCenterTableView()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSArray *imageArray;
@@ -89,25 +93,36 @@
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 1) {
-        NSLog(@"消息点击了!!!!!");
-        
-//        这里弹到消息界面
-        MineMessageController *messageVC = [[MineMessageController alloc] init];
-        [self.viewController.navigationController pushViewController:messageVC animated:YES];
+    ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
+    if (!accountModel) {
+        [MBProgressHUD showError:ZYLocalizedString(@"login_action")];
+    }else{
+        if (indexPath.row == 1) {
+            NSLog(@"消息点击了!!!!!");
+            
+            //        这里弹到消息界面
+            MineMessageController *messageVC = [[MineMessageController alloc] init];
+            [self.viewController.navigationController pushViewController:messageVC animated:YES];
+        }
+        else if (indexPath.row == 2)
+        {
+            ZCMainController *myTravelVC=[[ZCMainController alloc]init];
+            myTravelVC.zcType=Mylist;
+            myTravelVC.hidesBottomBarWhenPushed=YES;
+            [self.viewController.navigationController pushViewController:myTravelVC animated:YES];
+        }
+        else if (indexPath.row == 3)
+        {
+            MineWantGoVC *wantGoVC = [[MineWantGoVC alloc] init];
+            [self.viewController.navigationController pushViewController:wantGoVC animated:YES];
+        }else if (indexPath.row == 4)
+        {
+            MyUserFollowedVC *myUserFollowedVC = [[MyUserFollowedVC alloc] init];
+            [self.viewController.navigationController pushViewController:myUserFollowedVC animated:YES];
+        }
     }
-    else if (indexPath.row == 2)
-    {
-        ZCMainController *myTravelVC=[[ZCMainController alloc]init];
-        myTravelVC.zcType=Mylist;
-        myTravelVC.hidesBottomBarWhenPushed=YES;
-        [self.viewController.navigationController pushViewController:myTravelVC animated:YES];
-    }
-    else if (indexPath.row == 3)
-    {
-        _RCManager=[ZYZCRCManager defaultManager];
-        [_RCManager getMyConversationListWithSupperController:self.viewController];
-    }
+    
+    
 }
 
 @end

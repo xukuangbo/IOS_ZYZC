@@ -11,6 +11,7 @@
 @class TacticSingleFoodModel;
 @class TacticVideoModel;
 @class TacticSingleModel;
+@class MineWantGoModel;
 //写一个代理
 @interface TacticImageView : UIButton
 
@@ -19,6 +20,8 @@
 @property (nonatomic, strong) TacticSingleFoodModel *tacticSingleFoodModel;
 
 @property (nonatomic, strong) TacticSingleModel *tacticSingleModel;
+@property (nonatomic, strong) MineWantGoModel *mineWantGoModel;
+
 
 @property (nonatomic,assign) ThreeMapViewType pushType;
 

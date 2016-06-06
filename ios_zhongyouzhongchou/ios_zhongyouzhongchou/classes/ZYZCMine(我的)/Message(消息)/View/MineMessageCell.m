@@ -203,7 +203,6 @@
         //时间
         self.timeLabel.text = model.time;
         
-        
     }
 }
 
