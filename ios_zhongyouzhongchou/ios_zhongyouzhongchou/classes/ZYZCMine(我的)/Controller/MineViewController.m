@@ -32,6 +32,7 @@
     
     //创建一个头视图的view
     [self createHeadView];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated

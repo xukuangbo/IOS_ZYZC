@@ -16,6 +16,7 @@
 #import "TacticSingleFoodVC.h"
 #import "TacticGeneralVC.h"
 #import "ZCWebViewController.h"
+#import "MineWantGoModel.h"
 
 @interface TacticImageView ()
 
@@ -98,6 +99,14 @@
     [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(tacticSingleFoodModel.min_foodImg)] forState:UIControlStateNormal];
 }
 
+- (void)setMineWantGoModel:(MineWantGoModel *)mineWantGoModel
+{
+    _mineWantGoModel = mineWantGoModel;
+//    self.pushType = threeMapViewTypeFood;
+    self.nameLabel.text = mineWantGoModel.name;
+    [self sd_setImageWithURL:[NSURL URLWithString:KWebImage(mineWantGoModel.viewImg)] forState:UIControlStateNormal];
+}
+
 //这里写个跳转到单个景点
 - (void)clickAction:(UIButton *)button
 {
@@ -119,8 +128,15 @@
         
     }else if(self.pushType == threeMapViewTypeCountryView || self.pushType == threeMapViewTypeCityView) {
         //说明是国家或者城市
-        TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:self.tacticSingleModel.ID];
-        [self.viewController.navigationController pushViewController:singleVC animated:YES];
+        if (self.mineWantGoModel) {//想去
+            TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:self.mineWantGoModel.ID];
+            [self.viewController.navigationController pushViewController:singleVC animated:YES];
+            return;
+        }else if (self.tacticSingleModel){//国家或城市
+            TacticSingleViewController *singleVC = [[TacticSingleViewController alloc] initWithViewId:self.tacticSingleModel.ID];
+            [self.viewController.navigationController pushViewController:singleVC animated:YES];
+            return;
+        }
     }else if(self.pushType == threeMapViewTypeSingleView) {
         //说明是一般景点
         TacticGeneralVC *generalVC = [[TacticGeneralVC alloc] initWithViewId:self.tacticSingleModel.ID];

@@ -46,20 +46,19 @@
 
 #pragma mark --- 基础网络接口
 //正式
-#define BASE_URL @"http://114.55.137.241:8080/"
+//#define BASE_URL @"http://114.55.137.241:8080/"
 //测试
-//#define BASE_URL @"http://121.40.225.119:8080/"
+#define BASE_URL @"http://121.40.225.119:8080/"
 
 
 #define HTTPURL(APPEND_URL) [NSString stringWithFormat:@"%@%@.action?",BASE_URL,APPEND_URL]
-
 
 
 #pragma mark --- 项目网络接口
 //获取个人主页信息
 #define GETUSERDETAIL      HTTPURL(@"u/getUserDetail")
 //获取我关注的人
-#define LISTUSERFOLLOWED   HTTPURL(@"friends/listUserFollowed")
+#define Get_UserFollowed_List(openid)  [NSString stringWithFormat:@"%@friends/listUserFollowed.action?openid=%@",BASE_URL,openid]
 
 //获取label信息
 #define LISTLABLE          HTTPURL(@"user/listLabel")
@@ -130,10 +129,15 @@
 //获取更多视频
 #define GET_TACTIC_More_Videos [NSString stringWithFormat:@"%@admin_back/getViewVideoList.action?viewType=2",BASE_URL]
 //添加想去的目的地
-#define GET_TACTIC_WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/addMySpot.action?openid=%@&viewId=%d",BASE_URL,openid,viewId]
+#define Add_Tactic_WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/addMySpot.action?openid=%@&viewId=%d",BASE_URL,openid,viewId]
+//删除想去的目的地
+#define Del_Tactic__WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/delMySpot.action?openid=%@&viewId=%d",BASE_URL,openid,viewId]
+//获取想去的目的地列表
+#define Get_Tactic_List_WantGo(openid) [NSString stringWithFormat:@"%@viewSpot/getMySpots.action?openid=%@",BASE_URL,openid]
 
 //通过userid获取用户基本信息
 #define GET_USERINFO_BYUSERID    HTTPURL(@"u/getUserById")
+
 //通过openid获取用户基本信息
 #define GET_USERINFO_BYOPENID   HTTPURL(@"u/getUserByOpenId")
 //获取聊天的token

@@ -22,12 +22,16 @@
 @property (nonatomic, weak) UITableView *tableView;
 
 @property (nonatomic, strong) TacticSingleModelFrame *tacticSingleModelFrame;
+
+@property (nonatomic, weak) UIButton *sureButton;
+
+@property (nonatomic,assign) BOOL isWantGo;
 @end
 
 
 
 @implementation TacticSingleViewController
-
+#pragma mark - system方法
 - (instancetype)initWithViewId:(NSInteger)viewId
 {
     self = [super init];
@@ -52,19 +56,23 @@
      *  创建tableView
      */
     [self createTableView];
-    
-    /**
-     *  刷新数据
-     */
-    [self refreshDataWithViewId:self.viewId];
     /**
      *  创建底部工具条
      */
     [self createBottomBar];
     
+    /**
+     *  刷新数据
+     */
+    [self refreshDataWithViewId:self.viewId];
+    
+    [self requestWantGoWithViewId:_viewId];
 }
-
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self scrollViewDidScroll:self.tableView];
+}
+#pragma mark - set方法
 - (TacticSingleModelFrame *)tacticSingleModelFrame
 {
     if(!_tacticSingleModelFrame){
@@ -72,38 +80,18 @@
     }
     return _tacticSingleModelFrame;
 }
-/**
- *  刷新数据
- */
-- (void)refreshDataWithViewId:(NSInteger)viewId
+
+- (void)setIsWantGo:(BOOL)isWantGo
 {
-    
-    if (_tacticSingleModel) {
-        self.tacticSingleModelFrame.tacticSingleModel = _tacticSingleModel;
-        [self.tableView reloadData];
-        return;
+    _isWantGo = isWantGo;
+    if (isWantGo == YES) {//已关注
+        [_sureButton setTitle:@"已关注" forState:UIControlStateNormal];
+    }else{
+        [_sureButton setTitle:@"想去" forState:UIControlStateNormal];
     }
-    
-    NSString *url = GET_TACTIC_VIEW(viewId);
-    NSLog(@"%@",url);
-    
-    __weak typeof(&*self) weakSelf = self;
-    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
-        if (isSuccess) {
-            
-//          NSLog(@"%@",result);
-            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
-            weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
-            
-            [weakSelf.tableView reloadData];
-        }
-        
-    } andFailBlock:^(id failResult) {
-        NSLog(@"%@",failResult);
-    }];
 }
 
-
+#pragma mark - configUI方法
 /**
  *  设置导航栏
  */
@@ -112,7 +100,6 @@
     [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(0)];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
-
 /**
  *  创建tableView
  */
@@ -145,30 +132,82 @@
     sureBtn.titleLabel.font=[UIFont systemFontOfSize:20];
     [sureBtn addTarget:self action:@selector(wantToGoAction:) forControlEvents:UIControlEventTouchUpInside];
     [bottomBar addSubview:sureBtn];
+    self.sureButton = sureBtn;
+}
+#pragma mark - requsetData方法
+/**
+ *  刷新数据
+ */
+- (void)refreshDataWithViewId:(NSInteger)viewId
+{
+    if (_tacticSingleModel) {
+        self.tacticSingleModelFrame.tacticSingleModel = _tacticSingleModel;
+        [self.tableView reloadData];
+        return;
+    }
+    
+    NSString *url = GET_TACTIC_VIEW(viewId);
+    NSLog(@"%@",url);
+    
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            
+            //          NSLog(@"%@",result);
+            TacticSingleModel *tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
+            weakSelf.tacticSingleModelFrame.tacticSingleModel = tacticSingleModel;
+            
+            [weakSelf.tableView reloadData];
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
+- (void)requestWantGoWithViewId:(NSInteger)viewId
+{
+    //假数据
+    NSInteger yesOrNot = arc4random() % 2 ;
+    self.isWantGo = yesOrNot;
+    
 }
 
 - (void)wantToGoAction:(UIButton *)button
 {
-    //添加想去目的地
     ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
     if (!accountModel) {//没有账号
         [MBProgressHUD showError:@"请登录后再点击"];
     }else{
-        NSString *wantGoUrl = GET_TACTIC_WantGo(accountModel.openid, self.viewId);
-        NSLog(@"%@",wantGoUrl);
-        [ZYZCHTTPTool getHttpDataByURL:wantGoUrl withSuccessGetBlock:^(id result, BOOL isSuccess) {
-            [MBProgressHUD showSuccess:ZYLocalizedString(@"add_spot_success")];
-        } andFailBlock:^(id failResult) {
-            [MBProgressHUD showError:ZYLocalizedString(@"add_spot_fail")];
-        }];
+        if(_isWantGo == NO){//加关注
+            NSString *wantGoUrl = Add_Tactic_WantGo(accountModel.openid, self.viewId);
+            NSLog(@"%@",wantGoUrl);
+            [ZYZCHTTPTool getHttpDataByURL:wantGoUrl withSuccessGetBlock:^(id result, BOOL isSuccess) {
+                [MBProgressHUD showSuccess:ZYLocalizedString(@"add_spot_success")];
+                //改文字
+                [self.sureButton setTitle:@"已关注" forState:UIControlStateNormal];
+                
+            } andFailBlock:^(id failResult) {
+                [MBProgressHUD showError:ZYLocalizedString(@"add_spot_fail")];
+            }];
+        }else{//取关
+            NSString *wantGoUrl = Del_Tactic__WantGo(accountModel.openid, self.viewId);
+            [ZYZCHTTPTool getHttpDataByURL:wantGoUrl withSuccessGetBlock:^(id result, BOOL isSuccess) {
+                [MBProgressHUD showSuccess:ZYLocalizedString(@"del_spot_success")];
+                //改文字
+                [self.sureButton setTitle:@"想去" forState:UIControlStateNormal];
+                
+            } andFailBlock:^(id failResult) {
+                [MBProgressHUD showError:ZYLocalizedString(@"del_spot_fail")];
+            }];
+            
+        }
     }
+    
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self scrollViewDidScroll:self.tableView];
-}
+
 
 #pragma mark - UITableDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
