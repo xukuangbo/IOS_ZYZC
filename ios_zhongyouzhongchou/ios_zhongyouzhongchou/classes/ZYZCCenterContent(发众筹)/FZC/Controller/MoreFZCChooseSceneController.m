@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) OneSpotModel *chooseSpotModel;
 @property (nonatomic, strong) NSMutableArray  *viewSpot;
+@property (nonatomic, assign) BOOL         hasFlurData;
 @end
 
 @implementation MoreFZCChooseSceneController
@@ -93,6 +94,7 @@
     for (OneSpotModel *oneSpotModel in arr) {
         [_viewSpot addObject:oneSpotModel];
     }
+    _hasFlurData=arr.count>0;
     [_table reloadData];
 }
 
@@ -108,7 +110,13 @@
             }
             else
             {
-                [MBProgressHUD showError:ZYLocalizedString(@"error_no_spot")];
+                if (!_hasFlurData) {
+                    [MBProgressHUD showError:ZYLocalizedString(@"error_no_spot")];
+                }
+                else
+                {
+                    [_searchBar resignFirstResponder];
+                }
             }
         }
     }

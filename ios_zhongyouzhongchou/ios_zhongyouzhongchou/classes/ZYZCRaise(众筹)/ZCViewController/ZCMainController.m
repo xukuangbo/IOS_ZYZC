@@ -28,6 +28,7 @@
 @property (nonatomic, strong) ZCListModel *listModel;
 @property (nonatomic, strong) NSMutableArray *listArr;
 @property (nonatomic, weak  ) ZCNoneDataView *noneDataView;
+@property (nonatomic, strong) UIButton     *scrollTop;
 
 @end
 
@@ -211,7 +212,24 @@
         [self.view addSubview:_noneDataView];
         _noneDataView.hidden=YES;
     }
+    
+    _scrollTop=[UIButton buttonWithType:UIButtonTypeCustom];
+    _scrollTop.layer.cornerRadius=KCORNERRADIUS;
+    _scrollTop.layer.masksToBounds=YES;
+    _scrollTop.frame=CGRectMake(KSCREEN_W-60,KSCREEN_H-59-55,50,50);
+    [_scrollTop setImage:[UIImage imageNamed:@"回到顶部"] forState:UIControlStateNormal];
+    
+    [_scrollTop addTarget:self action:@selector(scrollToTop) forControlEvents:UIControlEventTouchUpInside];
+    _scrollTop.hidden=YES;
+    [self.view addSubview:_scrollTop];
 }
+
+-(void)scrollToTop
+{
+    [_table setContentOffset:CGPointMake(0, -64) animated:YES];
+    
+}
+
 
 #pragma mark --- 创建tableView
 -(void)createTableView
@@ -369,11 +387,18 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat offSetY=scrollView.contentOffset.y;
-    if (offSetY>=0) {
-        
+    if (scrollView==_table) {
+        CGFloat offSetY=scrollView.contentOffset.y;
+        if (offSetY>=1000.0) {
+            _scrollTop.hidden=NO;
+        }
+        else
+        {
+            _scrollTop.hidden=YES;
+        }
     }
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated
 {
