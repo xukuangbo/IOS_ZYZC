@@ -8,6 +8,7 @@
 
 #import "ChatListViewController.h"
 #import "ZYZCConversationController.h"
+#import "UINavigationBar+Background.h"
 @interface ChatListViewController ()
 
 @end
@@ -74,7 +75,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.tabBarController.navigationItem.title = @"会话";    
+    self.tabBarController.navigationItem.title = @"会话";
+    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
 }
 
 /**
@@ -107,5 +109,7 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
+
 
 @end
