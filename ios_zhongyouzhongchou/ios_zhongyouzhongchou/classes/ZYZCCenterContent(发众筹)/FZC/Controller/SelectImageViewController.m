@@ -43,7 +43,6 @@
      */
     [self createScrollView];
     
-    
     /**
      *  创建6个角的小图标
      */
@@ -54,7 +53,6 @@
  */
 - (void)createScrollView
 {
-    
     //1.0先创建中间的透明图（现在决定用一个删除scrollview）
     UIScrollView *scrollView = [[UIScrollView alloc] init];
     scrollView.size = CGSizeMake(KSCREEN_W,selectImagescrollViewH);
@@ -71,9 +69,9 @@
     //让scrollview没有覆盖的地方显示图片
     scrollView.clipsToBounds = NO;
     //设置可以缩放
-    scrollView.minimumZoomScale = 1;
-    scrollView.maximumZoomScale = 3;
-    scrollView.bouncesZoom = YES;
+//    scrollView.minimumZoomScale = 1;
+//    scrollView.maximumZoomScale = 3;
+//    scrollView.bouncesZoom = YES;
     [self.view addSubview:scrollView];
     self.scrollView = scrollView;
     
@@ -84,7 +82,6 @@
     imageView.contentMode=UIViewContentModeScaleAspectFit;
     [scrollView addSubview:imageView];
     imageView.userInteractionEnabled = YES;
-    
     
 }
 
@@ -191,12 +188,12 @@
     
     UIImageView *newImgview = [[UIImageView alloc] initWithImage:srcimg];
     
-    float zoomScale = 1.0 / [self.scrollView zoomScale];
+//    float zoomScale = 1.0 / [self.scrollView zoomScale];
     CGRect rect;
-    rect.origin.x = (self.scrollView.contentOffset.x) * zoomScale * (srcimg.size.width / KSCREEN_W);
-    rect.origin.y = (self.scrollView.contentOffset.y + 64) * zoomScale * (srcimg.size.height / KSCREEN_H);
-    rect.size.width = self.scrollView.bounds.size.width * zoomScale * (srcimg.size.width / KSCREEN_W);
-    rect.size.height = self.scrollView.bounds.size.height * zoomScale * (srcimg.size.height / KSCREEN_H);//要裁剪的图片区域，按照原图的像素大小来，超过原图大小的边自动适配
+    rect.origin.x = (self.scrollView.contentOffset.x) * (srcimg.size.width / KSCREEN_W);
+    rect.origin.y = (self.scrollView.contentOffset.y + 64) * (srcimg.size.height / KSCREEN_H);
+    rect.size.width = self.scrollView.bounds.size.width * (srcimg.size.width / KSCREEN_W);
+    rect.size.height = self.scrollView.bounds.size.height * (srcimg.size.height / KSCREEN_H);//要裁剪的图片区域，按照原图的像素大小来，超过原图大小的边自动适配
     
 //    NSLog(@"%@-----%f",NSStringFromCGRect(rect),zoomScale);
     
