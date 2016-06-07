@@ -57,15 +57,25 @@
     ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
     [dataBase saveDataWithFinishBlock:^(BOOL saveSuccess) {
         if (saveSuccess) {
-            NSArray *dataArr=[dataBase recieveDBData];
-            for (NSDictionary *dic in dataArr) {
-                OneSpotModel *oneSportModel=[[OneSpotModel alloc]mj_setKeyValues:dic];
-                [_viewSpot addObject:oneSportModel];
-            }
-            [_table reloadData];
+            [self getDataSuccess];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getDataSuccess) name:KSAVE_SPOT_FINISH object:nil];
         }
     }];
 
+}
+
+-(void)getDataSuccess
+{
+    ZYZCDataBase *dataBase=[ZYZCDataBase sharedDBManager];
+    NSArray *dataArr=[dataBase recieveDBData];
+    for (NSDictionary *dic in dataArr) {
+        OneSpotModel *oneSportModel=[[OneSpotModel alloc]mj_setKeyValues:dic];
+        [_viewSpot addObject:oneSportModel];
+    }
+    [_table reloadData];
 }
 
 -(BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

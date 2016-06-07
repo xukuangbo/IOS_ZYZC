@@ -10,6 +10,7 @@ static ZYZCDataBase *_db;
 {
     FMDatabase *_fmdb;
     BOOL hasSaveSpotData;
+    BOOL hasGetSpotData;
 }
 
 
@@ -28,8 +29,7 @@ static ZYZCDataBase *_db;
 -(instancetype)init
 {
     if (self=[super init]) {
-        [self createTables];
-  
+    
     }
     return self;
 }
@@ -55,6 +55,8 @@ static ZYZCDataBase *_db;
             BOOL spotTableSucced=[_fmdb executeUpdate:spotSQL];
             if (spotTableSucced) {
                 NSLog(@"spot表格创建成功");
+                //存储数据
+                [self saveDataWithFinishBlock:nil];
             }
             else{
                 NSLog(@"spot表格创建失败");
@@ -75,7 +77,7 @@ static ZYZCDataBase *_db;
      */
     BOOL exist=[self searchOneDataWithID:dataId];
     if (exist) {
-//        NSLog(@"数据已存在!");
+        NSLog(@"数据已存在!");
         return NO;
     }
     NSString *sql=@"insert into ViewSpot(id,viewType,name,country,pinyin) values(?,?,?,?,?)";
@@ -197,25 +199,37 @@ static ZYZCDataBase *_db;
         }
         return;
     }
+    if (hasGetSpotData) {
+        if (doFinish) {
+            doFinish(NO);
+        }
+        return;
+    }
+    
     [ZYZCHTTPTool getHttpDataByURL:GETVIEWSPOT withSuccessGetBlock:^(id result, BOOL isSuccess)
      {
          if (isSuccess) {
-             ZYZCViewSpotModel *viewSpotModel=[[ZYZCViewSpotModel alloc]mj_setKeyValues:result];
-             dispatch_async(dispatch_get_main_queue(), ^{
+              ZYZCViewSpotModel *viewSpotModel=[[ZYZCViewSpotModel alloc]mj_setKeyValues:result];
+             hasGetSpotData=YES;
+              dispatch_async(dispatch_get_global_queue(0, 0), ^{
                  for (OneSpotModel *oneSpotModel in viewSpotModel.data) {
                      NSString *pinyin=[LanguageTool chineseChangeToPinYin:oneSpotModel.name];
                      [self insertDataWithId:oneSpotModel.ID andType:oneSpotModel.viewType andName:oneSpotModel.name andCountry:oneSpotModel.country  andPinyin:pinyin];
                  }
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     hasSaveSpotData=YES;
+                     [[NSNotificationCenter defaultCenter]postNotificationName:KSAVE_SPOT_FINISH object:nil];
+                     if (doFinish) {
+                         doFinish(isSuccess);
+                     }
+                 });
              });
-             hasSaveSpotData=YES;
         }
-    if (doFinish) {
-        doFinish(isSuccess);
-    }
-     } andFailBlock:^(id failResult) {
+    } andFailBlock:^(id failResult) {
          NSLog(@"%@",failResult);
-     }];
+    }];
 }
+
 
 #pragma mark --- 拼音匹配（景点地名库）
 -(NSArray*)queryWithPinyinCondition:(NSString *)condition
@@ -278,10 +292,10 @@ static ZYZCDataBase *_db;
     BOOL success=[_fmdb executeUpdate:sql,userId,name,portraitUri,token];
     
     if (success) {
-//        NSLog(@"插入成功");
+        NSLog(@"插入成功");
     }
     else{
-//        NSLog(@"插入失败%@",_fmdb.lastErrorMessage);
+        NSLog(@"插入失败%@",_fmdb.lastErrorMessage);
     }
     return success;
 }

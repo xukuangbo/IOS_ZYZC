@@ -16,6 +16,11 @@ typedef void (^DoFinish)(BOOL doSuccess);
 @interface ZYZCDataBase : NSObject
 
 +(instancetype )sharedDBManager;
+
+/**
+ *  创建表单
+ */
+-(void)createTables;
 /**
  *  增
  */
