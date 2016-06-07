@@ -39,12 +39,12 @@
 {
     NSLog(@"_userId:%@",_userId);
     
-////    NSNumber *myUserId=@54;
-//    NSUserDefaults  *user=[NSUserDefaults standardUserDefaults];
-//    NSNumber *myUserId=[user objectForKey:KUSER_MARK];
-//    if ([myUserId isEqual:_userId]) {
-//        return;
-//    }
+    //判断是否是自己的
+    NSUserDefaults  *user=[NSUserDefaults standardUserDefaults];
+    NSNumber *myUserId=[user objectForKey:KUSER_MARK];
+    if ([myUserId isEqual:_userId]) {
+        return;
+    }
     ZYZCPersonalController *personalController=[[ZYZCPersonalController alloc]init];
     personalController.hidesBottomBarWhenPushed=YES;
     personalController.userId=_userId;

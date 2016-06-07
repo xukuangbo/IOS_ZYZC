@@ -84,6 +84,7 @@
     _iconImage=[[ZCDetailCustomButton alloc]initWithFrame:CGRectMake(4, 4, 74, 74)];
     _iconImage.layer.cornerRadius=3;
     _iconImage.layer.masksToBounds=YES;
+    _iconImage.userInteractionEnabled=NO;
     [_iconBgView addSubview:_iconImage];
     
     //添加姓名
@@ -165,6 +166,7 @@
     
     //众筹详情
     if (oneModel.zcType==DetailType) {
+        _iconImage.userInteractionEnabled=YES;
         bgImg.height=PRODUCT_DETAIL_CELL_HEIGHT;
         _lineView.hidden=NO;
         _destLayerImg.hidden=YES;

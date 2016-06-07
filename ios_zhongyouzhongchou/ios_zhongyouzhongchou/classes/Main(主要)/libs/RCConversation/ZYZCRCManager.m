@@ -160,7 +160,7 @@ static ZYZCRCManager *_RCManager;
  *  @param targetId       聊天的对象id
  *  @param viewController 推出聊天界面的控制器
  */
--(void)connectTarget:(NSString *)targetId andSuperViewController:(UIViewController *)viewController
+-(void)connectTarget:(NSString *)targetId andTitle:(NSString *)title andSuperViewController:(UIViewController *)viewController
 {
     [self loginRongCloudSuccess:^{
         [[RCIM sharedRCIM] setUserInfoDataSource:self];
@@ -169,7 +169,7 @@ static ZYZCRCManager *_RCManager;
             conversationVC.hidesBottomBarWhenPushed=YES;
             conversationVC.conversationType =ConversationType_PRIVATE;
             conversationVC.targetId = targetId;
-            conversationVC.title = @"聊天";
+            conversationVC.title = title;
             [viewController.navigationController pushViewController:conversationVC animated:YES];
         });
     }];

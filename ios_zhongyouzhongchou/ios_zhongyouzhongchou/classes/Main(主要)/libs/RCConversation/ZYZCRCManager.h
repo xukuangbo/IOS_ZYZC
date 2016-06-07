@@ -36,5 +36,5 @@ typedef void (^LoginSuccess)();//登陆后操作
 /**
  *  单聊
  */
--(void)connectTarget:(NSString *)targetId andSuperViewController:(UIViewController *)viewControlle;
+-(void)connectTarget:(NSString *)targetId andTitle:(NSString *)title andSuperViewController:(UIViewController *)viewController;
 @end

@@ -150,6 +150,7 @@
         button.titleLabel.font=[UIFont systemFontOfSize:15];
         [clickView addSubview:button];
         if (i==0) {
+            [button setTitleColor:[UIColor ZYZC_MainColor] forState:UIControlStateNormal];
             _preButton=button;
         }
     }
@@ -241,13 +242,14 @@
 -(void)chat
 {
     _RCManager=[ZYZCRCManager defaultManager];
-    [_RCManager connectTarget:_userModel.openid andSuperViewController:self.viewController];
+    [_RCManager connectTarget:_userModel.openid andTitle:_userModel.userName  andSuperViewController:self.viewController];
 }
 
 #pragma mark --- 添加关注／取消关注
 -(void)addOrDeleteFollow{
     
      NSDictionary *params=@{@"openid":[ZYZCTool getUserId],@"friendsId":_userModel.userId};
+    NSLog(@"params:%@",params);
     if (_friendship) {
         //取消关注
         [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:UNFOLLOWUSER andParameters:params andSuccessGetBlock:^(id result, BOOL isSuccess)

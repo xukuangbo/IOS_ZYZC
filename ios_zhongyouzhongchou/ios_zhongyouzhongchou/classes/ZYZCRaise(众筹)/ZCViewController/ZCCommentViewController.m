@@ -86,10 +86,12 @@
         [weakSelf getHttpData];
     }];
     
-    _table.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    MJRefreshAutoNormalFooter *autoFooter=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _pageNo++;
-        [weakSelf getHttpData];
+        [self getHttpData];
     }];
+    [autoFooter setTitle:@"" forState:MJRefreshStateIdle];
+    _table.mj_footer=autoFooter;
     
     //添加评论
     _addCommentView=[[AddCommentView alloc]init];

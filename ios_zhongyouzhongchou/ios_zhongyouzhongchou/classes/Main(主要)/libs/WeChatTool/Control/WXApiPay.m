@@ -17,7 +17,7 @@
 @implementation WXApiPay
 
 #pragma mark --- 支付
--(void )payForWeChat
+-(void )payForWeChat:(NSDictionary *)dict
 {
 //    post
 //    {
@@ -31,18 +31,12 @@
 //        
 //    }
    
-    NSDictionary *dic=@{@"openid":[ZYZCTool getUserId],
-                        @"ip":[ZYZCTool getDeviceIp],
-                        @"productId":@190,
-                        @"style1":@0.1,
-                        @"style2":@0.1,
-                        @"style3":@0.1,
-                        @"style4":@0.1,
-                        @"style5":@0.1,
-                        };
+    NSMutableDictionary *params=[NSMutableDictionary dictionaryWithDictionary:dict];
+    [params setObject:[ZYZCTool getUserId] forKey:@"openid"];
+    [params setObject:[ZYZCTool getDeviceIp] forKey:@"ip"];
     
-    NSString *url=@"http://121.40.225.119:8080/weixinpay/generateAppOrder.action";
-    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:url  andParameters:dic andSuccessGetBlock:^(id result, BOOL isSuccess) {
+ 
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_WX_ORDER  andParameters:params andSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"result:%@",result);
             PayReq *request = [[PayReq alloc] init];
             /** 商家向财付通申请的商家id */

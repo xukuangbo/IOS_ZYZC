@@ -48,6 +48,7 @@
 @property (nonatomic, strong) UIButton              *collectionBtn;
 @property (nonatomic, strong) UILabel               *travelThemeLab;
 @property (nonatomic, strong) ZCDetailTableHeadView *headView;
+@property (nonatomic, strong) ZCDetailBottomView    *bottomView;
 
 @property (nonatomic, assign) ZCDetailContentType   contentType;
 
@@ -65,14 +66,15 @@
 
 @property (nonatomic, assign) BOOL  paySupportMoney;//标记：跳转到支持／付款
 
-@property (nonatomic, assign) BOOL hasCosponsor;//联合发起人
-@property (nonatomic, assign) BOOL hasIntroGoal;//众筹目的
-@property (nonatomic, assign) BOOL hasIntroGeneral;//目的地介绍
-@property (nonatomic, assign) BOOL hasIntroMovie;//动画攻略
-@property (nonatomic, assign) BOOL hasHotComment;//热门评论
-@property (nonatomic, assign) BOOL hasInterestTravel;//兴趣标签匹配的旅游
-@property (nonatomic, assign) BOOL getCollection;
-@property (nonatomic, assign) BOOL viewDisappear;
+@property (nonatomic, assign) BOOL hasCosponsor;//标记是否有联合发起人
+@property (nonatomic, assign) BOOL hasIntroGoal;//标记是否有众筹目的
+@property (nonatomic, assign) BOOL hasIntroGeneral;//标记是否有目的地介绍
+@property (nonatomic, assign) BOOL hasIntroMovie;//标记是否有动画攻略
+@property (nonatomic, assign) BOOL hasSupportView;//标记是否有支持界面
+@property (nonatomic, assign) BOOL hasHotComment;//标记是否有热门评论
+@property (nonatomic, assign) BOOL hasInterestTravel;//标记是否有兴趣标签匹配的旅游
+@property (nonatomic, assign) BOOL getCollection;//添加收藏与否
+@property (nonatomic, assign) BOOL viewDidappear;//标记界面是否出现
 @end
 
 @implementation ZCPersonInfoController
@@ -130,6 +132,7 @@
     _hasIntroGoal   =_zcType==MyDraft?YES:NO;//添加众筹目的
     _hasIntroGeneral= _viewSpots.count>0?YES:NO;//添加目的地介绍
     _hasIntroMovie  = NO;//添加动画攻略
+    _hasSupportView=NO;//添加支持界面
     _hasHotComment  = NO;//添加热门评论
     _hasInterestTravel=NO;//添加兴趣标签匹配的旅游
 
@@ -150,9 +153,9 @@
                 [_detailDays addObject:oneSchedule];
             }
             _hasIntroGoal=YES;
+            _hasSupportView=YES;
              _getCollection=[_detailModel.detailProductModel.Friend isEqual:@0];
-            [_collectionBtn setImage: _getCollection?[UIImage imageNamed:@"icon_collection"]:[UIImage imageNamed:@"icon_collection_pre"] forState:UIControlStateNormal];
-            
+            [_collectionBtn setTitle:_getCollection?@"推荐":@"已推荐" forState:UIControlStateNormal];
             [_table reloadData];
         }
     } andFailBlock:^(id failResult) {
@@ -274,30 +277,33 @@
     _shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _shareBtn.frame=CGRectMake(KSCREEN_W-40, 0, 40, 44);
     [_shareBtn setImage:[UIImage imageNamed:@"icon_share"] forState:UIControlStateNormal];
-    [_shareBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventAllEvents];
+    [_shareBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventAllEvents];
     [self.navigationController.navigationBar addSubview:_shareBtn];
-    
-    if (_zcType==AllList) {
-        //导航栏添加收藏
-        _collectionBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        _collectionBtn.frame=CGRectMake(_shareBtn.left-40, 0, 40, 44);
-        [_collectionBtn setImage:[UIImage imageNamed:@"icon_collection"] forState:UIControlStateNormal];
-        [_collectionBtn addTarget:self  action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
-        [self.navigationController.navigationBar addSubview:_collectionBtn];
-    }
+        
         //添加底部按钮
         __weak typeof (&*self)weakSelf=self;
-        ZCDetailBottomView *bottomView=[[ZCDetailBottomView alloc]init];
-        bottomView.zcType=_zcType;
-        bottomView.commentBlock=^()
+        _bottomView=[[ZCDetailBottomView alloc]init];
+        _bottomView.zcType=_zcType;
+        _bottomView.buttonClick=^(ZCBottomButtonType buttonType)
         {
-            [weakSelf comment:YES];
+            if (buttonType==CommentType) {
+                [weakSelf comment:YES];
+            }
+            else if(buttonType==SupportType)
+            {
+                 [weakSelf support];
+            }
+            else if (buttonType==RecommendType)
+            {
+                [weakSelf collection];
+            }
         };
-        bottomView.supportBlock=^()
-        {
-            [weakSelf support];
-        };
-        [self.view addSubview:bottomView];
+        [self.view addSubview:_bottomView];
+        
+        if (_zcType==AllList) {
+            _collectionBtn=(UIButton *)[_bottomView viewWithTag:RecommendType];
+        }
+        
     }
 }
 
@@ -314,7 +320,7 @@
     NSInteger secondSectionCellNumber=
     (2*_hasIntroGoal+2*_hasIntroGeneral+2*_hasIntroMovie*_spotVideos.count)*(self.contentType==IntroType?1:0)
     +2*days*(self.contentType==ArrangeType?1:0)
-    +(2+2*_hasHotComment+2*_hasInterestTravel*(1+4))*(self.contentType==ReturnType?1:0);
+    +(2*_hasSupportView+2*_hasHotComment+2*_hasInterestTravel*(1+4))*(self.contentType==ReturnType?1:0);
     
     if (section==0) {
         return 2 + 2*_hasCosponsor;
@@ -404,7 +410,7 @@
         //查看回报内容
         else
         {
-            if (indexPath.row==0) {
+            if (indexPath.row==0&&_hasSupportView) {
                 NSString *returnFirstCellId=@"returnFirstCell";
                 ZCDetailReturnFirstCell *returnFirstCell=(ZCDetailReturnFirstCell *)[self customTableView:tableView cellWithIdentifier:returnFirstCellId andCellClass:[ZCDetailReturnFirstCell class]];
                 returnFirstCell.cellModel=_detailModel.detailProductModel;
@@ -510,7 +516,7 @@
         //回报部分cells高度
         else
         {
-            if (indexPath.row ==0) {
+            if (indexPath.row ==0&&_hasSupportView) {
                 return _detailModel.detailProductModel.returnFirtCellHeight;
             }
             else if (indexPath.row==2*_hasHotComment &&indexPath.row !=0)
@@ -593,7 +599,7 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     //图片拉伸效果
-    if (scrollView==self.table&&!_viewDisappear) {
+    if (scrollView==_table&&_viewDidappear) {
         CGFloat offsetY = scrollView.contentOffset.y;
         if (offsetY <= -BGIMAGEHEIGHT)
         {
@@ -605,15 +611,10 @@
         }
         
         //导航栏颜色渐变
-        CGFloat height=BGIMAGEHEIGHT;
-        if (offsetY >= -height) {
-            CGFloat alpha = MIN(1, (height + offsetY)/height);
-            [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:alpha]];
-        } else {
-            [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
-        }
-        
+        [self changeNavColorByContentOffSetY:offsetY];
+
         //设置导航栏title
+        CGFloat height=BGIMAGEHEIGHT;
         if ((height + offsetY)/(height)>1) {
              self.title= _travelThemeLab.text;
             if (_travelThemeLab.text.length>8) {
@@ -633,19 +634,6 @@
         {
             scrollView.contentInset=UIEdgeInsetsMake(BGIMAGEHEIGHT, 0, 0, 0);
         }
-    }
-}
-
-#pragma mark --- 按钮点击事件
--(void)clickBtn:(UIButton *)sender
-{
-    if (sender==_shareBtn) {
-        //分享
-        [self share];
-    }
-    if (sender==_collectionBtn) {
-        //收藏
-        [self collection];
     }
 }
 
@@ -676,7 +664,7 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark --- 收藏/取消收藏
+#pragma mark --- 推荐/取消推荐
 -(void)collection
 {
     NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],@"friendsId":_productId};
@@ -684,7 +672,7 @@
     
     [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:url andParameters:parameters andSuccessGetBlock:^(id result, BOOL isSuccess) {
         _getCollection?[MBProgressHUD showSuccess:ZYLocalizedString(@"collection_success")]:[MBProgressHUD showSuccess:ZYLocalizedString(@"collection_fail")];
-        [_collectionBtn setImage:_getCollection?[UIImage imageNamed:@"icon_collection_pre"]:[UIImage imageNamed:@"icon_collection"] forState:UIControlStateNormal];
+        [_collectionBtn setTitle:_getCollection?@"已推荐":@"推荐" forState:UIControlStateNormal];
         _getCollection=!_getCollection;
         
     } andFailBlock:^(id failResult) {
@@ -709,38 +697,70 @@
 #pragma mark --- 支持
 -(void)support
 {
-    NSLog(@"支付");
-    WXApiPay *wxPay=[[WXApiPay alloc]init];
-    [wxPay payForWeChat];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOrderPayResult:) name:KORDER_PAY_NOTIFICATION object:nil];//监听一个通知
+    //支付
+    if (_bottomView.surePay) {
+        NSLog(@"productId:%@",_oneModel.product.productId);
+        if (_bottomView.payMoneyBlock) {
+             _bottomView.payMoneyBlock(_oneModel.product.productId);
+        }
+    }
+    //提示先择支付众筹的类型
+    else{
+        UIButton *supportBtn=(UIButton *)[_headView viewWithTag:ReturnType];
+        [_headView getContent:supportBtn];
     
-//    UIButton *supportBtn=(UIButton *)[_headView viewWithTag:ReturnType];
-//    [_headView getContent:supportBtn];
-//    [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [MBProgressHUD showSuccess:@"请选择支持方式"];
+        [UIView animateWithDuration:0.1 animations:^{
+            _table.contentOffset=CGPointMake(0, BGIMAGEHEIGHT-44);
+        } completion:nil];
+    }
 }
 
+
+#pragma mark --- 支付结果
 -(void)getOrderPayResult:(NSNotification *)notify
 {
     NSLog(@"notify%@",notify);
+    
     if ([notify.object isEqualToString:@"success"]) {
         //支付成功
     }
 }
 
+#pragma mark --- 改变导航栏颜色
+-(void)changeNavColorByContentOffSetY:(CGFloat )offsetY
+{
+    //导航栏颜色渐变
+    CGFloat height=BGIMAGEHEIGHT;
+    if (offsetY >= -height) {
+        CGFloat alpha = MIN(1, (height + offsetY)/height);
+        [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:alpha]];
+    } else {
+        [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
+    }
+
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _viewDisappear=NO;
     [self.navigationController.navigationBar cnSetBackgroundColor:[_navColor colorWithAlphaComponent:0]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-
+    _viewDidappear=YES;
+     _shareBtn.hidden=NO;
+    [self changeNavColorByContentOffSetY:_table.contentOffset.y];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"viewControllerShow" object:nil];
 }
 
+
 -(void)viewWillDisappear:(BOOL)animated
 {
-    _viewDisappear=YES;
+    [super viewWillDisappear:animated];
+    _shareBtn.hidden=YES;
+    _viewDidappear=NO;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

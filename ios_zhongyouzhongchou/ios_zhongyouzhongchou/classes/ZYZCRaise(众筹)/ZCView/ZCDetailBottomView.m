@@ -7,7 +7,8 @@
 //
 
 #import "ZCDetailBottomView.h"
-
+#import "WXApiPay.h"
+#import "MBProgressHUD+MJ.h"
 @implementation ZCDetailBottomView
 
 /*
@@ -60,6 +61,7 @@
         sureBtn.tag=CommentType+i;
         [self addSubview:sureBtn];
     }
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeSupportButton:) name:KCAN_SUPPORT_MONEY object:nil];
 }
 
 #pragma mark --- 个人版控件创建
@@ -83,27 +85,50 @@
 #pragma mark --- 底部按钮点击事件
 -(void)clickBtn:(UIButton *)sender
 {
-    switch (sender.tag) {
-        case CommentType:
-            //评论
-            if (_commentBlock) {
-                _commentBlock();
-            }
-            break;
-        case SupportType:
-            //支持
-            if (_supportBlock) {
-                _supportBlock();
-            }
-            break;
-        case RecommendType:
-            //推荐
-            break;
-        default:
-            break;
+    if (_buttonClick) {
+        _buttonClick(sender.tag);
     }
 }
 
+#pragma mark --- 如果可以支持，支持按钮变为支付
+-(void)changeSupportButton:(NSNotification *)notify
+{
+    NSString *str=notify.object;
+    
+    _payMoneyBlock=^(NSNumber *productId){
+        NSMutableDictionary *mutDic=[NSMutableDictionary dictionaryWithDictionary:[ZYZCTool turnJsonStrToDictionary:notify.object]];
+        [mutDic setObject:productId forKey:@"productId"];
+        NSNumber *style2=mutDic[@"style2"];
+        if ( style2&&[style2 isEqual:@0]) {
+            [MBProgressHUD showError:@"请添加支持任意金额数"];
+            return ;
+        }
+        NSLog(@"mutDic:%@",mutDic);
+        WXApiPay *wxPay=[[WXApiPay alloc]init];
+        [wxPay payForWeChat:mutDic];
+    };
+    
+    UIButton *supportBtn=(UIButton *)[self viewWithTag:SupportType];
+     if([str isEqualToString:@"hidden"])
+    {
+        _surePay=NO;
+        [supportBtn setTitle:@"支持" forState:UIControlStateNormal];
+        [supportBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
+        supportBtn.backgroundColor=[UIColor clearColor];
+    }
+     else {
+         _surePay=YES;
+         [supportBtn setTitle:@"支付" forState:UIControlStateNormal];
+         [supportBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+         supportBtn.backgroundColor=[UIColor ZYZC_MainColor];
+     }
+
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:KCAN_SUPPORT_MONEY object:nil];
+}
 
 
 

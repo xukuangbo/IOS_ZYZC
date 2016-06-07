@@ -211,6 +211,11 @@
          [_supportBtn setImage:[UIImage imageNamed:@"Butttn_support"] forState:UIControlStateNormal];
     }
     _sureSupport=!_sureSupport;
+    
+    if (_supportBlock) {
+        _supportBlock();
+    }
+    
 }
 
 #pragma mark --- 是否可支持
@@ -219,6 +224,10 @@
     _chooseSupport=chooseSupport;
     if (!_chooseSupport) {
         _supportBtn.enabled=NO;
+    }
+    else
+    {
+        _supportBtn.enabled=YES;
     }
 }
 
