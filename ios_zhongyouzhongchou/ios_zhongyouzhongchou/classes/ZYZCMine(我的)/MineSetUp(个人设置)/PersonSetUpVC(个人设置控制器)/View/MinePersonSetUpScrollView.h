@@ -47,7 +47,7 @@
 /**
  *  婚姻状况选择框
  */
-@property (nonatomic, weak) UIButton *marryButton;
+@property (nonatomic, weak) UILabel *marryButton;
 
 /**
  *  省会点击选择框
