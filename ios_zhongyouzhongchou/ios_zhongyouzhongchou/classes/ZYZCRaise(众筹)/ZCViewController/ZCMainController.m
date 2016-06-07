@@ -234,41 +234,38 @@
 #pragma mark --- 创建tableView
 -(void)createTableView
 {
-    _table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, KSCREEN_H-KTABBAR_HEIGHT) style:UITableViewStyleGrouped];
+    _table=[[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     _table.dataSource=self;
     _table.delegate=self;
     _table.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
     _table.backgroundColor=[UIColor ZYZC_BgGrayColor];
+    _table.contentInset=UIEdgeInsetsMake(0, 0, KEDGE_DISTANCE, 0) ;
     [self.view addSubview:_table];
     _table.separatorStyle=UITableViewCellSeparatorStyleNone;
     
     //如果是我的众筹列表改变table的初始位置
     if (self.zcType==Mylist) {
-        _table.contentInset=UIEdgeInsetsMake(44, 0, 0, 0) ;
-        _table.frame=CGRectMake(0, 0, KSCREEN_W, KSCREEN_H);
+        _table.contentInset=UIEdgeInsetsMake(44, 0, -44+KEDGE_DISTANCE, 0) ;
+        _table.frame=self.view.bounds;
     }
     //添加下拉刷新动画效果
-    MJRefreshGifHeader *gifHeader=[MJRefreshGifHeader headerWithRefreshingBlock:^{
+    MJRefreshNormalHeader *normarlHeader=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _pageNo=1;
         [self getHttpData];
     }];
-    UIImage *img01=[UIImage imageNamed:@"btn_dy_pre"];
-    UIImage *img02=[UIImage imageNamed:@"btn_fzc_pre"];
-    UIImage *img03=[UIImage imageNamed:@"btn_ht_pre"];
-    UIImage *img04=[UIImage imageNamed:@"btn_lxxj_pre"];
-    
-    [gifHeader setImages:@[img01,img02,img03,img04]  forState:MJRefreshStatePulling];
-     gifHeader.lastUpdatedTimeLabel.hidden=YES;
-//    gifHeader.gifView.contentMode=
-     gifHeader.stateLabel.textColor=[UIColor ZYZC_TextGrayColor04];
-    _table.mj_header=gifHeader;
+     normarlHeader.lastUpdatedTimeLabel.hidden=YES;
+//     normarlHeader.stateLabel.textColor=[UIColor ZYZC_TextGrayColor04];
+    [normarlHeader setTitle:@"" forState:MJRefreshStateIdle];
+    _table.mj_header=normarlHeader;
     
     //添加上拉刷新
-    _table.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    MJRefreshAutoNormalFooter *autoFooter=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _pageNo++;
         [self getHttpData];
     }];
-
+    [autoFooter setTitle:@"" forState:MJRefreshStateIdle];
+    _table.mj_footer=autoFooter;
+    
 }
 #pragma mark --- 创建过滤选择项视图
 -(void)createFitersView

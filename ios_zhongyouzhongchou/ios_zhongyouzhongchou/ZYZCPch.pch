@@ -142,7 +142,7 @@
 #define GET_USERINFO_BYOPENID   HTTPURL(@"u/getUserByOpenId")
 //获取聊天的token
 #define GET_CHAT_TOKEN(openId,name,headImg)   [NSString stringWithFormat:@"%@rongAPI/getToken.action?userId=%@&userName=%@&portraitUri=%@",BASE_URL,openId,name,headImg]
-
+#define  GET_WX_ORDER          [NSString stringWithFormat:@"%@weixinpay/generateAppOrder.action",BASE_URL]
 
 #endif /* ZYZCPch_pch */
 

@@ -35,8 +35,8 @@
     [params setObject:[ZYZCTool getUserId] forKey:@"openid"];
     [params setObject:[ZYZCTool getDeviceIp] forKey:@"ip"];
     
-    NSString *url=@"http://121.40.225.119:8080/weixinpay/generateAppOrder.action";
-    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:url  andParameters:params andSuccessGetBlock:^(id result, BOOL isSuccess) {
+ 
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_WX_ORDER  andParameters:params andSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"result:%@",result);
             PayReq *request = [[PayReq alloc] init];
             /** 商家向财付通申请的商家id */
