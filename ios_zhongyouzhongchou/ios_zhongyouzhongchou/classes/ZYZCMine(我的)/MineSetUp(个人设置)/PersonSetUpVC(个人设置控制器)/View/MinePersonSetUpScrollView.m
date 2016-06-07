@@ -150,8 +150,12 @@
     UILabel *marryLabel = [[UILabel alloc] initWithFrame:CGRectMake(marryLabelX, marryLabelY, marryLabelW, marryLabelH)];
     marryLabel.text = @"感情状况";
 
-    UIButton *marryButton = [[UIButton alloc] init];
-    marryButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+    UILabel *marryButton = [[UILabel alloc] init];
+    marryButton.userInteractionEnabled = YES;
+//    UIButton *marryButton = [[UIButton alloc] init];
+    marryButton.textColor =[UIColor ZYZC_TextGrayColor];
+    marryButton.textAlignment = NSTextAlignmentLeft;
+    [marryButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(marryButtonAction:)]];
     self.marryButton = marryButton;
     [self createUIWithSuperView:self.secondBg titleLabel:marryLabel titleView:marryButton];
     
@@ -161,8 +165,10 @@
     CGFloat heightLabelW = (bgImageViewW - heightLabelX * 2) * 0.3;
     CGFloat heightLabelH = SetUpFirstCellLabelHeight;
     UILabel *heightLabel = [[UILabel alloc] initWithFrame:CGRectMake(heightLabelX, heightLabelY, heightLabelW, heightLabelH)];
-    heightLabel.text = @"身高";
+    heightLabel.text = @"身高(cm)";
     UITextField *heightButton = [[UITextField alloc] init];
+    heightButton.clearsOnBeginEditing = YES;
+    heightButton.keyboardType = UIKeyboardTypeNumberPad;
     self.heightButton = heightButton;
     [self createUIWithSuperView:self.secondBg titleLabel:heightLabel titleView:heightButton];
 
@@ -172,8 +178,10 @@
     CGFloat weightLabelW = (bgImageViewW - weightLabelX * 2) * 0.3;
     CGFloat weightLabelH = SetUpFirstCellLabelHeight;
     UILabel *weightLabel = [[UILabel alloc] initWithFrame:CGRectMake(weightLabelX, weightLabelY, weightLabelW, weightLabelH)];
-    weightLabel.text = @"体重";
+    weightLabel.text = @"体重(kg)";
     UITextField *weightButton = [[UITextField alloc] init];
+    weightButton.clearsOnBeginEditing = YES;
+    weightButton.keyboardType = UIKeyboardTypeNumberPad;
     self.weightButton = weightButton;
     [self createUIWithSuperView:self.secondBg titleLabel:weightLabel titleView:weightButton];
     
@@ -368,6 +376,33 @@
     [alertController addAction:girlAction];
     [alertController addAction:unknownAction];
     
+    [self.viewController presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)marryButtonAction:(UIButton *)button
+{
+    //弹出性别选择
+    __weak typeof(&*self) weakSelf = self;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *noMarrryAction = [UIAlertAction actionWithTitle:@"单身" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        weakSelf.marryButton.text = @"单身";
+    }];
+    UIAlertAction *lovingAction = [UIAlertAction actionWithTitle:@"恋爱中" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        weakSelf.marryButton.text = @"恋爱中";
+    }];
+    UIAlertAction *marriedAction = [UIAlertAction actionWithTitle:@"已婚" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        weakSelf.marryButton.text = @"已婚";
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:noMarrryAction];
+    [alertController addAction:lovingAction];
+    [alertController addAction:marriedAction];
+
     [self.viewController presentViewController:alertController animated:YES completion:nil];
 }
 #pragma mark - set方法
