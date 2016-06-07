@@ -66,6 +66,7 @@
      */
     [self refreshDataWithViewId:self.viewId];
     
+    
     [self requestWantGoWithViewId:_viewId];
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -162,13 +163,24 @@
     } andFailBlock:^(id failResult) {
         NSLog(@"%@",failResult);
     }];
+    
 }
 
 - (void)requestWantGoWithViewId:(NSInteger)viewId
 {
-    //假数据
-    NSInteger yesOrNot = arc4random() % 2 ;
-    self.isWantGo = yesOrNot;
+    
+    ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
+    NSString *url = Get_Tactic_Status_WantGo(accountModel.openid, self.viewId);
+    NSLog(@"%@",url);
+    __weak typeof(&*self) weakSelf = self;
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        if (isSuccess) {
+            weakSelf.isWantGo = [result[@"data"] intValue];
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
     
 }
 
@@ -184,8 +196,8 @@
             [ZYZCHTTPTool getHttpDataByURL:wantGoUrl withSuccessGetBlock:^(id result, BOOL isSuccess) {
                 [MBProgressHUD showSuccess:ZYLocalizedString(@"add_spot_success")];
                 //改文字
-                [self.sureButton setTitle:@"已关注" forState:UIControlStateNormal];
-                _isWantGo = !_isWantGo;
+//                [self.sureButton setTitle:@"已关注" forState:UIControlStateNormal];
+                self.isWantGo = YES;
             } andFailBlock:^(id failResult) {
                 [MBProgressHUD showError:ZYLocalizedString(@"add_spot_fail")];
             }];
@@ -195,9 +207,9 @@
             [ZYZCHTTPTool getHttpDataByURL:wantGoUrl withSuccessGetBlock:^(id result, BOOL isSuccess) {
                 [MBProgressHUD showSuccess:ZYLocalizedString(@"del_spot_success")];
                 //改文字
-                [self.sureButton setTitle:@"想去" forState:UIControlStateNormal];
+//                [self.sureButton setTitle:@"想去" forState:UIControlStateNormal];
                 
-                _isWantGo = !_isWantGo;
+                self.isWantGo = NO;
             } andFailBlock:^(id failResult) {
                 [MBProgressHUD showError:ZYLocalizedString(@"del_spot_fail")];
             }];

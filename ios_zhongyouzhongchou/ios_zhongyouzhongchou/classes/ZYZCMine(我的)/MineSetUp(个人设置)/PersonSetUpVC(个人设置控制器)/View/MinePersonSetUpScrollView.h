@@ -34,7 +34,7 @@
 /**
  *  星座点击选择框
  */
-@property (nonatomic, weak) UITextField *constellationButton;
+@property (nonatomic, weak) UILabel *constellationButton;
 
 
 

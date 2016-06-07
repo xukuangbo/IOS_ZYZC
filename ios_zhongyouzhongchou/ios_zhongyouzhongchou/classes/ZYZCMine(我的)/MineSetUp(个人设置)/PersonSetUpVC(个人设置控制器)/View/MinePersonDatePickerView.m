@@ -9,7 +9,7 @@
 #import "MinePersonDatePickerView.h"
 @interface MinePersonDatePickerView()
 @property (nonatomic, weak) UIView *mapView;
-@property (nonatomic, copy) NSString *dateString;
+@property (nonatomic, strong) NSDate *birthDayDate;
 @end
 @implementation MinePersonDatePickerView
 
@@ -19,7 +19,7 @@
     if (self) {
         //弹出生日view
         self.backgroundColor = [UIColor clearColor];
-        
+        self.birthDayDate = [[NSDate alloc] init];
 //        CGFloat mapViewX = 0;
 //        CGFloat mapViewW = KSCREEN_W - mapViewX * 2;
 //        CGFloat mapViewH = 270 * KCOFFICIEMNT;
@@ -78,14 +78,26 @@
 
 - (void)datePickerValueChanged:(UIDatePicker *)sender
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    self.dateString = [formatter stringFromDate:sender.date];
+    _birthDayDate = sender.date;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"yyyy-MM-dd"];
+//    self.dateString = [formatter stringFromDate:sender.date];
+//    
+//    
+////    NSDate * senddate = [NSDate date];
+//    NSCalendar * cal = [NSCalendar currentCalendar];
+//    
+//    NSUInteger unitFlags = NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+//    NSDateComponents * component = [cal components:unitFlags fromDate:sender.date];
+////    NSInteger year = [component year];
+//    NSInteger month = [component month];
+//    NSInteger day = [component day];
+    
 }
 
 - (void)sureBtnAction
 {
-    self.sureBlock(self.dateString);
+    self.sureBlock(self.birthDayDate);
     
     [self removeFromSuperview];
 }

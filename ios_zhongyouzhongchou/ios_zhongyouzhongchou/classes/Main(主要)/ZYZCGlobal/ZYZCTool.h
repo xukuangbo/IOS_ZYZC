@@ -92,5 +92,13 @@
  */
 + (void)cleanZCDraftFile;
 
-
+/**
+ *  根据生日计算星座
+ *
+ *  @param month 月份
+ *  @param day   日期
+ *
+ *  @return 星座名称
+ */
++(NSString *)calculateConstellationWithMonth:(NSInteger)month day:(NSInteger)day;
 @end

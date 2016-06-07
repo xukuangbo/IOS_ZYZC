@@ -93,7 +93,6 @@
  */
 - (void)reloadUIData:(id)result
 {
-
     NSDictionary *dic = (NSDictionary *)result;
     NSDictionary *data = dic[@"data"];
     

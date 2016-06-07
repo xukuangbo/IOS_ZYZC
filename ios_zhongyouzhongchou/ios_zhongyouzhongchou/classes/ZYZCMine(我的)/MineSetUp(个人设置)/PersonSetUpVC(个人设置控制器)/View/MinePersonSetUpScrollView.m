@@ -16,21 +16,21 @@
 @property (nonatomic, strong) UIImageView *secondBg;
 @property (nonatomic, strong) UIImageView *thirdBg;
 @property (nonatomic, strong) UIImageView *fourthBg;
-@property (nonatomic, strong) UIImageView *fifthBg;
 @end
 @implementation MinePersonSetUpScrollView
-
+#pragma mark - system方法
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         [self createUI];
         
-        
     }
     return self;
 }
 
+
+#pragma mark - setUI方法
 - (void)createUI
 {
     //头视图
@@ -42,14 +42,14 @@
     //第一个表格
     [self createFirstUI];
     
-    [self createSecondUI];
+//    [self createSecondUI];
     
     [self createThirdUI];
     
     [self createFourthUI];
     
     [self createFifthUI];
-    self.contentSize = CGSizeMake(KSCREEN_W, self.fifthBg.bottom + KEDGE_DISTANCE);
+    self.contentSize = CGSizeMake(KSCREEN_W, self.fourthBg.bottom + KEDGE_DISTANCE);
     NSLog(@"%@",NSStringFromCGSize(self.contentSize));
 }
 /**
@@ -75,6 +75,7 @@
     nameTitleLabel.text = @"姓名";
     
     UITextField *titleView = [[UITextField alloc] init];
+    titleView.placeholder = @"请输入姓名";
     titleView.clearsOnBeginEditing = YES;
     titleView.delegate = self;
     self.nameTextField = titleView;
@@ -90,7 +91,7 @@
     UIButton *sexButton = [[UIButton alloc] init];
     sexButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [sexButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
-    sexButton.userInteractionEnabled = NO;
+    [sexButton addTarget:self action:@selector(sexButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     self.sexButton = sexButton;
     [self createUIWithSuperView:self.firstBg titleLabel:sexLabel titleView:sexButton];
     
@@ -115,12 +116,9 @@
     CGFloat constellationLabelH = SetUpFirstCellLabelHeight;
     UILabel *constellationLabel = [[UILabel alloc] initWithFrame:CGRectMake(constellationLabelX, constellationLabelY, constellationLabelW, constellationLabelH)];
     constellationLabel.text = @"星座";
-    UITextField *constellationButton = [[UITextField alloc] init];
+    UILabel *constellationButton = [[UILabel alloc] init];
     constellationButton.textColor = [UIColor ZYZC_TextGrayColor];
-    constellationButton.placeholder = @"请输入星座";
-    constellationButton.delegate = self;
-    [constellationButton setValue:[UIColor ZYZC_TextGrayColor] forKeyPath:@"_placeholderLabel.textColor"];//设置占位字的颜色
-    constellationButton.delegate = self;
+    constellationButton.text = @"请输入星座";
     self.constellationButton = constellationButton;
     [self createUIWithSuperView:self.firstBg titleLabel:constellationLabel titleView:constellationButton];
     
@@ -129,10 +127,11 @@
     self.firstBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     self.firstBg.height = (SetUpFirstCellLabelHeight * 4 + KEDGE_DISTANCE * 2);
 }
+
 /**
  *  第二个cell
  */
-- (void)createSecondUI
+- (void)createThirdUI
 {
     //背景白图
     CGFloat bgImageViewX = KEDGE_DISTANCE;
@@ -142,37 +141,6 @@
     self.secondBg = [[UIImageView alloc] initWithFrame:CGRectMake(bgImageViewX, bgImageViewY, bgImageViewW, bgImageViewH)];
     self.secondBg.userInteractionEnabled = YES;
     [self addSubview:self.secondBg];
-    
-    //兴趣标题
-    CGFloat likeLabelX = KEDGE_DISTANCE;
-    CGFloat likeLabelY = KEDGE_DISTANCE;
-    CGFloat likeLabelW = (bgImageViewW - likeLabelX * 2) * 0.3;
-    CGFloat likeLabelH = SetUpFirstCellLabelHeight;
-    UILabel *likeLabel = [[UILabel alloc] initWithFrame:CGRectMake(likeLabelX, likeLabelY, likeLabelW, likeLabelH)];
-    likeLabel.text = @"兴趣标签";
-    UIButton *likeButton = [[UIButton alloc] init];
-    [likeButton addTarget:self action:@selector(likeButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    self.likeButton = likeButton;
-    [self createUIWithSuperView:self.secondBg titleLabel:likeLabel titleView:likeButton];
-    
-    self.secondBg.layer.cornerRadius = 5;
-    self.secondBg.layer.masksToBounds = YES;
-    self.secondBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
-    self.secondBg.height = (SetUpFirstCellLabelHeight * 1 + KEDGE_DISTANCE * 2);
-}
-/**
- *  第三个cell
- */
-- (void)createThirdUI
-{
-    //背景白图
-    CGFloat bgImageViewX = KEDGE_DISTANCE;
-    CGFloat bgImageViewY = self.secondBg.bottom + KEDGE_DISTANCE;
-    CGFloat bgImageViewW = KSCREEN_W - 2 * bgImageViewX;
-    CGFloat bgImageViewH = 0;
-    self.thirdBg = [[UIImageView alloc] initWithFrame:CGRectMake(bgImageViewX, bgImageViewY, bgImageViewW, bgImageViewH)];
-    self.thirdBg.userInteractionEnabled = YES;
-    [self addSubview:self.thirdBg];
     
     //感情状况标题
     CGFloat marryLabelX = KEDGE_DISTANCE;
@@ -185,7 +153,7 @@
     UIButton *marryButton = [[UIButton alloc] init];
     marryButton.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.marryButton = marryButton;
-    [self createUIWithSuperView:self.thirdBg titleLabel:marryLabel titleView:marryButton];
+    [self createUIWithSuperView:self.secondBg titleLabel:marryLabel titleView:marryButton];
     
     //身高标题
     CGFloat heightLabelX = KEDGE_DISTANCE;
@@ -196,7 +164,7 @@
     heightLabel.text = @"身高";
     UITextField *heightButton = [[UITextField alloc] init];
     self.heightButton = heightButton;
-    [self createUIWithSuperView:self.thirdBg titleLabel:heightLabel titleView:heightButton];
+    [self createUIWithSuperView:self.secondBg titleLabel:heightLabel titleView:heightButton];
 
     //体重标题
     CGFloat weightLabelX = KEDGE_DISTANCE;
@@ -207,12 +175,12 @@
     weightLabel.text = @"体重";
     UITextField *weightButton = [[UITextField alloc] init];
     self.weightButton = weightButton;
-    [self createUIWithSuperView:self.thirdBg titleLabel:weightLabel titleView:weightButton];
+    [self createUIWithSuperView:self.secondBg titleLabel:weightLabel titleView:weightButton];
     
-    self.thirdBg.layer.cornerRadius = 5;
-    self.thirdBg.layer.masksToBounds = YES;
-    self.thirdBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
-    self.thirdBg.height = (SetUpFirstCellLabelHeight * 3 + KEDGE_DISTANCE * 2);
+    self.secondBg.layer.cornerRadius = 5;
+    self.secondBg.layer.masksToBounds = YES;
+    self.secondBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
+    self.secondBg.height = (SetUpFirstCellLabelHeight * 3 + KEDGE_DISTANCE * 2);
 }
 /**
  *  第四个cell
@@ -221,12 +189,12 @@
 {
     //背景白图
     CGFloat bgImageViewX = KEDGE_DISTANCE;
-    CGFloat bgImageViewY = self.thirdBg.bottom + KEDGE_DISTANCE;
+    CGFloat bgImageViewY = self.secondBg.bottom + KEDGE_DISTANCE;
     CGFloat bgImageViewW = KSCREEN_W - 2 * bgImageViewX;
     CGFloat bgImageViewH = 0;
-    self.fourthBg = [[UIImageView alloc] initWithFrame:CGRectMake(bgImageViewX, bgImageViewY, bgImageViewW, bgImageViewH)];
-    self.fourthBg.userInteractionEnabled = YES;
-    [self addSubview:self.fourthBg];
+    self.thirdBg = [[UIImageView alloc] initWithFrame:CGRectMake(bgImageViewX, bgImageViewY, bgImageViewW, bgImageViewH)];
+    self.thirdBg.userInteractionEnabled = YES;
+    [self addSubview:self.thirdBg];
     
     //公司标题
     CGFloat companyLabelX = KEDGE_DISTANCE;
@@ -240,7 +208,7 @@
     companyButton.clearsOnBeginEditing = YES;
     companyButton.delegate = self;
     self.companyButton = companyButton;
-    [self createUIWithSuperView:self.fourthBg titleLabel:companyLabel titleView:companyButton];
+    [self createUIWithSuperView:self.thirdBg titleLabel:companyLabel titleView:companyButton];
     //工作
     CGFloat jobLabelX = KEDGE_DISTANCE;
     CGFloat jobLabelY = companyButton.bottom;
@@ -253,7 +221,7 @@
     jobButton.clearsOnBeginEditing = YES;
     jobButton.delegate = self;
     self.jobButton = jobButton;
-    [self createUIWithSuperView:self.fourthBg titleLabel:jobLabel titleView:jobButton];
+    [self createUIWithSuperView:self.thirdBg titleLabel:jobLabel titleView:jobButton];
     
     //学校标题
     CGFloat schoolLabelX = KEDGE_DISTANCE;
@@ -266,8 +234,7 @@
     schoolButton.clearsOnBeginEditing = YES;
     schoolButton.delegate = self;
     self.schoolButton = schoolButton;
-    [self createUIWithSuperView:self.fourthBg titleLabel:schoolLabel titleView:schoolButton];
-    
+    [self createUIWithSuperView:self.thirdBg titleLabel:schoolLabel titleView:schoolButton];
     
     //所在地标题
     CGFloat locationLabelX = KEDGE_DISTANCE;
@@ -278,12 +245,12 @@
     locationLabel.text = @"所在地";
     UITextField *locationButton = [[UITextField alloc] init];
     self.locationButton = locationButton;
-    [self createUIWithSuperView:self.fourthBg titleLabel:locationLabel titleView:locationButton];
+    [self createUIWithSuperView:self.thirdBg titleLabel:locationLabel titleView:locationButton];
     
-    self.fourthBg.layer.cornerRadius = 5;
-    self.fourthBg.layer.masksToBounds = YES;
-    self.fourthBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
-    self.fourthBg.height = (SetUpFirstCellLabelHeight * 4 + KEDGE_DISTANCE * 2);
+    self.thirdBg.layer.cornerRadius = 5;
+    self.thirdBg.layer.masksToBounds = YES;
+    self.thirdBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
+    self.thirdBg.height = (SetUpFirstCellLabelHeight * 4 + KEDGE_DISTANCE * 2);
 }
 /**
  *  第五个cell
@@ -292,12 +259,12 @@
 {
     //背景白图
     CGFloat bgImageViewX = KEDGE_DISTANCE;
-    CGFloat bgImageViewY = self.fourthBg.bottom + KEDGE_DISTANCE;
+    CGFloat bgImageViewY = self.thirdBg.bottom + KEDGE_DISTANCE;
     CGFloat bgImageViewW = KSCREEN_W - 2 * bgImageViewX;
     CGFloat bgImageViewH = 0;
-    self.fifthBg = [[UIImageView alloc] initWithFrame:CGRectMake(bgImageViewX, bgImageViewY, bgImageViewW, bgImageViewH)];
-    self.fifthBg.userInteractionEnabled = YES;
-    [self addSubview:self.fifthBg];
+    self.fourthBg = [[UIImageView alloc] initWithFrame:CGRectMake(bgImageViewX, bgImageViewY, bgImageViewW, bgImageViewH)];
+    self.fourthBg.userInteractionEnabled = YES;
+    [self addSubview:self.fourthBg];
     
     //邮箱标题
     CGFloat emailX = KEDGE_DISTANCE;
@@ -311,14 +278,14 @@
     emailButton.clearsOnBeginEditing = YES;
     emailButton.delegate = self;
     self.emailButton = emailButton;
-    [self createUIWithSuperView:self.fifthBg titleLabel:emailLabel titleView:emailButton];
+    [self createUIWithSuperView:self.fourthBg titleLabel:emailLabel titleView:emailButton];
     
     
     
-    self.fifthBg.layer.cornerRadius = 5;
-    self.fifthBg.layer.masksToBounds = YES;
-    self.fifthBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
-    self.fifthBg.height = (SetUpFirstCellLabelHeight * 1 + KEDGE_DISTANCE * 2);
+    self.fourthBg.layer.cornerRadius = 5;
+    self.fourthBg.layer.masksToBounds = YES;
+    self.fourthBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
+    self.fourthBg.height = (SetUpFirstCellLabelHeight * 1 + KEDGE_DISTANCE * 2);
 }
 
 - (void)createUIWithSuperView:(UIView *)superView titleLabel:(UILabel *)titleLabel titleView:(UIView *)titleView
@@ -336,6 +303,7 @@
     [superView addSubview:titleView];
 }
 
+#pragma mark - button点击方法
 - (void)birthButtonAction:(UIButton *)birthButton
 {
     [self.nameTextField endEditing:YES];
@@ -346,8 +314,21 @@
     MinePersonDatePickerView *datePickerView = [[MinePersonDatePickerView alloc] initWithFrame:self.bounds];
 
     __weak typeof(&*self) weakSelf = self;
-    datePickerView.sureBlock = ^(NSString *dateString){
+    datePickerView.sureBlock = ^(NSDate *birthdayDate){
+        //转成字符串
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *dateString = [formatter stringFromDate:birthdayDate];
         [weakSelf.birthButton setTitle:dateString forState:UIControlStateNormal];
+        //转成星座
+        NSCalendar * cal = [NSCalendar currentCalendar];
+    
+        NSUInteger unitFlags = NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+        NSDateComponents * component = [cal components:unitFlags fromDate:birthdayDate];
+    //    NSInteger year = [component year];
+        NSInteger month = [component month];
+        NSInteger day = [component day];
+        weakSelf.constellationButton.text = [ZYZCTool calculateConstellationWithMonth:month day:day];
     };
     
     [self addSubview:datePickerView];
@@ -362,6 +343,34 @@
     [self.viewController.navigationController pushViewController:likeController animated:YES];
 }
 
+
+- (void)sexButtonAction:(UIButton *)button
+{
+    //弹出性别选择
+    __weak typeof(&*self) weakSelf = self;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *manAction = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [weakSelf.sexButton setTitle:@"男" forState:UIControlStateNormal];
+    }];
+    UIAlertAction *girlAction = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [weakSelf.sexButton setTitle:@"女" forState:UIControlStateNormal];
+    }];
+    UIAlertAction *unknownAction = [UIAlertAction actionWithTitle:@"保密" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [weakSelf.sexButton setTitle:@"保密" forState:UIControlStateNormal];
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:manAction];
+    [alertController addAction:girlAction];
+    [alertController addAction:unknownAction];
+    
+    [self.viewController presentViewController:alertController animated:YES completion:nil];
+}
+#pragma mark - set方法
 /**
  *  刷新数据
  */
@@ -396,4 +405,11 @@
     [textField endEditing:YES];
     return YES;
 }
+
+#pragma mark - requsetData方法
+
+
+
+#pragma mark - delegate方法
+
 @end
