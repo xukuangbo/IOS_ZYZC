@@ -32,8 +32,8 @@
 -(void)getCustomItems
 {
     
-    NSArray *titleArray = @[@"攻略",@"众筹",@"商城",@"我的"];
-    NSArray *imageArray = @[@"tab_one_gl",@"tab_two_zc",@"tab_thr_sc",@"tab_fou_min"];
+    NSArray *titleArray = @[@"攻略",@"众筹",@"直播",@"我的"];
+    NSArray *imageArray = @[@"tab_one_gl",@"tab_two_zc",@"tab_zhibo",@"tab_fou_min"];
     for (int i=0; i<4; i++){
         UINavigationController *navi = self.viewControllers[i];
         navi.tabBarItem = [[UITabBarItem alloc] initWithTitle:titleArray[i] image:[[UIImage imageNamed:imageArray[i]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:[NSString stringWithFormat:@"%@_pre",imageArray[i]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];

@@ -153,7 +153,7 @@
 -(void)saveViewSpot
 {
     ZYZCDataBase *dbManager=[ZYZCDataBase sharedDBManager];
-    [dbManager saveDataWithFinishBlock:nil];
+    [dbManager createTables];
 }
 
 /**

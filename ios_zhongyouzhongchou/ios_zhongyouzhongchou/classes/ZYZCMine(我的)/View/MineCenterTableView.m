@@ -18,7 +18,7 @@
 #import "ZYZCAccountTool.h"
 #import "ZYZCAccountModel.h"
 #import "MBProgressHUD+MJ.h"
-
+#import "ZYZCMineVIewController.h"
 @interface MineCenterTableView()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSArray *titleArray;
@@ -119,6 +119,11 @@
         {
             MyUserFollowedVC *myUserFollowedVC = [[MyUserFollowedVC alloc] init];
             [self.viewController.navigationController pushViewController:myUserFollowedVC animated:YES];
+        }
+        else if(indexPath.row == 5)
+        {
+            ZYZCMineVIewController *vc=[[ZYZCMineVIewController alloc]init];
+            [self.viewController.navigationController pushViewController:vc animated:YES];
         }
     }
     
