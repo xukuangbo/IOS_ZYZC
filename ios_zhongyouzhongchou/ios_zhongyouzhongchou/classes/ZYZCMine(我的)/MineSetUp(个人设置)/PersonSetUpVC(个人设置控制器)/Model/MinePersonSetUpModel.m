@@ -11,11 +11,4 @@
 @implementation MinePersonSetUpModel
 
 
-//+ (NSDictionary *)mj_objectClassInArray
-//{
-//    return @{
-//             @"mgViews" : [TacticSingleModel class],
-//             @"foods" : [TacticSingleFoodModel class]
-//             };
-//}
 @end

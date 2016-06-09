@@ -18,7 +18,7 @@
         FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.bounds];
         blurView.tintColor = [UIColor colorWithRed:35 / 256.0 green:382 / 256.0 blue:183 / 256.0 alpha:1];  //前景颜色
         blurView.blurRadius = 100;                 //模糊半径
-        blurView.dynamic = NO;                     //动态改变模糊效果
+        blurView.dynamic = YES;                     //动态改变模糊效果
         [self addSubview:blurView];
         
         UIView *mapView = [[UIView alloc] init];

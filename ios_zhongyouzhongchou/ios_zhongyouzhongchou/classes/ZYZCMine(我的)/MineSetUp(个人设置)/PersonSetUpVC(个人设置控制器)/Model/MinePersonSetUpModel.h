@@ -26,8 +26,7 @@
 @property (nonatomic, copy) NSString *district;
 //faceImg: "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0",
 @property (nonatomic, copy) NSString *faceImg;
-//height: 170,
-@property (nonatomic, assign) CGFloat height;
+
 //maritalStatus: "0",
 @property (nonatomic, copy) NSString *maritalStatus;
 //openid: "o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
@@ -55,7 +54,11 @@
 //userName: "Band",
 @property (nonatomic, copy) NSString *userName;
 //weight: 50
-@property (nonatomic, assign) CGFloat weight;
+@property (nonatomic, assign) int weight;
+//height: 170,
+@property (nonatomic, assign) int height;
+
+@property (nonatomic, copy) NSString *mail;
 
 @property (nonatomic, strong) MinePersonAddressModel *userbyaddress;
 //}

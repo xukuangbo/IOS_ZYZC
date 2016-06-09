@@ -256,7 +256,6 @@
             //有微信的数据后可以向我们的服务器发送注册信息
             [self regisPersonalMessageWith:weakAccount];
             
-            
         } andFailBlock:^(id failResult) {
             NSLog(@"%@",failResult);
         }];
@@ -294,9 +293,9 @@
     __weak typeof(&*self) weakSelf = self;
     [ZYZCHTTPTool postHttpDataWithEncrypt:NO andURL:@"http://121.40.225.119:8080/register/saveWeixinInfo.action" andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
-            ZYZCAccountModel *model = [ZYZCAccountTool account];
-            model.userId = result[@"data"][@"userId"];
-            [ZYZCAccountTool saveAccount:model];
+//            ZYZCAccountModel *model = [ZYZCAccountTool account];
+            weakAccount.userId = result[@"data"][@"userId"];
+            [ZYZCAccountTool saveAccount:weakAccount];
             [NSThread sleepForTimeInterval:2];
             [MBProgressHUD hideHUD];
             [MBProgressHUD showSuccess:@"注册成功"];

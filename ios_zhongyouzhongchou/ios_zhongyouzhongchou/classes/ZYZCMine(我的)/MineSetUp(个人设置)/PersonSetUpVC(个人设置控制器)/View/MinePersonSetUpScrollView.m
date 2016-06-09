@@ -9,13 +9,17 @@
 #import "MinePersonSetUpHeadView.h"
 #import "MinePersonSetUpModel.h"
 #import "MinePersonDatePickerView.h"
-#import "MinePersonSetUpLikeController.h"
+#import "ZYZCAccountTool.h"
+#import "ZYZCAccountModel.h"
+#import "MBProgressHUD+MJ.h"
+#import "STPickerArea.h"
 #define SetUpFirstCellLabelHeight 34
-@interface MinePersonSetUpScrollView()<UITextFieldDelegate>
+@interface MinePersonSetUpScrollView()<UITextFieldDelegate,STPickerAreaDelegate>
 @property (nonatomic, strong) UIImageView *firstBg;
 @property (nonatomic, strong) UIImageView *secondBg;
 @property (nonatomic, strong) UIImageView *thirdBg;
 @property (nonatomic, strong) UIImageView *fourthBg;
+@property (nonatomic, weak) UIButton *saveButton;
 @end
 @implementation MinePersonSetUpScrollView
 #pragma mark - system方法
@@ -25,6 +29,7 @@
     if (self) {
         [self createUI];
         
+//        [self requestData];
     }
     return self;
 }
@@ -42,15 +47,17 @@
     //第一个表格
     [self createFirstUI];
     
-//    [self createSecondUI];
+    [self createSecondUI];
     
     [self createThirdUI];
     
     [self createFourthUI];
     
-    [self createFifthUI];
-    self.contentSize = CGSizeMake(KSCREEN_W, self.fourthBg.bottom + KEDGE_DISTANCE);
+    [self createSaveButton];
+    
+    self.contentSize = CGSizeMake(KSCREEN_W, self.saveButton.bottom + KEDGE_DISTANCE);
     NSLog(@"%@",NSStringFromCGSize(self.contentSize));
+    
 }
 /**
  *  第一个cell
@@ -72,7 +79,7 @@
     CGFloat nameTitleW = (bgImageViewW - nameTitleX * 2) * 0.3;
     CGFloat nameTitleH = SetUpFirstCellLabelHeight;
     UILabel *nameTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameTitleX, nameTitleY, nameTitleW, nameTitleH)];
-    nameTitleLabel.text = @"姓名";
+    nameTitleLabel.text = @"昵称";
     
     UITextField *titleView = [[UITextField alloc] init];
     titleView.placeholder = @"请输入姓名";
@@ -131,7 +138,7 @@
 /**
  *  第二个cell
  */
-- (void)createThirdUI
+- (void)createSecondUI
 {
     //背景白图
     CGFloat bgImageViewX = KEDGE_DISTANCE;
@@ -191,9 +198,9 @@
     self.secondBg.height = (SetUpFirstCellLabelHeight * 3 + KEDGE_DISTANCE * 2);
 }
 /**
- *  第四个cell
+ *  第三个cell
  */
-- (void)createFourthUI
+- (void)createThirdUI
 {
     //背景白图
     CGFloat bgImageViewX = KEDGE_DISTANCE;
@@ -252,6 +259,8 @@
     UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(locationLabelX, locationLabelY, locationLabelW, locationLabelH)];
     locationLabel.text = @"所在地";
     UITextField *locationButton = [[UITextField alloc] init];
+    locationButton.delegate = self;
+    locationButton.placeholder = @"请选择所在地";
     self.locationButton = locationButton;
     [self createUIWithSuperView:self.thirdBg titleLabel:locationLabel titleView:locationButton];
     
@@ -261,9 +270,9 @@
     self.thirdBg.height = (SetUpFirstCellLabelHeight * 4 + KEDGE_DISTANCE * 2);
 }
 /**
- *  第五个cell
+ *  第四个cell
  */
-- (void)createFifthUI
+- (void)createFourthUI
 {
     //背景白图
     CGFloat bgImageViewX = KEDGE_DISTANCE;
@@ -296,6 +305,29 @@
     self.fourthBg.height = (SetUpFirstCellLabelHeight * 1 + KEDGE_DISTANCE * 2);
 }
 
+- (void)createSaveButton
+{
+    //保存按钮
+    CGFloat saveButtonX = KEDGE_DISTANCE;
+    CGFloat saveButtonY = self.fourthBg.bottom + KEDGE_DISTANCE;
+    CGFloat saveButtonW = KSCREEN_W - 2 * saveButtonX;
+    CGFloat saveButtonH = SetUpFirstCellLabelHeight *2;
+    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    saveButton.frame = CGRectMake(saveButtonX, saveButtonY, saveButtonW, saveButtonH);
+    saveButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    saveButton.top = saveButtonY;
+    saveButton.layer.cornerRadius = 5;
+    saveButton.layer.masksToBounds = YES;
+    saveButton.titleLabel.textColor = [UIColor whiteColor];
+    saveButton.backgroundColor = [UIColor ZYZC_MainColor];
+    [saveButton addTarget:self action:@selector(saveButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [saveButton setTitle:@"保存" forState:UIControlStateNormal];
+    
+    [self addSubview:saveButton];
+    self.saveButton = saveButton;
+
+}
+
 - (void)createUIWithSuperView:(UIView *)superView titleLabel:(UILabel *)titleLabel titleView:(UIView *)titleView
 {
     //标题
@@ -314,10 +346,7 @@
 #pragma mark - button点击方法
 - (void)birthButtonAction:(UIButton *)birthButton
 {
-    [self.nameTextField endEditing:YES];
-    [self.constellationButton endEditing:YES];
-    [self.heightButton endEditing:YES];
-    [self.weightButton endEditing:YES];
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
     
     MinePersonDatePickerView *datePickerView = [[MinePersonDatePickerView alloc] initWithFrame:self.bounds];
 
@@ -342,18 +371,9 @@
     [self addSubview:datePickerView];
 }
 
-/**
- *  兴趣标签
- */
-- (void)likeButtonAction
-{
-    MinePersonSetUpLikeController *likeController = [[MinePersonSetUpLikeController alloc] init];
-    [self.viewController.navigationController pushViewController:likeController animated:YES];
-}
-
-
 - (void)sexButtonAction:(UIButton *)button
 {
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
     //弹出性别选择
     __weak typeof(&*self) weakSelf = self;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -381,6 +401,8 @@
 
 - (void)marryButtonAction:(UIButton *)button
 {
+    
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
     //弹出性别选择
     __weak typeof(&*self) weakSelf = self;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -405,6 +427,84 @@
 
     [self.viewController presentViewController:alertController animated:YES completion:nil];
 }
+
+- (void)saveButtonAction:(UIButton *)button
+{
+    ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
+    if (accountModel) {
+        NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+        [parameter setValue:accountModel.openid forKey:@"openid"];
+        if (_nameTextField.text.length > 0) {
+            [parameter setValue:_nameTextField.text forKey:@"realName"];
+        }
+        if (_sexButton.titleLabel.text.length > 0) {
+            if([_sexButton.titleLabel.text isEqualToString:@"男"]){
+                [parameter setValue:[NSNumber numberWithInt:1]  forKey:@"sex"];
+            }else if([_sexButton.titleLabel.text isEqualToString:@"女"]){
+                [parameter setValue:[NSNumber numberWithInt:2]  forKey:@"sex"];
+            }else{
+                [parameter setValue:[NSNumber numberWithInt:0]  forKey:@"sex"];
+            }
+        
+        }
+        if (_birthButton.titleLabel.text.length > 0) {
+            [parameter setValue:_birthButton.titleLabel.text forKey:@"birthday"];
+        }
+        if (_heightButton.text.length > 0) {
+            [parameter setValue:_heightButton.text forKey:@"height"];
+        }
+        if (_weightButton.text.length > 0) {
+            [parameter setValue:_weightButton.text forKey:@"weight"];
+        }
+        if (_constellationButton.text.length > 0) {
+            [parameter setValue:_constellationButton.text forKey:@"constellation"];
+        }
+        if (_marryButton.text.length > 0) {
+            if([_marryButton.text isEqualToString:@"未婚"]){
+                [parameter setValue:[NSNumber numberWithInt:0] forKey:@"maritalStatus"];
+            }else if([_sexButton.titleLabel.text isEqualToString:@"恋爱中"]){
+                [parameter setValue:[NSNumber numberWithInt:1]  forKey:@"maritalStatus"];
+            }else{
+                [parameter setValue:[NSNumber numberWithInt:2]  forKey:@"maritalStatus"];
+            }
+        }
+        if (_emailButton.text.length > 0) {
+            [parameter setValue:_emailButton.text forKey:@"mail"];
+        }
+        if (_companyButton.text.length > 0) {
+            [parameter setValue:_companyButton.text forKey:@"company"];
+        }
+        if (_jobButton.text.length > 0) {
+            [parameter setValue:_jobButton.text forKey:@"title"];
+        }
+        if (_schoolButton.text.length > 0) {
+            [parameter setValue:_schoolButton.text forKey:@"school"];
+        }
+        if (_locationButton.text.length > 0) {
+            [parameter setValue:_locationButton.text forKey:@"province"];
+        }
+        if (_locationButton.text.length > 0) {
+            [parameter setValue:_locationButton.text forKey:@"city"];
+        }
+        if (_locationButton.text.length > 0) {
+            [parameter setValue:_locationButton.text forKey:@"district"];
+        }
+        NSLog(@"%@",Regist_UpdateUserInfo);
+        [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:Regist_UpdateUserInfo andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {
+            [MBProgressHUD showSuccess:@"保存成功"];
+            [MBProgressHUD setAnimationDelay:2];
+            [self.viewController.navigationController popViewControllerAnimated:YES];
+        } andFailBlock:^(id failResult) {
+            [MBProgressHUD showError:@"保存失败"];
+            [MBProgressHUD setAnimationDelay:2];
+            NSLog(@"%@",failResult);
+        }];
+
+    }
+   
+    
+}
+
 #pragma mark - set方法
 /**
  *  刷新数据
@@ -413,28 +513,77 @@
 {
     //头视图
     NSString *faceImg = minePersonSetUpModel.faceImg;
-    [self.headView.iconView sd_setImageWithURL:[NSURL URLWithString:faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:(SDWebImageRetryFailed | SDWebImageLowPriority)];
-    
-    self.headView.nameLabel.text = minePersonSetUpModel.userName;
-    
-    [self.headView sd_setImageWithURL:[NSURL URLWithString:faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:(SDWebImageRetryFailed | SDWebImageLowPriority)];
-    
-    //姓名
-    self.nameTextField.text = minePersonSetUpModel.userName? minePersonSetUpModel.userName : nil;
-    //性别
-    NSString *sexText = minePersonSetUpModel.sex? minePersonSetUpModel.sex : @"请输入性别";
-    [self.sexButton setTitle:sexText forState:UIControlStateNormal];
-    //生日
-    NSString *birthText = minePersonSetUpModel.birthday? minePersonSetUpModel.birthday : @"请输入生日";
-    [self.birthButton setTitle:birthText forState:UIControlStateNormal];
-    //星座
-    NSString *constellationText = minePersonSetUpModel.constellation? minePersonSetUpModel.constellation : nil;
-    self.constellationButton.text = constellationText;
-    //兴趣标签
-    
+    if (minePersonSetUpModel.faceImg.length > 0) {
+        [self.headView.iconView sd_setImageWithURL:[NSURL URLWithString:faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:(SDWebImageRetryFailed | SDWebImageLowPriority)];
+    }
+    if (minePersonSetUpModel.userName.length > 0) {
+        self.headView.nameLabel.text = minePersonSetUpModel.userName;
+    }
+    if (minePersonSetUpModel.realName.length > 0) {
+        self.nameTextField.text = minePersonSetUpModel.realName;
+    }
+    if (minePersonSetUpModel.sex > 0) {
+        if ([minePersonSetUpModel.sex intValue] == 0) {
+            [self.sexButton setTitle:@"保密" forState:UIControlStateNormal];
+        }else if ([minePersonSetUpModel.sex intValue] == 1){
+            [self.sexButton setTitle:@"男" forState:UIControlStateNormal];
+        }else{
+            [self.sexButton setTitle:@"女" forState:UIControlStateNormal];
+        }
+    }
+    if(minePersonSetUpModel.birthday.length > 0){
+        [_birthButton setTitle:minePersonSetUpModel.birthday forState:UIControlStateNormal];
+    }
+    if (minePersonSetUpModel.constellation.length > 0) {
+        _constellationButton.text = minePersonSetUpModel.constellation;
+    }
+    if (minePersonSetUpModel.maritalStatus.length > 0) {
+        if ([minePersonSetUpModel.maritalStatus intValue] == 0) {
+            self.marryButton.text = @"单身";
+        }else if ([minePersonSetUpModel.sex intValue] == 1){
+            self.marryButton.text = @"恋爱中";
+        }else{
+            self.marryButton.text = @"已婚";
+        }
+    }
+    if (minePersonSetUpModel.height > 0) {
+        _heightButton.text = [NSString stringWithFormat:@"%d",minePersonSetUpModel.height];
+    }
+    if (minePersonSetUpModel.weight > 0) {
+        _weightButton.text = [NSString stringWithFormat:@"%d",minePersonSetUpModel.weight] ;
+    }
+    if (minePersonSetUpModel.company.length > 0) {
+        _companyButton.text = minePersonSetUpModel.company;
+    }
+    if (minePersonSetUpModel.title.length > 0) {
+        _jobButton.text = minePersonSetUpModel.title;
+    }
+    if (minePersonSetUpModel.school.length > 0) {
+        _schoolButton.text = minePersonSetUpModel.school;
+    }
+    if (minePersonSetUpModel.province.length > 0) {
+        [_proviceButton setTitle:minePersonSetUpModel.province forState:UIControlStateNormal];
+    }
+    if (minePersonSetUpModel.mail.length > 0) {
+        _emailButton.text = minePersonSetUpModel.mail;
+    }
+
 }
 
 #pragma mark - UITextfieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField == _locationButton) {
+        [_locationButton resignFirstResponder];
+        
+        
+        STPickerArea *pickerArea = [[STPickerArea alloc]init];
+        [pickerArea setDelegate:self];
+        [pickerArea setContentMode:STPickerContentModeBottom];
+        [pickerArea show];
+        
+    }
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField endEditing:YES];
@@ -442,9 +591,31 @@
 }
 
 #pragma mark - requsetData方法
-
+//- (void)requestData
+//{
+//    ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
+//    NSString *url = Get_SelfInfo(accountModel.openid, [accountModel.userId intValue]);
+////    NSString *url = @"";
+//    NSLog(@"%@",url);
+//    //访问网络
+//    __weak typeof(&*self) weakSelf = self;
+//    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+//        if (isSuccess) {
+//            //请求成功，转化为数组
+////            weakSelf.mineWantGoModelArray = [MineWantGoModel mj_objectArrayWithKeyValuesArray:result[@"data"]];
+////            [weakSelf.collectionView reloadData];
+//        }
+//    } andFailBlock:^(id failResult) {
+//        NSLog(@"%@",failResult);
+//    }];
+//}
 
 
 #pragma mark - delegate方法
+- (void)pickerArea:(STPickerArea *)pickerArea province:(NSString *)province city:(NSString *)city area:(NSString *)area
+{
+    NSString *text = [NSString stringWithFormat:@"%@ %@ %@", province, city, area];
+    _locationButton.text = text;
+}
 
 @end

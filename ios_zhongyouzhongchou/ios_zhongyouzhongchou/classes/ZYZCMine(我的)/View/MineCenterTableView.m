@@ -19,6 +19,7 @@
 #import "ZYZCAccountModel.h"
 #import "MBProgressHUD+MJ.h"
 #import "ZYZCMineVIewController.h"
+#import "MineWalletVc.h"
 @interface MineCenterTableView()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, strong) NSArray *titleArray;
@@ -97,7 +98,10 @@
     if (!accountModel) {
         [MBProgressHUD showError:ZYLocalizedString(@"login_action")];
     }else{
-        if (indexPath.row == 1) {
+        if (indexPath.row == 0) {
+            NSLog(@"我的钱包!!!!!");
+            [self.viewController.navigationController pushViewController:[[MineWalletVc alloc] init] animated:YES];
+        }else if (indexPath.row == 1) {
             NSLog(@"消息点击了!!!!!");
             
             //        这里弹到消息界面

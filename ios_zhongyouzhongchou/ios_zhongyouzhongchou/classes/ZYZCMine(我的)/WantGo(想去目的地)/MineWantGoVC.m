@@ -35,7 +35,6 @@ static NSString *const ID = @"MineWantGoCollectionViewCell";
     [super viewDidLoad];
     
     [self configUI];
-    
 }
 
 - (void)configUI
