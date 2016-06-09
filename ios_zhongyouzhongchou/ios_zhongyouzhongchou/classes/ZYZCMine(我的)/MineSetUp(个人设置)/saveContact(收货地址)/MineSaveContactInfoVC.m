@@ -235,7 +235,7 @@
         }
         
         NSLog(@"%@",Regist_SaveContactInfo);
-        [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:@"http://192.168.1.27/register/saveContactInfo.action" andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {
+        [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:Regist_SaveContactInfo andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {
             [MBProgressHUD showSuccess:@"保存成功"];
             [MBProgressHUD setAnimationDelay:2];
             [self.navigationController popViewControllerAnimated:YES];
@@ -263,10 +263,10 @@
         [MBProgressHUD showError:ZYLocalizedString(@"place_phone")];
         return NO;
     }
-//    if(_placeButton.text.length <= 0){
-//        [MBProgressHUD showError:ZYLocalizedString(@"place_place")];
-//        return NO;
-//    }
+    if(_placeButton.text.length <= 0){
+        [MBProgressHUD showError:ZYLocalizedString(@"place_place")];
+        return NO;
+    }
     if(_detailPlaceButton.text.length <= 0){
         [MBProgressHUD showError:ZYLocalizedString(@"place_detail_place")];
         
@@ -280,7 +280,6 @@
 {
     if (textField == _placeButton) {
         [_placeButton resignFirstResponder];
-        
         
         STPickerArea *pickerArea = [[STPickerArea alloc]init];
         [pickerArea setDelegate:self];

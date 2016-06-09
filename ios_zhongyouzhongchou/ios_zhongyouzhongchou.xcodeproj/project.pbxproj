@@ -40,6 +40,9 @@
 		0432ADA41D0966F9005D789E /* STUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432AD9B1D0966F9005D789E /* STUI.m */; };
 		0432ADA51D0966F9005D789E /* UIView+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432AD9D1D0966F9005D789E /* UIView+ST.m */; };
 		0432ADA61D0966F9005D789E /* STPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADA01D0966F9005D789E /* STPickerView.m */; };
+		0432ADAF1D096B89005D789E /* NSCalendar+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADA91D096B89005D789E /* NSCalendar+ST.m */; };
+		0432ADB01D096B89005D789E /* STPickerDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADAB1D096B89005D789E /* STPickerDate.m */; };
+		0432ADB11D096B89005D789E /* STPickerSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADAE1D096B89005D789E /* STPickerSingle.m */; };
 		04518B4B1CE419F0001921D0 /* MineSetUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */; };
 		04518B4C1CE419F0001921D0 /* MineSetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */; };
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
@@ -135,7 +138,6 @@
 		04A99D271CC0924E00C6F5F0 /* ZYZCAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D261CC0924E00C6F5F0 /* ZYZCAccountModel.m */; };
 		04A99D2A1CC0926400C6F5F0 /* ZYZCAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D291CC0926400C6F5F0 /* ZYZCAccountTool.m */; };
 		04A99D2D1CC0C6EE00C6F5F0 /* MineMessageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */; };
-		04B99A611CFC251D00E3C33A /* MinePersonDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A601CFC251D00E3C33A /* MinePersonDatePickerView.m */; };
 		04B99A681CFDA6F300E3C33A /* TacticGeneralVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A671CFDA6F300E3C33A /* TacticGeneralVC.m */; };
 		04B99A6B1CFEFB7B00E3C33A /* TacticGeneralModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A6A1CFEFB7B00E3C33A /* TacticGeneralModel.m */; };
 		04B99A6E1CFFBAA600E3C33A /* TacticCityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B99A6D1CFFBAA600E3C33A /* TacticCityHeadView.m */; };
@@ -154,7 +156,6 @@
 		04D9A4B31D09089A00753392 /* MineTravelTagsFirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A4B21D09089A00753392 /* MineTravelTagsFirstView.m */; };
 		04D9A4B61D09115E00753392 /* MineTravelTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A4B51D09115E00753392 /* MineTravelTagsCell.m */; };
 		04F685491CF57C9F00E1A98E /* MinePersonSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */; };
-		04F6854A1CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685441CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m */; };
 		04F6854B1CF57C9F00E1A98E /* MinePersonSetUpHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685461CF57C9F00E1A98E /* MinePersonSetUpHeadView.m */; };
 		04F6854C1CF57C9F00E1A98E /* MinePersonSetUpScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685481CF57C9F00E1A98E /* MinePersonSetUpScrollView.m */; };
 		04F6854F1CF57CD900E1A98E /* MinePersonSetUpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F6854E1CF57CD900E1A98E /* MinePersonSetUpModel.m */; };
@@ -328,6 +329,12 @@
 		0432AD9D1D0966F9005D789E /* UIView+ST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ST.m"; sourceTree = "<group>"; };
 		0432AD9F1D0966F9005D789E /* STPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPickerView.h; sourceTree = "<group>"; };
 		0432ADA01D0966F9005D789E /* STPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPickerView.m; sourceTree = "<group>"; };
+		0432ADA81D096B89005D789E /* NSCalendar+ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+ST.h"; sourceTree = "<group>"; };
+		0432ADA91D096B89005D789E /* NSCalendar+ST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+ST.m"; sourceTree = "<group>"; };
+		0432ADAA1D096B89005D789E /* STPickerDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPickerDate.h; sourceTree = "<group>"; };
+		0432ADAB1D096B89005D789E /* STPickerDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPickerDate.m; sourceTree = "<group>"; };
+		0432ADAD1D096B89005D789E /* STPickerSingle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPickerSingle.h; sourceTree = "<group>"; };
+		0432ADAE1D096B89005D789E /* STPickerSingle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPickerSingle.m; sourceTree = "<group>"; };
 		04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MineSetUpVC.storyboard; sourceTree = "<group>"; };
 		04518B491CE419F0001921D0 /* MineSetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineSetUpViewController.h; sourceTree = "<group>"; };
 		04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineSetUpViewController.m; sourceTree = "<group>"; };
@@ -515,8 +522,6 @@
 		04A99D291CC0926400C6F5F0 /* ZYZCAccountTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCAccountTool.m; sourceTree = "<group>"; };
 		04A99D2B1CC0C6EE00C6F5F0 /* MineMessageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineMessageTool.h; sourceTree = "<group>"; };
 		04A99D2C1CC0C6EE00C6F5F0 /* MineMessageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineMessageTool.m; sourceTree = "<group>"; };
-		04B99A5F1CFC251D00E3C33A /* MinePersonDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonDatePickerView.h; sourceTree = "<group>"; };
-		04B99A601CFC251D00E3C33A /* MinePersonDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonDatePickerView.m; sourceTree = "<group>"; };
 		04B99A661CFDA6F300E3C33A /* TacticGeneralVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticGeneralVC.h; sourceTree = "<group>"; };
 		04B99A671CFDA6F300E3C33A /* TacticGeneralVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TacticGeneralVC.m; sourceTree = "<group>"; };
 		04B99A691CFEFB7B00E3C33A /* TacticGeneralModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticGeneralModel.h; sourceTree = "<group>"; };
@@ -553,8 +558,6 @@
 		04D9A4B51D09115E00753392 /* MineTravelTagsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagsCell.m; sourceTree = "<group>"; };
 		04F6853F1CF57C9F00E1A98E /* MinePersonSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpController.h; sourceTree = "<group>"; };
 		04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpController.m; sourceTree = "<group>"; };
-		04F685431CF57C9F00E1A98E /* MinePersonSetUpFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpFirstCell.h; sourceTree = "<group>"; };
-		04F685441CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpFirstCell.m; sourceTree = "<group>"; };
 		04F685451CF57C9F00E1A98E /* MinePersonSetUpHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpHeadView.h; sourceTree = "<group>"; };
 		04F685461CF57C9F00E1A98E /* MinePersonSetUpHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpHeadView.m; sourceTree = "<group>"; };
 		04F685471CF57C9F00E1A98E /* MinePersonSetUpScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpScrollView.h; sourceTree = "<group>"; };
@@ -929,6 +932,8 @@
 		0432AD911D0966F9005D789E /* STPicker */ = {
 			isa = PBXGroup;
 			children = (
+				0432ADA71D096B89005D789E /* Date(日期) */,
+				0432ADAC1D096B89005D789E /* Single(单数组) */,
 				0432AD921D0966F9005D789E /* Area(地区) */,
 				0432AD961D0966F9005D789E /* STConfig */,
 				0432AD9E1D0966F9005D789E /* STPickerView */,
@@ -967,6 +972,26 @@
 				0432ADA01D0966F9005D789E /* STPickerView.m */,
 			);
 			path = STPickerView;
+			sourceTree = "<group>";
+		};
+		0432ADA71D096B89005D789E /* Date(日期) */ = {
+			isa = PBXGroup;
+			children = (
+				0432ADA81D096B89005D789E /* NSCalendar+ST.h */,
+				0432ADA91D096B89005D789E /* NSCalendar+ST.m */,
+				0432ADAA1D096B89005D789E /* STPickerDate.h */,
+				0432ADAB1D096B89005D789E /* STPickerDate.m */,
+			);
+			path = "Date(日期)";
+			sourceTree = "<group>";
+		};
+		0432ADAC1D096B89005D789E /* Single(单数组) */ = {
+			isa = PBXGroup;
+			children = (
+				0432ADAD1D096B89005D789E /* STPickerSingle.h */,
+				0432ADAE1D096B89005D789E /* STPickerSingle.m */,
+			);
+			path = "Single(单数组)";
 			sourceTree = "<group>";
 		};
 		04518B471CE419F0001921D0 /* MineSetUp(个人设置) */ = {
@@ -1725,14 +1750,10 @@
 		04F685421CF57C9F00E1A98E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				04F685431CF57C9F00E1A98E /* MinePersonSetUpFirstCell.h */,
-				04F685441CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m */,
 				04F685451CF57C9F00E1A98E /* MinePersonSetUpHeadView.h */,
 				04F685461CF57C9F00E1A98E /* MinePersonSetUpHeadView.m */,
 				04F685471CF57C9F00E1A98E /* MinePersonSetUpScrollView.h */,
 				04F685481CF57C9F00E1A98E /* MinePersonSetUpScrollView.m */,
-				04B99A5F1CFC251D00E3C33A /* MinePersonDatePickerView.h */,
-				04B99A601CFC251D00E3C33A /* MinePersonDatePickerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2229,6 +2250,7 @@
 				2CE074BB1CCF487B006D312D /* ZCDetailCustomButton.m in Sources */,
 				04D9A4AC1D06CBBD00753392 /* MineWalletVc.m in Sources */,
 				04A99CA71CBF848D00C6F5F0 /* MoreFZCGoalTableView.m in Sources */,
+				0432ADAF1D096B89005D789E /* NSCalendar+ST.m in Sources */,
 				04A99CC91CBF848D00C6F5F0 /* MineMessageModel.m in Sources */,
 				2C7E3B4E1D06C92100F51C61 /* MineOneItemCell.m in Sources */,
 				04A99D1F1CC07E1800C6F5F0 /* WXApiResponseHandler.m in Sources */,
@@ -2266,7 +2288,6 @@
 				04D9A4B61D09115E00753392 /* MineTravelTagsCell.m in Sources */,
 				040651211CC62FC7003FD539 /* TAAbstractDotView.m in Sources */,
 				0432ADA61D0966F9005D789E /* STPickerView.m in Sources */,
-				04B99A611CFC251D00E3C33A /* MinePersonDatePickerView.m in Sources */,
 				0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */,
 				04F836451CD72C3300140980 /* SDPieProgressView.m in Sources */,
 				2CE074C31CCF7ECC006D312D /* ZYZCTabBarController.m in Sources */,
@@ -2319,6 +2340,7 @@
 				04F68C9F1CD6E3E3000CA70D /* ReturnThirdCellTwo.m in Sources */,
 				04A99C951CBF848D00C6F5F0 /* UINavigationBar+Background.m in Sources */,
 				040651261CC62FC7003FD539 /* SDCycleScrollView.m in Sources */,
+				0432ADB11D096B89005D789E /* STPickerSingle.m in Sources */,
 				040651271CC62FC7003FD539 /* UIView+SDExtension.m in Sources */,
 				04A99C901CBF848D00C6F5F0 /* UIView+ZYZCLineView.m in Sources */,
 				2C4EEFC01CC60D8600AA99F6 /* WeekDayView.m in Sources */,
@@ -2327,6 +2349,7 @@
 				04A99CAD1CBF848D00C6F5F0 /* MoreFZCRaiseMoneyFirstCell.m in Sources */,
 				04A99CB21CBF848D00C6F5F0 /* ReturnCellBaseBGView.m in Sources */,
 				04A99CEE1CBF851500C6F5F0 /* UIView+CustomFrame.m in Sources */,
+				0432ADB01D096B89005D789E /* STPickerDate.m in Sources */,
 				04F685491CF57C9F00E1A98E /* MinePersonSetUpController.m in Sources */,
 				04C087AB1D044B9600203D40 /* MineWantGoVC.m in Sources */,
 				04A99CF01CBF851500C6F5F0 /* RMCalendarModel.m in Sources */,
@@ -2337,7 +2360,6 @@
 				2C7E3B4B1D06B34D00F51C61 /* MineTableViewCell.m in Sources */,
 				04FCCAAF1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m in Sources */,
 				04A99CC01CBF848D00C6F5F0 /* WSMBaseView.m in Sources */,
-				04F6854A1CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m in Sources */,
 				04D9A4B31D09089A00753392 /* MineTravelTagsFirstView.m in Sources */,
 				2C079C561CFFD4B6002EFF29 /* ChatUserModel.m in Sources */,
 				04A99CC11CBF848D00C6F5F0 /* CustomItemView.m in Sources */,

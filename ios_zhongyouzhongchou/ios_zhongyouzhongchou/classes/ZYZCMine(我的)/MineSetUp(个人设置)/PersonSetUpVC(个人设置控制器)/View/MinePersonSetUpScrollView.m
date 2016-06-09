@@ -8,18 +8,24 @@
 #import "MinePersonSetUpScrollView.h"
 #import "MinePersonSetUpHeadView.h"
 #import "MinePersonSetUpModel.h"
-#import "MinePersonDatePickerView.h"
 #import "ZYZCAccountTool.h"
 #import "ZYZCAccountModel.h"
 #import "MBProgressHUD+MJ.h"
 #import "STPickerArea.h"
+#import "STPickerDate.h"
+#import "STPickerSingle.h"
+#import "FXBlurView.h"
 #define SetUpFirstCellLabelHeight 34
-@interface MinePersonSetUpScrollView()<UITextFieldDelegate,STPickerAreaDelegate>
+@interface MinePersonSetUpScrollView()<UITextFieldDelegate,STPickerAreaDelegate,STPickerDateDelegate>
 @property (nonatomic, strong) UIImageView *firstBg;
 @property (nonatomic, strong) UIImageView *secondBg;
 @property (nonatomic, strong) UIImageView *thirdBg;
 @property (nonatomic, strong) UIImageView *fourthBg;
+@property (nonatomic, copy) NSString *province;
+@property (nonatomic, copy) NSString *city;
+@property (nonatomic, copy) NSString *district;
 @property (nonatomic, weak) UIButton *saveButton;
+@property (nonatomic, strong) FXBlurView *blurView;
 @end
 @implementation MinePersonSetUpScrollView
 #pragma mark - system方法
@@ -40,7 +46,6 @@
 {
     //头视图
      MinePersonSetUpHeadView *headView = [[MinePersonSetUpHeadView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, imageHeadHeight)];
-//    headView.backgroundColor = [UIColor redColor];
     self.headView = headView;
     [self addSubview:headView];
     
@@ -59,6 +64,7 @@
     NSLog(@"%@",NSStringFromCGSize(self.contentSize));
     
 }
+
 /**
  *  第一个cell
  */
@@ -82,6 +88,7 @@
     nameTitleLabel.text = @"昵称";
     
     UITextField *titleView = [[UITextField alloc] init];
+    titleView.textColor = [UIColor lightGrayColor];
     titleView.placeholder = @"请输入姓名";
     titleView.clearsOnBeginEditing = YES;
     titleView.delegate = self;
@@ -109,10 +116,10 @@
     CGFloat birthdayLabelH = SetUpFirstCellLabelHeight;
     UILabel *birthdayLabel = [[UILabel alloc] initWithFrame:CGRectMake(birthdayLabelX, birthdayLabelY, birthdayLabelW, birthdayLabelH)];
     birthdayLabel.text = @"生日";
-    UIButton *birthButton = [[UIButton alloc] init];
-    [birthButton addTarget:self action:@selector(birthButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    birthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [birthButton setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
+    UITextField *birthButton = [[UITextField alloc] init];
+    birthButton.textColor = [UIColor lightGrayColor];
+    birthButton.placeholder = @"请选择生日";
+    birthButton.delegate = self;
     self.birthButton = birthButton;
     [self createUIWithSuperView:self.firstBg titleLabel:birthdayLabel titleView:birthButton];
     
@@ -174,6 +181,7 @@
     UILabel *heightLabel = [[UILabel alloc] initWithFrame:CGRectMake(heightLabelX, heightLabelY, heightLabelW, heightLabelH)];
     heightLabel.text = @"身高(cm)";
     UITextField *heightButton = [[UITextField alloc] init];
+    heightButton.textColor = [UIColor lightGrayColor];
     heightButton.clearsOnBeginEditing = YES;
     heightButton.keyboardType = UIKeyboardTypeNumberPad;
     self.heightButton = heightButton;
@@ -187,6 +195,7 @@
     UILabel *weightLabel = [[UILabel alloc] initWithFrame:CGRectMake(weightLabelX, weightLabelY, weightLabelW, weightLabelH)];
     weightLabel.text = @"体重(kg)";
     UITextField *weightButton = [[UITextField alloc] init];
+    weightButton.textColor = [UIColor lightGrayColor];
     weightButton.clearsOnBeginEditing = YES;
     weightButton.keyboardType = UIKeyboardTypeNumberPad;
     self.weightButton = weightButton;
@@ -220,6 +229,7 @@
     companyLabel.text = @"公司";
     
     UITextField *companyButton = [[UITextField alloc] init];
+    companyButton.textColor = [UIColor lightGrayColor];
     companyButton.clearsOnBeginEditing = YES;
     companyButton.delegate = self;
     self.companyButton = companyButton;
@@ -233,6 +243,7 @@
     jobLabel.text = @"职业";
     
     UITextField *jobButton = [[UITextField alloc] init];
+    jobButton.textColor = [UIColor lightGrayColor];
     jobButton.clearsOnBeginEditing = YES;
     jobButton.delegate = self;
     self.jobButton = jobButton;
@@ -246,6 +257,7 @@
     UILabel *schoolLabel = [[UILabel alloc] initWithFrame:CGRectMake(schoolLabelX, schoolLabelY, schoolLabelW, schoolLabelH)];
     schoolLabel.text = @"学校";
     UITextField *schoolButton = [[UITextField alloc] init];
+    schoolButton.textColor = [UIColor lightGrayColor];
     schoolButton.clearsOnBeginEditing = YES;
     schoolButton.delegate = self;
     self.schoolButton = schoolButton;
@@ -259,6 +271,7 @@
     UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(locationLabelX, locationLabelY, locationLabelW, locationLabelH)];
     locationLabel.text = @"所在地";
     UITextField *locationButton = [[UITextField alloc] init];
+    locationButton.textColor = [UIColor lightGrayColor];
     locationButton.delegate = self;
     locationButton.placeholder = @"请选择所在地";
     self.locationButton = locationButton;
@@ -292,6 +305,8 @@
     emailLabel.text = @"邮箱";
     
     UITextField *emailButton = [[UITextField alloc] init];
+    emailButton.placeholder = @"请输入邮箱";
+    emailButton.textColor = [UIColor lightGrayColor];
     emailButton.clearsOnBeginEditing = YES;
     emailButton.delegate = self;
     self.emailButton = emailButton;
@@ -343,33 +358,7 @@
     [superView addSubview:titleView];
 }
 
-#pragma mark - button点击方法
-- (void)birthButtonAction:(UIButton *)birthButton
-{
-    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
-    
-    MinePersonDatePickerView *datePickerView = [[MinePersonDatePickerView alloc] initWithFrame:self.bounds];
-
-    __weak typeof(&*self) weakSelf = self;
-    datePickerView.sureBlock = ^(NSDate *birthdayDate){
-        //转成字符串
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd"];
-        NSString *dateString = [formatter stringFromDate:birthdayDate];
-        [weakSelf.birthButton setTitle:dateString forState:UIControlStateNormal];
-        //转成星座
-        NSCalendar * cal = [NSCalendar currentCalendar];
-    
-        NSUInteger unitFlags = NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
-        NSDateComponents * component = [cal components:unitFlags fromDate:birthdayDate];
-    //    NSInteger year = [component year];
-        NSInteger month = [component month];
-        NSInteger day = [component day];
-        weakSelf.constellationButton.text = [ZYZCTool calculateConstellationWithMonth:month day:day];
-    };
-    
-    [self addSubview:datePickerView];
-}
+#pragma mark - button点击方
 
 - (void)sexButtonAction:(UIButton *)button
 {
@@ -447,8 +436,8 @@
             }
         
         }
-        if (_birthButton.titleLabel.text.length > 0) {
-            [parameter setValue:_birthButton.titleLabel.text forKey:@"birthday"];
+        if (_birthButton.text.length > 0) {
+            [parameter setValue:_birthButton.text forKey:@"birthday"];
         }
         if (_heightButton.text.length > 0) {
             [parameter setValue:_heightButton.text forKey:@"height"];
@@ -480,14 +469,14 @@
         if (_schoolButton.text.length > 0) {
             [parameter setValue:_schoolButton.text forKey:@"school"];
         }
-        if (_locationButton.text.length > 0) {
-            [parameter setValue:_locationButton.text forKey:@"province"];
+        if (_province.length > 0) {
+            [parameter setValue:_province forKey:@"province"];
         }
-        if (_locationButton.text.length > 0) {
-            [parameter setValue:_locationButton.text forKey:@"city"];
+        if (_city.length > 0) {
+            [parameter setValue:_city forKey:@"city"];
         }
-        if (_locationButton.text.length > 0) {
-            [parameter setValue:_locationButton.text forKey:@"district"];
+        if (_district.length > 0) {
+            [parameter setValue:_district forKey:@"district"];
         }
         NSLog(@"%@",Regist_UpdateUserInfo);
         [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:Regist_UpdateUserInfo andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {
@@ -513,8 +502,12 @@
 {
     //头视图
     NSString *faceImg = minePersonSetUpModel.faceImg;
+    
     if (minePersonSetUpModel.faceImg.length > 0) {
         [self.headView.iconView sd_setImageWithURL:[NSURL URLWithString:faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:(SDWebImageRetryFailed | SDWebImageLowPriority)];
+        [self.headView sd_setImageWithURL:[NSURL URLWithString:faceImg] placeholderImage:[UIImage imageNamed:@"icon_placeholder"] options:(SDWebImageRetryFailed | SDWebImageLowPriority) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [_headView addFXBlurView];
+        }];
     }
     if (minePersonSetUpModel.userName.length > 0) {
         self.headView.nameLabel.text = minePersonSetUpModel.userName;
@@ -532,7 +525,7 @@
         }
     }
     if(minePersonSetUpModel.birthday.length > 0){
-        [_birthButton setTitle:minePersonSetUpModel.birthday forState:UIControlStateNormal];
+        _birthButton.text = minePersonSetUpModel.birthday;
     }
     if (minePersonSetUpModel.constellation.length > 0) {
         _constellationButton.text = minePersonSetUpModel.constellation;
@@ -561,9 +554,22 @@
     if (minePersonSetUpModel.school.length > 0) {
         _schoolButton.text = minePersonSetUpModel.school;
     }
+    //地名
+    NSString *placeString = @"";
     if (minePersonSetUpModel.province.length > 0) {
-        [_proviceButton setTitle:minePersonSetUpModel.province forState:UIControlStateNormal];
+        placeString = [placeString stringByAppendingString:minePersonSetUpModel.province];
+        _province = minePersonSetUpModel.province;
     }
+    if (minePersonSetUpModel.city.length > 0) {
+        placeString = [placeString stringByAppendingString:minePersonSetUpModel.city];
+        _city = minePersonSetUpModel.city;
+    }
+    if (minePersonSetUpModel.district.length > 0) {
+        placeString = [placeString stringByAppendingString:minePersonSetUpModel.district];
+        _district = minePersonSetUpModel.district;
+    }
+    _locationButton.text = placeString;
+    
     if (minePersonSetUpModel.mail.length > 0) {
         _emailButton.text = minePersonSetUpModel.mail;
     }
@@ -576,12 +582,18 @@
     if (textField == _locationButton) {
         [_locationButton resignFirstResponder];
         
-        
         STPickerArea *pickerArea = [[STPickerArea alloc]init];
         [pickerArea setDelegate:self];
         [pickerArea setContentMode:STPickerContentModeBottom];
         [pickerArea show];
         
+    }
+    if (textField == _birthButton) {
+        [_birthButton resignFirstResponder];
+        
+        STPickerDate *pickerDate = [[STPickerDate alloc]init];
+        [pickerDate setDelegate:self];
+        [pickerDate show];
     }
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -591,31 +603,25 @@
 }
 
 #pragma mark - requsetData方法
-//- (void)requestData
-//{
-//    ZYZCAccountModel *accountModel = [ZYZCAccountTool account];
-//    NSString *url = Get_SelfInfo(accountModel.openid, [accountModel.userId intValue]);
-////    NSString *url = @"";
-//    NSLog(@"%@",url);
-//    //访问网络
-//    __weak typeof(&*self) weakSelf = self;
-//    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
-//        if (isSuccess) {
-//            //请求成功，转化为数组
-////            weakSelf.mineWantGoModelArray = [MineWantGoModel mj_objectArrayWithKeyValuesArray:result[@"data"]];
-////            [weakSelf.collectionView reloadData];
-//        }
-//    } andFailBlock:^(id failResult) {
-//        NSLog(@"%@",failResult);
-//    }];
-//}
+
 
 
 #pragma mark - delegate方法
 - (void)pickerArea:(STPickerArea *)pickerArea province:(NSString *)province city:(NSString *)city area:(NSString *)area
 {
     NSString *text = [NSString stringWithFormat:@"%@ %@ %@", province, city, area];
+    _province = province;
+    _city = city;
+    _district = area;
     _locationButton.text = text;
+}
+
+- (void)pickerDate:(STPickerDate *)pickerDate year:(NSInteger)year month:(NSInteger)month day:(NSInteger)day
+{
+    NSString *text = [NSString stringWithFormat:@"%d-%02d-%02d", year, month, day];
+   _constellationButton.text = [ZYZCTool calculateConstellationWithMonth:month day:day];
+    
+    _birthButton.text = text;
 }
 
 @end
