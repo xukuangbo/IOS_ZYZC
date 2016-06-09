@@ -43,7 +43,7 @@
     [self.view addSubview:navBgView];
     
     _table=[[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _table.contentInset=UIEdgeInsetsMake(HEAD_VIEW_HEIGHT, 0, -44, 0);
+    _table.contentInset=UIEdgeInsetsMake(HEAD_VIEW_HEIGHT, 0, 0, 0);
     _table.dataSource=self;
     _table.delegate=self;
     _table.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
@@ -51,13 +51,16 @@
     _table.separatorStyle=UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
     
-    _table.mj_footer=[MJRefreshAutoFooter footerWithRefreshingBlock:^{
+    
+    MJRefreshAutoNormalFooter *normalFooter=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _pageNo++;
         [self getProductsData];
     }];
+    [normalFooter setTitle:@"" forState:MJRefreshStateIdle];
+    
     
     //添加头视图
-    _headView=[[PersonHeadView alloc]init];
+    _headView=[[PersonHeadView alloc]initWithType:NO];
     [self.view addSubview:_headView];
     
     __weak typeof (&*self )weakSelf=self;
@@ -99,7 +102,6 @@
     if (!_userModel.openid) {
         return;
     }
-     NSLog(@"type:%ld",_productType-PublishType+1);
     NSString *url=[NSString stringWithFormat:@"%@%@",LISTMYPRODUCTS,
                    GET_MY_LIST(_userModel.openid,_productType-PublishType+1,_pageNo)];
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess)

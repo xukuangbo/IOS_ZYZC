@@ -466,8 +466,12 @@
     
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:dataDict];
     [newParameters addEntriesFromDictionary:@{@"productCountryId":@1}];
+    //=======================================================
+    [newParameters setObject:@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/12333.jpg" forKey:@"cover"];
+    //=======================================================
     _dataDic=newParameters;
      NSLog(@"_dataDic:%@",_dataDic);
+    
     [self publishHttpData];
 }
 

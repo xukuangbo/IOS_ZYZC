@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icn_xingcheng.png",
+      "filename" : "icon_trip.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icn_xingcheng@2x.png",
+      "filename" : "icon_trip@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icn_xingcheng@3x.png",
+      "filename" : "icon_trip@3x.png",
       "scale" : "3x"
     }
   ],

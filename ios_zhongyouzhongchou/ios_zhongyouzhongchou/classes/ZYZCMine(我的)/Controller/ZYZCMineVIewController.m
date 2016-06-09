@@ -11,11 +11,13 @@
 #import "UserModel.h"
 #import "ZYZCAccountTool.h"
 #import "ZYZCAccountModel.h"
-@interface ZYZCMineVIewController ()
+#import "MineTableViewCell.h"
+@interface ZYZCMineVIewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) PersonHeadView *personHeadView;
+@property (nonatomic, strong) UITableView    *table;
 @property (nonatomic, strong) UserModel      *userModel;
-@property (nonatomic, strong) NSNumber  *meGzAll;
-@property (nonatomic, strong) NSNumber  *gzMeAll;
+@property (nonatomic, strong) NSNumber       *meGzAll;
+@property (nonatomic, strong) NSNumber       *gzMeAll;
 @end
 
 @implementation ZYZCMineVIewController
@@ -36,32 +38,77 @@
 
 -(void)configUI
 {
-    _personHeadView=[[PersonHeadView alloc]init];
-    _personHeadView.isMineView=YES;
-    _personHeadView.userModel=[self getUser];
-    [self.view addSubview:_personHeadView];
+    UIView *navBgView=[[UIView alloc]initWithFrame:self.view.bounds];
+    [self.view addSubview:navBgView];
+    
+    _table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W,KSCREEN_H-49) style:UITableViewStylePlain];
+    _table.dataSource=self;
+    _table.delegate=self;
+    _table.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
+    _table.backgroundColor=[UIColor ZYZC_BgGrayColor];
+    _table.separatorStyle=UITableViewCellSeparatorStyleNone;
+    _table.showsVerticalScrollIndicator=NO;
+    [self.view addSubview:_table];
+    
+    _personHeadView=[[PersonHeadView alloc]initWithType:YES];
+    _table.tableHeaderView=_personHeadView;
     
 }
 
--(UserModel *)getUser
+-(NSInteger )tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    UserModel *user=nil;
-    ZYZCAccountModel *accountModel=[ZYZCAccountTool account];
-    if (accountModel) {
-        user=[[UserModel alloc]init];
-        user.userName=accountModel.nickname;
-        user.faceImg=accountModel.headimgurl;
-        user.sex= [NSString stringWithFormat:@"%@",accountModel.sex];
-    }
-    return user;
+    return 3;
 }
 
 
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==1) {
+        MineTableViewCell *minecCell=[[MineTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        return minecCell;
+    }
+    else
+    {
+        UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+        return cell;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==1) {
+         return MINE_CELL_HEIGHT;
+    }
+    else
+    {
+        return KEDGE_DISTANCE;
+    }
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY=scrollView.contentOffset.y;
+//        NSLog(@"%f",offsetY);
+        _personHeadView.tableOffSetY=offsetY;
+  
+    if (offsetY>=74) {
+        self.title=_userModel.userName.length>8?[_userModel.userName substringToIndex:8]:_userModel.userName;
+    }
+    else
+    {
+        self.title=nil;
+    }
+}
+
+#pragma mark --- 设置
 -(void)leftButtonClick
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark --- 消息
 -(void)rightButtonClick
 {
     

@@ -7,7 +7,7 @@
 //
 
 #define HEAD_VIEW_HEIGHT  234+80*KCOFFICIEMNT
-
+#define MY_HEAD_VIEW_HEIGHT  154+80*KCOFFICIEMNT
 //typedef void (^ScrollTable)(CGFloat offSetY);
 
 typedef NS_ENUM(NSInteger, PersonProductType)
@@ -38,5 +38,7 @@ typedef void (^ChangeProduct)(PersonProductType productType) ;
 @property (nonatomic, assign) BOOL      isMineView;
 //改变众筹项目类型
 @property (nonatomic, copy  ) ChangeProduct changeProduct;
+
+- (instancetype)initWithType:(BOOL)isMineView;
 
 @end

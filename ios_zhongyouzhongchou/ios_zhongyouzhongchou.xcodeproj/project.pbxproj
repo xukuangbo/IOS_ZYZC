@@ -193,6 +193,9 @@
 		2C4EEFC01CC60D8600AA99F6 /* WeekDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4EEFBE1CC60D8600AA99F6 /* WeekDayView.m */; };
 		2C4EEFC11CC60D8600AA99F6 /* WeekDayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4EEFBF1CC60D8600AA99F6 /* WeekDayView.xib */; };
 		2C4EEFC41CC6316900AA99F6 /* ZCDetailFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */; };
+		2C7E3B4B1D06B34D00F51C61 /* MineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E3B4A1D06B34D00F51C61 /* MineTableViewCell.m */; };
+		2C7E3B4E1D06C92100F51C61 /* MineOneItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E3B4D1D06C92100F51C61 /* MineOneItemCell.m */; };
+		2C7E3B541D06CC4C00F51C61 /* MineOneItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E3B531D06CC4C00F51C61 /* MineOneItemModel.m */; };
 		2C82882F1CD83E0A004873B6 /* NecessaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C82882E1CD83E0A004873B6 /* NecessaryView.m */; };
 		2C8288311CD87F7A004873B6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C8288301CD87F7A004873B6 /* Localizable.strings */; };
 		2C8288341CD886DE004873B6 /* NecessoryAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8288331CD886DE004873B6 /* NecessoryAlertManager.m */; };
@@ -628,6 +631,12 @@
 		2C4EEFC31CC6316900AA99F6 /* ZCDetailFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDetailFirstCell.m; sourceTree = "<group>"; };
 		2C72BCC21CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2C72BCC31CB7A36300E733F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		2C7E3B491D06B34D00F51C61 /* MineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTableViewCell.h; sourceTree = "<group>"; };
+		2C7E3B4A1D06B34D00F51C61 /* MineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTableViewCell.m; sourceTree = "<group>"; };
+		2C7E3B4C1D06C92100F51C61 /* MineOneItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineOneItemCell.h; sourceTree = "<group>"; };
+		2C7E3B4D1D06C92100F51C61 /* MineOneItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineOneItemCell.m; sourceTree = "<group>"; };
+		2C7E3B521D06CC4C00F51C61 /* MineOneItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineOneItemModel.h; sourceTree = "<group>"; };
+		2C7E3B531D06CC4C00F51C61 /* MineOneItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineOneItemModel.m; sourceTree = "<group>"; };
 		2C82882D1CD83E0A004873B6 /* NecessaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NecessaryView.h; sourceTree = "<group>"; };
 		2C82882E1CD83E0A004873B6 /* NecessaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NecessaryView.m; sourceTree = "<group>"; };
 		2C8288301CD87F7A004873B6 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -1341,6 +1350,8 @@
 			children = (
 				04A99C691CBF848D00C6F5F0 /* MineUserModel.h */,
 				04A99C6A1CBF848D00C6F5F0 /* MineUserModel.m */,
+				2C7E3B521D06CC4C00F51C61 /* MineOneItemModel.h */,
+				2C7E3B531D06CC4C00F51C61 /* MineOneItemModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1356,6 +1367,10 @@
 				04A99C711CBF848D00C6F5F0 /* MineFootTableView.m */,
 				04A99C721CBF848D00C6F5F0 /* MineHeadView.h */,
 				04A99C731CBF848D00C6F5F0 /* MineHeadView.m */,
+				2C7E3B491D06B34D00F51C61 /* MineTableViewCell.h */,
+				2C7E3B4A1D06B34D00F51C61 /* MineTableViewCell.m */,
+				2C7E3B4C1D06C92100F51C61 /* MineOneItemCell.h */,
+				2C7E3B4D1D06C92100F51C61 /* MineOneItemCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2215,6 +2230,7 @@
 				04D9A4AC1D06CBBD00753392 /* MineWalletVc.m in Sources */,
 				04A99CA71CBF848D00C6F5F0 /* MoreFZCGoalTableView.m in Sources */,
 				04A99CC91CBF848D00C6F5F0 /* MineMessageModel.m in Sources */,
+				2C7E3B4E1D06C92100F51C61 /* MineOneItemCell.m in Sources */,
 				04A99D1F1CC07E1800C6F5F0 /* WXApiResponseHandler.m in Sources */,
 				04C087B81D05534600203D40 /* MyUserFollowedCell.m in Sources */,
 				040651411CC78877003FD539 /* TacticImageView.m in Sources */,
@@ -2316,7 +2332,9 @@
 				04A99CF01CBF851500C6F5F0 /* RMCalendarModel.m in Sources */,
 				041D06ED1CD322AB002B8329 /* ZYZCAVPlayer.m in Sources */,
 				04A99C9D1CBF848D00C6F5F0 /* MoreFZCViewController.m in Sources */,
+				2C7E3B541D06CC4C00F51C61 /* MineOneItemModel.m in Sources */,
 				04A99CCE1CBF848D00C6F5F0 /* MineFootTableView.m in Sources */,
+				2C7E3B4B1D06B34D00F51C61 /* MineTableViewCell.m in Sources */,
 				04FCCAAF1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m in Sources */,
 				04A99CC01CBF848D00C6F5F0 /* WSMBaseView.m in Sources */,
 				04F6854A1CF57C9F00E1A98E /* MinePersonSetUpFirstCell.m in Sources */,

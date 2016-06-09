@@ -38,11 +38,15 @@
 }
 */
 
-- (instancetype)init
+- (instancetype)initWithType:(BOOL)isMineView
 {
     self = [super init];
     if (self) {
+        _isMineView=isMineView;
         self.frame=CGRectMake(0, 0, KSCREEN_W, HEAD_VIEW_HEIGHT);
+        if (_isMineView) {
+            self.height=MY_HEAD_VIEW_HEIGHT;
+        }
         [self configUI];
     }
     return self;
@@ -51,6 +55,9 @@
 {
     //背景图
     _infoView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.width, self.height-45)];
+    if (_isMineView) {
+        _infoView.height=self.height;
+    }
     _infoView.contentMode=UIViewContentModeScaleAspectFill;
     _infoView.layer.masksToBounds=YES;
     _infoView.backgroundColor=[UIColor ZYZC_BgGrayColor];
@@ -70,6 +77,22 @@
     //基本信息
     _baseInfoView=[[UIView alloc]initWithFrame:CGRectMake(0, _faceImgView.bottom+KEDGE_DISTANCE, self.width, _infoView.bottom-30-_faceImgView.bottom-3*KEDGE_DISTANCE)];
     [self addSubview:_baseInfoView];
+    
+    //名字
+    _nameLab=[self createLabWithFrame:CGRectMake(0, 0, 0, 0) andText:nil andTextColor:[UIColor whiteColor] andFont:[UIFont boldSystemFontOfSize:22] andTextAlignment:NSTextAlignmentRight];
+    [_baseInfoView addSubview:_nameLab];
+    
+    //性别
+    _sexImg=[[UIImageView alloc]init];
+    [_baseInfoView addSubview:_sexImg];
+    
+    //关注和粉丝
+    _attentionLab=[self createLabWithFrame:CGRectMake(0, 0, 0, 0)  andText:nil andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
+    [_baseInfoView addSubview:_attentionLab];
+    
+    //基础信息
+    _personInfoLab=[self createLabWithFrame:CGRectMake(0, 0, 0, 0)  andText:nil andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
+    [_baseInfoView addSubview:_personInfoLab];
     
 }
 
@@ -101,16 +124,18 @@
         }];
     }
     //名字
-    UIFont *font=[UIFont boldSystemFontOfSize:22];
+    UIFont *font=_nameLab.font;
     CGFloat nameWidth=[ZYZCTool calculateStrLengthByText:userModel.userName andFont:font andMaxWidth:self.width].width;
     if (nameWidth>self.width-40) {
         nameWidth=self.width-40;
     }
-    _nameLab=[self creatLabWithFrame:CGRectMake(self.width/2-(nameWidth+20)/2, 0, nameWidth, 30) andText:userModel.userName  andTextColor:[UIColor whiteColor] andFont:font andTextAlignment:NSTextAlignmentRight];
-    [_baseInfoView addSubview:_nameLab];
+    _nameLab.frame=CGRectMake(self.width/2-(nameWidth+20)/2, 0, nameWidth, 30);
+    _nameLab.text=userModel.userName;
+
+    
     
     //性别
-    _sexImg=[[UIImageView alloc]initWithFrame:CGRectMake(_nameLab.right, _nameLab.top+5, 20, 20)];
+    _sexImg.frame=CGRectMake(_nameLab.right, _nameLab.top+5, 20, 20);
     if ([userModel.sex isEqualToString:@"1"]) {
         textArr=@[@"他发起的",@"他参与的",@"他推荐的"];
         _sexImg.image=[UIImage imageNamed:@"btn_sex_mal"];
@@ -121,23 +146,24 @@
         textArr=@[@"她发起的",@"她参与的",@"她推荐的"];
         _sexImg.image=[UIImage imageNamed:@"btn_sex_fem"];
     }
-    [_baseInfoView addSubview:_sexImg];
+    
     
     //关注和粉丝
     NSString *attentionText=FOLLIOW_AND_BEFOLLOW([_meGzAll integerValue], [_gzMeAll integerValue]);
-    _attentionLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, _nameLab.bottom, self.width-2*KEDGE_DISTANCE, 15) andText:attentionText andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
-    [_baseInfoView addSubview:_attentionLab];
+    _attentionLab.frame=CGRectMake(KEDGE_DISTANCE, _nameLab.bottom, self.width-2*KEDGE_DISTANCE, 15);
+    _attentionLab.text=attentionText;
     
     //基础信息
     NSString *personInfo=@"23岁、天枰座、50kg、170cm、单身";
-    _personInfoLab=[self creatLabWithFrame:CGRectMake(KEDGE_DISTANCE, _attentionLab.bottom+5, _attentionLab.width, 15) andText:personInfo andTextColor:[UIColor whiteColor] andFont:[UIFont systemFontOfSize:13] andTextAlignment:NSTextAlignmentCenter];
-    [_baseInfoView addSubview:_personInfoLab];
+    _personInfoLab.frame=CGRectMake(KEDGE_DISTANCE, _attentionLab.bottom+5, _attentionLab.width, 15);
+    _personInfoLab.text=personInfo;
+
     
     if (_isMineView) {
-        self.height=HEAD_VIEW_HEIGHT-45;
         return;
     }
     //他发起，他参与，他推荐
+    
     UIView *clickView=[[UIView alloc]initWithFrame:CGRectMake(0, _infoView.bottom, self.width, 45)];
     clickView.backgroundColor=[UIColor whiteColor];
     [self addSubview:clickView ];
@@ -168,7 +194,6 @@
     //加关注
     _addInterestBtn=[self createButtonWithFrame:CGRectMake(30, _infoView.bottom-KEDGE_DISTANCE-30, 100, 30) andTag:AddInterest andNeedBorder:YES  andText:_friendship?@"取消关注":@"＋  关注" andTextColor:[UIColor whiteColor]];
     [self addSubview:_addInterestBtn];
-    
     //留言
     _chatBtn=[self createButtonWithFrame:CGRectMake(self.width-130, _addInterestBtn.top, 100, 30) andTag:ChatType andNeedBorder:YES  andText:@"留言" andTextColor:[UIColor whiteColor]];
     [self addSubview:_chatBtn];
@@ -194,9 +219,10 @@
 }
 
 #pragma mark --- 创建lable
--(UILabel *)creatLabWithFrame:(CGRect)frame andText:(NSString *)text andTextColor:(UIColor *)textColor andFont:(UIFont *)font andTextAlignment:(NSTextAlignment )alignment
+-(UILabel *)createLabWithFrame:(CGRect)frame andText:(NSString *)text andTextColor:(UIColor *)textColor andFont:(UIFont *)font andTextAlignment:(NSTextAlignment )alignment
 {
-    UILabel *lab=[[UILabel alloc]initWithFrame:frame];
+    UILabel *lab=[[UILabel alloc]init];
+    lab.frame=frame;
     lab.text=text;
     lab.textColor=textColor;
     lab.font=font;
@@ -288,6 +314,16 @@
 {
     _tableOffSetY=tableOffSetY;
     
+    if (_isMineView) {
+        
+        if (tableOffSetY>=0) {
+            CGFloat rate01=MIN(1, tableOffSetY/(_baseInfoView.top-64));
+            _baseInfoView.alpha=1-rate01;
+            CGFloat rate02=MIN(1, tableOffSetY/_faceImgView.top);
+            _faceImgView.alpha=1-rate02;
+        }
+        return;
+    }
     if (tableOffSetY>=-(HEAD_VIEW_HEIGHT)&&tableOffSetY<=64-HEAD_VIEW_HEIGHT) {
         CGFloat rate=MIN(1, (tableOffSetY+HEAD_VIEW_HEIGHT)/64);
         
@@ -301,9 +337,5 @@
     }
 }
 
--(void)reloadPersonInfo
-{
-    
-}
 
 @end
