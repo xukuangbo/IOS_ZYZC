@@ -11,7 +11,7 @@
 #import "MineTravelTagsVC.h"
 #import "MineTravelTagsFirstView.h"
 
-@interface MineTravelTagsVC ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface MineTravelTagsVC ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *firstBg;
 @property (nonatomic, strong) MineTravelTagsFirstView *firstCollectionView;
@@ -87,7 +87,6 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
     detailTitleLabel.bottom = titleLabel.bottom;
     [_firstBg addSubview:detailTitleLabel];
     
-    
     CGFloat firstCollectionViewX = KEDGE_DISTANCE;
     CGFloat firstCollectionViewY = titleLabel.bottom + KEDGE_DISTANCE;
     CGFloat firstCollectionViewW = _firstBg.width - 2 * firstCollectionViewX;
@@ -126,7 +125,7 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
     saveButton.titleLabel.textColor = [UIColor whiteColor];
     saveButton.backgroundColor = [UIColor ZYZC_MainColor];
     saveButton.titleLabel.font = [UIFont systemFontOfSize:25];
-    [saveButton addTarget:self action:@selector(saveButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [saveButton addTarget:self action:@selector(saveButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [saveButton setTitle:@"保存" forState:UIControlStateNormal];
     
     [self.scrollView addSubview:saveButton];
@@ -140,29 +139,5 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
 #pragma mark - button点击方法
 
 #pragma mark - delegate方法
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return 30;
-}
-
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
-
-    
-    return cell;
-}
-#pragma mark - UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat width = ((collectionView.width - 5 * KEDGE_DISTANCE) / 3);
-    return CGSizeMake(width, width);
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(10, 10, 10, 10);
-}
 
 @end

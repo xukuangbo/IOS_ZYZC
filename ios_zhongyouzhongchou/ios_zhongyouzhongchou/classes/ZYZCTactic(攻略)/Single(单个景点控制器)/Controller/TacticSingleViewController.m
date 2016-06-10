@@ -86,9 +86,9 @@
 {
     _isWantGo = isWantGo;
     if (isWantGo == YES) {//已关注
-        [_sureButton setTitle:@"已关注" forState:UIControlStateNormal];
+        [_sureButton setTitle:ZYLocalizedString(@"isWantGo") forState:UIControlStateNormal];
     }else{
-        [_sureButton setTitle:@"想去" forState:UIControlStateNormal];
+        [_sureButton setTitle:ZYLocalizedString(@"wantGo") forState:UIControlStateNormal];
     }
 }
 
@@ -128,7 +128,7 @@
     CGFloat btn_width = KSCREEN_W/2;
     UIButton *sureBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     sureBtn.frame = CGRectMake(btn_width * 0.5, 0, btn_width, bottomBar.height);
-    [sureBtn setTitle:@"想去" forState:UIControlStateNormal];
+    [sureBtn setTitle:ZYLocalizedString(@"wantGo") forState:UIControlStateNormal];
     [sureBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
     sureBtn.titleLabel.font=[UIFont systemFontOfSize:20];
     [sureBtn addTarget:self action:@selector(wantToGoAction:) forControlEvents:UIControlEventTouchUpInside];

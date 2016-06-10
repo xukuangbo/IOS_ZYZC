@@ -48,9 +48,9 @@
 //正式
 //#define BASE_URL @"http://114.55.137.241:8080/"
 //测试
-#define BASE_URL @"http://121.40.225.119:8080/"
+//#define BASE_URL @"http://121.40.225.119:8080/"
 //华子
-//#define BASE_URL @"http://192.168.1.27/"
+#define BASE_URL @"http://192.168.1.33/"
 
 #define HTTPURL(APPEND_URL) [NSString stringWithFormat:@"%@%@.action?",BASE_URL,APPEND_URL]
 
@@ -82,7 +82,8 @@
 #define Regist_UpdateUserInfo [NSString stringWithFormat:@"%@register/updateUserInfo.action",BASE_URL]
 //收货地址
 #define Regist_SaveContactInfo [NSString stringWithFormat:@"%@register/saveContactInfo.action",BASE_URL]
-
+//获取我的钱包
+#define Get_MyWallet      [NSString stringWithFormat:@"%@wallet/getMyWallet.action",BASE_URL]
 
 //用户基本信息
 #define BASEINFO           HTTPURL(@"register/saveBaseInfo")
@@ -138,13 +139,13 @@
 //获取更多视频
 #define GET_TACTIC_More_Videos [NSString stringWithFormat:@"%@admin_back/getViewVideoList.action?viewType=2",BASE_URL]
 //添加想去的目的地
-#define Add_Tactic_WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/addMySpot.action?openid=%@&viewId=%d",BASE_URL,openid,viewId]
+#define Add_Tactic_WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/addMySpot.action?openid=%@&viewId=%zd",BASE_URL,openid,viewId]
 //删除想去的目的地
-#define Del_Tactic__WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/delMySpot.action?openid=%@&viewId=%d",BASE_URL,openid,viewId]
+#define Del_Tactic__WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/delMySpot.action?openid=%@&viewId=%zd",BASE_URL,openid,viewId]
 //获取想去的目的地列表
 #define Get_Tactic_List_WantGo(openid) [NSString stringWithFormat:@"%@viewSpot/getMySpots.action?openid=%@",BASE_URL,openid]
 //获取目的地关注状态
-#define Get_Tactic_Status_WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/checkMySpotStatus.action?openid=%@&viewId=%d",BASE_URL,openid,viewId]
+#define Get_Tactic_Status_WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/checkMySpotStatus.action?openid=%@&viewId=%zd",BASE_URL,openid,viewId]
 
 //通过userid获取用户基本信息
 #define GET_USERINFO_BYUSERID    HTTPURL(@"u/getUserById")

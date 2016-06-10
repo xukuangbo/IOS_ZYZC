@@ -43,6 +43,8 @@
 		0432ADAF1D096B89005D789E /* NSCalendar+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADA91D096B89005D789E /* NSCalendar+ST.m */; };
 		0432ADB01D096B89005D789E /* STPickerDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADAB1D096B89005D789E /* STPickerDate.m */; };
 		0432ADB11D096B89005D789E /* STPickerSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADAE1D096B89005D789E /* STPickerSingle.m */; };
+		0432ADB41D0A815C005D789E /* MineWalletTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADB31D0A815C005D789E /* MineWalletTableViewCell.m */; };
+		0432ADB71D0AA95D005D789E /* MineWalletModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADB61D0AA95D005D789E /* MineWalletModel.m */; };
 		04518B4B1CE419F0001921D0 /* MineSetUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */; };
 		04518B4C1CE419F0001921D0 /* MineSetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */; };
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
@@ -335,6 +337,10 @@
 		0432ADAB1D096B89005D789E /* STPickerDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPickerDate.m; sourceTree = "<group>"; };
 		0432ADAD1D096B89005D789E /* STPickerSingle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPickerSingle.h; sourceTree = "<group>"; };
 		0432ADAE1D096B89005D789E /* STPickerSingle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPickerSingle.m; sourceTree = "<group>"; };
+		0432ADB21D0A815C005D789E /* MineWalletTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineWalletTableViewCell.h; sourceTree = "<group>"; };
+		0432ADB31D0A815C005D789E /* MineWalletTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineWalletTableViewCell.m; sourceTree = "<group>"; };
+		0432ADB51D0AA95D005D789E /* MineWalletModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineWalletModel.h; sourceTree = "<group>"; };
+		0432ADB61D0AA95D005D789E /* MineWalletModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineWalletModel.m; sourceTree = "<group>"; };
 		04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MineSetUpVC.storyboard; sourceTree = "<group>"; };
 		04518B491CE419F0001921D0 /* MineSetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineSetUpViewController.h; sourceTree = "<group>"; };
 		04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineSetUpViewController.m; sourceTree = "<group>"; };
@@ -1700,6 +1706,10 @@
 			children = (
 				04D9A4AA1D06CBBD00753392 /* MineWalletVc.h */,
 				04D9A4AB1D06CBBD00753392 /* MineWalletVc.m */,
+				0432ADB21D0A815C005D789E /* MineWalletTableViewCell.h */,
+				0432ADB31D0A815C005D789E /* MineWalletTableViewCell.m */,
+				0432ADB51D0AA95D005D789E /* MineWalletModel.h */,
+				0432ADB61D0AA95D005D789E /* MineWalletModel.m */,
 			);
 			path = "MyWallet(钱包)";
 			sourceTree = "<group>";
@@ -2290,6 +2300,7 @@
 				0432ADA61D0966F9005D789E /* STPickerView.m in Sources */,
 				0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */,
 				04F836451CD72C3300140980 /* SDPieProgressView.m in Sources */,
+				0432ADB41D0A815C005D789E /* MineWalletTableViewCell.m in Sources */,
 				2CE074C31CCF7ECC006D312D /* ZYZCTabBarController.m in Sources */,
 				2CDC49FA1CFD3B5900E7893C /* ZYZCRCManager.m in Sources */,
 				0490D1591CC9BFB60064844C /* TacticSingleModelFrame.m in Sources */,
@@ -2392,6 +2403,7 @@
 				04A99CD11CBF848D00C6F5F0 /* ZCFilterModel.m in Sources */,
 				2CE5DD9D1CE999A900895A94 /* ZCCommentModel.m in Sources */,
 				04A99C971CBF848D00C6F5F0 /* ZYZCNavigationController.m in Sources */,
+				0432ADB71D0AA95D005D789E /* MineWalletModel.m in Sources */,
 				2C4AD99F1CEDA98E005FC29E /* ZCWSMView.m in Sources */,
 				04B99A681CFDA6F300E3C33A /* TacticGeneralVC.m in Sources */,
 				2CAF7BB41CE02B6600CB0885 /* ZCOneProductCell.m in Sources */,

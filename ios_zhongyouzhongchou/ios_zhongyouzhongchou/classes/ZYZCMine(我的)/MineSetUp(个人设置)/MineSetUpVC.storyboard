@@ -120,12 +120,25 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="06P-RX-n5f">
+                                                    <rect key="frame" x="457" y="5" width="100" height="33"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="XnS-jT-qnd"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstItem="aym-og-60a" firstAttribute="top" secondItem="hkp-ol-8Fi" secondAttribute="topMargin" constant="5" id="6vr-8z-DSz"/>
+                                                <constraint firstItem="06P-RX-n5f" firstAttribute="top" secondItem="hkp-ol-8Fi" secondAttribute="top" constant="5" id="EdB-5A-4bR"/>
                                                 <constraint firstItem="aym-og-60a" firstAttribute="leading" secondItem="hkp-ol-8Fi" secondAttribute="leadingMargin" constant="22" id="HXg-Ch-0CE"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="aym-og-60a" secondAttribute="bottom" constant="5" id="Lj2-IW-yMY"/>
+                                                <constraint firstAttribute="bottom" secondItem="06P-RX-n5f" secondAttribute="bottom" constant="5" id="PJs-fX-qjq"/>
+                                                <constraint firstAttribute="trailing" secondItem="06P-RX-n5f" secondAttribute="trailing" constant="10" id="wzn-uJ-cT6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -239,6 +252,9 @@
                             <outlet property="delegate" destination="0bb-EN-DYV" id="Qvw-NE-OVM"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="cacheSize" destination="06P-RX-n5f" id="nVs-8b-J88"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sV8-8r-NQk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

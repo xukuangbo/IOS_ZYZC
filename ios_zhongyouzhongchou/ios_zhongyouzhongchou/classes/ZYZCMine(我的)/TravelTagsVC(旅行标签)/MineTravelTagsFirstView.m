@@ -21,7 +21,7 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
         self.dataSource =self;
         self.backgroundColor = [UIColor clearColor];
         [self registerClass:[MineTravelTagsCell class] forCellWithReuseIdentifier:ID];
-        self.titleArray = @[@"阿达",@"阿asd达",@"阿发阿萨德达",@"阿达",@"阿达",@"阿达",@"阿无敌达",@"阿按地区的达",@"阿安全达",@"阿粉红",@"达",@"阿三公分吧说的达",@"阿啊达",@"阿按地方噶",@"阿达",@"阿胡达",@"阿发电脑你达",@"阿达聚客通"];
+        self.titleArray = @[@"阿达",@"阿asd达",@"阿德达",@"阿达",@"阿达",@"阿达",@"阿无敌达",@"阿的达",@"阿全达",@"阿粉红",@"达",@"阿说的达",@"阿啊达",@"按地方噶",@"阿达",@"阿胡达",@"阿发你达",@"阿通"];
     }
     return self;
 }
@@ -56,7 +56,8 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
     CGSize titleSize = [ZYZCTool calculateStrLengthByText:@"呵呵" andFont:tagsLabelFont andMaxWidth:MAXFLOAT];
     CGFloat width = (collectionView.width - 3 * KEDGE_DISTANCE) / 4.0;
     
-    return CGSizeMake(width - 10, titleSize.height + 10);
+//    return CGSizeMake(width, titleSize.height + 10);
+    return CGSizeMake(100, 100);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

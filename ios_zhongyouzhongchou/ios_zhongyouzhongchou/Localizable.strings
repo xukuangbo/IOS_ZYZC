@@ -57,6 +57,13 @@
 
 
 "error_no_spot"="没有找到匹配的目的地";
+
+/**
+ *  想去目的地
+ */
+"wantGo_success" = "标记想去成功";
+"wantGo" = "想去";
+"isWantGo" = "已关注";
 /**
  *  评论结果
  */
@@ -69,8 +76,8 @@
 "collection_success"="已添加推荐";
 "collection_fail"="已取消推荐";
 
-"add_spot_success"="成功添加目的地";
-"add_spot_fail"="添加失败";
+"add_spot_success"="标记想去成功";
+"add_spot_fail"="标记失败";
 
 "del_spot_success"="成功取关目的地";
 "del_spot_fail"="取关失败";

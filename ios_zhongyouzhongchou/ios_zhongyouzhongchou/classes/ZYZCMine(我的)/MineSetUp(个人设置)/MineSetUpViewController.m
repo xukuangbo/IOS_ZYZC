@@ -14,6 +14,7 @@
 #import "MineSaveContactInfoVC.h"
 #import "MineTravelTagsVC.h"
 @interface MineSetUpViewController ()<UITableViewDataSource,UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *cacheSize;
 
 @end
 
@@ -25,6 +26,14 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_back_new"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(pressBack)];
     self.title = @"设置";
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self calculateSize];
 }
 
 -(void)pressBack
@@ -70,6 +79,8 @@
             case 0://清空缓存
                 //这个是清空缓存的方法，弹出一个alert
                 NSLog(@"清空缓存");
+                [self presentClearCacheAlert];
+                
                 break;
             case 1:
                 //打开众游链接
@@ -89,4 +100,79 @@
         
     }
 }
+
+/**
+ *  弹出清楚缓存内容
+ */
+- (void)presentClearCacheAlert
+{
+    __weak typeof(&*self) weakSelf = self;
+    NSString *chcheSize = [NSString stringWithFormat:@"缓存大小为%.1f M，确认清除?",[SDImageCache sharedImageCache].getSize /1024.0/1024.0];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:chcheSize preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [weakSelf clearCache];
+        [weakSelf calculateSize];
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:sureAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+#pragma mark - 文件相关操作
+- (void)calculateSize
+{
+    CGFloat cacheSize = [SDImageCache sharedImageCache].getSize /1024.0/1024.0;
+    _cacheSize.text = [NSString stringWithFormat:@"%.1f M",cacheSize];
+}
+
+-(void)clearCache{
+    [[SDImageCache sharedImageCache] clearDisk];
+}
+
+//-(void)clearCache{
+//    NSFileManager *fileManager=[NSFileManager defaultManager];
+//    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//    if ([fileManager fileExistsAtPath:path]) {
+//        NSArray *childerFiles=[fileManager subpathsAtPath:path];
+//        for (NSString *fileName in childerFiles) {
+//            //如有需要，加入条件，过滤掉不想删除的文件
+//            NSString *absolutePath=[path stringByAppendingPathComponent:fileName];
+//            [fileManager removeItemAtPath:absolutePath error:nil];
+//        }
+//    }
+//    [[SDImageCache sharedImageCache] cleanDisk];
+//
+//}
+//
+//-(float)fileSizeAtPath:(NSString *)path{
+//    NSFileManager *fileManager=[NSFileManager defaultManager];
+//    if([fileManager fileExistsAtPath:path]){
+//        long long size=[fileManager attributesOfItemAtPath:path error:nil].fileSize;
+//        return size/1024.0/1024.0;
+//    }
+//    return 0;
+//}
+
+
+
+//-(float)folderSizeAtPath:(NSString *)path{
+//    NSFileManager *fileManager=[NSFileManager defaultManager];
+//    float folderSize;
+//    if ([fileManager fileExistsAtPath:path]) {
+//        NSArray *childerFiles=[fileManager subpathsAtPath:path];
+//        for (NSString *fileName in childerFiles) {
+//            NSString *absolutePath=[path stringByAppendingPathComponent:fileName];
+//            folderSize +=[self fileSizeAtPath:absolutePath];
+//        }
+//        //SDWebImage框架自身计算缓存的实现
+//        folderSize+=[[SDImageCache sharedImageCache] getSize]/1024.0/1024.0;
+//        return folderSize;
+//    }
+//    return 0;
+//}
+
 @end
