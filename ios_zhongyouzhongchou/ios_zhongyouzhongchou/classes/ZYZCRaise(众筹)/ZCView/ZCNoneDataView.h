@@ -12,4 +12,6 @@
 @property (nonatomic, weak ) IBOutlet UIImageView *iconView;
 @property (nonatomic, weak)  IBOutlet UILabel *lab01;
 @property (nonatomic, weak)  IBOutlet UILabel *lab02;
+
+@property (nonatomic, assign) NSInteger myZCType;
 @end

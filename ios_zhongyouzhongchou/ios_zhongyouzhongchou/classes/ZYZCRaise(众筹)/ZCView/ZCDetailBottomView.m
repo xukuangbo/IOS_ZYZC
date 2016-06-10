@@ -18,7 +18,6 @@
     // Drawing code
 }
 */
-
 - (instancetype)init
 {
     self = [super init];
@@ -32,24 +31,23 @@
     return self;
 }
 
--(void)setZcType:(ZC_TYPE)zcType
-{
-    _zcType=zcType;
-    if (zcType == AllList) {
-        [self configUI01];
-    }
-    else if (zcType == Mylist)
-    {
-        [self configUI02];
-    }
-}
 
-#pragma mark --- 访客版控件创建
--(void)configUI01
+-(void)setDetailProductType:(DetailProductType)detailProductType
 {
-    NSArray *titleArr=@[@"评论",@"支持",@"推荐"];
-    CGFloat btn_width=KSCREEN_W/3;
-    for (int i=0; i<3; i++) {
+    _detailProductType=detailProductType;
+     NSArray *titleArr=nil;
+    if (detailProductType==PersonDetailProduct) {
+        titleArr=@[@"评论",@"支持",@"推荐"];
+    }
+    else if(detailProductType==MineDetailProduct)
+    {
+        titleArr=@[@"补充说明",@"支持自己"];
+    }
+    if (!titleArr.count) {
+        return;
+    }
+    CGFloat btn_width=KSCREEN_W/titleArr.count;
+    for (int i=0; i<titleArr.count; i++) {
         UIButton *sureBtn=[UIButton buttonWithType:UIButtonTypeCustom];
         sureBtn.frame=CGRectMake(btn_width*i, self.height/2-20, btn_width, 40);
         [sureBtn setTitle:titleArr[i] forState:UIControlStateNormal];
@@ -61,26 +59,10 @@
         sureBtn.tag=CommentType+i;
         [self addSubview:sureBtn];
     }
-     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeSupportButton:) name:KCAN_SUPPORT_MONEY object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeSupportButton:) name:KCAN_SUPPORT_MONEY object:nil];
 }
 
-#pragma mark --- 个人版控件创建
--(void)configUI02
-{
-    NSArray *titleArr=@[@"补充说明",@"支持自己"];
-    CGFloat btn_width=KSCREEN_W/2;
-    for (int i=0; i<2; i++) {
-        UIButton *sureBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        sureBtn.frame=CGRectMake(btn_width*i, self.height/2-20, btn_width, 40);
-        [sureBtn setTitle:titleArr[i] forState:UIControlStateNormal];
-        [sureBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
-        sureBtn.titleLabel.font=[UIFont systemFontOfSize:20];
-        [sureBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
-        sureBtn.tag=CommentType+i;
-        [self addSubview:sureBtn];
-    }
-
-}
 
 #pragma mark --- 底部按钮点击事件
 -(void)clickBtn:(UIButton *)sender
@@ -129,9 +111,6 @@
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:KCAN_SUPPORT_MONEY object:nil];
 }
-
-
-
 
 
 @end

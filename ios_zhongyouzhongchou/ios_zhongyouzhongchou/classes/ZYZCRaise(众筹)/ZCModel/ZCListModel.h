@@ -9,32 +9,58 @@
 #import <Foundation/Foundation.h>
 #import "UserModel.h"
 
-//所有众筹列表／我的众筹列表／众筹详情中个人信息栏/我的草稿
-typedef NS_ENUM(NSInteger, ZC_TYPE)
+
+typedef NS_ENUM(NSInteger, ProductType)
 {
-    AllList,
-    Mylist,
-    DetailType,
-    MyDraft
+    ZCListProduct,          //众筹列表
+    ZCDetailProduct,        //众筹详情
+    MyPublishProduct,       //我的众筹
+    MyJionProduct,          //我参加的众筹
+    MyReturnProduct,        //我的回报
+    MyDraftProduct,         //我的草稿
+    MyGoingProduct,         //我的正在进行的
+    MyChoosePartnerProduct, //我的选择一起游的
+    MyFailProduct,          //我的失败的
+    MyVerifyProduct,        //我的上传凭证的
+    MyDrawCashProduct       //我的可提现的
 };
 
-//我的众筹列表中区分我发布，我参与，我推荐
-typedef NS_ENUM(NSInteger, MY_ZC_TYPE)
+#pragma mark --- 众筹
+typedef NS_ENUM(NSInteger, DetailProductType)
 {
-    MyPublish=1,
-    MyJoin,
-    MyRecommend
+    PersonDetailProduct,
+    MineDetailProduct,
+    DraftDetailProduct
 };
 
-//我的众筹列表中项目出现的状态
-typedef NS_ENUM(NSInteger, ZCStateType) {
-    ZCStateTypeDraft,             //众筹草稿
-    ZCStateTypeGoing,             //众筹正在进行
-    ZCStateTypeChoosePartner,     //选择同游(众筹达到100%，并且众筹时间已截止)
-    ZCStateTypeTypeTraveling,     //上传游记(正在进行旅行中)
-    ZCStateTypeEndTravel,         //申请提现(旅游结束)
-    ZCStateTypeFail,              //众筹失败(众筹未达到100%，并且众筹时间已截止)
-};
+
+//
+////所有众筹列表／我的众筹列表／众筹详情中个人信息栏/我的草稿
+//typedef NS_ENUM(NSInteger, ZC_TYPE)
+//{
+//    AllList,
+//    Mylist,
+//    DetailType,
+//    MyDraft
+//};
+//
+////我的众筹列表中区分我发布，我参与，我推荐
+//typedef NS_ENUM(NSInteger, MY_ZC_TYPE)
+//{
+//    MyPublish=1,
+//    MyJoin,
+//    MyRecommend
+//};
+//
+////我的众筹列表中项目出现的状态
+//typedef NS_ENUM(NSInteger, ZCStateType) {
+//    ZCStateTypeDraft,             //众筹草稿
+//    ZCStateTypeGoing,             //众筹正在进行
+//    ZCStateTypeChoosePartner,     //选择同游(众筹达到100%，并且众筹时间已截止)
+//    ZCStateTypeTypeTraveling,     //上传游记(正在进行旅行中)
+//    ZCStateTypeEndTravel,         //申请提现(旅游结束)
+//    ZCStateTypeFail,              //众筹失败(众筹未达到100%，并且众筹时间已截止)
+//};
 
 @class ZCOneModel,ZCProductModel,ZCSpellbuyproductModel;
 
@@ -53,9 +79,9 @@ typedef NS_ENUM(NSInteger, ZCStateType) {
 @property (nonatomic, strong) ZCSpellbuyproductModel *spellbuyproduct;
 @property (nonatomic, strong) UserModel       *user;
 
-@property (nonatomic, assign) ZC_TYPE         zcType;
-@property (nonatomic, assign) MY_ZC_TYPE      myZCtype;
-@property (nonatomic, assign) ZCStateType     zcStateType;
+@property (nonatomic, assign) ProductType     productType;
+
+
 
 @end
 
@@ -73,6 +99,7 @@ typedef NS_ENUM(NSInteger, ZCStateType) {
 @property (nonatomic, copy  ) NSString *travelstartTime;
 @property (nonatomic, copy  ) NSString *travelendTime;
 @property (nonatomic, strong) NSNumber *up;
+@property (nonatomic, strong) NSNumber *friendsCount;
 
 @end
 

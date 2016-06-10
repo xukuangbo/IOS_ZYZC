@@ -13,7 +13,6 @@
 #define TOGETHERSUPPORT(rate,money) [NSString stringWithFormat:@"一起去:支持%d％旅费(%.2f)元",rate,money]
 
 #import "ZCDetailReturnFirstCell.h"
-#import "ZCPersonInfoController.h"
 
 @interface ZCDetailReturnFirstCell ()
 @property (nonatomic, strong) NSMutableArray *mySubViews;
@@ -189,10 +188,10 @@
             [dic setObject:weakSelf.returnMoney01 forKey:@"style3"];
         }
         if (weakSelf.returnSupportView02.sureSupport) {
-            [dic setObject:weakSelf.returnMoney02 forKey:@"style4"];
+            [dic setObject:weakSelf.returnMoney02 forKey:@"style5"];
         }
         if (weakSelf.togetherView.sureSupport) {
-            [dic setObject:weakSelf.togetherMoney forKey:@"style5"];
+            [dic setObject:weakSelf.togetherMoney forKey:@"style4"];
         }
         NSData *data = [NSJSONSerialization dataWithJSONObject :dic options : NSJSONWritingPrettyPrinted error:NULL];
         NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];

@@ -12,8 +12,8 @@
 #import "ZYZCPersonalController.h"
 #import "PersonHeadView.h"
 #import "ZCListModel.h"
-#import "ZCOneProductCell.h"
-#import "ZCPersonInfoController.h"
+#import "ZYZCOneProductCell.h"
+#import "ZCProductDetailController.h"
 @interface ZYZCPersonalController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView       *table;
 @property (nonatomic, strong) PersonHeadView    *headView;
@@ -104,6 +104,7 @@
     }
     NSString *url=[NSString stringWithFormat:@"%@%@",LISTMYPRODUCTS,
                    GET_MY_LIST(_userModel.openid,_productType-PublishType+1,_pageNo)];
+    NSLog(@"url:%@",url);
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess)
     {
         NSLog(@"%@",result);
@@ -138,24 +139,19 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return _productArr.count>0?_productArr.count*2+1:0;
+     return _productArr.count*2+1;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row%2) {
         NSString *cellId=@"productCell";
-        ZCOneProductCell *productCell=[tableView dequeueReusableCellWithIdentifier:cellId];
-        if (!productCell) {
-            productCell=[[ZCOneProductCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        }
-        productCell.oneModel=_productArr[(indexPath.row+1)/2-1];
+        ZYZCOneProductCell *productCell=(ZYZCOneProductCell*)[ZYZCOneProductCell customTableView:tableView cellWithIdentifier:cellId andCellClass:[ZYZCOneProductCell class]];
+        productCell.oneModel=_productArr[(indexPath.row-1)/2];
         return productCell;
     }
     else{
-        UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        cell.contentView.backgroundColor=[UIColor ZYZC_BgGrayColor];
+        UITableViewCell *cell=[ZYZCOneProductCell createNormalCell];
         return cell;
     }
 }
@@ -173,16 +169,18 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row%2) {
     //推出信息详情页
-    ZCPersonInfoController *personInfoVC=[[ZCPersonInfoController alloc]init];
-    personInfoVC.hidesBottomBarWhenPushed=YES;
+    ZCProductDetailController *personDetailVC=[[ZCProductDetailController alloc]init];
+    personDetailVC.hidesBottomBarWhenPushed=YES;
     ZCOneModel *oneModel=_productArr[(indexPath.row+1)/2-1];
-    personInfoVC.oneModel=oneModel;
-    personInfoVC.productId=oneModel.product.productId;
-    [self.navigationController pushViewController:personInfoVC animated:YES];
+    personDetailVC.oneModel=oneModel;
+    personDetailVC.oneModel.productType=ZCDetailProduct;
+    personDetailVC.productId=oneModel.product.productId;
+    personDetailVC.detailProductType=PersonDetailProduct;
+    [self.navigationController pushViewController:personDetailVC animated:YES];
+    }
 }
-
-
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

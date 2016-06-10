@@ -11,7 +11,6 @@
 #import "MineHeadView.h"
 #import "MineCenterTableViewCell.h"
 #import "MineMessageController.h"
-#import "ZCMainController.h"
 #import "MineWantGoVC.h"
 #import "ZYZCRCManager.h"
 #import "MyUserFollowedVC.h"
@@ -106,10 +105,10 @@
         }
         else if (indexPath.row == 2)
         {
-            ZCMainController *myTravelVC=[[ZCMainController alloc]init];
-            myTravelVC.zcType=Mylist;
-            myTravelVC.hidesBottomBarWhenPushed=YES;
-            [self.viewController.navigationController pushViewController:myTravelVC animated:YES];
+//            ZCMainController *myTravelVC=[[ZCMainController alloc]init];
+//            myTravelVC.zcType=Mylist;
+//            myTravelVC.hidesBottomBarWhenPushed=YES;
+//            [self.viewController.navigationController pushViewController:myTravelVC animated:YES];
         }
         else if (indexPath.row == 3)
         {

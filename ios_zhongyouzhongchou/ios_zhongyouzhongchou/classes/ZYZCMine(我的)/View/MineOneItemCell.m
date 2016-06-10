@@ -31,7 +31,7 @@
 
 -(void)configUI
 {
-    _iconImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0,(ONE_ITEM_CELL_HEIGHT-20)/2 , 20, 20)];
+    _iconImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0,(ONE_ITEM_CELL_HEIGHT-24)/2 , 24, 24)];
     [self.contentView addSubview:_iconImageView];
     
     _titleLab=[[UILabel alloc]initWithFrame:CGRectMake(_iconImageView.right+KEDGE_DISTANCE, (ONE_ITEM_CELL_HEIGHT-30)/2, 200, 30)];
