@@ -9,6 +9,7 @@
 #import "WXApiPay.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "ZYZCTool+getLocalTime.h"
+#import "MBProgressHUD.h"
 @interface WXApiPay ()
 
 
@@ -36,6 +37,7 @@
     [params setObject:[ZYZCTool getDeviceIp] forKey:@"ip"];
     
  
+    [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
     [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:GET_WX_ORDER  andParameters:params andSuccessGetBlock:^(id result, BOOL isSuccess) {
         NSLog(@"result:%@",result);
             PayReq *request = [[PayReq alloc] init];
@@ -63,9 +65,11 @@
            NSLog(@"sign:%@",request.sign);
             //! @brief 发送请求到微信，等待微信返回onResp
             [WXApi sendReq: request];
+        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
 
     } andFailBlock:^(id failResult) {
         NSLog(@"failResult:%@",failResult);
+        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
     }];
     
 }

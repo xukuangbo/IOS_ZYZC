@@ -20,7 +20,7 @@
 #import "NecessoryAlertManager.h"
 
 #import "FZCSaveDraftData.h"
-#import "ZCPersonInfoController.h"
+#import "ZCProductDetailController.h"
 
 
 #define kMoreFZCToolBar 20
@@ -31,9 +31,6 @@
 #define ALERT_PUBLISH_TAG 3
 
 @interface MoreFZCViewController ()<MoreFZCToolBarDelegate,UIAlertViewDelegate>
-//@property (nonatomic, copy  ) NSString *oneResouceFile;
-//@property (nonatomic, copy  ) NSString *archiveDataPath;
-//@property (nonatomic, assign) BOOL isFirstTimeToSave;
 @property (nonatomic, assign) BOOL needPopVC;
                               //记录发布的数据在oss的位置
 @property (nonatomic, copy  ) NSString *myZhouChouMarkName;
@@ -282,13 +279,21 @@
 {
     ZCDetailModel *detailModel=[[ZCDetailModel alloc]init];
     detailModel.detailProductModel=_detailProductModel;
+    ZCProductDetailController *draftDetailVC=[[ZCProductDetailController alloc]init];
+    draftDetailVC.oneModel=_oneModel;
+    draftDetailVC.oneModel.productType=ZCDetailProduct;
+    draftDetailVC.detailModel=detailModel;
+    draftDetailVC.schedule=_detailProductModel.schedule;
+    draftDetailVC.detailProductType=DraftDetailProduct;
+    [self.navigationController pushViewController:draftDetailVC animated:YES];
+
     
-    ZCPersonInfoController *personInfoVC=[[ZCPersonInfoController alloc]init];
-    personInfoVC.oneModel=_oneModel;
-    personInfoVC.detailModel=detailModel;
-    personInfoVC.schedule=_detailProductModel.schedule;
-    personInfoVC.zcType=MyDraft;
-    [self.navigationController pushViewController:personInfoVC animated:YES];
+//    ZCPersonInfoController *personInfoVC=[[ZCPersonInfoController alloc]init];
+//    personInfoVC.oneModel=_oneModel;
+//    personInfoVC.detailModel=detailModel;
+//    personInfoVC.schedule=_detailProductModel.schedule;
+//    personInfoVC.zcType=MyDraft;
+//    [self.navigationController pushViewController:personInfoVC animated:YES];
 }
 
 #pragma mark --- 下一步或发布
@@ -478,7 +483,7 @@
 #pragma mark --- 发布请求
 -(void)publishHttpData
 {
-    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT andParameters:_dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
+    [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:ADDPRODUCT  andParameters:_dataDic andSuccessGetBlock:^(id result, BOOL isSuccess) {
         if (isSuccess) {
             //发送成功，删除本地数据
 //            [self cleanTmpFile];
@@ -673,6 +678,12 @@
         NSString *jsonStr = [[ NSString alloc ] initWithData :data encoding : NSUTF8StringEncoding];
     
     return jsonStr;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor ZYZC_NavColor]];
 }
 
 @end

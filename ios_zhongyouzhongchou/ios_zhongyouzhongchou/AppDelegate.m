@@ -52,7 +52,8 @@
     //存储地名库
     [self saveViewSpot];
     
-    //==========
+    //=========
+    
 //    [ZYZCTool saveUserIdById:@"oulbuvtpzxiOe6t9hVBh2mNRgiaI"];
 //    NSLog(@"%@",[ZYZCTool getUserId]);
 //    WXApiPay *pay=[[WXApiPay alloc]init];

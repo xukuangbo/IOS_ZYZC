@@ -22,7 +22,7 @@ typedef void (^PayMoneyBlock)(NSNumber *productId);
 
 @interface ZCDetailBottomView : UIView
 
-@property (nonatomic, assign) ZC_TYPE zcType;       //标记：区分访客版和个人版
+@property (nonatomic, assign) DetailProductType detailProductType;
 
 @property (nonatomic, assign) BOOL   surePay;       //标记：是否支付
 

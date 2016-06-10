@@ -35,12 +35,6 @@
 
 -(void)getHttpData
 {
-    if (!_needGetData) {
-        _commentArr=[NSMutableArray arrayWithArray:_comments];
-        [_table reloadData];
-        _needGetData=YES;
-        return;
-    }
     NSDictionary *parameters=@{@"openid":[ZYZCTool getUserId],
                                @"productId":_productId,
                                @"pageNo":[NSNumber numberWithInt:_pageNo],
@@ -71,7 +65,7 @@
 -(void)configUI
 {
     _table =[[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _table.height=KSCREEN_H-49;
+//    _table.height=KSCREEN_H-49; 
     _table.dataSource=self;
     _table.delegate=self;
     _table.showsVerticalScrollIndicator=NO;

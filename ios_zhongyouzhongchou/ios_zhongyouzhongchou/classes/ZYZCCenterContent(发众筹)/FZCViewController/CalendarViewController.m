@@ -207,7 +207,7 @@ static NSString *DayCell = @"DayCell";
 #pragma mark --- 获取我已参与的日期
 -(void )getMyOccupyDays
 {
-    NSString *url=[NSString stringWithFormat:@"%@cache=false&orderType=1&pageNo=1&pageSize=20&openid=%@",GET_MY_OCCUPY_TIME,[ZYZCTool getUserId]];
+    NSString *url=[NSString stringWithFormat:@"%@cache=false&orderType=1&pageNo=1&pageSize=100&openid=%@",GET_MY_OCCUPY_TIME,[ZYZCTool getUserId]];
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
 //        NSLog(@"%@",result);
         if (isSuccess) {

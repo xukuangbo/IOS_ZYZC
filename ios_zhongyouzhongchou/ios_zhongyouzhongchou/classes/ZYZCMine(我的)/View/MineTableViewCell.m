@@ -5,16 +5,18 @@
 //  Created by liuliang on 16/6/7.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
+#import "ZYZCMineVIewController.h"
 
 #import "MineTableViewCell.h"
-#import "ZCMainController.h"
+#import "MyProductViewController.h"
+#import "MyReturnViewController.h"
 #import "MineWantGoVC.h"
 #import "ZYZCRCManager.h"
 #import "MyUserFollowedVC.h"
 #import "ZYZCAccountTool.h"
 #import "ZYZCAccountModel.h"
 #import "MBProgressHUD+MJ.h"
-#import "ZYZCMineVIewController.h"
+
 @interface MineTableViewCell ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UIImageView *iconImg;
 @property (nonatomic, strong) UILabel     *textLab;
@@ -107,14 +109,17 @@
     else if (indexPath.row==2)
     {
         //我的行程
-        ZCMainController *myTravelVC=[[ZCMainController alloc]init];
-        myTravelVC.zcType=Mylist;
+        MyProductViewController *myTravelVC=[[MyProductViewController alloc]init];
         myTravelVC.hidesBottomBarWhenPushed=YES;
         [self.viewController.navigationController pushViewController:myTravelVC animated:YES];
     }
     else if(indexPath.row==3)
     {
         //我的回报
+        MyReturnViewController *returnViewController=[[MyReturnViewController alloc]init];
+        returnViewController.hidesBottomBarWhenPushed=YES;
+        [self.viewController.navigationController pushViewController:returnViewController animated:YES];
+        
         
     }
     else if (indexPath.row==4)

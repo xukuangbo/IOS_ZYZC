@@ -120,10 +120,10 @@
             </objects>
             <point key="canvasLocation" x="-897" y="730.5"/>
         </scene>
-        <!--Main Controller-->
+        <!--Main View Controller-->
         <scene sceneID="F4P-6P-mcg">
             <objects>
-                <viewController id="Ohd-Li-93B" customClass="ZCMainController" sceneMemberID="viewController">
+                <viewController id="Ohd-Li-93B" customClass="ZCMainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0U7-DZ-lrv"/>
                         <viewControllerLayoutGuide type="bottom" id="znW-JY-a98"/>

@@ -12,6 +12,8 @@
 
 #import "TacticSingleViewController.h"
 
+#import "UIView+GetSuperTableView.h"
+
 #define FIRSTBTN_TAG  3
 #define LINEVIEW_TAG  110
 @interface ZCDetailIntroSecondCell ()
@@ -186,9 +188,10 @@
 -(void)getHttpDataByViewId:(NSNumber *)viewId
 {
     NSString *url=[NSString stringWithFormat:@"%@viewId=%@",GET_VIEWSPOT,viewId];
+    __weak typeof (&*self)weakSelf=self;
     [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
         _tacticSingleModel = [TacticSingleModel mj_objectWithKeyValues:result[@"data"]];
-        [self reloadData];
+        [weakSelf reloadData];
     } andFailBlock:^(id failResult) {
 //        NSLog(@"%@",failResult);
     }];

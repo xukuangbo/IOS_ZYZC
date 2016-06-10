@@ -15,7 +15,7 @@
 {
     MoreFZCDataManager *dataManager= [MoreFZCDataManager sharedMoreFZCDataManager];
     
-    oneModel.zcType=DetailType;
+    oneModel.productType=ZCDetailProduct;
     ZCProductModel *productModel=[[ZCProductModel alloc]init];
     productModel.productPrice= [NSNumber numberWithFloat:[dataManager.raiseMoney_totalMoney floatValue]*100.0] ;
     productModel.travelstartTime=dataManager.goal_startDate;
