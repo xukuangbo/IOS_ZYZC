@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FXBlurView.h"
 #define imageHeadHeight (KSCREEN_W / 16 * 9)
 @interface MinePersonSetUpHeadView : UIImageView
 @property (nonatomic, weak) UIImageView *iconView;
 @property (nonatomic, weak) UILabel *nameLabel;
+@property (nonatomic, strong) FXBlurView *blurView;
+
+- (void)addFXBlurView;
 @end

@@ -79,3 +79,10 @@
  *  个人中心界面
  */
 "login_action" = "请登录后操作";
+/**
+ *  收货地址
+ */
+"place_name" = "请输入姓名";
+"place_phone" = "请输入电话号码";
+"place_place" = "请输入地区";
+"place_detail_place" = "请输入地址";

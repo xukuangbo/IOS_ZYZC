@@ -21,7 +21,7 @@
 
 #import "UIView+ZYZCLineView.h"
 
-#import "UIViewExt.h"
+#import "UIView+ST.h"
 
 //获取UIView控制器
 #import "UIView+ViewController.h"
@@ -50,7 +50,11 @@
 //测试
 #define BASE_URL @"http://121.40.225.119:8080/"
 //华子
+<<<<<<< HEAD
 //#define BASE_URL @"http://192.168.1.33/"
+=======
+//#define BASE_URL @"http://192.168.1.27/"
+>>>>>>> aed493cacf3af561dbe82bf3640f8efb3a539416
 
 #define HTTPURL(APPEND_URL) [NSString stringWithFormat:@"%@%@.action?",BASE_URL,APPEND_URL]
 
@@ -60,6 +64,8 @@
 #define GETUSERDETAIL      HTTPURL(@"u/getUserDetail")
 //获取我关注的人
 #define Get_UserFollowed_List(openid)  [NSString stringWithFormat:@"%@friends/listUserFollowed.action?openid=%@",BASE_URL,openid]
+//获取个人信息（需带userId）
+#define Get_SelfInfo(openid,userId)  [NSString stringWithFormat:@"%@u/getUserDetail.action?openid=%@&userId=%d",BASE_URL,openid,userId]
 
 //获取label信息
 #define LISTLABLE          HTTPURL(@"user/listLabel")
@@ -76,6 +82,12 @@
 #define GETUSERINFO        HTTPURL(@"register/getUserInfo")
 //注册微信用户信息
 #define REGISTERWEICHAT    HTTPURL(@"register/saveWeixinInfo")
+//注册个人信息（总）
+#define Regist_UpdateUserInfo [NSString stringWithFormat:@"%@register/updateUserInfo.action",BASE_URL]
+//收货地址
+#define Regist_SaveContactInfo [NSString stringWithFormat:@"%@register/saveContactInfo.action",BASE_URL]
+
+
 //用户基本信息
 #define BASEINFO           HTTPURL(@"register/saveBaseInfo")
 //实名认证

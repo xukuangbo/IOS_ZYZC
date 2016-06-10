@@ -11,6 +11,8 @@
 #import "ZYZCAccountTool.h"
 #import "ZYZCAccountModel.h"
 #import "MBProgressHUD+MJ.h"
+#import "MineSaveContactInfoVC.h"
+#import "MineTravelTagsVC.h"
 @interface MineSetUpViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -18,8 +20,8 @@
 @implementation MineSetUpViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     
+    [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_back_new"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(pressBack)];
     self.title = @"设置";
@@ -54,11 +56,11 @@
                 break;
             case 1://旅行标签
                 NSLog(@"旅行标签");
-                
+                [self.navigationController pushViewController:[[MineTravelTagsVC alloc] init] animated:YES];
                 break;
             case 2://收货地址
                 NSLog(@"收货地址");
-                
+                [self.navigationController pushViewController:[[MineSaveContactInfoVC alloc] init] animated:YES];
                 break;
             default:
                 break;

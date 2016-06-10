@@ -11,7 +11,11 @@
 
 @class MinePersonSetUpHeadView;
 @class MinePersonSetUpModel;
+
 @interface MinePersonSetUpScrollView : UIScrollView
+
+
+
 @property (nonatomic, weak) MinePersonSetUpHeadView *headView;
 
 /**
@@ -30,19 +34,11 @@
 /**
  *  生日点击选择框
  */
-@property (nonatomic, weak) UIButton *birthButton;
+@property (nonatomic, weak) UITextField *birthButton;
 /**
  *  星座点击选择框
  */
 @property (nonatomic, weak) UILabel *constellationButton;
-
-
-
-/**
- *  兴趣标签选择框
- */
-@property (nonatomic, weak) UIButton *likeButton;
-
 
 /**
  *  婚姻状况选择框
@@ -62,8 +58,6 @@
  */
 @property (nonatomic, weak) UITextField *weightButton;
 
-
-
 /**
  *  公司输入
  */
@@ -80,8 +74,6 @@
  *  所在地输入
  */
 @property (nonatomic, weak) UITextField *locationButton;
-
-
 /**
  *  邮箱输入
  */

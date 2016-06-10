@@ -14,12 +14,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        //创建一个背景毛玻璃
-        FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.bounds];
-        blurView.tintColor = [UIColor colorWithRed:35 / 256.0 green:382 / 256.0 blue:183 / 256.0 alpha:1];  //前景颜色
-        blurView.blurRadius = 100;                 //模糊半径
-        blurView.dynamic = NO;                     //动态改变模糊效果
-        [self addSubview:blurView];
+        self.contentMode = UIViewContentModeScaleAspectFill;
         
         UIView *mapView = [[UIView alloc] init];
         [self addSubview:mapView];
@@ -32,8 +27,7 @@
         shadowView.size = CGSizeMake(shadowViewWH, shadowViewWH);
         shadowView.layer.cornerRadius = 5;
         shadowView.layer.masksToBounds = YES;
-        CGFloat arcFloat = (arc4random_uniform(150) + 50) / 256.0;
-        shadowView.backgroundColor= [UIColor colorWithRed:arcFloat green: arcFloat blue:arcFloat alpha:1];
+        shadowView.backgroundColor= [UIColor ZYZC_MainColor];
         [mapView addSubview:shadowView];
         //头像
         CGFloat iconViewXY = 5 * KCOFFICIEMNT;
@@ -61,4 +55,19 @@
     return self;
 }
 
+
+-(void)addFXBlurView
+{
+    if (_blurView) {
+        [_blurView removeFromSuperview];
+    }
+    //创建毛玻璃
+    _blurView = [[FXBlurView alloc] initWithFrame:self.bounds];
+    [_blurView setDynamic:NO];
+    _blurView.blurRadius=10;
+    [self addSubview:_blurView];
+    [self insertSubview:_blurView atIndex:0];
+    self.clipsToBounds = YES;
+    
+}
 @end
