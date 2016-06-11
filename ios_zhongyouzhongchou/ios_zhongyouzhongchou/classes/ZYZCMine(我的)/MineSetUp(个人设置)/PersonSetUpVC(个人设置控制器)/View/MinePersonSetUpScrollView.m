@@ -182,6 +182,7 @@
     heightLabel.text = @"身高(cm)";
     UITextField *heightButton = [[UITextField alloc] init];
     heightButton.textColor = [UIColor lightGrayColor];
+    heightButton.placeholder = @"请输入身高";
     heightButton.clearsOnBeginEditing = YES;
     heightButton.keyboardType = UIKeyboardTypeNumberPad;
     self.heightButton = heightButton;
@@ -196,6 +197,7 @@
     weightLabel.text = @"体重(kg)";
     UITextField *weightButton = [[UITextField alloc] init];
     weightButton.textColor = [UIColor lightGrayColor];
+    weightButton.placeholder = @"请输入体重";
     weightButton.clearsOnBeginEditing = YES;
     weightButton.keyboardType = UIKeyboardTypeNumberPad;
     self.weightButton = weightButton;
@@ -230,6 +232,7 @@
     
     UITextField *companyButton = [[UITextField alloc] init];
     companyButton.textColor = [UIColor lightGrayColor];
+    companyButton.placeholder = @"请输入公司名称";
     companyButton.clearsOnBeginEditing = YES;
     companyButton.delegate = self;
     self.companyButton = companyButton;
@@ -244,6 +247,7 @@
     
     UITextField *jobButton = [[UITextField alloc] init];
     jobButton.textColor = [UIColor lightGrayColor];
+    jobButton.placeholder = @"请输入工作";
     jobButton.clearsOnBeginEditing = YES;
     jobButton.delegate = self;
     self.jobButton = jobButton;
@@ -258,14 +262,30 @@
     schoolLabel.text = @"学校";
     UITextField *schoolButton = [[UITextField alloc] init];
     schoolButton.textColor = [UIColor lightGrayColor];
+    schoolButton.placeholder = @"请输入学校";
     schoolButton.clearsOnBeginEditing = YES;
     schoolButton.delegate = self;
     self.schoolButton = schoolButton;
     [self createUIWithSuperView:self.thirdBg titleLabel:schoolLabel titleView:schoolButton];
     
+    //学校标题
+    CGFloat departmentX = KEDGE_DISTANCE;
+    CGFloat departmentY = schoolButton.bottom;
+    CGFloat departmentW = (bgImageViewW - departmentX * 2) * 0.3;
+    CGFloat departmentH = SetUpFirstCellLabelHeight;
+    UILabel *departmentLabel = [[UILabel alloc] initWithFrame:CGRectMake(departmentX, departmentY, departmentW, departmentH)];
+    departmentLabel.text = @"专业";
+    UITextField *departmentButton = [[UITextField alloc] init];
+    departmentButton.textColor = [UIColor lightGrayColor];
+    departmentButton.placeholder = @"请输入专业";
+    departmentButton.clearsOnBeginEditing = YES;
+    departmentButton.delegate = self;
+    self.departmentButton = departmentButton;
+    [self createUIWithSuperView:self.thirdBg titleLabel:departmentLabel titleView:departmentButton];
+    
     //所在地标题
     CGFloat locationLabelX = KEDGE_DISTANCE;
-    CGFloat locationLabelY = schoolButton.bottom;
+    CGFloat locationLabelY = departmentButton.bottom;
     CGFloat locationLabelW = (bgImageViewW - locationLabelX * 2) * 0.3;
     CGFloat locationLabelH = SetUpFirstCellLabelHeight;
     UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(locationLabelX, locationLabelY, locationLabelW, locationLabelH)];
@@ -280,7 +300,7 @@
     self.thirdBg.layer.cornerRadius = 5;
     self.thirdBg.layer.masksToBounds = YES;
     self.thirdBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
-    self.thirdBg.height = (SetUpFirstCellLabelHeight * 4 + KEDGE_DISTANCE * 2);
+    self.thirdBg.height = (SetUpFirstCellLabelHeight * 5 + KEDGE_DISTANCE * 2);
 }
 /**
  *  第四个cell
@@ -312,12 +332,24 @@
     self.emailButton = emailButton;
     [self createUIWithSuperView:self.fourthBg titleLabel:emailLabel titleView:emailButton];
     
-    
+    //手机
+    CGFloat phoneLabelX = KEDGE_DISTANCE;
+    CGFloat phoneLabelY = emailButton.bottom;
+    CGFloat phoneLabelW = (bgImageViewW - phoneLabelX * 2) * 0.3;
+    CGFloat phoneLabelH = SetUpFirstCellLabelHeight;
+    UILabel *phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(phoneLabelX, phoneLabelY, phoneLabelW, phoneLabelH)];
+    phoneLabel.text = @"QQ";
+    UITextField *phoneButton = [[UITextField alloc] init];
+    phoneButton.textColor = [UIColor lightGrayColor];
+    phoneButton.delegate = self;
+    phoneButton.placeholder = @"请输入QQ";
+    self.phoneButton = phoneButton;
+    [self createUIWithSuperView:self.fourthBg titleLabel:phoneLabel titleView:phoneButton];
     
     self.fourthBg.layer.cornerRadius = 5;
     self.fourthBg.layer.masksToBounds = YES;
     self.fourthBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
-    self.fourthBg.height = (SetUpFirstCellLabelHeight * 1 + KEDGE_DISTANCE * 2);
+    self.fourthBg.height = (SetUpFirstCellLabelHeight * 2 + KEDGE_DISTANCE * 2);
 }
 
 - (void)createSaveButton
@@ -469,6 +501,9 @@
         if (_schoolButton.text.length > 0) {
             [parameter setValue:_schoolButton.text forKey:@"school"];
         }
+        if (_departmentButton.text.length ) {
+            [parameter setValue:_schoolButton.text forKey:@"department"];
+        }
         if (_province.length > 0) {
             [parameter setValue:_province forKey:@"province"];
         }
@@ -477,6 +512,9 @@
         }
         if (_district.length > 0) {
             [parameter setValue:_district forKey:@"district"];
+        }
+        if (_phoneButton.text.length > 0) {
+            [parameter setValue:_district forKey:@"qq"];
         }
         NSLog(@"%@",Regist_UpdateUserInfo);
         [ZYZCHTTPTool postHttpDataWithEncrypt:YES andURL:Regist_UpdateUserInfo andParameters:parameter andSuccessGetBlock:^(id result, BOOL isSuccess) {
@@ -491,7 +529,6 @@
 
     }
    
-    
 }
 
 #pragma mark - set方法
@@ -553,6 +590,9 @@
     }
     if (minePersonSetUpModel.school.length > 0) {
         _schoolButton.text = minePersonSetUpModel.school;
+    }
+    if (minePersonSetUpModel.department.length > 0) {
+        _departmentButton.text = minePersonSetUpModel.department;
     }
     //地名
     NSString *placeString = @"";

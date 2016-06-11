@@ -2403,7 +2403,6 @@
 				04A99C8D1CBF848D00C6F5F0 /* UIColor+ZYZCColors.m in Sources */,
 				2C8B916E1CE70629004FDCB7 /* ZCCommentViewController.m in Sources */,
 				04A99C991CBF848D00C6F5F0 /* ChooseSceneImgController.m in Sources */,
-				04A99CD71CBF848D00C6F5F0 /* ZCPersonInfoController.m in Sources */,
 				04D9A4B01D084DE100753392 /* MineTravelTagsVC.m in Sources */,
 				04F836431CD72C3300140980 /* SDLoopProgressView.m in Sources */,
 				04C087A41D03E97000203D40 /* TacticMoreVideosVC.m in Sources */,

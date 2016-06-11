@@ -28,5 +28,7 @@
 @property (nonatomic, copy) NSString *userId;
 //    "zipCode": 310000
 @property (nonatomic, copy) NSString *zipCode;
+@property (nonatomic, copy) NSString *descript;
+
 //}
 @end

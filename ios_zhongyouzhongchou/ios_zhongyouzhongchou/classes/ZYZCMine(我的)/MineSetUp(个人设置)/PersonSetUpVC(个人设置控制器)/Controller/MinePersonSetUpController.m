@@ -75,7 +75,7 @@
     ZYZCAccountModel *model = [ZYZCAccountTool account];
     
     NSString *getUserInfoURL  = Get_SelfInfo(model.openid, [model.userId intValue]);
-    
+    NSLog(@"%@",getUserInfoURL);
     [ZYZCHTTPTool getHttpDataByURL:getUserInfoURL withSuccessGetBlock:^(id result, BOOL isSuccess) {
 //        NSLog(@"%@",result);
         

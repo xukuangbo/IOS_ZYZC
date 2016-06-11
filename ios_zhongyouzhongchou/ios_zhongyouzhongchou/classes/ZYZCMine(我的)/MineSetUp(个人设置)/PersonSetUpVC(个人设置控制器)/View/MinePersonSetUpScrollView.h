@@ -71,6 +71,11 @@
  */
 @property (nonatomic, weak) UITextField *schoolButton;
 /**
+ *  专业输入
+ */
+@property (nonatomic, weak) UITextField *departmentButton;
+
+/**
  *  所在地输入
  */
 @property (nonatomic, weak) UITextField *locationButton;
@@ -78,6 +83,11 @@
  *  邮箱输入
  */
 @property (nonatomic, weak) UITextField *emailButton;
+/**
+ *  手机输入
+ */
+@property (nonatomic, weak) UITextField *phoneButton;
+
 
 
 @property (nonatomic, strong) MinePersonSetUpModel *minePersonSetUpModel;
