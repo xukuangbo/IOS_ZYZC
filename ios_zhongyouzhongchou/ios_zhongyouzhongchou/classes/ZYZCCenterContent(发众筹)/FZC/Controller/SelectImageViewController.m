@@ -10,7 +10,7 @@
 #import "UINavigationBar+Background.h"
 #import "FXBlurView.h"
 
-#define selectImagescrollViewH 143.5 * KCOFFICIEMNT
+#define selectImagescrollViewH (KSCREEN_W / 16.0 * 9)
 #define selectImageTabbarH 88
 
 @interface SelectImageViewController ()<UIScrollViewDelegate>
@@ -25,6 +25,7 @@
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
+        self.automaticallyAdjustsScrollViewInsets = NO;
     }
     return self;
 }
@@ -64,8 +65,6 @@
     //让图片偏移到顶部去
     scrollView.contentOffset = CGPointMake(0, scrollView.top);
     
-    //设置可移动大小
-    scrollView.contentSize = CGSizeMake(KSCREEN_W, KSCREEN_H - 64);
     //让scrollview没有覆盖的地方显示图片
     scrollView.clipsToBounds = NO;
     //设置可以缩放
@@ -76,12 +75,18 @@
     self.scrollView = scrollView;
     
     //创建imageView,这个imageView得放在srollview里面
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -64, KSCREEN_W, KSCREEN_H)];
+    
+    CGFloat imageViewH = KSCREEN_W * _selectImage.size.height / _selectImage.size.width;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, KSCREEN_W, imageViewH)];
 //    imageView.image = [UIImage imageNamed:@"pic"];
     imageView.image=_selectImage;
     imageView.contentMode=UIViewContentModeScaleAspectFit;
     [scrollView addSubview:imageView];
     imageView.userInteractionEnabled = YES;
+    
+    
+    //设置可移动大小
+    scrollView.contentSize = CGSizeMake(KSCREEN_W, imageViewH);
     
 }
 
@@ -188,12 +193,16 @@
     
     UIImageView *newImgview = [[UIImageView alloc] initWithImage:srcimg];
     
-//    float zoomScale = 1.0 / [self.scrollView zoomScale];
+    NSInteger scale = [ZYZCTool deviceVersion];
     CGRect rect;
-    rect.origin.x = (self.scrollView.contentOffset.x) * (srcimg.size.width / KSCREEN_W);
-    rect.origin.y = (self.scrollView.contentOffset.y + 64) * (srcimg.size.height / KSCREEN_H);
-    rect.size.width = self.scrollView.bounds.size.width * (srcimg.size.width / KSCREEN_W);
-    rect.size.height = self.scrollView.bounds.size.height * (srcimg.size.height / KSCREEN_H);//要裁剪的图片区域，按照原图的像素大小来，超过原图大小的边自动适配
+    rect.origin.x = 0;
+    rect.origin.y = (self.scrollView.contentOffset.y ) * scale;
+//    rect.origin.x = (self.scrollView.contentOffset.x) * (srcimg.size.width / KSCREEN_W);
+//    rect.origin.y = (self.scrollView.contentOffset.y ) * (srcimg.size.height / KSCREEN_H);
+    rect.size.width = _selectImage.size.width;
+    rect.size.height = _selectImage.size.width * 9 / 16.0;
+//    rect.size.width = self.scrollView.bounds.size.width * (srcimg.size.width / KSCREEN_W);
+//    rect.size.height = self.scrollView.bounds.size.height * (srcimg.size.height / KSCREEN_H);//要裁剪的图片区域，按照原图的像素大小来，超过原图大小的边自动适配
     
 //    NSLog(@"%@-----%f",NSStringFromCGRect(rect),zoomScale);
     

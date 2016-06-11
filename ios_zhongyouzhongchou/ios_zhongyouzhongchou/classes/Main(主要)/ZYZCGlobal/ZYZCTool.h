@@ -101,4 +101,15 @@
  *  @return 星座名称
  */
 +(NSString *)calculateConstellationWithMonth:(NSInteger)month day:(NSInteger)day;
+
+/**
+ *  设备版本
+ *
+ *  @return e.g. iPhone 5S
+ */
++ (NSInteger)deviceVersion;
+/**
+ *  修正图片方向
+ */
++ (UIImage *)fixOrientation:(UIImage *)aImage;
 @end
