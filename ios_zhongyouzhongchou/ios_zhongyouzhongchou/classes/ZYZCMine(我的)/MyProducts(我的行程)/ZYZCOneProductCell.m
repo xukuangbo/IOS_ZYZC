@@ -151,7 +151,7 @@
     //添加出发时间
     _startLab=[self createLabWithFrame:CGRectMake(_moneyLab.right, _moneyLab.top, _bgImg.width/2-KEDGE_DISTANCE, 15) andFont:[UIFont boldSystemFontOfSize:14] andTitleColor:[UIColor ZYZC_TextBlackColor]];
     _startLab.textAlignment=NSTextAlignmentRight;
-    _startLab.text=@"2016/03出发";
+    _startLab.text=@"";
     [_bgImg addSubview:_startLab];
     
     //添加进度条
@@ -187,7 +187,7 @@
     //标题
     _titleLab.text=oneModel.product.productName;
     //推荐人数
-    _recommendLab.text=[NSString stringWithFormat:@"%@人推荐",oneModel.product.friendsCount];
+    _recommendLab.text=[NSString stringWithFormat:@"%@人推荐",oneModel.product.friendsCount?oneModel.product.friendsCount:@0];
 
     //风景图
     if (!_headImage.hidden) {
@@ -309,11 +309,12 @@
     }
     
     //出发日期
-    NSString *startStr=KSTART_TIME(oneModel.product.travelstartTime);
-    if (startStr.length>2) {
-        _startLab.attributedText=[self changeTextFontAndColorByString:startStr andChangeRange:NSMakeRange(startStr.length-2, 2)];
+    if (oneModel.product.travelstartTime) {
+        NSString *startStr=KSTART_TIME(oneModel.product.travelstartTime);
+        if (startStr.length>2) {
+            _startLab.attributedText=[self changeTextFontAndColorByString:startStr andChangeRange:NSMakeRange(startStr.length-2, 2)];
+        }
     }
-    
     //已筹资金
     CGFloat spellRealBuyPrice=0.0;
     if (oneModel.spellbuyproduct.spellRealBuyPrice) {

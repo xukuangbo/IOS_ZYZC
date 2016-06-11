@@ -20,6 +20,8 @@
 @property (nonatomic, strong) UILabel *destLab;
 @property (nonatomic, strong) UIScrollView *goalsView;
 @property (nonatomic, strong) UIButton *preClickBtn;
+@property (nonatomic, strong) UIImageView  *countryImg;
+@property (nonatomic, strong) UILabel     *countryLab;
 @property (nonatomic, assign) CGFloat preBtnX;
 @property (nonatomic, assign) BOOL firstGetGoals;
 
@@ -82,8 +84,22 @@
     _generalLab.textColor=[UIColor ZYZC_TextGrayColor04];
     [self.contentView addSubview:_generalLab];
     
-    _generalLab.text=@"        三大纪律开始打架了扩大啊发哈肌肤恢复噶大是大非合适的接口发生地方就开始地方上独领风骚的护发素可点击发货速度快结束发生地方 i 松而我的大三大的发生地方首都发生地方是谁的冯绍峰发生地方是非得失";
-    _generalLab.attributedText=[ZYZCTool setLineDistenceInText:_generalLab.text];
+    //国旗
+    _countryImg=[[UIImageView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, _oneGoalImg.height-46, 36, 36)];
+    _countryImg.hidden=YES;
+    _countryImg.image=[UIImage imageNamed:@"image_placeholder"];
+    _countryImg.contentMode=UIViewContentModeScaleAspectFill;
+    _countryImg.layer.cornerRadius=20;
+    _countryImg.layer.masksToBounds=YES;
+    [_oneGoalImg addSubview:_countryImg];
+    //国家
+    _countryLab=[[UILabel alloc]initWithFrame:CGRectMake(_countryImg.right+KEDGE_DISTANCE, _countryImg.top, 100, 36)];
+    _countryLab.font=[UIFont boldSystemFontOfSize:18];
+    _countryLab.textColor=[UIColor whiteColor];
+    _countryLab.shadowOffset=CGSizeMake(1, 1);
+    _countryLab.shadowColor=[UIColor blackColor];
+    //    _countryLab.hidden=YES;
+    [_oneGoalImg addSubview:_countryLab];
     
     //给cell添加点击事件
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gotoViewSpot)];
@@ -206,6 +222,16 @@
     if (_destLab.text.length) {
        _generalLab.attributedText=[ZYZCTool setLineDistenceInText:_generalLab.text];
     }
+    
+    if (_tacticSingleModel.countryImg.length) {
+        _countryImg.hidden=NO;
+        [_countryImg sd_setImageWithURL:[NSURL URLWithString:KWebImage(_tacticSingleModel.countryImg)] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
+    }
+    if (_tacticSingleModel.country.length) {
+        _countryLab.hidden=NO;
+        _countryLab.text=_tacticSingleModel.country;
+    }
+    
 }
 
 #pragma mark --- 景点详情

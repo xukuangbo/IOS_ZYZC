@@ -47,7 +47,8 @@
         _textField.text=manager.goal_travelTheme;
     }
     //添加空白框架背景
-    UIImageView *frameImg=[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.topLineView.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE, 125*KCOFFICIEMNT)];
+    UIImageView *frameImg=[[UIImageView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.topLineView.bottom+KEDGE_DISTANCE, KSCREEN_W-4*KEDGE_DISTANCE, 175*KCOFFICIEMNT)];
+    frameImg.contentMode=UIViewContentModeScaleAspectFill;
     frameImg.layer.cornerRadius=5;
     frameImg.layer.masksToBounds=YES;
     frameImg.layer.borderWidth=1;

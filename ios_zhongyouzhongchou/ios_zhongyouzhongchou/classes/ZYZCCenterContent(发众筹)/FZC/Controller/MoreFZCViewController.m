@@ -195,17 +195,10 @@
  */
 -(void)pressBack
 {
-    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-    NSString *myDraftState=[user objectForKey:KMY_ZC_DRAFT_SAVE];
-    //如果没有保存，则清空
-    if (!myDraftState) {
-        [ZYZCTool cleanZCDraftFile];
-    }
-    // 释放单例中存储的内容
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    [manager initAllProperties];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"直接退出,所有数据将清除" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag=ALERT_BACK_TAG;
+    [alert show];
 }
 
 #pragma mark --- alertView代理方法
@@ -215,18 +208,20 @@
         //保存数据
         if (buttonIndex ==1)
         {
-            _needPopVC=YES;
-        }
-        //不保存
-        else
-        {
-            //删除Documents中临时存储文件
-//            [self cleanTmpFile];
+            NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+            NSString *myDraftState=[user objectForKey:KMY_ZC_DRAFT_SAVE];
+            //如果没有保存，则清空
+            if (!myDraftState) {
+                [ZYZCTool cleanZCDraftFile];
+            }
+            // 释放单例中存储的内容
+            MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+            [manager initAllProperties];
             
+            [self.navigationController popViewControllerAnimated:YES];
         }
-        [self.navigationController popViewControllerAnimated:YES];
-       
     }
+    
     //数据上传到oss失败，提示重新上传
     else if (alertView.tag ==ALERT_UPLOAD_TAG)
     {
@@ -532,73 +527,6 @@
         }
     }
 }
-
-
-/*
-#pragma mark --- 保存数据
--(void)saveData
-{
-    if (_oneResouceFile) {
-        //数据已保存过，再次保存时需删除这个众筹的资源文件
-        NSFileManager *manager=[NSFileManager defaultManager];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [manager removeItemAtPath:_oneResouceFile error:nil];
-        });
-    }
-   //创建保存某个众筹的资源文件
-    NSString *pathDocuments=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    _oneResouceFile = [NSString stringWithFormat:@"%@/%@/%@", pathDocuments,KDOCUMENT_FILE,KMY_ZHONGCHOU_TMP];
-    [MBProgressHUD showMessage:nil];
-    
-    [self saveModelInManager];
-    
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    __weak typeof (&*self)weakSelf=self;
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-      
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //将数据转化成上传数据对应的类型
-            FZCReplaceDataKeys *replaceKeys=[[FZCReplaceDataKeys alloc]init];
-//            [replaceKeys replaceDataKeys];
-            // 模型转字典
-            NSDictionary *dataDict = replaceKeys.mj_keyValues;
-            NSLog(@"dataDict:%@",dataDict);
-            
-            //归档
-            weakSelf.archiveDataPath=[NSString stringWithFormat:@"%@/%@.data",_oneResouceFile,[ZYZCTool getLocalTime]];
-            [NSKeyedArchiver archiveRootObject:manager toFile:weakSelf.archiveDataPath];
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showSuccess:@"保存成功!"];
-            [weakSelf saveDataInMyZhongChouPlist];
-            if (weakSelf.needPopVC) {
-                [weakSelf.navigationController popViewControllerAnimated:YES];
-                weakSelf.needPopVC=NO;
-            }
-        });
-    });
-}
-
-
-#pragma mark --- 保存数据到plist文档中
--(void)saveDataInMyZhongChouPlist
-{
-    NSString *path=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0];
-    NSString *plistPath=[path stringByAppendingPathComponent:@"MyZhongChou.plist"];
-    NSArray *arr=[NSArray arrayWithContentsOfFile:plistPath];
-    NSMutableArray *mutArr=[NSMutableArray arrayWithArray:arr];
-     NSDictionary *dict=@{@"oneResouceFile":_oneResouceFile,@"archiveDataPath":_archiveDataPath};
-    if (!_isFirstTimeToSave) {
-        [mutArr addObject:dict];
-        _isFirstTimeToSave=YES;
-    }
-    else
-    {
-        [mutArr replaceObjectAtIndex:mutArr.count-1 withObject:dict];
-    }
-    [mutArr writeToFile:plistPath atomically:YES];
-}
-
-*/
 
 -(void)getHttpData
 {

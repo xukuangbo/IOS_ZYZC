@@ -7,7 +7,7 @@
 //
 
 #import "MoreFZCBaseTableViewCell.h"
-#define SECONDCELLHEIGHT 65+125*KCOFFICIEMNT
+#define SECONDCELLHEIGHT 65+175*KCOFFICIEMNT
 @interface GoalSecondCell : MoreFZCBaseTableViewCell<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) UIImagePickerController *imagePicker;
