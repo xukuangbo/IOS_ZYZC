@@ -169,7 +169,9 @@
 {
     //获取众筹详情
     NSString *urlStr=KGET_DETAIL_PRODUCT([ZYZCTool getUserId],_productId);
+     NSLog(@"%@",urlStr);
     [ZYZCHTTPTool getHttpDataByURL:urlStr withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"result:%@",result);
         if (isSuccess) {
             _detailModel=[[ZCDetailModel alloc]mj_setKeyValues:result];
             
@@ -187,7 +189,7 @@
             [_collectionBtn setTitle:_getCollection?@"推荐":@"已推荐" forState:UIControlStateNormal];
         }
     } andFailBlock:^(id failResult) {
-
+        NSLog(@"failResult:%@",failResult);
     }];
 }
 

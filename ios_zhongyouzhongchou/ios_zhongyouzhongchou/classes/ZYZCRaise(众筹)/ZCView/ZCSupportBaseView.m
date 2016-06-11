@@ -121,6 +121,7 @@
     _morePeopleBtn=[ZYZCTool getCustomBtnByTilte:@"更多" andImageName:@"btn_xxd" andtitleFont:[UIFont systemFontOfSize:15]];
     _morePeopleBtn.frame=CGRectMake(self.width-50, _hasSupportLab.top, 50, 30) ;
     [_morePeopleBtn addTarget:self action:@selector(morePeople) forControlEvents:UIControlEventTouchUpInside];
+    _morePeopleBtn.hidden=YES;
     [_otherViews addSubview:_morePeopleBtn];
     
     self.height=_otherViews.bottom+KEDGE_DISTANCE;
@@ -186,10 +187,6 @@
             [iconBtn sd_setImageWithURL:[NSURL URLWithString:user.img] forState:UIControlStateNormal];
             [_supportPeople addSubview:iconBtn];
         }
-    }
-    else
-    {
-        _morePeopleBtn.hidden=YES;
     }
 }
 

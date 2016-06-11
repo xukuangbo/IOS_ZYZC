@@ -195,7 +195,7 @@
     _addInterestBtn=[self createButtonWithFrame:CGRectMake(30, _infoView.bottom-KEDGE_DISTANCE-30, 100, 30) andTag:AddInterest andNeedBorder:YES  andText:_friendship?@"取消关注":@"＋  关注" andTextColor:[UIColor whiteColor]];
     [self addSubview:_addInterestBtn];
     //留言
-    _chatBtn=[self createButtonWithFrame:CGRectMake(self.width-130, _addInterestBtn.top, 100, 30) andTag:ChatType andNeedBorder:YES  andText:@"留言" andTextColor:[UIColor whiteColor]];
+    _chatBtn=[self createButtonWithFrame:CGRectMake(self.width-130, _addInterestBtn.top, 100, 30) andTag:ChatType andNeedBorder:YES  andText:@"私信" andTextColor:[UIColor whiteColor]];
     [self addSubview:_chatBtn];
 
 }

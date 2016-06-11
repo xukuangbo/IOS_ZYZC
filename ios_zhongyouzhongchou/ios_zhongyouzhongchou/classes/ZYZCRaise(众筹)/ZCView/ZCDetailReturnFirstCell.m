@@ -82,7 +82,9 @@
             }
         }
         else if ([reportModel.style intValue]==1) {
-            NSNumber *myUserId=@1;//获取我的userId
+            //获取我的userId，判断是否已支持过该项目一元
+            NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+            NSString *myUserId=[user objectForKey:KUSER_MARK];
             _supportOneYuanView.users=reportModel.users;
             BOOL hasSupportOneYuan=NO;
             for (UserModel *user in _supportOneYuanView.users) {
@@ -91,7 +93,7 @@
                 }
             }
             if (hasSupportOneYuan) {
-                _supportAnyYuanView.chooseSupport=NO;
+                _supportOneYuanView.chooseSupport=NO;
             }
         }
         else if ([reportModel.style intValue]==2)
