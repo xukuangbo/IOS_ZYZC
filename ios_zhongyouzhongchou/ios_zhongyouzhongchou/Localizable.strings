@@ -95,3 +95,12 @@
 "place_phone" = "请输入电话号码";
 "place_place" = "请输入地区";
 "place_detail_place" = "请输入地址";
+
+/**
+ *  攻略首页标签标题
+ */
+"tactic_video_title" = "视频攻略";
+"tactic_video_detailTitle" = "3分钟看懂旅行目的地核心攻略";
+"tactic_country_title" = "热门国家";
+"country_detail_title" = "根据兴趣标签精准匹配更靠谱";
+"tactic_dest_title" = "热门目的地";

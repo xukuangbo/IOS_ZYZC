@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#define TacticTableViewCellMargin 10
+#define KEDGE_DISTANCE 10
 #define TacticTableViewCellTextMargin 4
 #define titleFont [UIFont systemFontOfSize:15]
 #define descFont [UIFont systemFontOfSize:13]
@@ -15,12 +15,15 @@
 
 //我提供两种高度给他
 //这是视频播放，图文那种
-#define oneViewMapHeight ((KSCREEN_W - TacticTableViewCellMargin * 4) / 8.0 * 5 + descLabelBottom + TacticTableViewCellMargin + TacticTableViewCellTextMargin)
-#define oneViewHeight ((KSCREEN_W - TacticTableViewCellMargin * 4) / 8.0 * 5)
+#define oneViewMapHeight ((KSCREEN_W - KEDGE_DISTANCE * 4) / 8.0 * 5 + descLabelBottom + KEDGE_DISTANCE + TacticTableViewCellTextMargin)
+#define oneViewHeight ((KSCREEN_W - KEDGE_DISTANCE * 4) / 8.0 * 5)
 //这是3个view视频那种
-#define threeViewMapHeight ((KSCREEN_W - TacticTableViewCellMargin * 6) / 3.0 + descLabelBottom + TacticTableViewCellTextMargin + TacticTableViewCellMargin)
-#define threeViewHeight ((KSCREEN_W - TacticTableViewCellMargin * 6) / 3.0)
+#define threeViewMapHeight ((KSCREEN_W - KEDGE_DISTANCE * 6) / 3.0 + descLabelBottom + TacticTableViewCellTextMargin + KEDGE_DISTANCE)
+#define threeViewHeight ((KSCREEN_W - KEDGE_DISTANCE * 6) / 3.0)
 
+//6个小view
+#define sixViewMapHeight (((KSCREEN_W - KEDGE_DISTANCE * 6) / 3.0 + KEDGE_DISTANCE) * 2 + descLabelBottom + TacticTableViewCellTextMargin )
+#define sixViewHeight ((KSCREEN_W - KEDGE_DISTANCE * 6) / 3.0 * 2 + KEDGE_DISTANCE)
 typedef NS_ENUM(NSInteger, MoreVCType)
 {
     MoreVCTypeDefult = 0,

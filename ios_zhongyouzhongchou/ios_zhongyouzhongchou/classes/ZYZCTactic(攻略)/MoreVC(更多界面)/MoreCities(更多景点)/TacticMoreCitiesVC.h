@@ -10,4 +10,6 @@
 
 @interface TacticMoreCitiesVC : ZYZCBaseViewController
 
+- (instancetype)initWithViewType:(NSInteger)viewType;
+@property (nonatomic, assign) NSInteger viewType;
 @end

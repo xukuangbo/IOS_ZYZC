@@ -109,7 +109,6 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     // 网络加载 --- 创建带标题的图片轮播器
-
     SDCycleScrollView *headView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 280, KSCREEN_W, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     //添加渐变条
     UIImageView *bgImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KSCREEN_W, 64)];
@@ -148,7 +147,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (threeViewMapHeight * 2) + TacticTableViewCellMargin * 3;
+    return (threeViewMapHeight + sixViewMapHeight + sixViewMapHeight) + KEDGE_DISTANCE * 5;
 }
 /**
  *  navi背景色渐变的效果

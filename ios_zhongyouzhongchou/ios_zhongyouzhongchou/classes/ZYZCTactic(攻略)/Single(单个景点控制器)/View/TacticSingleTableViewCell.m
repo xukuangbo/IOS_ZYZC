@@ -65,13 +65,13 @@
 {
 //    CGFloat textMargin = 4;
     //目的地概况
-    TacticCustomMapView *descView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,  KSCREEN_W - TacticTableViewCellMargin * 2, 120)];
+    TacticCustomMapView *descView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,  KSCREEN_W - KEDGE_DISTANCE * 2, 120)];
     descView.titleLabel.text = @"目的地概况";
     descView.moreButton.hidden = NO;
     descView.delegate = self;
     descView.moreButton.tag = MoreVCTypeTypeMoreText;
     CGFloat descLabelH = descView.height - descLabelBottom - TacticTableViewCellTextMargin * 2;
-    UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(TacticTableViewCellMargin, descLabelBottom, descView.width - TacticTableViewCellMargin * 2, descLabelH)];
+    UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(KEDGE_DISTANCE, descLabelBottom, descView.width - KEDGE_DISTANCE * 2, descLabelH)];
 //    descLabel.backgroundColor = [UIColor ZYZC_BgGrayColor];
     descLabel.textColor = [UIColor ZYZC_TextGrayColor];
     descLabel.layer.cornerRadius = 5;
@@ -83,14 +83,14 @@
     self.descLabel = descLabel;
     self.descView = descView;
     //动画攻略
-    CGFloat flashViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+    CGFloat flashViewW = KSCREEN_W - KEDGE_DISTANCE * 2;
     CGFloat flashViewH = oneViewMapHeight;
     TacticCustomMapView *flashView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,flashViewW, flashViewH)];
     flashView.titleLabel.text = @"动画攻略";
     [self.contentView addSubview:flashView];
     self.flashView = flashView;
     
-    CGFloat flashPlayButtonW = flashViewW - TacticTableViewCellMargin * 2;
+    CGFloat flashPlayButtonW = flashViewW - KEDGE_DISTANCE * 2;
     CGFloat flashPlayButtonH = oneViewHeight;
     ZYZCCusomMovieImage *flashPlayButton = [[ZYZCCusomMovieImage alloc] initWithFrame:CGRectMake(0, 0, flashPlayButtonW, flashPlayButtonH)];
     flashPlayButton.layer.cornerRadius = 5;
@@ -100,7 +100,7 @@
     self.flashPlayButton = flashPlayButton;
     
     //图文攻略
-    CGFloat pictureViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+    CGFloat pictureViewW = KSCREEN_W - KEDGE_DISTANCE * 2;
     CGFloat pictureViewH = oneViewMapHeight;
     TacticCustomMapView *pictureView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,pictureViewW, pictureViewH)];
     pictureView.titleLabel.text = @"图文攻略";
@@ -115,7 +115,7 @@
     self.pictureShowButton = pictureShowButton;
     
     //众游小贴士
-    CGFloat tipsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+    CGFloat tipsViewW = KSCREEN_W - KEDGE_DISTANCE * 2;
     CGFloat tipsViewH = oneViewMapHeight;
     TacticCustomMapView *tipsView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,tipsViewW, tipsViewH)];
     tipsView.titleLabel.text = @"众游小贴士";
@@ -133,7 +133,7 @@
     self.tipsShowButton = tipsShowButton;
     
     //必玩景点
-    CGFloat mustPlayViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+    CGFloat mustPlayViewW = KSCREEN_W - KEDGE_DISTANCE * 2;
     CGFloat mustPlayViewH = threeViewMapHeight;
     TacticCustomMapView *mustPlayView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,mustPlayViewW, mustPlayViewH)];
     mustPlayView.backgroundColor = [UIColor redColor];
@@ -141,9 +141,9 @@
     [self.contentView addSubview:mustPlayView];
     self.mustPlayView = mustPlayView;
     
-    CGFloat mustPlayViewButtonX = TacticTableViewCellMargin;
+    CGFloat mustPlayViewButtonX = KEDGE_DISTANCE;
     CGFloat mustPlayViewButtonY = descLabelBottom + TacticTableViewCellTextMargin;
-    CGFloat mustPlayViewButtonW = mustPlayView.width - TacticTableViewCellMargin * 2;
+    CGFloat mustPlayViewButtonW = mustPlayView.width - KEDGE_DISTANCE * 2;
     CGFloat mustPlayViewButtonH = (KSCREEN_W - 10 * 6) / 3.0;
     TacticThreeMapView *mustPlayViewButton = [[TacticThreeMapView alloc] initWithFrame:CGRectMake(mustPlayViewButtonX, mustPlayViewButtonY, mustPlayViewButtonW, mustPlayViewButtonH)];
     mustPlayView.moreButton.hidden = NO;
@@ -155,7 +155,7 @@
     self.mustPlayViewButton = mustPlayViewButton;
     
     //特色美食
-    CGFloat foodsViewW = KSCREEN_W - TacticTableViewCellMargin * 2;
+    CGFloat foodsViewW = KSCREEN_W - KEDGE_DISTANCE * 2;
     CGFloat foodsViewH = threeViewMapHeight;
     TacticCustomMapView *foodsView = [[TacticCustomMapView alloc] initWithFrame:CGRectMake(0, 0,foodsViewW, foodsViewH)];
     foodsView.delegate = self;
@@ -165,9 +165,9 @@
     [self.contentView addSubview:foodsView];
     self.foodsView = foodsView;
     
-    CGFloat foodsPlayViewButtonX = TacticTableViewCellMargin;
+    CGFloat foodsPlayViewButtonX = KEDGE_DISTANCE;
     CGFloat foodsPlayViewButtonY = descLabelBottom + TacticTableViewCellTextMargin;
-    CGFloat foodsPlayViewButtonW = mustPlayView.width - TacticTableViewCellMargin * 2;
+    CGFloat foodsPlayViewButtonW = mustPlayView.width - KEDGE_DISTANCE * 2;
     CGFloat foodsPlayViewButtonH = (KSCREEN_W - 10 * 6) / 3.0;
     TacticThreeMapView *foodsPlayViewButton = [[TacticThreeMapView alloc] initWithFrame:CGRectMake(foodsPlayViewButtonX, foodsPlayViewButtonY, foodsPlayViewButtonW, foodsPlayViewButtonH)];
     foodsPlayViewButton.threeMapViewType = threeMapViewTypeFood;

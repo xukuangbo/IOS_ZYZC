@@ -35,22 +35,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ios_zhongyouzhongchou/classes/ZYZCMine(&#x6211;&#x7684;)/TravelTagsVC(&#x65c5;&#x884c;&#x6807;&#x7b7e;)/MineTravelTagsCell.m"
-            timestampString = "487172536.252483"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "-initWithFrame:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ios_zhongyouzhongchou/classes/Main(&#x4e3b;&#x8981;)/ZYZCGlobal/ZYZCTool.m"
             timestampString = "487342141.952277"
             startingColumnNumber = "9223372036854775807"

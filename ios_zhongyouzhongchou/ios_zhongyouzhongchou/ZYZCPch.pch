@@ -138,6 +138,8 @@
 #define GET_TACTIC_VIEW(viewID) [NSString stringWithFormat:@"%@viewSpot/getViewSpot.action?viewId=%zd",BASE_URL,viewID]
 //获取更多景点
 #define GET_TACTIC_More_Cities [NSString stringWithFormat:@"%@admin_back/getViewList.action?viewType=2",BASE_URL]
+//获取更多国家
+#define GET_TACTIC_More_Countries [NSString stringWithFormat:@"%@admin_back/getViewList.action?viewType=1",BASE_URL]
 //获取更多视频
 #define GET_TACTIC_More_Videos [NSString stringWithFormat:@"%@admin_back/getViewVideoList.action?viewType=2",BASE_URL]
 //添加想去的目的地
@@ -148,6 +150,8 @@
 #define Get_Tactic_List_WantGo(openid) [NSString stringWithFormat:@"%@viewSpot/getMySpots.action?openid=%@",BASE_URL,openid]
 //获取目的地关注状态
 #define Get_Tactic_Status_WantGo(openid,viewId) [NSString stringWithFormat:@"%@viewSpot/checkMySpotStatus.action?openid=%@&viewId=%zd",BASE_URL,openid,viewId]
+//获取旅行标签列表
+#define Get_TravelTag_List(tag) [NSString stringWithFormat:@"%@user/listLabel.action?tag=%zd",BASE_URL,tag]
 
 //通过userid获取用户基本信息
 #define GET_USERINFO_BYUSERID    HTTPURL(@"u/getUserById")

@@ -29,9 +29,9 @@
         
         //先让自己的数组拥有3个view，是否显示要看以后
         CGFloat threeMapViewMargin = 10;
-        CGFloat buttonWH = (frame.size.width - threeMapViewMargin * 4) / 3.0;
+        CGFloat buttonWH = (frame.size.width - threeMapViewMargin * 2) / 3.0;
         for (int i = 0; i < 3; i++) {
-            CGFloat buttonX = threeMapViewMargin + i * (threeMapViewMargin + buttonWH);
+            CGFloat buttonX = i * (threeMapViewMargin + buttonWH);
             CGFloat buttonY = 0;
             TacticImageView *button = [[TacticImageView alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonWH, buttonWH)];
             button.frame = CGRectMake(buttonX, buttonY, buttonWH, buttonWH);

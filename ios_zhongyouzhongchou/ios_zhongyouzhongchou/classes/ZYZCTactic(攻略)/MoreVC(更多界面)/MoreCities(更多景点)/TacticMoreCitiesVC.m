@@ -22,11 +22,12 @@
 @end
 
 @implementation TacticMoreCitiesVC
-- (instancetype)init
+- (instancetype)initWithViewType:(NSInteger)viewType
 {
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
+        _viewType = viewType;
     }
     return self;
 }
@@ -60,7 +61,12 @@ static NSString *const ID = @"TacticMoreCitiesCell";
 
 - (void)requestData
 {
-    NSString *url = GET_TACTIC_More_Cities;
+    NSString *url = nil;
+    if (_viewType == 1) {
+        url = GET_TACTIC_More_Countries;
+    }else if (_viewType == 2){
+        url = GET_TACTIC_More_Cities;
+    }
     NSLog(@"%@",url);
     //访问网络
     __weak typeof(&*self) weakSelf = self;
@@ -92,7 +98,7 @@ static NSString *const ID = @"TacticMoreCitiesCell";
     cell.imageView.pushType = threeMapViewTypeCityView;
     
     TacticSingleModel *tacticSingleModel = [[TacticSingleModel alloc] init];
-    tacticSingleModel.viewType = 2;
+    tacticSingleModel.viewType = _viewType;
     tacticSingleModel.viewImg = moreModel.min_viewImg;
     tacticSingleModel.ID = moreModel.ID;
     tacticSingleModel.name = moreModel.name;

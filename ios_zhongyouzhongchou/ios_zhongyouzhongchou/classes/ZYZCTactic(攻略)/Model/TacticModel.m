@@ -19,7 +19,8 @@
     return @{
              @"videos" : [TacticVideoModel class],
              @"mgViews" : [TacticSingleModel class],
-             @"indexImg" : [TacticIndexImgModel class]
+             @"indexImg" : [TacticIndexImgModel class],
+             @"countryViews" : [TacticSingleModel class]
              };
 }
 
