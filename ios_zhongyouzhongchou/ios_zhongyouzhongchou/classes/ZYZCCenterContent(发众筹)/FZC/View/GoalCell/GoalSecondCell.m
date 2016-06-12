@@ -16,6 +16,8 @@
 #import "UIView+GetSuperTableView.h"
 #import "MoreFZCViewController.h"
 #import "ZYZCTool+getLocalTime.h"
+#import "MBProgressHUD+MJ.h"
+
 @interface GoalSecondCell()
 @end
 
@@ -88,7 +90,7 @@
 {
     _imagePicker = [[UIImagePickerController alloc] init];
     _imagePicker.delegate = self;
-    _imagePicker.allowsEditing = YES;
+    _imagePicker.allowsEditing = NO;
     __weak typeof (&*self)weakSelf=self;
     //创建UIAlertController控制器
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -121,10 +123,29 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*)kUTTypeImage])
     {
+        NSInteger phoneType = [ZYZCTool deviceVersion];
+        UIImage *newImg = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSLog(@"%@",NSStringFromCGSize(newImg.size));
+        
+        UIImage *selectImg = [ZYZCTool fixOrientation:newImg];
+        CGSize imageScreenSize = CGSizeZero;
+        if (phoneType == 1) {
+            imageScreenSize = selectImg.size;
+        }else if(phoneType == 2) {
+            imageScreenSize = CGSizeMake(selectImg.size.width / 2, selectImg.size.height / 2);
+        }else if(phoneType == 3) {
+            imageScreenSize = CGSizeMake(selectImg.size.width / 3, selectImg.size.height / 3);
+        }
+        NSLog(@"%@",NSStringFromCGSize(selectImg.size));
+        BOOL selectImgJudge = [self judgeImgSizeByImg:imageScreenSize];
+        if (selectImgJudge == NO) {//如果太小
+            [MBProgressHUD showError:@"封面图片大小不符"];
+            return ;
+        }
         __weak typeof (&*self)weakSelf=self;
         [picker dismissViewControllerAnimated:YES completion:^{
             SelectImageViewController *selectImgVC=[[SelectImageViewController alloc]init];
-            selectImgVC.selectImage=[info objectForKey:UIImagePickerControllerEditedImage];
+            selectImgVC.selectImage=[info objectForKey:UIImagePickerControllerOriginalImage];
             selectImgVC.imageBlock=^(UIImage *img)
             {
                [ZYZCTool removeExistfile:ThemeImagePath];
@@ -139,6 +160,21 @@
             };
             [weakSelf.viewController.navigationController pushViewController:selectImgVC animated:YES];
         }];
+    }
+}
+/**
+ *  判断封面图片大小
+ */
+- (BOOL)judgeImgSizeByImg:(CGSize)imageSize
+{
+    NSLog(@"%f,%f",KSCREEN_W,KSCREEN_H);
+    CGFloat screenWidth = KSCREEN_W;
+    CGFloat screenHeight = KSCREEN_W / 16.0 * 10;
+//    (imageSize.height * KSCREEN_W)/imageSize.width >= screenHeight
+    if (imageSize.width >= screenWidth && imageSize.height >= screenHeight ) {
+        return YES;
+    }else{
+        return NO;
     }
 }
 
