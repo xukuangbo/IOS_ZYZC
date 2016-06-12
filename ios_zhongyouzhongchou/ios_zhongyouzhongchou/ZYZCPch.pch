@@ -158,6 +158,9 @@
 #define GET_CHAT_TOKEN(openId,name,headImg)   [NSString stringWithFormat:@"%@rongAPI/getToken.action?userId=%@&userName=%@&portraitUri=%@",BASE_URL,openId,name,headImg]
 #define  GET_WX_ORDER          [NSString stringWithFormat:@"%@weixinpay/generateAppOrder.action",BASE_URL]
 
+//获取微信token
+#define  GET_WX_TOKEN(code)    [NSString stringWithFormat:@"%@wxAPI/getToken.action?code=%@",BASE_URL,code];
+
 #endif /* ZYZCPch_pch */
 
 

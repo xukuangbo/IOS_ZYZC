@@ -25,8 +25,7 @@
 #define centerAndFootMapViewH 25
 
 @interface MineHeadView ()<WXApiManagerDelegate>
-
-
+@property (nonatomic, strong)ZYZCAccountModel *accountModel;
 @end
 @implementation MineHeadView
 
@@ -238,23 +237,24 @@
 /**
  *  刷新微信用户数据（头像等）
  */
-- (void)reloadAccountData
+- (void)requstPersonData:(ZYZCAccountModel *)account
 {
-    ZYZCAccountModel *account = [ZYZCAccountTool account];
-    __block typeof(&*account) weakAccount = account;
     if (account) {
         [MBProgressHUD showMessage:@"正在加载个人数据"];
         NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",account.access_token,account.openid];
         
         [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+            NSLog(@"result:%@",result);
             //这里可以请求到数据，然后加载给account,注册并加载数据
-            
+
             //记录到账号模型
-            weakAccount = [ZYZCAccountModel accountWithPersonalMessage:result];
-            [ZYZCAccountTool saveAccount:weakAccount];
+            _accountModel=[[ZYZCAccountModel alloc]mj_setKeyValues:result];
+//           _accountModel = [ZYZCAccountModel accountWithPersonalMessage:result];
+            
+//            [ZYZCAccountTool saveAccount:_accountModel];
             
             //有微信的数据后可以向我们的服务器发送注册信息
-            [self regisPersonalMessageWith:weakAccount];
+//            [self regisPersonalMessageWith:weakAccount];
             
         } andFailBlock:^(id failResult) {
             NSLog(@"%@",failResult);
@@ -366,26 +366,36 @@
 }
 
 /**
- *  登陆验证请求
+ *  获取微信登录的token
  */
 - (void)managerDidRecvAuthResponse:(SendAuthResp *)response
 {
-    NSString *url = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",kAppOpenid,kAppSercet,response.code];
-//    NSURL *zoneUrl = [NSURL URLWithString:url];
-    
-    AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
-    mgr.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
-    [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * responseObject) {
+    NSString *url = GET_WX_TOKEN(response.code);
+   [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+       //获取失败
+       if (result[@"errcode"]) {
+           [MBProgressHUD showError:ZYLocalizedString(@"fail_login_weixin")];
+           return ;
+       }
+       //获取成功
+       ZYZCAccountModel *accountModel = [[ZYZCAccountModel alloc]mj_setKeyValues:result[@"data"]];
+    [self requstPersonData:accountModel];
+
+    } andFailBlock:^(id failResult) {
+       NSLog(@"%@",failResult);
+   }];
+//    [mgr GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * responseObject) {
 //        NSLog(@"%@",responseObject);
         //这里还需要去请求个人信息，然后保存到本地
-        ZYZCAccountModel *accountModel = [ZYZCAccountModel accountWithDict:responseObject];
-        [ZYZCAccountTool saveAccount:accountModel];
+    
+//        ZYZCAccountModel *accountModel = [ZYZCAccountModel accountWithDict:responseObject];
+//        [ZYZCAccountTool saveAccount:accountModel];
         
         //这里可以让headview刷新一下数据
-        [self reloadAccountData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }];
+//        [self reloadAccountData];
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        NSLog(@"%@",error);
+//    }];
     
 }
 

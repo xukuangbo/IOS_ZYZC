@@ -201,8 +201,8 @@
          //目的地为json数组，需要转换成数组再做字符串拼接
         NSArray *dest=[ZYZCTool turnJsonStrToArray:oneModel.product.productDest];
         NSInteger destNumber=dest.count;
-        for (NSInteger i=0; i<destNumber;i++) {
-            if (i==0) {
+        for (NSInteger i=1; i<destNumber;i++) {
+            if (i==1) {
                 [place appendString:dest[i]];
             }
             else
@@ -309,7 +309,7 @@
     }
     
     //出发日期
-    if (oneModel.product.travelstartTime) {
+    if (oneModel.product.travelstartTime.length>8) {
         NSString *startStr=KSTART_TIME(oneModel.product.travelstartTime);
         if (startStr.length>2) {
             _startLab.attributedText=[self changeTextFontAndColorByString:startStr andChangeRange:NSMakeRange(startStr.length-2, 2)];
@@ -317,8 +317,8 @@
     }
     //已筹资金
     CGFloat spellRealBuyPrice=0.0;
-    if (oneModel.spellbuyproduct.spellRealBuyPrice) {
-        spellRealBuyPrice=[oneModel.spellbuyproduct.spellRealBuyPrice floatValue]/100.0;
+    if (oneModel.spellbuyproduct.realzjeNew) {
+        spellRealBuyPrice=[oneModel.spellbuyproduct.realzjeNew floatValue]/100.0;
     }
     _zcInfoView.moneyLab.text=[NSString stringWithFormat:@"¥%.2f",spellRealBuyPrice];
     //众筹进度
@@ -331,7 +331,7 @@
     //进度条更新
     _fillProgress.width=_emptyProgress.width*MIN(1, rate);
     //剩余天数
-    if (oneModel.product.productEndTime) {
+    if (oneModel.product.productEndTime.length>8) {
         NSString *productEndStr=[self changStrToDateStr:oneModel.product.productEndTime];
         NSDate *productEndDate=[NSDate dateFromString:productEndStr];
         int leftDays=[NSDate getDayNumbertoDay:nowDate beforDay:productEndDate]+1;

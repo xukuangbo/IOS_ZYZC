@@ -15,7 +15,6 @@
 #import "WXApi.h"
 #import "WXApiManager.h"
 #import "ZYZCDataBase.h"
-#import "WXApiPay.h"
 #import "ZYZCRCManager.h"
 @interface AppDelegate ()
 @property (nonatomic, strong)ZYZCRCManager *RCManager;

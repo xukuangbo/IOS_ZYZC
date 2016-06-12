@@ -24,9 +24,16 @@
     // Do any additional setup after loading the view.
     self.tabBar.translucent = NO;
     self.tabBar.alpha=0.95;
-    
+    self.selectedIndex=1;
      [self getCustomItems];
     [self insertSpaceItem];
+    UIView *coverView= [[UIView alloc]initWithFrame:CGRectMake(KSCREEN_W/2-40, 0, 80, self.tabBar.height)];
+    [self.tabBar addSubview:coverView];
+    UIButton *moreBtn= [UIButton buttonWithType:UIButtonTypeCustom];
+    moreBtn.frame=CGRectMake(KSCREEN_W/2-22.5,(self.tabBar.frame.size.height-45)/2, 45, 45);
+    [moreBtn addTarget:self action:@selector(clickBtn) forControlEvents:UIControlEventTouchUpInside];
+    [moreBtn setBackgroundImage:[UIImage imageNamed:@"tab_thr_fb"] forState:UIControlStateNormal];
+    [self.tabBar addSubview:moreBtn];
 }
 
 -(void)getCustomItems
@@ -55,13 +62,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    UIView *coverView= [[UIView alloc]initWithFrame:CGRectMake(KSCREEN_W/2-40, 0, 80, self.tabBar.frame.size.height)];
-    [self.tabBar addSubview:coverView];
-    UIButton *moreBtn= [UIButton buttonWithType:UIButtonTypeCustom];
-    moreBtn.frame=CGRectMake(KSCREEN_W/2-22.5,(self.tabBar.frame.size.height-45)/2, 45, 45);
-    [moreBtn addTarget:self action:@selector(clickBtn) forControlEvents:UIControlEventTouchUpInside];
-    [moreBtn setBackgroundImage:[UIImage imageNamed:@"tab_thr_fb"] forState:UIControlStateNormal];
-    [self.tabBar addSubview:moreBtn];
 }
 
 #pragma mark --- 创建半框

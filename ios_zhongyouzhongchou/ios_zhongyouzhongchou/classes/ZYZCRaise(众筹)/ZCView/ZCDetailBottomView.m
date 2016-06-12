@@ -7,8 +7,8 @@
 //
 
 #import "ZCDetailBottomView.h"
-#import "WXApiPay.h"
 #import "MBProgressHUD+MJ.h"
+#import "WXApiManager.h"
 @implementation ZCDetailBottomView
 
 /*
@@ -86,8 +86,8 @@
             return ;
         }
         NSLog(@"mutDic:%@",mutDic);
-        WXApiPay *wxPay=[[WXApiPay alloc]init];
-        [wxPay payForWeChat:mutDic];
+        WXApiManager *wxManager=[WXApiManager sharedManager];
+        [wxManager payForWeChat:mutDic];
     };
     
     UIButton *supportBtn=(UIButton *)[self viewWithTag:SupportType];

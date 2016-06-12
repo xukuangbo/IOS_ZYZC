@@ -234,7 +234,6 @@
 		2CD8027C1CF689C400823C9F /* ZYZCViewSpotModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8027B1CF689C400823C9F /* ZYZCViewSpotModel.m */; };
 		2CD8027F1CF68FCC00823C9F /* ZYZCDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8027E1CF68FCC00823C9F /* ZYZCDataBase.m */; };
 		2CD802841CF6DA3000823C9F /* LanguageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD802831CF6DA3000823C9F /* LanguageTool.m */; };
-		2CDAB2481CEC0AD900E3E0F5 /* WXApiPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */; };
 		2CDC49F71CFD32FC00E7893C /* ZYZCConversationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC49F61CFD32FC00E7893C /* ZYZCConversationController.m */; };
 		2CDC49FA1CFD3B5900E7893C /* ZYZCRCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC49F91CFD3B5900E7893C /* ZYZCRCManager.m */; };
 		2CDC49FD1CFD960A00E7893C /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC49FC1CFD960A00E7893C /* ChatListViewController.m */; };
@@ -723,8 +722,6 @@
 		2CD8027E1CF68FCC00823C9F /* ZYZCDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCDataBase.m; sourceTree = "<group>"; };
 		2CD802821CF6DA3000823C9F /* LanguageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageTool.h; sourceTree = "<group>"; };
 		2CD802831CF6DA3000823C9F /* LanguageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageTool.m; sourceTree = "<group>"; };
-		2CDAB2461CEC0AD900E3E0F5 /* WXApiPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiPay.h; sourceTree = "<group>"; };
-		2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiPay.m; sourceTree = "<group>"; };
 		2CDC49F51CFD32FC00E7893C /* ZYZCConversationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCConversationController.h; sourceTree = "<group>"; };
 		2CDC49F61CFD32FC00E7893C /* ZYZCConversationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYZCConversationController.m; sourceTree = "<group>"; };
 		2CDC49F81CFD3B5900E7893C /* ZYZCRCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYZCRCManager.h; sourceTree = "<group>"; };
@@ -1621,8 +1618,6 @@
 				04A99D141CC07E1800C6F5F0 /* WXApiResponseHandler.m */,
 				2C8B916F1CE71552004FDCB7 /* WXApiShare.h */,
 				2C8B91701CE71552004FDCB7 /* WXApiShare.m */,
-				2CDAB2461CEC0AD900E3E0F5 /* WXApiPay.h */,
-				2CDAB2471CEC0AD900E3E0F5 /* WXApiPay.m */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -2357,7 +2352,6 @@
 				2CD8027C1CF689C400823C9F /* ZYZCViewSpotModel.m in Sources */,
 				2C901DC31C89788C004B844B /* ViewController.m in Sources */,
 				2CAAB26E1CC23FD6006D4827 /* ZYZCTool+getLocalTime.m in Sources */,
-				2CDAB2481CEC0AD900E3E0F5 /* WXApiPay.m in Sources */,
 				04A99C9B1CBF848D00C6F5F0 /* MoreFZCChooseSceneController.m in Sources */,
 				2C4AD9A21CEDAA44005FC29E /* ZYZCCustomVoiceView.m in Sources */,
 				2C79606C1D0A74940026C9F6 /* MyReturnViewController.m in Sources */,

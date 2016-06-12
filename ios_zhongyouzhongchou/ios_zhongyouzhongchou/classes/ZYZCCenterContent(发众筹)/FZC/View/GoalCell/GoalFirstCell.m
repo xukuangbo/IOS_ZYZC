@@ -66,7 +66,6 @@
     _startBtn.size=CGSizeMake(80, 35);
     [_startBtn setTitle:@"出发地" forState:UIControlStateNormal];
     [_startBtn setTitleColor:[UIColor ZYZC_TextGrayColor] forState:UIControlStateNormal];
-    _startBtn.hidden=YES;
     [_startBtn addSubview:[UIView lineViewWithFrame:CGRectMake(0, _startBtn.height-1, _startBtn.width, 1) andColor:nil]];
     [_scroll addSubview:_startBtn];
     
@@ -93,6 +92,8 @@
         }
          manager.goal_goals=_sceneTitleArr;//单例纪录目的地
     }
+    
+    
     //添加旅行日程显示视图
     _scheduleView=[[GoalScheduleView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE*2, _scroll.bottom+40, KSCREEN_W-40, 40)];
     [self.contentView addSubview:_scheduleView];
@@ -116,11 +117,6 @@
         _peoplePickerView.numberPeople=4;
     }
     [self.contentView addSubview:_peoplePickerView];
-    
-    //添加必填项标示符
-//    [self.contentView addSubview:[[NecessaryView alloc] initWithTop:20]];
-//    [self.contentView addSubview:[[NecessaryView alloc] initWithTop:95]];
-//    [self.contentView addSubview:[[NecessaryView alloc] initWithTop:165]];
 }
 
 #pragma mark --- 选择行程日期

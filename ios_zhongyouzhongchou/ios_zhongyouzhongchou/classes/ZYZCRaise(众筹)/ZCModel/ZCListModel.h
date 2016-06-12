@@ -113,7 +113,7 @@ typedef NS_ENUM(NSInteger, DetailProductType)
 @property (nonatomic, strong) NSNumber *lotteryable;
 @property (nonatomic, strong) NSNumber *annable;
 @property (nonatomic, strong) NSNumber *spellRealBuyPrice;
-
+@property (nonatomic, strong) NSNumber *realzjeNew;
 @end
 
 

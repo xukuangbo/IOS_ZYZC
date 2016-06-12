@@ -39,6 +39,8 @@
 /**
  * Error
  */
+
+"fail_login_weixin"="登录失败，取消登陆";
 "error_no_dest"="请添加旅行目的地";
 "error_no_travelTime"="请添加旅行时间";
 "error_no_travel_theme"="请添加旅行主题名";

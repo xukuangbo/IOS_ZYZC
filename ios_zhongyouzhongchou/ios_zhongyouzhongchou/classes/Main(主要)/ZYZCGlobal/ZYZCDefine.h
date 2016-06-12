@@ -92,9 +92,9 @@
 #define kWechatAuthState   @"xxx"
 
 #define kAppOpenid @"wx4f5dad0f41bb5a7d"//微信的
-#define kAppSercet @"cbb6bf01c64e64aa869d497f600b1270"
+#define KWX_LOGIN_FAIL          @"loginFail"//微信登录失败
 #define KORDER_PAY_NOTIFICATION @"orderPay"//支付发布广播名
 #define KCAN_SUPPORT_MONEY      @"canSupportMoney"//支持时发布的广播
-#define KSAVE_SPOT_FINISH      @"saveSpotsFinish"//存储地名库结束发布的广播
+#define KSAVE_SPOT_FINISH       @"saveSpotsFinish"//存储地名库结束发布的广播
 
 #endif /* ZYZCDefine_h */

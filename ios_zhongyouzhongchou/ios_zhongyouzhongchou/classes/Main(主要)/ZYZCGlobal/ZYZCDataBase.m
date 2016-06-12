@@ -206,7 +206,9 @@ static ZYZCDataBase *_db;
         return;
     }
     
-    [ZYZCHTTPTool getHttpDataByURL:GETVIEWSPOT withSuccessGetBlock:^(id result, BOOL isSuccess)
+//    NSLog(@"spotsUrl:%@",GETVIEWSPOT);
+    NSString *httpUrl=[NSString stringWithFormat:@"%@viewType=2",GETVIEWSPOT];
+    [ZYZCHTTPTool getHttpDataByURL:httpUrl withSuccessGetBlock:^(id result, BOOL isSuccess)
      {
          if (isSuccess) {
               ZYZCViewSpotModel *viewSpotModel=[[ZYZCViewSpotModel alloc]mj_setKeyValues:result];

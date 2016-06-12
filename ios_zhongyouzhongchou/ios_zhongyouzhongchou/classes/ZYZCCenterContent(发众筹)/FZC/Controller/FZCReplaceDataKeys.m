@@ -54,10 +54,8 @@ MJCodingImplementation
     self.status=@1;
     self.title=manager.goal_travelTheme;
     self.spell_buy_price=(NSNumber *)manager.raiseMoney_totalMoney;
-    if (manager.goal_goals.count>=2) {
-        NSMutableArray *arr=[NSMutableArray arrayWithArray:manager.goal_goals];
-        [arr removeObjectAtIndex:0];
-        self.dest=arr;
+    if (manager.goal_goals.count) {
+        self.dest=manager.goal_goals;
     }
     self.start_time=manager.goal_startDate;
     self.end_time=manager.goal_backDate;

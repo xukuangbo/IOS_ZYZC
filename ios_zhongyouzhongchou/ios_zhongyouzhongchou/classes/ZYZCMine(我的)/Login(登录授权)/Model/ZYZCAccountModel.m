@@ -11,6 +11,11 @@
 @implementation ZYZCAccountModel
 MJCodingImplementation
 
++(NSDictionary *)mj_replacedKeyFromPropertyName
+{
+    return @{@"access_token":@"accessToken",@"openid":@"unionid"};
+}
+
 + (instancetype)accountWithDict:(NSDictionary *)dict
 {
     ZYZCAccountModel *account = [[self alloc] init];

@@ -18,7 +18,6 @@
 #import "MBProgressHUD+MJ.h"
 
 #import "WXApiShare.h"
-#import "WXApiPay.h"
 
 @interface ZCProductDetailController ()
 @property (nonatomic, strong) ZCProductDetailTableView    *table;
@@ -99,7 +98,7 @@
         }
     }
     else{
-        [_table.topImgView sd_setImageWithURL:[NSURL URLWithString:_oneModel.product.headImage ]];
+        [_table.topImgView sd_setImageWithURL:[NSURL URLWithString:_oneModel.product.headImage ] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
     }
     
     //除草稿外，项目添加分享，评论，收藏，支付操作
@@ -253,6 +252,7 @@
     if (_bottomView.surePay) {
         NSLog(@"productId:%@",_oneModel.product.productId);
         if (_bottomView.payMoneyBlock) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOrderPayResult:) name:KORDER_PAY_NOTIFICATION object:nil];
             _bottomView.payMoneyBlock(_oneModel.product.productId);
         }
     }
@@ -273,9 +273,9 @@
 -(void)getOrderPayResult:(NSNotification *)notify
 {
     NSLog(@"notify%@",notify);
-    
     if ([notify.object isEqualToString:@"success"]) {
-        //支付成功
+        //微信支付成功
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:KORDER_PAY_NOTIFICATION object:nil];
     }
 }
 
