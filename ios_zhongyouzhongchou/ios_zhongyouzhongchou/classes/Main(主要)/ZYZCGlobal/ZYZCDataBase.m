@@ -248,6 +248,8 @@ static ZYZCDataBase *_db;
          oneSpotModel.viewType =(NSNumber *)[rs stringForColumn:@"viewType"];
          oneSpotModel.name     =[rs stringForColumn:@"name"];
          oneSpotModel.pinyin   =[rs stringForColumn:@"pinyin"];
+         oneSpotModel.country   =[rs stringForColumn:@"country"];
+
         [array addObject:oneSpotModel];
     }
     return array;
@@ -268,6 +270,7 @@ static ZYZCDataBase *_db;
         oneSpotModel.viewType =(NSNumber *)[rs stringForColumn:@"viewType"];
         oneSpotModel.name     =[rs stringForColumn:@"name"];
         oneSpotModel.pinyin   =[rs stringForColumn:@"pinyin"];
+        oneSpotModel.country   =[rs stringForColumn:@"country"];
         [array addObject:oneSpotModel];
     }
     return array;

@@ -59,12 +59,12 @@
     }
     
     if (sender.tag==KZYZC_CENTERCONTENT_BTN_TAG+1) {
-        NSString *openId=[ZYZCTool getUserId];
-        if (!openId) {
-            [MBProgressHUD showError:@"未登录,请先进行登录!"];
-            return;
-        }
-        
+//        NSString *openId=[ZYZCTool getUserId];
+//        if (!openId) {
+//            [MBProgressHUD showError:@"未登录,请先进行登录!"];
+//            return;
+//        }
+//        
         MoreFZCViewController *fzcVC=[[MoreFZCViewController alloc]init];
         fzcVC.title=@"发起众筹";
         if (self.pushVCBlock) {

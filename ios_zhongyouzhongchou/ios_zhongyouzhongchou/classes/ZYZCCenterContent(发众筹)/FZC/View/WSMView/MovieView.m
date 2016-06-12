@@ -6,7 +6,7 @@
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
 #define TEXT_01 @"点击上传视屏文件"
-#define TEXT_02 @"提示:视屏不能长于3分钟"
+#define TEXT_02 @"提示:视屏不能长于10M"
 #import "MovieView.h"
 #import "MBProgressHUD.h"
 #import "ZYZCTool+getLocalTime.h"
@@ -21,6 +21,11 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 
+#import "XMNPhotoPickerFramework/XMNPhotoPickerFramework.h"
+#import "MediaUtils.h"
+#import "PromptController.h"
+#import "MBProgressHUD+MJ.h"
+
 @interface MovieView ()
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic, strong) UIImagePickerController *mediaPickerController;
@@ -28,6 +33,13 @@
 @property (nonatomic, assign) BOOL isRecordResoure;
 @property (nonatomic, strong) UIImage *preMovImg;
 @property (nonatomic, assign) BOOL isBigFile;
+
+@property (nonatomic, strong) XMNPhotoPickerController* picker;
+@property (nonatomic, strong) UIImage *movImage;
+@property (nonatomic, strong) NSURL *originMovUrl;
+
+@property (nonatomic, strong) NSMutableArray<XMNAssetModel*>* models;
+
 @end
 
 @implementation MovieView
@@ -79,92 +91,172 @@
 {
     _isRecordResoure=NO;
     _isBigFile=NO;
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    
-//    __weak typeof (&*self)weakSelf=self;
 #pragma mark --- 选择本地视屏
-//    UIAlertAction *localMediaAction = [UIAlertAction actionWithTitle:@"从相册中选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action)
-//    {
-        //相册是否允许访问
-        ALAuthorizationStatus author =[ALAssetsLibrary authorizationStatus];
-        if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied)
-        {
-            //不允许
-            UIAlertView *alertView01=[[UIAlertView alloc]initWithTitle:@"您屏蔽了选择相册的权限，开启请去系统设置->隐私->我的App来打开权限" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alertView01 show];
-            return;
-        }
-        
-        //创建图像选取控制器
-        self.mediaPickerController=[[UIImagePickerController alloc]init];
-        //设置图像选取控制器的类型
-        self.mediaPickerController.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
-        //允许用户进行编辑
-        self.mediaPickerController.allowsEditing = NO;
-        //设置委托对象
-        self.mediaPickerController.delegate = self;
-        //视频上传质量
-        self.mediaPickerController.videoQuality=UIImagePickerControllerQualityTypeHigh;
-        //设置图像选取控制器的来源模式为相册模式
-          self.mediaPickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-       //视屏时长限制
-         self.mediaPickerController.videoMaximumDuration=3;
-        //以模视图控制器的形式显示
-          [self.viewController presentViewController:self.mediaPickerController animated:YES completion:nil];
-//    }];
-/*
-#pragma mark --- 视屏录制
-    UIAlertAction *recordMdiaAction = [UIAlertAction actionWithTitle:@"视屏录制" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    //相册是否允许访问
+    ALAuthorizationStatus author =[ALAssetsLibrary authorizationStatus];
+    if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied)
     {
-        _isRecordResoure=YES;
-        //相机是否允许访问
-        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-        if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied)
-        {
-            //无权限
-            UIAlertView *alertView02=[[UIAlertView alloc]initWithTitle:@"您屏蔽了使用相机的权限，开启请去系统设置->隐私->我的App来打开权限" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alertView02 show];
-            return;
-        }
-        //创建图像选取控制器
-        weakSelf.mediaRecordController=[[UIImagePickerController alloc]init];
-        //设置图像选取控制器的类型
-        weakSelf.mediaRecordController.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
-        //允许用户进行编辑
-        weakSelf.mediaRecordController.allowsEditing = NO;
-        //设置委托对象
-        weakSelf.mediaRecordController.delegate = self;
-        //视频上传质量
-        weakSelf.mediaRecordController.videoQuality=UIImagePickerControllerQualityTypeHigh;
-        //设置图像选取控制器的来源模式为相册模式
-        //设置图像选取控制器的来源模式为相机模式
-          weakSelf.mediaRecordController.sourceType = UIImagePickerControllerSourceTypeCamera;
-        //设置摄像头模式（拍照，录制视频）为录像模式
-          weakSelf.mediaRecordController.cameraCaptureMode = UIImagePickerControllerCameraCaptureModeVideo;
-        //摄像头设置
-        weakSelf.mediaRecordController.cameraDevice=UIImagePickerControllerCameraDeviceRear|UIImagePickerControllerCameraDeviceFront;
-        //闪光灯设置
-        weakSelf.mediaRecordController.cameraFlashMode=UIImagePickerControllerCameraFlashModeOff|UIImagePickerControllerCameraFlashModeOn;
-        weakSelf.mediaRecordController.videoMaximumDuration=5;
-        if([[[UIDevice   currentDevice] systemVersion] floatValue]>=8.0) {
-            weakSelf.mediaRecordController.modalPresentationStyle=UIModalPresentationOverCurrentContext;
-        }
-        [weakSelf.viewController presentViewController:weakSelf.mediaRecordController animated:YES completion:nil];
-    }];
-
-    [alertController addAction:cancelAction];
-    [alertController addAction:localMediaAction];
-    [alertController addAction:recordMdiaAction];
+        //不允许
+        UIAlertView *alertView01=[[UIAlertView alloc]initWithTitle:@"您屏蔽了选择相册的权限，开启请去系统设置->隐私->我的App来打开权限" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView01 show];
+        return;
+    }
     
-    [self.viewController presentViewController:alertController animated:YES completion:nil];
-    */
+    _picker = [[XMNPhotoPickerController alloc] initWithMaxCount:9 delegate:nil];
+    _picker.autoPushToPhotoCollection=NO;
+    _picker.autoPushToVideoCollection=YES;
+    __weak typeof(&*self) weakSelf = self;
+//    选择视频后回调
+    [_picker setDidFinishPickingVideoBlock:^(UIImage * _Nullable image, XMNAssetModel * _Nullable asset) {
+        NSLog(@"asset:%@",asset.asset);
+        
+        weakSelf.movImage=image;
+        [weakSelf compressVideo:asset.asset];
+    }];
+//    点击取消
+    [_picker setDidCancelPickingBlock:^{
+        [weakSelf.viewController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [self.viewController presentViewController:_picker animated:YES completion:nil];
+}
+
+-(void)compressVideo:(PHAsset*)asset{
+    [PromptManager showJPGHUDWithMessage:@"正在获取视屏文件…" inView:_picker.view];
+    NSLog(@"asset:%@",asset);
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [MediaUtils writePHVedio:asset toPath:nil block:^(NSURL *url) {
+            if (!url) {
+                //写入失败
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [PromptManager dismissJPGHUD];
+                    [self.viewController dismissViewControllerAnimated:YES completion:^{
+                        [MBProgressHUD showError:@"读取数据失败"];
+                        self.movImage=nil;
+                    }];
+                });
+            }else{
+                //写入成功
+                self.originMovUrl=url;
+                long long fileSize=[MediaUtils getFileSize:[url path]];
+                CGFloat M_Size=fileSize/(1024.0 * 1024.0);
+                NSLog(@"+++++文件大小:%fM",M_Size);
+                //原文件大于300M,警告提醒，可能压缩后会大于10M导致视频上传失败
+                if (M_Size>300.0) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [PromptManager dismissJPGHUD];
+                        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"视频文件较大，压缩后可能大于10M,是否继续？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+                        [alertView show];
+                        return ;
+                    });
+                }
+                else
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self compressVideoByUrl:url];
+                    });
+                }
+            }
+        }];
+    });
+}
+
+#pragma mark ---压缩视屏
+-(void)compressVideoByUrl:(NSURL *)url
+{
+    self.movieFileName= [NSString stringWithFormat:@"%@.m4v",KMY_ZC_FILE_PATH(self.contentBelong)];
+         [PromptManager dismissJPGHUD];
+         [PromptManager showJPGHUDWithMessage:@"视频压缩中…" inView:_picker.view];
+    __weak typeof (&*self)weakSelf=self;
+    [MediaUtils convertVideoQuailtyWithInputURL:url outputURL:nil completeHandler:^(AVAssetExportSession *exportSession, NSURL* compressedOutputURL) {
+        [PromptManager dismissJPGHUD];
+        if (exportSession.status == AVAssetExportSessionStatusCompleted) {
+            /******* 压缩成功*******/
+            [MediaUtils deleteFileByPath:url.path];
+            long long fileSize=[MediaUtils getFileSize:compressedOutputURL.path];
+            CGFloat M_Size=fileSize/(1024.0 * 1024.0);
+            NSLog(@"+++++压缩后文件大小:%fM",M_Size);
+            
+            /******* 判断压缩后文件大小*******/
+            if (fileSize > 1024 * 1024 * 10) {
+                /******* 压缩后文件较大，删除文件*******/
+                [MediaUtils deleteFileByPath:[compressedOutputURL path]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.viewController dismissViewControllerAnimated:YES completion:^{
+                        [MBProgressHUD showError:@"视频过大,获取失败"];
+                        weakSelf.movImage=nil;
+                    }];
+                });
+                return ;
+            }
+            /******* 压缩后文件满足要求*******/
+                //复制文件到指定位置
+               [MediaUtils deleteFileByPath:weakSelf.movieFileName];
+                NSFileManager *fileManager=[NSFileManager defaultManager];
+                BOOL copySuccess=
+                [fileManager copyItemAtPath:[compressedOutputURL path] toPath:weakSelf.movieFileName error:nil];
+                if (copySuccess) {
+                    //删除源视频
+                    [MediaUtils deleteFileByPath:[compressedOutputURL path]];
+                    //将图片数据转换成png格式文件并存储
+                    weakSelf.movieImgFileName=[NSString stringWithFormat:@"%@.png",KMY_ZC_FILE_PATH(weakSelf.contentBelong)];
+                    [MediaUtils deleteFileByPath:weakSelf.movieImgFileName];
+                    if (weakSelf.movImage){
+                        [UIImagePNGRepresentation(weakSelf.movImage) writeToFile:weakSelf.movieImgFileName atomically:YES];
+                    }
+                    [weakSelf.viewController dismissViewControllerAnimated:YES completion:^{
+                    weakSelf.movieImg.image=weakSelf.movImage;
+                    weakSelf.turnImageView.hidden=NO;
+                    [PromptManager showSuccessJPGHUDWithMessage:@"压缩成功" intView: weakSelf.viewController.view time:1];
+                        [weakSelf saveDataInDataManager];
+                    }];
+                }
+        }
+        else{
+            /******* 压缩失败*******/
+            [MBProgressHUD showError:@"数据异常,压缩失败"];
+            weakSelf.movImage=nil;
+            [weakSelf.viewController dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+}
+
+#pragma mark  --- 保存数据到单例中
+-(void)saveDataInDataManager
+{
+    //将video文件和第一帧图片路径保存到单例中
+    MoreFZCDataManager *dataManager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    if ([self.contentBelong isEqualToString:RAISEMONEY_CONTENTBELONG]) {
+        dataManager.raiseMoney_movieUrl=self.movieFileName;
+        dataManager.raiseMoney_movieImg=self.movieImgFileName;
+    }
+    else if ([self.contentBelong isEqualToString:RETURN_01_CONTENTBELONG])
+    {
+        dataManager.return_movieUrl=self.movieFileName;
+        dataManager.return_movieImg=self.movieImgFileName;
+    }
+    else if ([self.contentBelong isEqualToString:RETURN_02_CONTENTBELONG])
+    {
+        dataManager.return_movieUrl01=self.movieFileName;
+        dataManager.return_movieImg01=self.movieImgFileName;
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        return;
+    }
+    else if(buttonIndex==1)
+    {
+        [self compressVideoByUrl:self.originMovUrl];
+    }
 }
 
 #pragma mark --- imagePickerController 选择后方法回调
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    self.movieFileName= [NSString stringWithFormat:@"%@.mp4",KMY_ZC_FILE_PATH(self.contentBelong)];;
+    self.movieFileName= [NSString stringWithFormat:@"%@.mp4",KMY_ZC_FILE_PATH(self.contentBelong)];
         //获取媒体类型
         NSString* mediaType = [info objectForKey:UIImagePickerControllerMediaType];
         //判断是不是视频

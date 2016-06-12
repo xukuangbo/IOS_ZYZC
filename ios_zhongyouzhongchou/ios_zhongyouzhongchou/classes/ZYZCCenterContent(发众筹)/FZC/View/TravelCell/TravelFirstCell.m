@@ -38,6 +38,7 @@
     recommendBtn.layer.borderWidth=1;
     recommendBtn.layer.borderColor=[UIColor ZYZC_MainColor].CGColor;
     [self.contentView addSubview:recommendBtn];
+    recommendBtn.hidden=YES;
     
     //创建日程视图
     _scheduleView=[[GoalScheduleView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE*2, self.topLineView.bottom+10, KSCREEN_W-40, 30)];
