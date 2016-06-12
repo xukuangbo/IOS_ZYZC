@@ -352,6 +352,7 @@
         return;
     }
     
+     _mbProgress.dimBackground=NO;
      _mbProgress=[MBProgressHUD showMessage:@"正在发布..."];
     
     if (_uploadDataState.count) {

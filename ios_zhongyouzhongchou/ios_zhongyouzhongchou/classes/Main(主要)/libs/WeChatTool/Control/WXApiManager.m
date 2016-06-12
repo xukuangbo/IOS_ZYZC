@@ -183,7 +183,7 @@
 {
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     NSString *openid=[user objectForKey:KUSER_ID];
-    //openid已存在，说明已登录
+//    openid已存在，说明已登录
     if (openid) {
         return;
     }
@@ -217,7 +217,7 @@
     
     NSMutableDictionary *params=[NSMutableDictionary dictionaryWithDictionary:dict];
     [params setObject:[ZYZCTool getUserId] forKey:@"openid"];
-    [params setObject:[ZYZCTool getDeviceIp] forKey:@"ip"];
+    [params setObject:@"127.0.0.1" forKey:@"ip"];// 不知道是干嘛用的
     
     
     [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];

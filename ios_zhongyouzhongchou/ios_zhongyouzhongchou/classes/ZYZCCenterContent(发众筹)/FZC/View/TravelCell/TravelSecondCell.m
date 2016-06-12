@@ -35,6 +35,7 @@
     detailBtn.layer.borderColor=[UIColor ZYZC_MainColor].CGColor;
     [detailBtn addTarget:self action:@selector(clickDetailTravel) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:detailBtn];
+    detailBtn.hidden=YES;
     
     _addView=[[AddDetailView alloc]initWithFrame:CGRectMake(2*KEDGE_DISTANCE, self.titleLab.bottom+10, KSCREEN_W-4*KEDGE_DISTANCE , TRAVELOPENHEIGHT-KEDGE_DISTANCE)];
     [self.contentView addSubview:_addView];
@@ -116,7 +117,7 @@
     
     AddSceneView *accommodateContentView=[_addView viewWithTag:AccommodateContentType];
     if (oneDetailModel.liveDes.length) {
-        accommodateContentView.textView.text=oneDetailModel.trafficDes;;
+        accommodateContentView.textView.text=oneDetailModel.liveDes;
         accommodateContentView.placeholdLab.hidden=YES;
     }
 
