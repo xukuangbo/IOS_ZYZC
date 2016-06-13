@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ios_zhongyouzhongchou/classes/ZYZCCenterContent(&#x53d1;&#x4f17;&#x7b79;)/FZC/View/WSMView/MovieView.m"
-            timestampString = "487426996.668406"
+            filePath = "ios_zhongyouzhongchou/classes/Main(&#x4e3b;&#x8981;)/libs/ZYZCPhotoPicker/Utils/MediaUtils.m"
+            timestampString = "487478104.009479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "-addMyMovie:"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "+writePHVedio:toPath:block:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -7,6 +7,7 @@
 //
 
 #import "MediaUtils.h"
+
 @implementation MediaUtils
 
 +(NSString *)getTempPath{
@@ -84,15 +85,21 @@
 }
 
 +(void)writePHVedio:(PHAsset*)asset toPath:(NSString*)path block:(void (^)(NSURL* url))finishBlock{
-
-//    PHFetchResult
-    
      NSLog(@"asset:%@",asset);
+    NSLog(@"localIdentifier:%@",asset.localIdentifier);
+    
+    PHFetchResult* fetchCollectionResult=[PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[asset.localIdentifier] options:nil];
+    PHAssetCollection* exisitingCollection = fetchCollectionResult.firstObject;
+    
+    PHAssetCollectionChangeRequest *collectionRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:exisitingCollection];
+    NSLog(@"%@",collectionRequest);
+    
     if ([asset isKindOfClass:[PHAsset class]]) {
         PHAsset* phAsset = (PHAsset*)asset;
         NSLog(@"phAsset:%@",phAsset);
         
         NSArray* assetResources = [PHAssetResource assetResourcesForAsset:phAsset];
+        
         NSLog(@"assetResources:%@",assetResources);
         PHAssetResource* assetResource = nil;
         for (PHAssetResource* assetRes in assetResources)
