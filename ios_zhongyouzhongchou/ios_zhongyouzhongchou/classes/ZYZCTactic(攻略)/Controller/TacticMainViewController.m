@@ -61,7 +61,6 @@
  */
 - (void)setUpNavi
 {
-    
     //设置导航栏的颜色为透明
     
     [self.navigationController.navigationBar cnSetBackgroundColor:home_navi_bgcolor(0)];

@@ -24,6 +24,11 @@
  *  热门目的地模型
  */
 @property (nonatomic, strong) NSArray *mgViews;
+/**
+ *  热门国家模型
+ */
+@property (nonatomic, strong) NSArray *countryViews;
+
 
 @property (nonatomic, strong) NSArray *indexImg;
 

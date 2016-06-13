@@ -7,7 +7,7 @@
 //
 
 #import "ZYZCBaseViewController.h"
-
+#import "ZYZCAccountModel.h"
 @interface MineTravelTagsVC : ZYZCBaseViewController
 
 @end

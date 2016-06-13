@@ -47,6 +47,7 @@
 		0432ADB71D0AA95D005D789E /* MineWalletModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADB61D0AA95D005D789E /* MineWalletModel.m */; };
 		04518B4B1CE419F0001921D0 /* MineSetUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */; };
 		04518B4C1CE419F0001921D0 /* MineSetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */; };
+		0469C5611D0D5E6700A34A03 /* MineTravelTagsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0469C5601D0D5E6700A34A03 /* MineTravelTagsModel.m */; };
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
 		0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */; };
 		0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */; };
@@ -386,6 +387,8 @@
 		04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MineSetUpVC.storyboard; sourceTree = "<group>"; };
 		04518B491CE419F0001921D0 /* MineSetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineSetUpViewController.h; sourceTree = "<group>"; };
 		04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineSetUpViewController.m; sourceTree = "<group>"; };
+		0469C55F1D0D5E6700A34A03 /* MineTravelTagsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTravelTagsModel.h; sourceTree = "<group>"; };
+		0469C5601D0D5E6700A34A03 /* MineTravelTagsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagsModel.m; sourceTree = "<group>"; };
 		048DDE9A1CC229F600136C7A /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
 		048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
 		0490D14E1CC92B350064844C /* TacticSingleFoodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleFoodModel.h; sourceTree = "<group>"; };
@@ -1845,6 +1848,8 @@
 				04D9A4B21D09089A00753392 /* MineTravelTagsFirstView.m */,
 				04D9A4B41D09115E00753392 /* MineTravelTagsCell.h */,
 				04D9A4B51D09115E00753392 /* MineTravelTagsCell.m */,
+				0469C55F1D0D5E6700A34A03 /* MineTravelTagsModel.h */,
+				0469C5601D0D5E6700A34A03 /* MineTravelTagsModel.m */,
 			);
 			path = "TravelTagsVC(旅行标签)";
 			sourceTree = "<group>";
@@ -2735,6 +2740,7 @@
 				2CD59E451D0906EE009BF136 /* ZCProductDetailController.m in Sources */,
 				04A99CC71CBF848D00C6F5F0 /* MineViewController.m in Sources */,
 				04F6854C1CF57C9F00E1A98E /* MinePersonSetUpScrollView.m in Sources */,
+				0469C5611D0D5E6700A34A03 /* MineTravelTagsModel.m in Sources */,
 				2CD4B4541CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m in Sources */,
 				2C4AD9A81CEDED29005FC29E /* ZCSupportOneYuanView.m in Sources */,
 				2C2421D31CEEB22400F994FB /* ZCSupportTogetherView.m in Sources */,

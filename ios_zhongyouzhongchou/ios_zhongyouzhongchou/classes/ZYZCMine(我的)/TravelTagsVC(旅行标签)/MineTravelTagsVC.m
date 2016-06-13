@@ -10,6 +10,8 @@
 #define MineTravelTagsDetailTitleFont [UIFont systemFontOfSize:12]
 #import "MineTravelTagsVC.h"
 #import "MineTravelTagsFirstView.h"
+#import "ZYZCAccountTool.h"
+#import "MineTravelTagsModel.h"
 
 @interface MineTravelTagsVC ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -17,6 +19,7 @@
 @property (nonatomic, strong) MineTravelTagsFirstView *firstCollectionView;
 @property (nonatomic, strong) UIImageView *secondBg;
 @property (nonatomic, strong) UICollectionView *secondCollectionView;
+
 @end
 
 @implementation MineTravelTagsVC
@@ -27,11 +30,19 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
-//        self.navigationController.navigationBar.translucent = YES;
+//        self.navigationController.navigationBar.translucent = ;
         self.title = @"旅行标签";
         [self configUI];
+        
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    
 }
 #pragma mark - setUI方法
 - (void)configUI
@@ -39,7 +50,7 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
     
     [self setBackItem];
     
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, KNAV_STATUS_HEIGHT, KSCREEN_W, KSCREEN_H - KNAV_STATUS_HEIGHT)];
+    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
     scrollView.backgroundColor = [UIColor ZYZC_BgGrayColor];
     [self.view addSubview:scrollView];
     scrollView.delegate = self;
@@ -48,9 +59,7 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
     //第一个表格
     [self createFirstUI];
     
-//    [self createSecondBg];
-    
-//    [self createSaveButton];
+//  [self createSaveButton];
     
 //    self.scrollView.contentSize = CGSizeMake(KSCREEN_W, self.saveButton.bottom + KEDGE_DISTANCE);
     if(self.scrollView.contentSize.height <= KSCREEN_H){
@@ -65,7 +74,7 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
     CGFloat bgImageViewX = KEDGE_DISTANCE;
     CGFloat bgImageViewY = KEDGE_DISTANCE;
     CGFloat bgImageViewW = KSCREEN_W - 2 * bgImageViewX;
-    CGFloat bgImageViewH = 300;
+    CGFloat bgImageViewH = _scrollView.height - bgImageViewY * 2;
     NSString *title = @"请选择你的旅行习惯";
     self.firstBg = [[UIImageView alloc] initWithFrame:CGRectMake(bgImageViewX, bgImageViewY, bgImageViewW, bgImageViewH)];
     self.firstBg.userInteractionEnabled = YES;
@@ -100,11 +109,6 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
         weakSelf.firstBg.image = KPULLIMG(@"tab_bg_boss0", 5, 0, 5, 0);
     };
     [_firstBg addSubview:_firstCollectionView];
-    
-}
-
-- (void)createSecondBg
-{
     
 }
 

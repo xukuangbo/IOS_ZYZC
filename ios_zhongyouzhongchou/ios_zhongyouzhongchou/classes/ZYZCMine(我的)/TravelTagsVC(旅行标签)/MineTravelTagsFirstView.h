@@ -11,7 +11,7 @@
 typedef void(^ChangeRealHeightBlock)(CGFloat);
 @interface MineTravelTagsFirstView : UICollectionView
 
-@property (nonatomic, strong) NSArray *titleArray;
+@property (nonatomic, strong) NSMutableArray *titleArray;
 
 @property (nonatomic, copy) ChangeRealHeightBlock changeRealHeightBlock;
 @end

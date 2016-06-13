@@ -128,24 +128,23 @@
         NSLog(@"%@",NSStringFromCGSize(newImg.size));
         
         UIImage *selectImg = [ZYZCTool fixOrientation:newImg];
-        CGSize imageScreenSize = CGSizeZero;
-        if (phoneType == 1) {
-            imageScreenSize = selectImg.size;
-        }else if(phoneType == 2) {
-            imageScreenSize = CGSizeMake(selectImg.size.width / 2, selectImg.size.height / 2);
-        }else if(phoneType == 3) {
-            imageScreenSize = CGSizeMake(selectImg.size.width / 3, selectImg.size.height / 3);
-        }
-        NSLog(@"%@",NSStringFromCGSize(selectImg.size));
-        BOOL selectImgJudge = [self judgeImgSizeByImg:imageScreenSize];
-        if (selectImgJudge == NO) {//如果太小
-            [MBProgressHUD showError:@"封面图片大小不符"];
-            return ;
-        }
+//        CGSize imageScreenSize = CGSizeZero;
+//        if (phoneType == 1) {
+//            imageScreenSize = selectImg.size;
+//        }else if(phoneType == 2) {
+//            imageScreenSize = CGSizeMake(selectImg.size.width / 2, selectImg.size.height / 2);
+//        }else if(phoneType == 3) {
+//            imageScreenSize = CGSizeMake(selectImg.size.width / 3, selectImg.size.height / 3);
+//        }
+//        NSLog(@"%@",NSStringFromCGSize(selectImg.size));
+//        BOOL selectImgJudge = [self judgeImgSizeByImg:imageScreenSize];
+//        if (selectImg == NO) {//如果太小
+//            [MBProgressHUD showError:@"封面图片大小不符"];
+//            return ;
+//        }
         __weak typeof (&*self)weakSelf=self;
         [picker dismissViewControllerAnimated:YES completion:^{
-            SelectImageViewController *selectImgVC=[[SelectImageViewController alloc]init];
-            selectImgVC.selectImage=[info objectForKey:UIImagePickerControllerOriginalImage];
+            SelectImageViewController *selectImgVC=[[SelectImageViewController alloc]initWithImage:[ZYZCTool fixOrientation:[info objectForKey:UIImagePickerControllerOriginalImage]]];
             selectImgVC.imageBlock=^(UIImage *img)
             {
                [ZYZCTool removeExistfile:ThemeImagePath];

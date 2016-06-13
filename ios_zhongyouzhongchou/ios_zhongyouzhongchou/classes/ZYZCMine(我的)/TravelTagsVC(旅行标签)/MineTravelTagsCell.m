@@ -7,22 +7,22 @@
 //
 
 #import "MineTravelTagsCell.h"
-
+#import "MineTravelTagsModel.h"
 @implementation MineTravelTagsCell
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.backgroundColor = [UIColor whiteColor];
+//        self.contentView.backgroundColor = [UIColor whiteColor];
         
-        UILabel *tagLabel = [[UILabel alloc]initWithFrame:frame];
-        tagLabel.layer.cornerRadius = 5;
-        tagLabel.layer.masksToBounds = YES;
-        tagLabel.layer.borderColor = [UIColor ZYZC_TextGrayColor].CGColor;
-        tagLabel.layer.borderWidth = 1;
-        tagLabel.textAlignment = NSTextAlignmentCenter;
-        [self.contentView addSubview:tagLabel];
-        self.tagsLabel = tagLabel;
+        _tagsLabel = [[UILabel alloc]initWithFrame:frame];
+        _tagsLabel.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255) / 255.0 green:arc4random_uniform(255) / 255.0 blue:arc4random_uniform(255) / 255.0 alpha:1.0];
+        _tagsLabel.layer.cornerRadius = 5;
+        _tagsLabel.layer.masksToBounds = YES;
+        _tagsLabel.layer.borderColor = [UIColor ZYZC_TextGrayColor].CGColor;
+        _tagsLabel.layer.borderWidth = 1;
+        _tagsLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_tagsLabel];
     }
     return self;
 }
