@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ZYZCAccountModel;
+#import "ZYZCAccountModel.h"
 @interface ZYZCAccountTool : NSObject
 /**
  *  存储账号信息

@@ -47,7 +47,10 @@
 		0432ADB71D0AA95D005D789E /* MineWalletModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432ADB61D0AA95D005D789E /* MineWalletModel.m */; };
 		04518B4B1CE419F0001921D0 /* MineSetUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */; };
 		04518B4C1CE419F0001921D0 /* MineSetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */; };
-		0469C5611D0D5E6700A34A03 /* MineTravelTagsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0469C5601D0D5E6700A34A03 /* MineTravelTagsModel.m */; };
+		0469C56F1D0E44CF00A34A03 /* MineTravelTagVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0469C56A1D0E44CF00A34A03 /* MineTravelTagVC.m */; };
+		0469C5701D0E44CF00A34A03 /* MineTravelTagsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0469C56D1D0E44CF00A34A03 /* MineTravelTagsModel.m */; };
+		0469C5731D0E472900A34A03 /* MineTravelTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0469C5721D0E472900A34A03 /* MineTravelTagButton.m */; };
+		0469C5761D0E4F4800A34A03 /* MineTravelTagBgView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0469C5751D0E4F4800A34A03 /* MineTravelTagBgView.m */; };
 		048DDE9C1CC229F600136C7A /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */; };
 		0490D1501CC92B350064844C /* TacticSingleFoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D14F1CC92B350064844C /* TacticSingleFoodModel.m */; };
 		0490D1531CC92BF40064844C /* TacticSingleTipsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490D1521CC92BF40064844C /* TacticSingleTipsModel.m */; };
@@ -153,9 +156,6 @@
 		04C087B81D05534600203D40 /* MyUserFollowedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C087B71D05534600203D40 /* MyUserFollowedCell.m */; };
 		04D9A4A81D06B9FC00753392 /* MineSaveContactInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A4A71D06B9FC00753392 /* MineSaveContactInfoVC.m */; };
 		04D9A4AC1D06CBBD00753392 /* MineWalletVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A4AB1D06CBBD00753392 /* MineWalletVc.m */; };
-		04D9A4B01D084DE100753392 /* MineTravelTagsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A4AF1D084DE000753392 /* MineTravelTagsVC.m */; };
-		04D9A4B31D09089A00753392 /* MineTravelTagsFirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A4B21D09089A00753392 /* MineTravelTagsFirstView.m */; };
-		04D9A4B61D09115E00753392 /* MineTravelTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A4B51D09115E00753392 /* MineTravelTagsCell.m */; };
 		04F685491CF57C9F00E1A98E /* MinePersonSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */; };
 		04F6854B1CF57C9F00E1A98E /* MinePersonSetUpHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685461CF57C9F00E1A98E /* MinePersonSetUpHeadView.m */; };
 		04F6854C1CF57C9F00E1A98E /* MinePersonSetUpScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F685481CF57C9F00E1A98E /* MinePersonSetUpScrollView.m */; };
@@ -387,8 +387,14 @@
 		04518B481CE419F0001921D0 /* MineSetUpVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MineSetUpVC.storyboard; sourceTree = "<group>"; };
 		04518B491CE419F0001921D0 /* MineSetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineSetUpViewController.h; sourceTree = "<group>"; };
 		04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineSetUpViewController.m; sourceTree = "<group>"; };
-		0469C55F1D0D5E6700A34A03 /* MineTravelTagsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTravelTagsModel.h; sourceTree = "<group>"; };
-		0469C5601D0D5E6700A34A03 /* MineTravelTagsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagsModel.m; sourceTree = "<group>"; };
+		0469C5691D0E44CF00A34A03 /* MineTravelTagVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTravelTagVC.h; sourceTree = "<group>"; };
+		0469C56A1D0E44CF00A34A03 /* MineTravelTagVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagVC.m; sourceTree = "<group>"; };
+		0469C56C1D0E44CF00A34A03 /* MineTravelTagsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTravelTagsModel.h; sourceTree = "<group>"; };
+		0469C56D1D0E44CF00A34A03 /* MineTravelTagsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagsModel.m; sourceTree = "<group>"; };
+		0469C5711D0E472900A34A03 /* MineTravelTagButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTravelTagButton.h; sourceTree = "<group>"; };
+		0469C5721D0E472900A34A03 /* MineTravelTagButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagButton.m; sourceTree = "<group>"; };
+		0469C5741D0E4F4800A34A03 /* MineTravelTagBgView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTravelTagBgView.h; sourceTree = "<group>"; };
+		0469C5751D0E4F4800A34A03 /* MineTravelTagBgView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagBgView.m; sourceTree = "<group>"; };
 		048DDE9A1CC229F600136C7A /* MBProgressHUD+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+MJ.h"; sourceTree = "<group>"; };
 		048DDE9B1CC229F600136C7A /* MBProgressHUD+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+MJ.m"; sourceTree = "<group>"; };
 		0490D14E1CC92B350064844C /* TacticSingleFoodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TacticSingleFoodModel.h; sourceTree = "<group>"; };
@@ -597,12 +603,6 @@
 		04D9A4A71D06B9FC00753392 /* MineSaveContactInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineSaveContactInfoVC.m; sourceTree = "<group>"; };
 		04D9A4AA1D06CBBD00753392 /* MineWalletVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineWalletVc.h; sourceTree = "<group>"; };
 		04D9A4AB1D06CBBD00753392 /* MineWalletVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineWalletVc.m; sourceTree = "<group>"; };
-		04D9A4AE1D084DE000753392 /* MineTravelTagsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTravelTagsVC.h; sourceTree = "<group>"; };
-		04D9A4AF1D084DE000753392 /* MineTravelTagsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagsVC.m; sourceTree = "<group>"; };
-		04D9A4B11D09089A00753392 /* MineTravelTagsFirstView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTravelTagsFirstView.h; sourceTree = "<group>"; };
-		04D9A4B21D09089A00753392 /* MineTravelTagsFirstView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagsFirstView.m; sourceTree = "<group>"; };
-		04D9A4B41D09115E00753392 /* MineTravelTagsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTravelTagsCell.h; sourceTree = "<group>"; };
-		04D9A4B51D09115E00753392 /* MineTravelTagsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTravelTagsCell.m; sourceTree = "<group>"; };
 		04F6853F1CF57C9F00E1A98E /* MinePersonSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpController.h; sourceTree = "<group>"; };
 		04F685401CF57C9F00E1A98E /* MinePersonSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinePersonSetUpController.m; sourceTree = "<group>"; };
 		04F685451CF57C9F00E1A98E /* MinePersonSetUpHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinePersonSetUpHeadView.h; sourceTree = "<group>"; };
@@ -1136,6 +1136,35 @@
 				04518B4A1CE419F0001921D0 /* MineSetUpViewController.m */,
 			);
 			path = "MineSetUp(个人设置)";
+			sourceTree = "<group>";
+		};
+		0469C5681D0E44CF00A34A03 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0469C5691D0E44CF00A34A03 /* MineTravelTagVC.h */,
+				0469C56A1D0E44CF00A34A03 /* MineTravelTagVC.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0469C56B1D0E44CF00A34A03 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0469C56C1D0E44CF00A34A03 /* MineTravelTagsModel.h */,
+				0469C56D1D0E44CF00A34A03 /* MineTravelTagsModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0469C56E1D0E44CF00A34A03 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0469C5711D0E472900A34A03 /* MineTravelTagButton.h */,
+				0469C5721D0E472900A34A03 /* MineTravelTagButton.m */,
+				0469C5741D0E4F4800A34A03 /* MineTravelTagBgView.h */,
+				0469C5751D0E4F4800A34A03 /* MineTravelTagBgView.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		048DDE991CC229F600136C7A /* MBProgressHUD+MJ */ = {
@@ -1842,14 +1871,9 @@
 		04D9A4AD1D084D9600753392 /* TravelTagsVC(旅行标签) */ = {
 			isa = PBXGroup;
 			children = (
-				04D9A4AE1D084DE000753392 /* MineTravelTagsVC.h */,
-				04D9A4AF1D084DE000753392 /* MineTravelTagsVC.m */,
-				04D9A4B11D09089A00753392 /* MineTravelTagsFirstView.h */,
-				04D9A4B21D09089A00753392 /* MineTravelTagsFirstView.m */,
-				04D9A4B41D09115E00753392 /* MineTravelTagsCell.h */,
-				04D9A4B51D09115E00753392 /* MineTravelTagsCell.m */,
-				0469C55F1D0D5E6700A34A03 /* MineTravelTagsModel.h */,
-				0469C5601D0D5E6700A34A03 /* MineTravelTagsModel.m */,
+				0469C5681D0E44CF00A34A03 /* Controller */,
+				0469C56B1D0E44CF00A34A03 /* Model */,
+				0469C56E1D0E44CF00A34A03 /* View */,
 			);
 			path = "TravelTagsVC(旅行标签)";
 			sourceTree = "<group>";
@@ -2566,6 +2590,7 @@
 				2CE5DD9A1CE9552400895A94 /* ZCCommentCell.m in Sources */,
 				04C087A01D03E31300203D40 /* TacticMoreCitiesVC.m in Sources */,
 				2C3777F51D07CA2C004FDA9D /* ZYZCOneProductCell.m in Sources */,
+				0469C5701D0E44CF00A34A03 /* MineTravelTagsModel.m in Sources */,
 				2C24A0941CFC389600950663 /* ZCWebViewController.m in Sources */,
 				2C3777FC1D07F355004FDA9D /* ZYZCBaseTableView.m in Sources */,
 				04A99D201CC07E1800C6F5F0 /* GetMessageFromWXResp+responseWithTextOrMediaMessage.m in Sources */,
@@ -2600,6 +2625,7 @@
 				2C7E3B4E1D06C92100F51C61 /* MineOneItemCell.m in Sources */,
 				04A99D1F1CC07E1800C6F5F0 /* WXApiResponseHandler.m in Sources */,
 				04C087B81D05534600203D40 /* MyUserFollowedCell.m in Sources */,
+				0469C5731D0E472900A34A03 /* MineTravelTagButton.m in Sources */,
 				040651411CC78877003FD539 /* TacticImageView.m in Sources */,
 				04A99D221CC07E1800C6F5F0 /* WXMediaMessage+messageConstruct.m in Sources */,
 				2C8B19901D0CF7EC0063097B /* XMNPhotoManager.m in Sources */,
@@ -2635,7 +2661,6 @@
 				04A99CEF1CBF851500C6F5F0 /* RMCalendarLogic.m in Sources */,
 				04A99CC51CBF848D00C6F5F0 /* CalendarViewController.m in Sources */,
 				04F836421CD72C3300140980 /* SDBaseProgressView.m in Sources */,
-				04D9A4B61D09115E00753392 /* MineTravelTagsCell.m in Sources */,
 				2C8B19721D0CF7EC0063097B /* JGProgressHUDFadeAnimation.m in Sources */,
 				040651211CC62FC7003FD539 /* TAAbstractDotView.m in Sources */,
 				0432ADA61D0966F9005D789E /* STPickerView.m in Sources */,
@@ -2676,7 +2701,6 @@
 				04A99C8D1CBF848D00C6F5F0 /* UIColor+ZYZCColors.m in Sources */,
 				2C8B916E1CE70629004FDCB7 /* ZCCommentViewController.m in Sources */,
 				04A99C991CBF848D00C6F5F0 /* ChooseSceneImgController.m in Sources */,
-				04D9A4B01D084DE100753392 /* MineTravelTagsVC.m in Sources */,
 				04F836431CD72C3300140980 /* SDLoopProgressView.m in Sources */,
 				04C087A41D03E97000203D40 /* TacticMoreVideosVC.m in Sources */,
 				2C24A08E1CFC26A400950663 /* ZCSpotVideoModel.m in Sources */,
@@ -2717,7 +2741,6 @@
 				2C7E3B4B1D06B34D00F51C61 /* MineTableViewCell.m in Sources */,
 				04FCCAAF1CDC45AD00540B28 /* TacticMoreCollectionViewCell.m in Sources */,
 				04A99CC01CBF848D00C6F5F0 /* WSMBaseView.m in Sources */,
-				04D9A4B31D09089A00753392 /* MineTravelTagsFirstView.m in Sources */,
 				2C079C561CFFD4B6002EFF29 /* ChatUserModel.m in Sources */,
 				2C3777EF1D07C345004FDA9D /* MyProductTableView.m in Sources */,
 				04A99CC11CBF848D00C6F5F0 /* CustomItemView.m in Sources */,
@@ -2740,7 +2763,6 @@
 				2CD59E451D0906EE009BF136 /* ZCProductDetailController.m in Sources */,
 				04A99CC71CBF848D00C6F5F0 /* MineViewController.m in Sources */,
 				04F6854C1CF57C9F00E1A98E /* MinePersonSetUpScrollView.m in Sources */,
-				0469C5611D0D5E6700A34A03 /* MineTravelTagsModel.m in Sources */,
 				2CD4B4541CCDE807006A7CE8 /* ZCDetailReturnFourthCell.m in Sources */,
 				2C4AD9A81CEDED29005FC29E /* ZCSupportOneYuanView.m in Sources */,
 				2C2421D31CEEB22400F994FB /* ZCSupportTogetherView.m in Sources */,
@@ -2793,9 +2815,11 @@
 				2C8B196F1D0CF7EC0063097B /* JGProgressHUD.m in Sources */,
 				2CCB4DDD1CD1D86300ABA1DB /* FZCReplaceDataKeys.m in Sources */,
 				04A99CCA1CBF848D00C6F5F0 /* MineMessageCell.m in Sources */,
+				0469C56F1D0E44CF00A34A03 /* MineTravelTagVC.m in Sources */,
 				2C8B19811D0CF7EC0063097B /* XMNPhotoPreviewController.m in Sources */,
 				0490D15F1CCB6A3E0064844C /* TacticCustomMapView.m in Sources */,
 				04F836471CD72C3300140980 /* SDTransparentPieProgressView.m in Sources */,
+				0469C5761D0E4F4800A34A03 /* MineTravelTagBgView.m in Sources */,
 				2CF7EB071CC78599007074FE /* ZCDetailIntroThirdCell.m in Sources */,
 				04A99CC61CBF848D00C6F5F0 /* FZCBaseViewController.m in Sources */,
 				04A99CB01CBF848D00C6F5F0 /* RaiseMoneySecondCellView.m in Sources */,
