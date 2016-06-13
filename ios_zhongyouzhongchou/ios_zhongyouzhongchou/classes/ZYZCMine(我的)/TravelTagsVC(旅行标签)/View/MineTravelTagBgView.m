@@ -24,7 +24,7 @@
 @end
 
 @implementation MineTravelTagBgView
-- (instancetype)initWithFrame:(CGRect)frame Title:(NSString *)title DetailTitle:(NSString *)detailTitle TitleArray:(NSArray *)titleArray
+- (instancetype)initWithFrame:(CGRect)frame Title:(NSString *)title DetailTitle:(NSString *)detailTitle TitleArray:(NSArray *)titleArray PesonTitleArray:(NSArray *)personTitleArray
 {
     self = [super initWithFrame:frame];
     
@@ -66,7 +66,30 @@
             CGFloat buttonY = row * (buttonH + KEDGE_DISTANCE) + KEDGE_DISTANCE + titleLabel.bottom;
             MineTravelTagsModel *model = titleArray[i];
             
+            
             MineTravelTagButton *button = [[MineTravelTagButton alloc] initWithFrame:CGRectMake(buttonX, buttonY, buttonW, buttonH)];
+            //设置是否为已经标记了的
+            for (NSString *tag in personTitleArray) {
+                if ([tag isEqualToString:model.value]) {
+                    button.selected = YES;
+                }else{
+                    
+                }
+                
+            }
+            
+            if (button.selected == YES) {
+                
+                button.backgroundColor = [UIColor ZYZC_MainColor];
+                
+                button.layer.borderColor = [UIColor ZYZC_MainColor].CGColor;
+            }else{
+                
+                button.backgroundColor = [UIColor clearColor];
+                
+                button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            }
+            
             __weak typeof(&*self) weakSelf = self;
             __weak typeof(&*button) weakButton = button;
             button.buttonClickBlock = ^(){

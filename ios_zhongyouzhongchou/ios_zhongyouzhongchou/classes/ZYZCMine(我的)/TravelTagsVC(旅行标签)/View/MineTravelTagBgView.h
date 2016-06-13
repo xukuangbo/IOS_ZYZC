@@ -13,5 +13,5 @@
 
 @property (nonatomic, assign) NSInteger maxCount;
 
-- (instancetype)initWithFrame:(CGRect)frame Title:(NSString *)title DetailTitle:(NSString *)detailTitle TitleArray:(NSArray *)titleArray;
+- (instancetype)initWithFrame:(CGRect)frame Title:(NSString *)title DetailTitle:(NSString *)detailTitle TitleArray:(NSArray *)titleArray PesonTitleArray:(NSArray *)personTitleArray;
 @end
