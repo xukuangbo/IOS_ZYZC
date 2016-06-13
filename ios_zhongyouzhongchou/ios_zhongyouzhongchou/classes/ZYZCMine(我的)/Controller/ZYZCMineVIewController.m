@@ -12,6 +12,7 @@
 #import "ZYZCAccountTool.h"
 #import "ZYZCAccountModel.h"
 #import "MineTableViewCell.h"
+#import "MineSetUpViewController.h"
 @interface ZYZCMineVIewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) PersonHeadView *personHeadView;
 @property (nonatomic, strong) UITableView    *table;
@@ -105,7 +106,10 @@
 #pragma mark --- 设置
 -(void)leftButtonClick
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    UIStoryboard *board = [UIStoryboard storyboardWithName:@"MineSetUpVC" bundle:nil];
+    MineSetUpViewController *mineSetUpViewController = [board instantiateViewControllerWithIdentifier:@"MineSetUpViewController"];
+    mineSetUpViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mineSetUpViewController animated:YES];
 }
 
 #pragma mark --- 消息

@@ -105,7 +105,7 @@
     _picker = [[XMNPhotoPickerController alloc] initWithMaxCount:9 delegate:nil];
     _picker.autoPushToPhotoCollection=NO;
     _picker.autoPushToVideoCollection=YES;
-    __weak typeof(&*self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
 //    选择视频后回调
     [_picker setDidFinishPickingVideoBlock:^(UIImage * _Nullable image, XMNAssetModel * _Nullable asset) {
         NSLog(@"asset:%@",asset.asset);
@@ -123,7 +123,6 @@
 
 -(void)compressVideo:(PHAsset*)asset{
     [PromptManager showJPGHUDWithMessage:@"正在获取视屏文件…" inView:_picker.view];
-    NSLog(@"asset:%@",asset);
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [MediaUtils writePHVedio:asset toPath:nil block:^(NSURL *url) {
             if (!url) {
@@ -252,6 +251,8 @@
         [self compressVideoByUrl:self.originMovUrl];
     }
 }
+
+
 
 #pragma mark --- imagePickerController 选择后方法回调
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info

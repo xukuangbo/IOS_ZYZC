@@ -23,7 +23,7 @@
 @property (nonatomic, assign) BOOL pickingVideoEnable;
 /** 是否自动push到相册页面 默认YES*/
 @property (nonatomic, assign) BOOL autoPushToPhotoCollection;
-/** 是否自动push到视屏页面 默认YES*/
+/** 是否自动push到视频页面 默认NO*/
 @property (nonatomic, assign) BOOL autoPushToVideoCollection;
 /** 每次最多可以选择带图片数量 默认9*/
 @property (nonatomic, assign) NSUInteger maxCount;
