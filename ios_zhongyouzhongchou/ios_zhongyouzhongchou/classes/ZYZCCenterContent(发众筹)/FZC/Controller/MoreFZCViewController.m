@@ -352,7 +352,7 @@
         return;
     }
     
-     _mbProgress.dimBackground=NO;
+     _mbProgress.dimBackground=YES;
      _mbProgress=[MBProgressHUD showMessage:@"正在发布..."];
     
     if (_uploadDataState.count) {
@@ -467,9 +467,9 @@
     
     NSMutableDictionary *newParameters=[NSMutableDictionary dictionaryWithDictionary:dataDict];
     [newParameters addEntriesFromDictionary:@{@"productCountryId":@1}];
-    //=======================================================
-    [newParameters setObject:@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/12333.jpg" forKey:@"cover"];
-    //=======================================================
+//    //=======================================================
+//    [newParameters setObject:@"http://zyzc-bucket01.oss-cn-hangzhou.aliyuncs.com/12333.jpg" forKey:@"cover"];
+//    //=======================================================
     _dataDic=newParameters;
      NSLog(@"_dataDic:%@",_dataDic);
     

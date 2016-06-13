@@ -60,7 +60,7 @@
 /**
  *  @author 嘴爷, 2016-05-26 15:05:07
  *
- *  @brief 压缩视频文件
+ *  @brief 压缩视频文件(9.0后可用)
  *
  *  @param inputURL  待压缩视频文件路径
  *  @param outputURL 压缩完成后的视频文件路径
@@ -79,5 +79,13 @@
  *  @return 压缩完成后的视频文件路径
  */
 + (NSURL *)convert2Mp4:(NSURL *)movUrl;
+
+/**
+ *   压缩视频文件(9.0后可用)
+ *
+ *  @param asset   用于读取媒体信息
+ *  @param handler 处理结束回调
+ */
++ (void)compressVideo:(PHAsset *)asset completeHandler:(void (^)(AVAssetExportSession* exportSession, NSURL* compressedOutputURL)) handler;
 
 @end

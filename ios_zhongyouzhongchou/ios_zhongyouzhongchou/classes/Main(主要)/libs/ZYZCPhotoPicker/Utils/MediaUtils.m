@@ -5,8 +5,11 @@
 //  Created by Mac on 16/5/26.
 //  Copyright © 2016年 Mac. All rights reserved.
 //
+#define DEVICE_VERSION  [[[UIDevice currentDevice] systemVersion] doubleValue]
+
 
 #import "MediaUtils.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @implementation MediaUtils
 
@@ -85,60 +88,56 @@
 }
 
 +(void)writePHVedio:(PHAsset*)asset toPath:(NSString*)path block:(void (^)(NSURL* url))finishBlock{
-     NSLog(@"asset:%@",asset);
-    NSLog(@"localIdentifier:%@",asset.localIdentifier);
-    
-    PHFetchResult* fetchCollectionResult=[PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[asset.localIdentifier] options:nil];
-    PHAssetCollection* exisitingCollection = fetchCollectionResult.firstObject;
-    
-    PHAssetCollectionChangeRequest *collectionRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:exisitingCollection];
-    NSLog(@"%@",collectionRequest);
-    
-    if ([asset isKindOfClass:[PHAsset class]]) {
-        PHAsset* phAsset = (PHAsset*)asset;
-        NSLog(@"phAsset:%@",phAsset);
-        
-        NSArray* assetResources = [PHAssetResource assetResourcesForAsset:phAsset];
-        
-        NSLog(@"assetResources:%@",assetResources);
-        PHAssetResource* assetResource = nil;
-        for (PHAssetResource* assetRes in assetResources)
-            if (assetRes.type == PHAssetMediaTypeVideo||
-                assetRes.type == PHAssetMediaTypeAudio)
+    if (DEVICE_VERSION<9.0) {
+        return;
+    }
+    else{
+        if ([asset isKindOfClass:[PHAsset class]]) {
+            PHAsset* phAsset = (PHAsset*)asset;
+            NSLog(@"phAsset:%@",phAsset);
+            
+            NSArray* assetResources = [PHAssetResource assetResourcesForAsset:phAsset];
+            
+            NSLog(@"assetResources:%@",assetResources);
+            PHAssetResource* assetResource = nil;
+            for (PHAssetResource* assetRes in assetResources)
+                if (assetRes.type == PHAssetMediaTypeVideo||
+                    assetRes.type == PHAssetMediaTypeAudio)
+                {
+                    assetResource = assetRes;
+                }
+            
+            if (assetResource) {
+                NSLog(@"===============源文件名称%@", assetResource.originalFilename);
+                
+                if (!path) {
+                    NSDateFormatter *formater = [[NSDateFormatter alloc] init];//用时间给文件全名，以免重复
+                    [formater setDateFormat:@"yyyyMMddHHmmss"];
+                    NSString* fileName = [NSString stringWithFormat:@"temp%@.m4v", [formater stringFromDate:[NSDate date]]];
+                    path = [[MediaUtils getTempPath] stringByAppendingPathComponent:fileName];
+                    NSLog(@"temp路径：：：：：：：：：%@", path);
+                }
+                NSURL* url = [NSURL fileURLWithPath:path];
+                if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+                    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+                }
+                
+                [[PHAssetResourceManager defaultManager] writeDataForAssetResource:assetResource toFile:url options:nil completionHandler:^(NSError * _Nullable error) {
+                    if (finishBlock) {
+                        finishBlock(url);
+                    }else{if (finishBlock) finishBlock(nil);}
+                }];
+            }
+            else
             {
-                assetResource = assetRes;
-            }
-        
-        if (assetResource) {
-            NSLog(@"===============源文件名称%@", assetResource.originalFilename);
-            
-            if (!path) {
-                NSDateFormatter *formater = [[NSDateFormatter alloc] init];//用时间给文件全名，以免重复
-                [formater setDateFormat:@"yyyyMMddHHmmss"];
-                NSString* fileName = [NSString stringWithFormat:@"temp%@.m4v", [formater stringFromDate:[NSDate date]]];
-                path = [[MediaUtils getTempPath] stringByAppendingPathComponent:fileName];
-                NSLog(@"temp路径：：：：：：：：：%@", path);
-            }
-            NSURL* url = [NSURL fileURLWithPath:path];
-            if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-                [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+                if (finishBlock) finishBlock(nil);
             }
             
-            [[PHAssetResourceManager defaultManager] writeDataForAssetResource:assetResource toFile:url options:nil completionHandler:^(NSError * _Nullable error) {
-                if (finishBlock) {
-                    finishBlock(url);
-                }else{if (finishBlock) finishBlock(nil);}
-            }];
         }
         else
         {
             if (finishBlock) finishBlock(nil);
         }
-        
-    }
-    else
-    {
-        if (finishBlock) finishBlock(nil);
     }
 }
 
@@ -215,8 +214,7 @@
     NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:avAsset];
     
     if ([compatiblePresets containsObject:AVAssetExportPresetHighestQuality]) {
-        AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]initWithAsset:avAsset
-                                                                              presetName:AVAssetExportPresetHighestQuality];
+        AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]initWithAsset:avAsset presetName:AVAssetExportPresetHighestQuality];
         mp4Url = [movUrl copy];
         mp4Url = [mp4Url URLByDeletingPathExtension];
         mp4Url = [mp4Url URLByAppendingPathExtension:@"mp4"];
@@ -253,6 +251,67 @@
     
     return mp4Url;
 }
+
++ (void)compressVideo:(PHAsset *)asset completeHandler:(void (^)(AVAssetExportSession* exportSession, NSURL* compressedOutputURL)) handler
+{
+    [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:nil resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info)
+     {
+         NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+         [formater setDateFormat:@"yyyyMMddHHmmss"];
+         NSString* fileName = [NSString stringWithFormat:@"temp%@.mp4", [formater stringFromDate:[NSDate date]]];
+         NSString *path = [[MediaUtils getTempPath] stringByAppendingPathComponent:fileName];
+         NSURL *outputURL=[NSURL fileURLWithPath:path] ;
+         
+         AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
+         session.outputFileType = AVFileTypeMPEG4;
+         session.shouldOptimizeForNetworkUse = YES;
+         // session.outputFileType = AVFileTypeQuickTimeMovie;
+         session.outputURL = outputURL ;
+
+         // 这个就是你可以导出的文件路径了。
+         [session exportAsynchronouslyWithCompletionHandler:^{
+             switch (session.status) {
+                 case AVAssetExportSessionStatusUnknown:
+                     NSLog(@"AVAssetExportSessionStatusUnknown");
+                     break;
+                     
+                 case AVAssetExportSessionStatusWaiting:
+                     
+                     NSLog(@"AVAssetExportSessionStatusWaiting");
+                     
+                     break;
+                     
+                 case AVAssetExportSessionStatusExporting:
+                     
+                     NSLog(@"AVAssetExportSessionStatusExporting");
+                     
+                     break;
+                     
+                 case AVAssetExportSessionStatusCompleted:
+                     
+                     NSLog(@"AVAssetExportSessionStatusCompleted");
+                     
+                     break;
+                     
+                 case AVAssetExportSessionStatusFailed:
+                     
+                     NSLog(@"AVAssetExportSessionStatusFailed");
+                     
+                     break;
+                     
+                 case AVAssetExportSessionStatusCancelled:
+                     
+                     NSLog(@"AVAssetExportSessionStatusCancelled");
+                     
+                     break;
+             }
+             if (handler) {
+                 handler(session, outputURL);
+             }
+         }];
+     }];
+}
+
 
 
 @end
