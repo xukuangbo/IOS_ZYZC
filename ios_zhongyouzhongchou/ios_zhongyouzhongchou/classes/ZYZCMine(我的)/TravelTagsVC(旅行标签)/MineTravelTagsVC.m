@@ -30,7 +30,6 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
-//        self.navigationController.navigationBar.translucent = ;
         self.title = @"旅行标签";
         [self configUI];
         
@@ -48,7 +47,6 @@ static NSString *const ID = @"MineTravelTagsCollectionViewCell";
 - (void)configUI
 {
     
-    [self setBackItem];
     
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
     scrollView.backgroundColor = [UIColor ZYZC_BgGrayColor];

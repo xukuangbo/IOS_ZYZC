@@ -12,7 +12,7 @@
 #import "ZYZCAccountModel.h"
 #import "MBProgressHUD+MJ.h"
 #import "MineSaveContactInfoVC.h"
-#import "MineTravelTagsVC.h"
+#import "MineTravelTagVC.h"
 @interface MineSetUpViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *cacheSize;
 
@@ -65,7 +65,7 @@
                 break;
             case 1://旅行标签
                 NSLog(@"旅行标签");
-                [self.navigationController pushViewController:[[MineTravelTagsVC alloc] init] animated:YES];
+                [self.navigationController pushViewController:[[MineTravelTagVC alloc] init] animated:YES];
                 break;
             case 2://收货地址
                 NSLog(@"收货地址");

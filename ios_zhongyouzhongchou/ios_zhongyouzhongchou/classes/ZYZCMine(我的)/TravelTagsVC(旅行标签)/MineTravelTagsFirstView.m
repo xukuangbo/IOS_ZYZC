@@ -5,7 +5,8 @@
 //  Created by mac on 16/6/9.
 //  Copyright © 2016年 liuliang. All rights reserved.
 //
-
+#define MineTravelTagsTitleFont [UIFont systemFontOfSize:15]
+#define MineTravelTagsDetailTitleFont [UIFont systemFontOfSize:12]
 #import "MineTravelTagsFirstView.h"
 #import "MineTravelTagsCell.h"
 #import "MineTravelTagsModel.h"
