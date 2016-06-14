@@ -428,17 +428,17 @@
     __weak typeof(&*self) weakSelf = self;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *noMarrryAction = [UIAlertAction actionWithTitle:@"单身" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *noMarrryAction = [UIAlertAction actionWithTitle:ZYLocalizedString(@"maritalStatus_0") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        weakSelf.marryButton.text = @"单身";
+        weakSelf.marryButton.text = ZYLocalizedString(@"maritalStatus_0");
     }];
-    UIAlertAction *lovingAction = [UIAlertAction actionWithTitle:@"恋爱中" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *lovingAction = [UIAlertAction actionWithTitle:ZYLocalizedString(@"maritalStatus_1") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        weakSelf.marryButton.text = @"恋爱中";
+        weakSelf.marryButton.text = ZYLocalizedString(@"maritalStatus_1");
     }];
-    UIAlertAction *marriedAction = [UIAlertAction actionWithTitle:@"已婚" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *marriedAction = [UIAlertAction actionWithTitle:ZYLocalizedString(@"maritalStatus_2") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        weakSelf.marryButton.text = @"已婚";
+        weakSelf.marryButton.text = ZYLocalizedString(@"maritalStatus_2");
     }];
     
     [alertController addAction:cancelAction];
@@ -481,12 +481,13 @@
             [parameter setValue:_constellationButton.text forKey:@"constellation"];
         }
         if (_marryButton.text.length > 0) {
-            if([_marryButton.text isEqualToString:@"未婚"]){
-                [parameter setValue:[NSNumber numberWithInt:0] forKey:@"maritalStatus"];
-            }else if([_sexButton.titleLabel.text isEqualToString:@"恋爱中"]){
-                [parameter setValue:[NSNumber numberWithInt:1]  forKey:@"maritalStatus"];
-            }else{
-                [parameter setValue:[NSNumber numberWithInt:2]  forKey:@"maritalStatus"];
+            if([_marryButton.text isEqualToString:ZYLocalizedString(@"maritalStatus_0")]){
+                [parameter setValue:@0 forKey:@"maritalStatus"];
+            }else if([_marryButton.text isEqualToString:ZYLocalizedString(@"maritalStatus_1")]){
+                [parameter setValue:@1 forKey:@"maritalStatus"];
+            }else if ([_marryButton.text isEqualToString:ZYLocalizedString(@"maritalStatus_2")])
+            {
+                [parameter setValue:@2 forKey:@"maritalStatus"];
             }
         }
         if (_emailButton.text.length > 0) {
@@ -569,11 +570,12 @@
     }
     if (minePersonSetUpModel.maritalStatus.length > 0) {
         if ([minePersonSetUpModel.maritalStatus intValue] == 0) {
-            self.marryButton.text = @"单身";
-        }else if ([minePersonSetUpModel.sex intValue] == 1){
-            self.marryButton.text = @"恋爱中";
-        }else{
-            self.marryButton.text = @"已婚";
+            self.marryButton.text = ZYLocalizedString(@"maritalStatus_0");
+        }else if ([minePersonSetUpModel.maritalStatus intValue] == 1){
+            self.marryButton.text = ZYLocalizedString(@"maritalStatus_1");
+        }else if ([minePersonSetUpModel.maritalStatus intValue] == 2)
+        {
+            self.marryButton.text = ZYLocalizedString(@"maritalStatus_2");
         }
     }
     if (minePersonSetUpModel.height > 0) {

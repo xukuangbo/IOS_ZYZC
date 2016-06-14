@@ -11,6 +11,7 @@
 #import "PersonHeadView.h"
 #import "FXBlurView.h"
 #import "ZYZCRCManager.h"
+#import "NSDate+RMCalendarLogic.h"
 @interface PersonHeadView ()
 @property (nonatomic, strong) UIImageView *infoView;
 @property (nonatomic, strong) UIImageView *faceImgView;
@@ -125,14 +126,13 @@
     }
     //名字
     UIFont *font=_nameLab.font;
-    CGFloat nameWidth=[ZYZCTool calculateStrLengthByText:userModel.userName andFont:font andMaxWidth:self.width].width;
+    NSString *name=userModel.realName?userModel.realName:userModel.userName;
+    CGFloat nameWidth=[ZYZCTool calculateStrLengthByText:name andFont:font andMaxWidth:self.width].width;
     if (nameWidth>self.width-40) {
         nameWidth=self.width-40;
     }
     _nameLab.frame=CGRectMake(self.width/2-(nameWidth+20)/2, 0, nameWidth, 30);
-    _nameLab.text=userModel.userName;
-
-    
+    _nameLab.text=name;
     
     //性别
     _sexImg.frame=CGRectMake(_nameLab.right, _nameLab.top+5, 20, 20);
@@ -154,9 +154,39 @@
     _attentionLab.text=attentionText;
     
     //基础信息
-    NSString *personInfo=@"23岁、天枰座、50kg、170cm、单身";
+    NSInteger age= 0;
+    [NSString stringWithFormat:@"%ld岁",age];
+    if (userModel.birthday.length) {
+        age=[NSDate getAgeFromBirthday:userModel.birthday];
+    }
+//    NSString *personInfo=@"23岁、天枰座、50kg、170cm、单身";
+    NSMutableString *personInfo1=[NSMutableString string];
+    age>0?[personInfo1 appendString:[NSString stringWithFormat:@"%ld岁、",age]]:nil;
+    userModel.constellation.length>0?[personInfo1 appendString:[NSString stringWithFormat:@"%@、",userModel.constellation]]:nil;
+    userModel.weight>0?[personInfo1 appendString:[NSString stringWithFormat:@"%@kg、",userModel.weight]]:nil;
+    
+    userModel.height>0?[personInfo1 appendString:[NSString stringWithFormat:@"%@cm、",userModel.height]]:nil;
+    NSString *marital=nil;
+    if (userModel.maritalStatus) {
+        if ([userModel.maritalStatus isEqual:@0]) {
+            marital=@"单身";
+        }
+        else if([userModel.maritalStatus isEqual:@1])
+        {
+            marital=@"恋爱中";
+        }
+        else if ([userModel.maritalStatus isEqual:@2])
+        {
+            marital=@"已婚";
+        }
+    }
+    userModel.maritalStatus?[personInfo1 appendString:[NSString stringWithFormat:@"%@",marital]]:nil;
+   
+    if ([personInfo1 hasSuffix:@"、"]) {
+        [personInfo1 replaceCharactersInRange:NSMakeRange(personInfo1.length-1, 1) withString:@""];
+    }
     _personInfoLab.frame=CGRectMake(KEDGE_DISTANCE, _attentionLab.bottom+5, _attentionLab.width, 15);
-    _personInfoLab.text=personInfo;
+    _personInfoLab.text=personInfo1;
 
     
     if (_isMineView) {

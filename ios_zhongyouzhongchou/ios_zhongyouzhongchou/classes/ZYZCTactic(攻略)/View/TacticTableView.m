@@ -125,7 +125,7 @@
         NSMutableArray *headURLArray = [NSMutableArray array];
         for (TacticIndexImgModel *indexImgModel in self.tacticModel.indexImg) {
             if (indexImgModel.status == 0) {//有效
-                NSString *headImgString = [NSString stringWithFormat:@"http://www.sosona.com:8080%@",indexImgModel.proImg];
+                NSString *headImgString = [NSString stringWithFormat:@"http://www.sosona.cn:8080%@",indexImgModel.proImg];
                 [headImgArray addObject:headImgString];
                 [headTitleArray addObject:indexImgModel.title];
                 [headURLArray addObject:indexImgModel.proUrl];

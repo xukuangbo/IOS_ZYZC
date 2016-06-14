@@ -9,6 +9,7 @@
 #import "ZYZCTabBarController.h"
 #import "ZYZCCenterContentView.h"
 #import "FXBlurView.h"
+#import "ZYCenterViewController.h"
 @interface ZYZCTabBarController ()
 {
     FXBlurView *blurView;
@@ -67,6 +68,10 @@
 #pragma mark --- 创建半框
 -(void)clickBtn
 {
+//    ZYCenterViewController *centerViewController=[[ZYCenterViewController alloc]init];
+//    [self presentViewController:centerViewController animated:YES completion:nil];
+//    return;
+    
     CGFloat viewHeight=220;
     //创建毛玻璃
     blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, KSCREEN_H-viewHeight, KSCREEN_W, viewHeight)];

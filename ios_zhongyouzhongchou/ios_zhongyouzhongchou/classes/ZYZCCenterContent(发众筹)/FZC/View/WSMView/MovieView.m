@@ -102,7 +102,7 @@
         return;
     }
     
-    _picker = [[XMNPhotoPickerController alloc] initWithMaxCount:9 delegate:nil];
+    _picker = [[XMNPhotoPickerController alloc] initWithMaxCount:1 delegate:nil];
     _picker.autoPushToPhotoCollection=NO;
     _picker.autoPushToVideoCollection=YES;
     __weak typeof(self) weakSelf = self;

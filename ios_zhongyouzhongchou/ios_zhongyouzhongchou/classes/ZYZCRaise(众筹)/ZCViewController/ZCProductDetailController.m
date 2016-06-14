@@ -58,9 +58,6 @@
 -(void)pressBack
 {
     [super pressBack];
-    if (_detailProductType==PersonDetailProduct) {
-         self.oneModel.productType=ZCListProduct;
-    }
     [_shareBtn removeFromSuperview];
     self.navigationController.navigationBar.titleTextAttributes=
     @{NSForegroundColorAttributeName:[UIColor whiteColor],
@@ -198,18 +195,21 @@
     __weak typeof (&*self)weakSelf=self;
     __block NSString *url=[NSString stringWithFormat:@"http://www.sosona.com/pay/crowdfundingDetail?pid=%@",_productId];
     
+    NSArray *destArr=[ZYZCTool turnJsonStrToArray:_oneModel.product.productDest];
+    NSString *dest=destArr.count>1?destArr[1]:@"";
+    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     alertController.view.tintColor=[UIColor ZYZC_MainColor];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *shareToZoneAction = [UIAlertAction actionWithTitle:@"分享到微信朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
     {
         NSLog(@"%@",weakSelf.oneModel.product.productName);
-        [WXApiShare shareScene:YES withTitle:@"众游" andDesc:weakSelf.oneModel.product.productName andThumbImage:nil andWebUrl:url];
+        [WXApiShare shareScene:YES withTitle:_oneModel.product.productName andDesc:[NSString stringWithFormat:@"%@梦想去%@旅行,正在众游筹旅费，希望你能支持TA",_oneModel.user.userName,dest] andThumbImage:nil andWebUrl:url];
     }];
     
     UIAlertAction *shareToFriendAction = [UIAlertAction actionWithTitle:@"分享到微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
   {
-      [WXApiShare shareScene:NO withTitle:@"众游" andDesc:weakSelf.oneModel.product.productName andThumbImage:nil andWebUrl:url];
+      [WXApiShare shareScene:NO withTitle:_oneModel.product.productName  andDesc:[NSString stringWithFormat:@"%@梦想去%@旅行,正在众游筹旅费，希望你能支持TA",_oneModel.user.userName,dest]  andThumbImage:nil andWebUrl:url];
   }];
     
     [alertController addAction:cancelAction];
@@ -309,6 +309,13 @@
     [super viewWillDisappear:animated];
     _shareBtn.hidden=YES;
     _viewDidappear=NO;
+//    if (_detailProductType==PersonDetailProduct) {
+//        self.oneModel.productType=ZCListProduct;
+//    }
+//    else if (_detailProductType==MineDetailProduct)
+//    {
+//        self.oneModel.productType=MyPublishProduct;
+//    }
 }
 
 

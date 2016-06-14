@@ -38,6 +38,7 @@
     
     if (indexPath.row%2) {
         ZYZCOneProductCell *productCell=(ZYZCOneProductCell *)[ZYZCOneProductCell customTableView:tableView cellWithIdentifier:@"productCell" andCellClass:[ZYZCOneProductCell class]];
+        productCell.oneModel.productType=ZCListProduct;
         productCell.oneModel=self.dataArr[(indexPath.row-1)/2];
         return productCell;
     }

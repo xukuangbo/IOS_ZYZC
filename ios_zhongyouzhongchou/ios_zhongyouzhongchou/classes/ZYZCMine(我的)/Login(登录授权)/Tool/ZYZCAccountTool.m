@@ -9,6 +9,7 @@
 #define HWAccountPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"account.archive"]
 #import "ZYZCAccountTool.h"
 #import "ZYZCAccountModel.h"
+#import "MediaUtils.h"
 @implementation ZYZCAccountTool
 /**
  *  存储账号信息
@@ -67,4 +68,11 @@
     
     return account;
 }
+
+#pragma mark --- 删除用户
++(void)deleteAccount
+{
+    [MediaUtils deleteFileByPath:HWAccountPath];
+}
+
 @end

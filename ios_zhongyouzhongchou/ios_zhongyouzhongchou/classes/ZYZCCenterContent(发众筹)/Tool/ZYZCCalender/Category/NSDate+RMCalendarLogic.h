@@ -47,4 +47,16 @@
 #pragma mark --- 获取两个日历间的所有日历
 + (NSArray *)getDatesBetweenDate:(NSDate *)startDate toDate:(NSDate *)endDate;
 
+/**
+ *  由生日得出年龄
+ *
+ *  @param birthday
+ */
++(NSInteger )getAgeFromBirthday:(NSString *)birthday;
+/**
+ *  
+ *
+ */
++ (NSString *)changStrToDateStr:(NSString *)string;
+
 @end

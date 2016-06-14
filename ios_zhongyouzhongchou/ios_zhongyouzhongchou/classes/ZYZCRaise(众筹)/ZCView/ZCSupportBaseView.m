@@ -89,10 +89,11 @@
     _textLab.textColor=[UIColor ZYZC_TextBlackColor];
     [self addSubview:_textLab];
     
-    _textLab.userInteractionEnabled=YES;
-    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openMoreText)];
-    [_textLab addGestureRecognizer:tap];
-    
+    if (textHeight>=75) {
+        _textLab.userInteractionEnabled=YES;
+        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openMoreText)];
+        [_textLab addGestureRecognizer:tap];
+    }
     _otherViews=[[UIView alloc]initWithFrame:CGRectMake(0, _textLab.bottom+KEDGE_DISTANCE, self.width, 20)];
     [self addSubview:self.otherViews];
     
@@ -130,7 +131,7 @@
 #pragma mark --- 展开更多文字
 -(void)openMoreText
 {
-    if (_isOpenText) {
+    if (!_isOpenText) {
         _textLab.numberOfLines=0;
         _textLab.height=_textOpenHeight;
         _moreTextBtn.hidden=YES;

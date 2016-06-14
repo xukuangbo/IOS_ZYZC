@@ -16,7 +16,7 @@
     message.title=title;
     message.description=description;
     //图片不能大于10k
-    [message setThumbImage:[UIImage imageNamed:@"btn_fzc_pre"]];
+    [message setThumbImage:[UIImage imageNamed:@"Share_iocn"]];
     WXWebpageObject *webpageObject=[WXWebpageObject object];
     webpageObject.webpageUrl=webUrl;
     message.mediaObject=webpageObject;

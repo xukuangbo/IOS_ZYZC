@@ -191,7 +191,7 @@
         {
             NSString *cellId01=@"cellId01";
             ZYZCOneProductCell *productCell=(ZYZCOneProductCell *)[ZYZCOneProductCell customTableView:tableView cellWithIdentifier:cellId01 andCellClass:[ZYZCOneProductCell class]];
-            productCell.productType=ZCDetailProduct;
+            productCell.oneModel.productType=ZCDetailProduct;
             productCell.oneModel=_oneModel;
             return productCell;
         }

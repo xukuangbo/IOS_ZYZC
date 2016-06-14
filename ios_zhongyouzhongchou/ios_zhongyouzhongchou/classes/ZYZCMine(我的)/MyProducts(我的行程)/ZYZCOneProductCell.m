@@ -264,38 +264,25 @@
     //个人信息
     NSMutableString *userInfo=[NSMutableString string];
     //添加年龄
-    int age=0;
+    NSInteger age=0;
     if (oneModel.user.birthday.length) {
-        NSDate *brithDay=[NSDate dateFromString:[self changStrToDateStr:oneModel.user.birthday]];
-        int days=[NSDate getDayNumbertoDay:brithDay beforDay:nowDate]+1;
-        age=days/365;
-        [userInfo appendString:[NSString stringWithFormat:@"%d岁",age]];
+         age=[NSDate getAgeFromBirthday:oneModel.user.birthday];
+        age>0?[userInfo appendString:[NSString stringWithFormat:@"%ld岁  ",age]]:nil;
     }
     //添加星座
-    if (oneModel.user.constellation.length) {
-        [userInfo appendString:userInfo.length>0?
-         [NSString stringWithFormat:@"  %@",oneModel.user.constellation]:
-         [NSString stringWithFormat:@"%@",oneModel.user.constellation]];
-    }
+    oneModel.user.constellation?[userInfo appendString:[NSString stringWithFormat:@"%@  ",oneModel.user.constellation]]:nil;
+    
     //添加体重
-    if (oneModel.user.weight) {
-        [userInfo appendString:userInfo.length>0?
-         [NSString stringWithFormat:@"  %@",oneModel.user.weight]:
-         [NSString stringWithFormat:@"%@",oneModel.user.weight]];
-    }
+    oneModel.user.weight?[userInfo appendString:[NSString stringWithFormat:@"%@kg  ",oneModel.user.weight]]:nil;
+    
     //添加身高
-    if (oneModel.user.height) {
-        [userInfo appendString:userInfo.length>0?
-         [NSString stringWithFormat:@"  %@",oneModel.user.height]:
-         [NSString stringWithFormat:@"%@",oneModel.user.height]];
-    }
+    oneModel.user.height?[userInfo appendString:[NSString stringWithFormat:@"%@cm  ",oneModel.user.height]]:
+         nil;
     //添加婚姻状态
     if (oneModel.user.maritalStatus) {
-        NSArray *maritals=@[@"单身",@"已婚",@"离异"];
+        NSArray *maritals=@[ZYLocalizedString(@"maritalStatus_0"),ZYLocalizedString(@"maritalStatus_1"),ZYLocalizedString(@"maritalStatus_2")];
         int state=[oneModel.user.maritalStatus intValue];
-        [userInfo appendString:userInfo.length>0?
-         [NSString stringWithFormat:@"  %@",maritals[state]]:
-         [NSString stringWithFormat:@"%@",maritals[state]]];
+        [userInfo appendString:[NSString stringWithFormat:@"%@",maritals[state]]];
     }
     _infoLab.text=userInfo;
     
@@ -332,7 +319,7 @@
     _fillProgress.width=_emptyProgress.width*MIN(1, rate);
     //剩余天数
     if (oneModel.product.productEndTime.length>8) {
-        NSString *productEndStr=[self changStrToDateStr:oneModel.product.productEndTime];
+        NSString *productEndStr=[NSDate changStrToDateStr:oneModel.product.productEndTime];
         NSDate *productEndDate=[NSDate dateFromString:productEndStr];
         int leftDays=[NSDate getDayNumbertoDay:nowDate beforDay:productEndDate]+1;
         if (leftDays<0) {
@@ -460,36 +447,6 @@
     return btn;
 }
 
-#pragma mark --- 将2016-1-1或20160101格式转成2016-01－01
--(NSString *)changStrToDateStr:(NSString *)string
-{
-    //此处可能存在两种类型的数据需要转换：2016-1-1，20160101
-    //判断是哪一种
-    NSRange range=[string rangeOfString:@"-"];
-    //第一种情况  2016-1-1
-    if (range.length) {
-        NSMutableArray *subArr=[NSMutableArray arrayWithArray:[string componentsSeparatedByString:@"-"]];
-        for (int i=0;i<subArr.count;i++) {
-            NSString *str=subArr[i];
-            if (str.length<2) {
-                NSString *newStr=[NSString stringWithFormat:@"0%@",str];
-                [subArr replaceObjectAtIndex:i withObject:newStr];
-            }
-        }
-        return [subArr componentsJoinedByString:@"-"];
-    }
-    //第二种情况  20160101
-    else
-    {
-        if (string.length==8) {
-            NSMutableString *newStr=[NSMutableString stringWithString:string];
-            [newStr insertString:@"-" atIndex:4];
-            [newStr insertString:@"-" atIndex:string.length-2];
-            return newStr;
-        }
-        return nil;
-    }
-}
 
 
 #pragma mark --- 字符串的字体更改

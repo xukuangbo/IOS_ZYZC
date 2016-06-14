@@ -13,9 +13,10 @@
 #import "MBProgressHUD+MJ.h"
 #import "MineSaveContactInfoVC.h"
 #import "MineTravelTagVC.h"
-@interface MineSetUpViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "WXApiManager.h"
+@interface MineSetUpViewController ()<UITableViewDataSource,UITableViewDelegate,WXApiManagerDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *cacheSize;
-
+@property (nonatomic, strong) WXApiManager      *wxManager;
 @end
 
 @implementation MineSetUpViewController
@@ -23,17 +24,19 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
+    _wxManager=[WXApiManager sharedManager];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_back_new"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(pressBack)];
     self.title = @"设置";
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [self calculateSize];
+//    UITableViewCell  *loginCell=[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+//     ZYZCAccountModel *model = [ZYZCAccountTool account];
+//    loginCell.textLabel.text=model?@"退出登录":@"登录";
+//    loginCell.textLabel.textAlignment=NSTextAlignmentCenter;
 }
 
 -(void)pressBack
@@ -44,6 +47,20 @@
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (indexPath.section==2) {
+        ZYZCAccountModel *model = [ZYZCAccountTool account];
+        if (model) {//登录了
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"是否退出登录？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+            [alert show];
+        }else//没登录
+        {
+            [_wxManager loginWeChatWithViewController:self];
+        }
+
+        return;
+    }
+    
     //当选中的时候就会调用
     ZYZCAccountModel *model = [ZYZCAccountTool account];
     if (model) {//登录了
@@ -96,9 +113,58 @@
         }
         
         
-    }else{
-        
     }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [self loginOut];
+    }
+}
+
+-(void)loginOut
+{
+    [ZYZCAccountTool deleteAccount];
+    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+    [user setObject:nil forKey:KUSER_ID];
+    [user setObject:nil forKey:KUSER_MARK];
+    [user setObject:nil forKey:KCHAT_TOKEN];
+    [user synchronize];
+    
+    _wxManager.delegate=self;
+    [_wxManager judgeAppGetWeChatLoginWithViewController:self];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failLoginWeChat:) name:KWX_LOGIN_FAIL object:nil];
+}
+
+
+#pragma mark --- 从微信返回的回调方法，获取微信token
+-(void)managerDidRecvAuthResponse:(SendAuthResp *)response
+{
+    NSString *url = GET_WX_TOKEN(response.code);
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+        //获取失败
+        if (result[@"data"][@"errcode"]) {
+            [_wxManager loginWeChatWithViewController:self];
+            return ;
+        }
+        else
+        {
+            //获取成功，获取微信信息，并注册我们的平台
+            ZYZCAccountModel *accountModel=[[ZYZCAccountModel alloc]mj_setKeyValues:result[@"data"]];
+            [_wxManager requstPersonalData:accountModel];
+            
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
+-(void)failLoginWeChat:(NSNotification *)notify
+{
+    [_wxManager loginWeChatWithViewController:self];
 }
 
 /**

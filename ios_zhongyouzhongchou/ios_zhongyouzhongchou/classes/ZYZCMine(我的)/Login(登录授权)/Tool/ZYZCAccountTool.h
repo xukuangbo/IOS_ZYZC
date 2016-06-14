@@ -22,4 +22,11 @@
  *  @return 账号模型（如果账号过期，返回nil）
  */
 + (ZYZCAccountModel *)account;
+
+/**
+ *  删除用户
+ */
++(void)deleteAccount;
+
+
 @end

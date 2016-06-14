@@ -283,6 +283,49 @@
     return ci;
 }
 
++(NSInteger )getAgeFromBirthday:(NSString *)birthday
+{
+    NSInteger age=0;
+    if (birthday.length) {
+        NSDate *brithDay=[NSDate dateFromString:[self changStrToDateStr:birthday]];
+        int days=[NSDate getDayNumbertoDay:brithDay beforDay:[NSDate date]]+1;
+        age=days/365;
+    }
+    return age;
+}
 
+#pragma mark --- 将2016-1-1或20160101格式转成2016-01－01
++ (NSString *)changStrToDateStr:(NSString *)string
+{
+    if (string.length==10) {
+        return string;
+    }
+    //此处可能存在两种类型的数据需要转换：2016-1-1，20160101
+    //判断是哪一种
+    NSRange range=[string rangeOfString:@"-"];
+    //第一种情况  2016-1-1
+    if (range.length) {
+        NSMutableArray *subArr=[NSMutableArray arrayWithArray:[string componentsSeparatedByString:@"-"]];
+        for (int i=0;i<subArr.count;i++) {
+            NSString *str=subArr[i];
+            if (str.length<2) {
+                NSString *newStr=[NSString stringWithFormat:@"0%@",str];
+                [subArr replaceObjectAtIndex:i withObject:newStr];
+            }
+        }
+        return [subArr componentsJoinedByString:@"-"];
+    }
+    //第二种情况  20160101
+    else
+    {
+        if (string.length==8) {
+            NSMutableString *newStr=[NSMutableString stringWithString:string];
+            [newStr insertString:@"-" atIndex:4];
+            [newStr insertString:@"-" atIndex:string.length-2];
+            return newStr;
+        }
+        return nil;
+    }
+}
 
 @end

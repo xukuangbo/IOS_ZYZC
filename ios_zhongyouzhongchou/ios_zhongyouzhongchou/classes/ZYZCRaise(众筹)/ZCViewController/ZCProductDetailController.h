@@ -21,8 +21,6 @@
 @property (nonatomic, strong) ZCDetailModel    *detailModel;
 
 @property (nonatomic, strong) NSArray          *schedule;//行程安排（我的草稿中数据）
-//@property (nonatomic, assign) ZC_TYPE zcType;       //标记：区分访客版和个人版
-
 //标记：区分访客版,个人版还是草稿
 @property (nonatomic, assign) DetailProductType detailProductType;
 

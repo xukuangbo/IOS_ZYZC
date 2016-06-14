@@ -16,6 +16,7 @@
 @interface ZYZCMineVIewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) PersonHeadView *personHeadView;
 @property (nonatomic, strong) UITableView    *table;
+@property (nonatomic, strong) UILabel        *titleLab;
 @property (nonatomic, strong) UserModel      *userModel;
 @property (nonatomic, strong) NSNumber       *meGzAll;
 @property (nonatomic, strong) NSNumber       *gzMeAll;
@@ -32,6 +33,13 @@
 
 -(void)setNavItems
 {
+    
+    _titleLab =[[UILabel alloc]initWithFrame:CGRectMake((self.view.width-200)/2, 0, 200, 44)];
+    _titleLab.textColor=[UIColor whiteColor];
+    _titleLab.font=[UIFont boldSystemFontOfSize:20];
+    _titleLab.textAlignment=NSTextAlignmentCenter;
+    [self.navigationController.navigationBar addSubview:_titleLab];
+    
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_set"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(leftButtonClick)];
     
 //    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_pas_ld"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonClick)];
@@ -53,6 +61,10 @@
     
     _personHeadView=[[PersonHeadView alloc]initWithType:YES];
     _table.tableHeaderView=_personHeadView;
+    MJRefreshHeader *refreshHeader=[MJRefreshHeader headerWithRefreshingBlock:^{
+        [self getUserInfoData];
+    }];
+    _table.mj_header=refreshHeader;
     
 }
 
@@ -95,11 +107,11 @@
         _personHeadView.tableOffSetY=offsetY;
   
     if (offsetY>=74) {
-        self.title=_userModel.userName.length>8?[_userModel.userName substringToIndex:8]:_userModel.userName;
+        _titleLab.text=_userModel.userName.length>8?[_userModel.userName substringToIndex:8]:_userModel.userName;
     }
     else
     {
-        self.title=nil;
+        _titleLab.text=nil;
     }
 }
 
@@ -121,7 +133,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    _titleLab.hidden=NO;
     [self.navigationController.navigationBar cnSetBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Background"]]];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 
@@ -148,9 +160,16 @@
              _personHeadView.gzMeAll=result[@"data"][@"gzMeAll"];
              _personHeadView.userModel=_userModel;
          }
+          [_table.mj_header endRefreshing];
      } andFailBlock:^(id failResult) {
+         [_table.mj_header endRefreshing];
          NSLog(@"%@",failResult);
      }];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    _titleLab.hidden=YES;
 }
 
 

@@ -12,6 +12,7 @@
 @property (nonatomic, strong) NSNumber *userId;
 @property (nonatomic, copy  ) NSString *openid;
 @property (nonatomic, copy  ) NSString *userName;
+@property (nonatomic, copy  ) NSString *realName;
 @property (nonatomic, copy  ) NSString *faceImg;
 @property (nonatomic, copy  ) NSString *sex;//0未知，1.男，2.女
 @property (nonatomic, copy  ) NSString *weixinProvince;

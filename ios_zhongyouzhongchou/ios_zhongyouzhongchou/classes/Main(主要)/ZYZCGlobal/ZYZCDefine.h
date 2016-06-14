@@ -77,7 +77,7 @@
 #define KVIEWSPOT_SAVE               @"viewSportSave"
 //记录上传资源到oss时失败没，有，删除文件
 #define KFAIL_UPLOAD_OSS             @"failUpload"
-//存储用户聊天信息
+//存储用户聊天凭证
 #define KCHAT_TOKEN                  @"chatToken"
 //存储用户userId（进入个人空间作为判断条件，如果是自己的userId，不能进入）
 #define KUSER_MARK                   @"userId"

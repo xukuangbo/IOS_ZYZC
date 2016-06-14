@@ -178,7 +178,7 @@
 }
 
 
-#pragma mark --- 判断用户是否一dengl微信
+#pragma mark --- 判断用户是否登录微信
 -(void)judgeAppGetWeChatLoginWithViewController:(UIViewController *)viewController
 {
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
