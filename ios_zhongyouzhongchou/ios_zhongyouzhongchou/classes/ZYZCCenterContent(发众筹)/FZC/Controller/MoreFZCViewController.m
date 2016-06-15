@@ -35,9 +35,11 @@
                               //记录发布的数据在oss的位置
 @property (nonatomic, copy  ) NSString *myZhouChouMarkName;
                               //记录发布的所有文件的状态
-@property (nonatomic, strong) NSMutableArray *uploadDataState;
+//@property (nonatomic, strong) NSMutableArray *uploadDataState;
                               //要上传到oss上的文件个数
 @property (nonatomic, assign) NSInteger uploadDataNumber;
+                              //发布成功个数
+@property (nonatomic, assign) NSInteger  uploadSuccessNumber;
                               //记录发布成功的状态
 @property (nonatomic, assign) BOOL hasPulish;
                               //记录上传数据成功的状态
@@ -65,7 +67,7 @@
     [user setObject:[NSNumber numberWithInteger:0] forKey:KMOREFZC_RETURN_SUPPORTTYPE];
     [user synchronize];
      self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-    _uploadDataState=[NSMutableArray array];
+//    _uploadDataState=[NSMutableArray array];
     [self setBackItem];
     [self createToolBar];
     [self createClearMapView];
@@ -261,7 +263,6 @@
 #pragma mark --- 浏览我的众筹
 -(void)skimZhongchou
 {
-    [self saveModelInManager];
     _oneModel=[[ZCOneModel alloc]init];
     _detailProductModel=[[ZCDetailProductModel alloc]init];
     __weak typeof (&*self)weakSelf=self;
@@ -310,7 +311,6 @@
             }
         }
         if (button.tag==MoreFZCToolBarTypeTravel) {
-            [self saveModelInManager];
             BOOL lossMessage03=[NecessoryAlertManager showNecessoryAlertView03];
             if (lossMessage03) {
                 return;
@@ -328,7 +328,6 @@
     //发  布
     else
     {
-        [self saveModelInManager];
         if (button.tag==MoreFZCToolBarTypeReturn) {
             BOOL lossMessage04=[NecessoryAlertManager showNecessoryAlertView04];
             if (lossMessage04) {
@@ -352,12 +351,11 @@
         return;
     }
     
-     _mbProgress.dimBackground=YES;
      _mbProgress=[MBProgressHUD showMessage:@"正在发布..."];
-    
-    if (_uploadDataState.count) {
-        [_uploadDataState removeAllObjects];
-    }
+    _uploadSuccessNumber=0;
+//    if (_uploadDataState.count) {
+//        [_uploadDataState removeAllObjects];
+//    }
 //
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     NSString *failDataFile=[user objectForKey:KFAIL_UPLOAD_OSS];
@@ -377,7 +375,7 @@
              {
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [MBProgressHUD hideHUD];
-                     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"网络发生异常" message:nil delegate:self cancelButtonTitle:@"确定"otherButtonTitles:nil, nil];
+                     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"网络异常，请检查网络" message:nil delegate:self cancelButtonTitle:@"确定"otherButtonTitles:nil, nil];
                      [alertView show];
 
                  });
@@ -413,7 +411,7 @@
                //文件上传到oss中以openId为文件名下的以_myZhouChouMarkName为文件名下
                ZYZCOSSManager *ossManager=[ZYZCOSSManager defaultOSSManager];
                BOOL uploadSuccess=[ossManager uploadObjectSyncByFileName:[NSString stringWithFormat:@"%@/%@",self.myZhouChouMarkName,tmpFileArr[i]]  andFilePath:[tmpFile stringByAppendingPathComponent:tmpFileArr[i]]];
-               [self.uploadDataState addObject:[NSNumber numberWithBool:uploadSuccess]];
+//               [self.uploadDataState addObject:[NSNumber numberWithBool:uploadSuccess]];
                //上传失败
                if (!uploadSuccess) {
                    break;
@@ -421,24 +419,19 @@
                //上传成功
                else
                {
+                   _uploadSuccessNumber++;
                    //在主线程更行进度条
                    dispatch_async(dispatch_get_main_queue(), ^{
-                       NSInteger successNumber=_uploadDataState.count;
-                       NSLog(@"successNumber:%ld,%ld",successNumber,_uploadDataNumber);
-                       _mbProgress.labelText=[NSString stringWithFormat:@"正在发布,已完成%.f％",(float)successNumber/(float)_uploadDataNumber*100.0];
+//                       NSInteger successNumber=_uploadDataState.count;
+//                       NSLog(@"successNumber:%ld,%ld",successNumber,_uploadDataNumber);
+                       _mbProgress.labelText=[NSString stringWithFormat:@"正在发布,已完成%.f％",(float)_uploadSuccessNumber/(float)_uploadDataNumber*100.0];
                    });
                }
            }
            //回到主线程
            dispatch_async(dispatch_get_main_queue(), ^
           {
-              _hasUpload=YES;
-              for (NSNumber *obj in _uploadDataState) {
-                  if (![obj boolValue]) {
-                      _hasUpload=NO;
-                      break;
-                  }
-              }
+              _hasUpload=_uploadSuccessNumber>=_uploadDataNumber;
               //数据上传成功，发布众筹
               if (_hasUpload) {
                   [self publishMyZhongchou];
@@ -447,13 +440,12 @@
               else
               {
                   [MBProgressHUD hideHUD];
-                  UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                  UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"网络异常，发布失败，是否重新发布" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
                   alert.tag=ALERT_UPLOAD_TAG;
                   [alert show];
               }
           });
        });
-
 }
 
 #pragma mark --- 发布我的众筹
@@ -506,27 +498,10 @@
         NSLog(@"failResult:%@",failResult);
         [MBProgressHUD hideHUD];
         //提示发布失败
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"网络异常,发布失败" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"数据错误,发布失败" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         alert.tag=ALERT_PUBLISH_TAG;
         [alert show];
     }];
-}
-
-#pragma mark --- 保存行程安排model到manager中
--(void)saveModelInManager
-{
-//    保存每日行程安排到单例中
-    MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
-    [manager.travelDetailDays removeAllObjects];
-    MoreFZCTravelTableView *travelTable=[(MoreFZCTravelTableView *)self.clearMapView viewWithTag:MoreFZCToolBarTypeTravel];
-    for (NSInteger i=0; i<travelTable.travelDetailCellArr.count; i++) {
-        TravelSecondCell *travelSecondCell=travelTable.travelDetailCellArr[i];
-        [travelSecondCell saveTravelOneDayDetailData];
-        NSDictionary *modelDict = travelSecondCell.oneDetailModel.mj_keyValues;
-        if (modelDict.count>2) {
-            [manager.travelDetailDays addObject:travelSecondCell.oneDetailModel];
-        }
-    }
 }
 
 -(void)getHttpData

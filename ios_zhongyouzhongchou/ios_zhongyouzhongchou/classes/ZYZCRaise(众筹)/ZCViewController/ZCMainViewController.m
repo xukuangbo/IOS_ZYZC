@@ -28,8 +28,6 @@
 @property (nonatomic, strong) UIButton           *scrollTop;
 @property (nonatomic, assign) int pageNo;
 
-@property (nonatomic, strong) WXApiManager      *wxManager;
-
 @end
 
 @implementation ZCMainViewController
@@ -43,39 +41,6 @@
     self.title=@"众筹";
     [self configUI];
     [self getHttpData];
-    _wxManager=[WXApiManager sharedManager];
-     _wxManager.delegate=self;
-    [_wxManager judgeAppGetWeChatLoginWithViewController:self];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failLoginWeChat:) name:KWX_LOGIN_FAIL object:nil];
-}
-
-#pragma mark --- 从微信返回的回调方法，获取微信token
--(void)managerDidRecvAuthResponse:(SendAuthResp *)response
-{
-    NSString *url = GET_WX_TOKEN(response.code);
-    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
-        NSLog(@"%@",result);
-        //获取失败
-        if (result[@"data"][@"errcode"]) {
-            [_wxManager loginWeChatWithViewController:self];
-            return ;
-        }
-        else
-        {
-            //获取成功，获取微信信息，并注册我们的平台
-            ZYZCAccountModel *accountModel=[[ZYZCAccountModel alloc]mj_setKeyValues:result[@"data"]];
-            [_wxManager requstPersonalData:accountModel];
-        
-        }
-
-    } andFailBlock:^(id failResult) {
-        NSLog(@"%@",failResult);
-    }];
-}
-
--(void)failLoginWeChat:(NSNotification *)notify
-{
-    [_wxManager loginWeChatWithViewController:self];
 }
 
 /*

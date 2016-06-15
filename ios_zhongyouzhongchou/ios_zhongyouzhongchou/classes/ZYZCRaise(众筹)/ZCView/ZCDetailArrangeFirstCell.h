@@ -24,4 +24,6 @@
 
 @property (nonatomic, copy  ) NSString *faceImg;
 
+@property (nonatomic, strong) NSString *startDay;
+
 @end

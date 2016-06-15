@@ -94,6 +94,13 @@
     return [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:self options:0];
 }
 
+- (NSDate *)dayInTheFollowingDay:(int)day andDate:(NSDate *)date
+{
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    dateComponents.day = day;
+    return [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:date options:0];
+}
+
 //获取年月日对象
 - (NSDateComponents *)YMDComponents
 {

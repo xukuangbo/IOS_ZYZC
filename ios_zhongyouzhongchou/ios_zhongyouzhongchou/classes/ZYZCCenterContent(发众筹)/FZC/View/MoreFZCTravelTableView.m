@@ -16,7 +16,7 @@
     if (self) {
         _rowsChangeHeight=[NSMutableDictionary dictionary];
         _travelDetailCellArr=[NSMutableArray array];
-        _travelDays=1;
+        _travelDays=0;
         self.dataSource =self;
         self.delegate   =self;
     }
@@ -27,30 +27,45 @@
 -(void)getTravelDays
 {
     MoreFZCDataManager *manager=[MoreFZCDataManager sharedMoreFZCDataManager];
+    
     _travelDays=[manager.goal_TotalTravelDay integerValue];
-    if (_travelDetailCellArr.count) {
-        [_travelDetailCellArr removeAllObjects];
-    }
-   
-    for (int i=0; i<_travelDays; i++) {
-        TravelSecondCell *secondCell=[[TravelSecondCell alloc]init];
-        secondCell.oneDetailModel.day=[NSNumber numberWithInt:i+1];
-        if (manager.travelDetailDays.count) {
-            for (MoreFZCTravelOneDayDetailMdel *model in manager.travelDetailDays) {
-                if ([model.day integerValue]==i+1) {
-                    secondCell.oneDetailModel=model;
-                }
-            }
+    
+    if (manager.travelDetailDays.count>_travelDays) {
+        for (NSInteger i=manager.travelDetailDays.count-1; i>=_travelDays-1; i--) {
+            [manager.travelDetailDays removeObjectAtIndex:i];
         }
-        [_travelDetailCellArr addObject:secondCell];
     }
+    else if (manager.travelDetailDays.count<_travelDays)
+    {
+        for (NSInteger i=manager.travelDetailDays.count;i<_travelDays; i++) {
+            MoreFZCTravelOneDayDetailMdel *model=[[MoreFZCTravelOneDayDetailMdel alloc]init];
+            model.day=[NSNumber numberWithInteger:i+1];
+            [manager.travelDetailDays addObject:model];
+        }
+    }
+  
+//    if (_travelDetailCellArr.count) {
+//        [_travelDetailCellArr removeAllObjects];
+//    }
+//   
+//    for (int i=0; i<_travelDays; i++) {
+//        TravelSecondCell *secondCell=[[TravelSecondCell alloc]init];
+//        secondCell.oneDetailModel.day=[NSNumber numberWithInt:i+1];
+//        if (manager.travelDetailDays.count) {
+//            for (MoreFZCTravelOneDayDetailMdel *model in manager.travelDetailDays) {
+//                if ([model.day integerValue]==i+1) {
+//                    secondCell.oneDetailModel=model;
+//                }
+//            }
+//        }
+//        [_travelDetailCellArr addObject:secondCell];
+//    }
 }
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     [self getTravelDays];
-    
     return 2+_travelDays*2;
 }
 
@@ -99,9 +114,13 @@
             }
         }
         
-        travelSecondCell.titleLab.text=[NSString stringWithFormat:@"第%.2zd天:",indexPath.row/2];
+        NSDate *startDay=[NSDate dateFromString:manager.goal_startDate];
+        NSDate *cellDate=[[NSDate alloc]init];
+        cellDate=[cellDate dayInTheFollowingDay:(int)(indexPath.row/2-1) andDate:startDay];
+        travelSecondCell.titleLab.text=[NSString stringWithFormat:@"%@",[NSDate stringFromDate:cellDate]];
         travelSecondCell.oneDetailModel.day=[NSNumber numberWithInteger:indexPath.row/2];
         travelSecondCell.contentBelong=TRAVEL_CONTENTBELONG(indexPath.row/2);
+                
         return travelSecondCell;
     }
     else
@@ -136,11 +155,11 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row%2==0&&indexPath.row>0) {
-        [_travelDetailCellArr replaceObjectAtIndex:indexPath.row/2-1 withObject:cell];
-    }
-}
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (indexPath.row%2==0&&indexPath.row>0) {
+//        [_travelDetailCellArr replaceObjectAtIndex:indexPath.row/2-1 withObject:cell];
+//    }
+//}
 
 @end

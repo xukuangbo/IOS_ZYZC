@@ -113,13 +113,11 @@
 - (void)requstPersonalData:(ZYZCAccountModel *)account
 {
     if (account) {
-//        [MBProgressHUD showMessage:@"正在加载个人数据"];
         NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",account.access_token,account.openid];
         [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
            ZYZCAccountModel  *accountModel=[[ZYZCAccountModel alloc]mj_setKeyValues:result];
 //            有微信的数据后可以向我们的服务器发送注册信息
             [self regisPersonalMessageWith:accountModel];
-            
         } andFailBlock:^(id failResult) {
             NSLog(@"%@",failResult);
         }];
@@ -168,12 +166,13 @@
             RCManager.hasLogin=NO;
             [RCManager getRCloudToken];
             
+            [[NSNotificationCenter defaultCenter]removeObserver:self name: KWX_LOGIN_FAIL object:nil];
+            
         }else{
             [[NSNotificationCenter defaultCenter]postNotificationName:KWX_LOGIN_FAIL object:nil];
         }
     } andFailBlock:^(id failResult) {
         [[NSNotificationCenter defaultCenter]postNotificationName:KWX_LOGIN_FAIL object:nil];
-        NSLog(@"__________%@",failResult);
     }];
 }
 
@@ -192,9 +191,6 @@
         [self loginWeChatWithViewController:viewController];
     }
 }
-
-
-
 
 
 

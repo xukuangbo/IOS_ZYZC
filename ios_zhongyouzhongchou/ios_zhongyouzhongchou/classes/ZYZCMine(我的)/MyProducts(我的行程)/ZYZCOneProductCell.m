@@ -25,6 +25,7 @@
 @property (nonatomic, strong) UILabel      *nameLab;
 @property (nonatomic, strong) UIImageView  *sexImg;
 @property (nonatomic, strong) UIImageView  *vipImg;
+@property (nonatomic, strong) UILabel      *startDestLab;
 @property (nonatomic, strong) UILabel      *destenceLab;
 @property (nonatomic, strong) UILabel      *jobLab;
 @property (nonatomic, strong) UILabel      *infoLab;
@@ -97,7 +98,7 @@
     [_bgImg addSubview:_destLab];
     
     //添加头像
-    _iconBgView=[[UIView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, _headImage.bottom-KEDGE_DISTANCE, 82, 82)];
+    _iconBgView=[[UIView alloc]initWithFrame:CGRectMake(KEDGE_DISTANCE, _headImage.bottom-15, 82, 82)];
     _iconBgView.layer.cornerRadius=KCORNERRADIUS;
     _iconBgView.layer.masksToBounds=YES;
     _iconBgView.backgroundColor=[UIColor colorWithRed:170/255 green:170/255 blue:170/255 alpha:0.2];
@@ -125,6 +126,14 @@
     _vipImg.image=[UIImage imageNamed:@"icon_id"];
     [_bgImg addSubview:_vipImg];
     _vipImg.hidden=YES;
+    
+    //添加出发地
+    _startDestLab=[self createLabWithFrame:CGRectMake(_vipImg.right+KEDGE_DISTANCE, _nameLab.top, 0, 20) andFont:[UIFont systemFontOfSize:13] andTitleColor:[UIColor whiteColor]];
+    _startDestLab.layer.cornerRadius=3;
+    _startDestLab.layer.masksToBounds=YES;
+    _startDestLab.backgroundColor=[UIColor ZYZC_BgGrayColor02];
+    _startDestLab.textAlignment=NSTextAlignmentCenter;
+    [_bgImg addSubview:_startDestLab];
     
     //添加距离
     _destenceLab=[self createLabWithFrame:CGRectMake(_bgImg.width-80-KEDGE_DISTANCE, _nameLab.top, 80, 20) andFont:[UIFont systemFontOfSize:13] andTitleColor:[UIColor ZYZC_TextGrayColor]];
@@ -195,11 +204,13 @@
             [_headImage sd_setImageWithURL:[NSURL URLWithString:oneModel.product.headImage]  placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
         }
     }
+    NSString *startDest=nil;//出发地
     if (oneModel.product.productDest) {
         //计算目的地的文字长度
         NSMutableString *place=[NSMutableString string];
          //目的地为json数组，需要转换成数组再做字符串拼接
         NSArray *dest=[ZYZCTool turnJsonStrToArray:oneModel.product.productDest];
+        startDest=[dest firstObject];
         NSInteger destNumber=dest.count;
         for (NSInteger i=1; i<destNumber;i++) {
             if (i==1) {
@@ -257,9 +268,19 @@
     
     //改变VIP图标位置
     _vipImg.left=_sexImg.right+3;
-    
+    if (startDest) {
+        //出发地
+        _startDestLab.text=[NSString stringWithFormat:@"%@出发",startDest];
+        CGFloat destWidth=[ZYZCTool calculateStrLengthByText:_startDestLab.text andFont:_startDestLab.font andMaxWidth:self.width].width+10;
+        if (destWidth>100) {
+            destWidth=100;
+        }
+        _startDestLab.left=_bgImg.width-KEDGE_DISTANCE-destWidth;
+        _startDestLab.width=destWidth;
+    }
     //职位
     _jobLab.text=oneModel.user.title;
+    
     
     //个人信息
     NSMutableString *userInfo=[NSMutableString string];
@@ -382,6 +403,7 @@
     _nameLab.top=_lineView.bottom+KEDGE_DISTANCE;
     _sexImg.top=_nameLab.top;
     _vipImg.top=_nameLab.top;
+    _startDestLab.top=_nameLab.top;
     _destenceLab.top=_nameLab.top;
     _jobLab.top=_nameLab.bottom+3;
     _infoLab.top=_jobLab.bottom+3;

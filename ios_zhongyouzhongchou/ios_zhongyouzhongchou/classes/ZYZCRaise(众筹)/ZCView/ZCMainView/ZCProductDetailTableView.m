@@ -250,6 +250,7 @@
                 NSString *arrangeCellId=[NSString stringWithFormat:@"arrangeCell%zd",indexPath.row/2];
                 ZCDetailArrangeFirstCell *arrangeCell=(ZCDetailArrangeFirstCell *)[ZYZCBaseTableViewCell customTableView:tableView cellWithIdentifier:arrangeCellId andCellClass:[ZCDetailArrangeFirstCell class]];
                 arrangeCell.faceImg=_oneModel.user.faceImg;
+                arrangeCell.startDay=_oneModel.product.travelstartTime;
                 arrangeCell.oneDaydetailModel=_detailDays[indexPath.row/2];
                 return arrangeCell;
             }

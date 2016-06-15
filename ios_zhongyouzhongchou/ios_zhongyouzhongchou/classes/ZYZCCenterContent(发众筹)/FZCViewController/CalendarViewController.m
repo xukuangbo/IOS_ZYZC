@@ -383,7 +383,7 @@ static NSString *DayCell = @"DayCell";
     //单例纪录返回时间
     manager.goal_backDate=[NSDate stringFromDate:_endDate];
     //单例纪录旅行总天数
-    manager.goal_TotalTravelDay=[NSString stringWithFormat:@"%zd", _travelTotalDays];
+    manager.goal_TotalTravelDay=[NSString stringWithFormat:@"%zd", _travelTotalDays+1];
     if (self.confirmBlock) {
         self.confirmBlock();
     }

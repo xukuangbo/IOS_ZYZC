@@ -7,7 +7,7 @@
 //
 
 #import "ZCDetailArrangeFirstCell.h"
-
+#import "NSDate+RMCalendarLogic.h"
 @interface ZCDetailArrangeFirstCell ()
 @property (nonatomic ,assign ) BOOL isFirstConfigView;
 @property (nonatomic ,strong ) NSMutableArray *viewHeights;
@@ -54,7 +54,12 @@
     }
     self.bgImg.height=_wsmView.bottom+KEDGE_DISTANCE;
     CGFloat cellHeight=self.bgImg.height;
-    self.titleLab.text=[NSString stringWithFormat:@"第%@天",oneDaydetailModel.day];
+//    self.titleLab.text=[NSString stringWithFormat:@"第%@天",oneDaydetailModel.day];
+    
+    NSDate *startDay=[NSDate dateFromString:_startDay];
+    NSDate *cellDate=[[NSDate alloc]init];
+    cellDate=[cellDate dayInTheFollowingDay:(int)([oneDaydetailModel.day intValue]-1) andDate:startDay];
+    self.titleLab.text=[NSString stringWithFormat:@"%@",[NSDate stringFromDate:cellDate]];
     //添加景点、交通、住宿、餐饮描述
     //是否有对应高度的判断数组
     NSArray *hasViews=@[[NSNumber numberWithBool:self.hasSight],[NSNumber numberWithBool:self.hasTrans],[NSNumber numberWithBool:self.hasLive],[NSNumber numberWithBool:self.hasFood] ];
@@ -152,5 +157,6 @@
 
     return view;
 }
+
 
 @end

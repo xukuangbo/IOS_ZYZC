@@ -7,7 +7,7 @@
 //
 
 #import "MoreFZCDataManager.h"
-
+#import "NSDate+RMCalendarLogic.h"
 @implementation MoreFZCDataManager
 
 MJCodingImplementation
@@ -45,6 +45,8 @@ static id _instace;
     if (self) {
         //这里写要初始化的东西！！！
         _travelDetailDays=[NSMutableArray array];
+        _goal_startDate=[NSDate stringFromDate:[NSDate date]];
+        _goal_backDate=_goal_startDate;
         _goal_TotalTravelDay=@"1";
         _return_returnPeopleStatus = @"1";
         _return_returnPeopleStatus01 = @"1";

@@ -25,6 +25,8 @@
 
 - (NSDate *)dayInTheFollowingDay:(int)day;//获取当前日期之后的几个天
 
+- (NSDate *)dayInTheFollowingDay:(int)day andDate:(NSDate *)date;
+
 - (NSDateComponents *)YMDComponents;
 
 + (NSDate *)dateFromString:(NSString *)dateString;//NSString转NSDate

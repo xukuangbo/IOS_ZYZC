@@ -16,8 +16,9 @@
 #import "WXApiManager.h"
 #import "ZYZCDataBase.h"
 #import "ZYZCRCManager.h"
-@interface AppDelegate ()
+@interface AppDelegate ()<WXApiManagerDelegate>
 @property (nonatomic, strong)ZYZCRCManager *RCManager;
+@property (nonatomic, strong) WXApiManager *wxManager;
 @end
 
 @implementation AppDelegate
@@ -50,6 +51,7 @@
     [self deleteFailDataInOss];
     //存储地名库
     [self saveViewSpot];
+
     
     //=========
     
@@ -102,6 +104,44 @@
     //==========
     return YES;
 }
+
+-(void)loginWeChat
+{
+    _wxManager=[WXApiManager sharedManager];
+    _wxManager.delegate=self;
+    [_wxManager judgeAppGetWeChatLoginWithViewController:self.window.rootViewController];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failLoginWeChat:) name:KWX_LOGIN_FAIL object:nil];
+}
+
+#pragma mark --- 从微信返回的回调方法，获取微信token
+-(void)managerDidRecvAuthResponse:(SendAuthResp *)response
+{
+    NSString *url = GET_WX_TOKEN(response.code);
+    [ZYZCHTTPTool getHttpDataByURL:url withSuccessGetBlock:^(id result, BOOL isSuccess) {
+        NSLog(@"%@",result);
+        //获取失败
+        if (result[@"data"][@"errcode"]) {
+            [_wxManager loginWeChatWithViewController:self.window.rootViewController];
+            return ;
+        }
+        else
+        {
+            //获取成功，获取微信信息，并注册我们的平台
+            ZYZCAccountModel *accountModel=[[ZYZCAccountModel alloc]mj_setKeyValues:result[@"data"]];
+            [_wxManager requstPersonalData:accountModel];
+            
+        }
+        
+    } andFailBlock:^(id failResult) {
+        NSLog(@"%@",failResult);
+    }];
+}
+
+-(void)failLoginWeChat:(NSNotification *)notify
+{
+    [_wxManager loginWeChatWithViewController:self.window.rootViewController];
+}
+
 
 #pragma mark 视频保存完毕的回调
 - (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInf{
@@ -254,6 +294,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [self loginWeChat];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

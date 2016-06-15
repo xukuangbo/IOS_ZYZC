@@ -135,6 +135,13 @@
     {
         manager.return_voiceUrl01=self.soundFileName;
     }
+    for (int i=0; i<manager.travelDetailDays.count; i++) {
+        if ([self.contentBelong isEqualToString:TRAVEL_CONTENTBELONG(i+1)]) {
+            MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
+            model.voiceUrl=self.soundFileName;
+            break;
+        }
+    }
 }
 
 #pragma mark --- 停止语音录制
@@ -194,6 +201,15 @@
     {
         manager.return_voiceUrl01= nil;
     }
+    
+    for (int i=0; i<manager.travelDetailDays.count; i++) {
+        if ([self.contentBelong isEqualToString:TRAVEL_CONTENTBELONG(i+1)]) {
+            MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
+            model.voiceUrl=nil;
+            break;
+        }
+    }
+
 
 }
 

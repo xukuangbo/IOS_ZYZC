@@ -88,6 +88,15 @@
         {
             manager.return_wordDes01=textStr;
         }
+        //行程文字描述
+        for (int i=0; i<manager.travelDetailDays.count; i++) {
+            if ([weakSelf.contentBelong isEqualToString:TRAVEL_CONTENTBELONG(i+1)]) {
+                MoreFZCTravelOneDayDetailMdel *model=manager.travelDetailDays[i];
+                model.wordDes=textStr;
+                break;
+            }
+        }
+        
     };
 
     [self.viewController presentViewController:wordEditVC animated:YES completion:nil];

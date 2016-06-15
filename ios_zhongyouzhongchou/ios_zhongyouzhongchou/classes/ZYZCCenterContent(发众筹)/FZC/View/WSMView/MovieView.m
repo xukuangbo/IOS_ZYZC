@@ -196,6 +196,14 @@
         dataManager.return_movieUrl01=self.movieFileName;
         dataManager.return_movieImg01=self.movieImgFileName;
     }
+    for (int i=0; i<dataManager.travelDetailDays.count; i++) {
+        if ([self.contentBelong isEqualToString:TRAVEL_CONTENTBELONG(i+1)]) {
+            MoreFZCTravelOneDayDetailMdel *model=dataManager.travelDetailDays[i];
+            model.movieUrl=self.movieFileName;
+            model.movieImg=self.movieImgFileName;
+            break;
+        }
+    }
 }
 
 /**
